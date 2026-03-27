@@ -1,6 +1,6 @@
 site:
-  name: AstroWind
-  site: 'https://astrowind.vercel.app'
+  name: UpBuff
+  site: 'https://upbuff-site.vercel.app'
   base: '/'
   trailingSlash: false
 
@@ -9,9 +9,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+    default: UpBuff
+    template: '%s — UpBuff'
+  description: "The ERP Execution Platform Built for SAP & Enterprise ERP"
   robots:
     index: true
     follow: true
