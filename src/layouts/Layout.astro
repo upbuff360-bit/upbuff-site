@@ -44,7 +44,26 @@ const { language, textDirection } = I18N;
 
   <body class="antialiased text-default bg-page tracking-tight">
     <slot />
-    
+    <!-- Paste before </body> -->
+    <script is:inline>
+      window.chatbotConfig = {
+        agentId: "agt-101",
+        primaryColor: "#0f172a",
+        appearance: "light",
+        apiBase: "https://chatbot-backend-336415449858.asia-south1.run.app",
+      };
+    </script>
+    <script src="https://chatbot-backend-336415449858.asia-south1.run.app/widget.js" async></script>
+    <script is:inline>
+      document.addEventListener('astro:page-load', () => {
+        if (!document.querySelector('#cw-bubble')) {
+          const s = document.createElement('script');
+          s.src = "https://chatbot-backend-336415449858.asia-south1.run.app/widget.js";
+          s.async = true;
+          document.body.appendChild(s);
+        }
+      });
+    </script>
     <BasicScripts />
   </body>
 </html>
