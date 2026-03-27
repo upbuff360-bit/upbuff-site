@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Header from '~/components/widgets/Header.astro';
 import LogoBar from '~/components/widgets/LogoBar.astro';
 import Stats from '~/components/widgets/Stats.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 
@@ -29,10 +30,57 @@ const metadata = {
 };
 
 const leaders = [
-  { name: 'Shiburaj Krishnapillai', role: 'Chief Executive Officer',  img: '/uploads/shiburaj.png',   linkedin: 'https://www.linkedin.com/in/shiburaj-krishnapillai' },
-  { name: 'Shiburaj Krishnapillai',          role: 'Chief Technology Officer',  img: '/uploads/common-male.svg',   linkedin: '#' },
-  { name: 'Shiburaj Krishnapillai',          role: 'Chief Marketing Officer',   img: '/uploads/common-female.svg', linkedin: '#' },
+  {
+    name: 'Shiburaj Krishnapillai',
+    role: 'Founder & CEO',
+    img: 'http://4.151.8.142:4000/uploads/common-male.svg',
+    linkedin: 'https://www.linkedin.com/in/shiburaj-krishnapillai',
+    bio: 'Founded UpBuff in 2017 with a clear conviction — ERP execution should never require core modification. Leads product vision, customer strategy, and the architectural principles that every UpBuff deployment is built on.',
+  },
+  {
+    name: 'To be updated',
+    role: 'Chief Technology Officer',
+    img: 'http://4.151.8.142:4000/uploads/common-male.svg',
+    linkedin: '#',
+    bio: 'Leads the engineering and platform architecture teams. Responsible for the API-first integration framework, Clean Core compliance, and the technical roadmap across all ERP platforms.',
+  },
+  {
+    name: 'To be updated',
+    role: 'Chief Marketing Officer',
+    img: 'http://4.151.8.142:4000/uploads/common-female.svg',
+    linkedin: '#',
+    bio: 'Drives UpBuff go-to-market strategy, brand, and demand generation across enterprise ERP markets. Focused on communicating the Clean Core advantage to CIOs, IT heads, and operations leaders.',
+  },
+  {
+    name: 'To be updated',
+    role: 'Tech Lead — Mobile',
+    img: 'http://4.151.8.142:4000/uploads/common-male.svg',
+    linkedin: '#',
+    bio: 'Leads mobile application development for field service, warehouse, and van sales execution. Owns the offline-first architecture, device sync layer, and Flutter platform across Android and iOS.',
+  },
+  {
+    name: 'To be updated',
+    role: 'Tech Lead — Modern Web',
+    img: 'http://4.151.8.142:4000/uploads/common-male.svg',
+    linkedin: '#',
+    bio: 'Leads web platform engineering including portals, dashboards, and the configuration layer. Owns the frontend architecture, component systems, and browser-based ERP execution interfaces.',
+  },
 ];
+
+const linkedinSvg = '<svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
+
+const leaderItems = leaders.map((p) => {
+  const roleTag = '<span class="block text-xs font-semibold uppercase tracking-widest text-indigo-500 mb-2">' + p.role + '</span>';
+  const bioTag  = '<p class="text-sm text-muted leading-relaxed mb-3">' + p.bio + '</p>';
+  const linkTag = '<a href="' + p.linkedin + '" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0A66C2] hover:underline">' + linkedinSvg + 'LinkedIn</a>';
+  const imgTag  = '<img src="' + p.img + '" alt="' + p.name + '" class="w-full h-full object-cover object-top" loading="lazy" />';
+  return {
+    title:       p.name,
+    description: roleTag + bioTag + linkTag,
+    image:       imgTag,
+    classes:     { image: '!p-0 !bg-gray-100' },
+  };
+});
 ---
 
 <Layout metadata={metadata}>
@@ -88,6 +136,12 @@ const leaders = [
       <div class="pt-0 md:pt-[76px] pointer-events-none" />
 
       <div class="py-20 md:py-28">
+        <!-- Tagline pill -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm mb-6">
+          <span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0" aria-hidden="true"></span>
+          <span class="text-sm font-medium text-white/80">About UpBuff</span>
+        </div>
+
         <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight font-heading mb-8">
           Our story
         </h1>
@@ -105,7 +159,7 @@ const leaders = [
         <!-- Team hero image -->
         <div class="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
           <img
-            src="/uploads/shibu-and-rajesh-together.png"
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
             alt="UpBuff team"
             class="w-full h-auto object-cover"
             loading="eager"
@@ -154,7 +208,7 @@ const leaders = [
         </div>
         <div class="rounded-2xl overflow-hidden shadow-lg">
           <img
-            src="/uploads/shibu.png"
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
             alt="UpBuff engineering team at work"
             class="w-full h-72 object-cover"
             loading="lazy"
@@ -166,7 +220,7 @@ const leaders = [
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div class="rounded-2xl overflow-hidden shadow-lg order-last md:order-first">
           <img
-            src="/uploads/shibu-and-rajesh.png"
+            src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
             alt="Building the UpBuff platform"
             class="w-full h-72 object-cover"
             loading="lazy"
@@ -205,7 +259,7 @@ const leaders = [
         </div>
         <div class="rounded-2xl overflow-hidden shadow-lg">
           <img
-            src="/uploads/engineering-team.png"
+            src="https://images.unsplash.com/photo-1565688534245-05d6b5be184a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
             alt="UpBuff in the field"
             class="w-full h-72 object-cover"
             loading="lazy"
@@ -237,7 +291,7 @@ const leaders = [
         <footer class="flex items-center justify-center gap-4">
           <div class="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-white/20 shrink-0 bg-gray-800">
             <img
-              src="/uploads/shiburaj.png"
+              src="http://4.151.8.142:4000/uploads/common-male.svg"
               alt="Shiburaj Krishnapillai"
               class="w-full h-full object-cover"
               loading="lazy"
@@ -315,14 +369,16 @@ const leaders = [
   <section class="not-prose overflow-hidden h-64 md:h-72">
     <div class="flex h-full marquee-track">
       {[
-        { src: '/uploads/sap-partner-summit-bankok.png', alt: 'Team collaboration',  w: 'w-80',  h: 'h-full',     mt: 'mt-0' },
-        { src: '/uploads/upbuff-at-gitex-dubai.png', alt: 'Workshop session', w: 'w-52',  h: 'h-4/5',      mt: 'mt-auto' },
-        { src: '/uploads/upbuff-at-gitex-discussions.png', alt: 'Strategy meeting', w: 'w-96',  h: 'h-full',     mt: 'mt-0' },
-        { src: '/uploads/shibu-at-huddle-kerala.png', alt: 'Engineering team', w: 'w-60',  h: 'h-3/4',      mt: 'mt-4' },
-        { src: '/uploads/shibu-and-rajesh-at-gitex.png', alt: 'Product demo',     w: 'w-96',  h: 'h-full',     mt: 'mt-0' },
-        { src: '/uploads/gitex-upbuff-presence.png', alt: 'Team collaboration',  w: 'w-56',  h: 'h-4/5',      mt: 'mt-auto' },
-        { src: '/uploads/upbuff-presence-at-gitex-all.png', alt: 'Workshop session', w: 'w-80',  h: 'h-full',     mt: 'mt-0' },
-        { src: '/uploads/upbuff-stall-at-huddle.png', alt: 'Strategy meeting', w: 'w-64',  h: 'h-3/4',      mt: 'mt-2' },
+        { src: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=80', alt: 'Team collaboration',  w: 'w-80',  h: 'h-full',     mt: 'mt-0' },
+        { src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80', alt: 'Workshop session', w: 'w-52',  h: 'h-4/5',      mt: 'mt-auto' },
+        { src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80', alt: 'Strategy meeting', w: 'w-72',  h: 'h-full',     mt: 'mt-0' },
+        { src: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=600&q=80', alt: 'Engineering team', w: 'w-60',  h: 'h-3/4',      mt: 'mt-4' },
+        { src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80', alt: 'Product demo',     w: 'w-96',  h: 'h-full',     mt: 'mt-0' },
+        { src: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=80', alt: 'Team collaboration',  w: 'w-56',  h: 'h-4/5',      mt: 'mt-auto' },
+        { src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&q=80', alt: 'Workshop session', w: 'w-80',  h: 'h-full',     mt: 'mt-0' },
+        { src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80', alt: 'Strategy meeting', w: 'w-64',  h: 'h-3/4',      mt: 'mt-2' },
+        { src: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=600&q=80', alt: 'Engineering team', w: 'w-72',  h: 'h-full',     mt: 'mt-0' },
+        { src: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80', alt: 'Product demo',     w: 'w-48',  h: 'h-4/5',      mt: 'mt-4' },
       ].map((photo) => (
         <div class={`shrink-0 ${photo.w} ${photo.h} ${photo.mt} overflow-hidden rounded-lg`}>
           <img
@@ -355,43 +411,12 @@ const leaders = [
   <!-- ══════════════════════════════════════════════════════════
        7. LEADERSHIP
        ══════════════════════════════════════════════════════════ -->
-  <section class="bg-white py-16 md:py-24 not-prose">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-3">Leadership</h2>
-      <p class="text-gray-400 text-center text-base max-w-xl mx-auto mb-14">
-        The team behind the platform.
-      </p>
-      <div class="flex flex-wrap justify-center gap-10 md:gap-14">
-        {leaders.map((person) => (
-          <div class="flex flex-col items-center text-center gap-3 w-36">
-            <div class="w-24 h-24 rounded-2xl overflow-hidden shadow-md ring-1 ring-gray-100 bg-gray-50">
-              <img
-                src={person.img}
-                alt={person.name}
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div class="flex flex-col items-center gap-2">
-              <p class="font-semibold text-gray-900 text-sm leading-snug">{person.name}</p>
-              <p class="text-xs text-gray-400 leading-snug">{person.role}</p>
-              <a
-                href={person.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${person.name} on LinkedIn`}
-                class="w-7 h-7 rounded-full bg-[#0A66C2] flex items-center justify-center shadow-sm hover:bg-[#004182] transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <FeaturesHighlights
+    tagline="Leadership"
+    title="The team behind the platform"
+    subtitle="The people who set the direction, make the calls, and stay accountable to every customer deployment."
+    items={leaderItems}
+  />
 
   <!-- ══════════════════════════════════════════════════════════
        8. LOGO BAR
@@ -399,12 +424,12 @@ const leaders = [
   <LogoBar
     label="Operations teams running on UpBuff today"
     logos={[
-      { src: '/uploads/ideaForge-logo.svg',         alt: 'ideaForge Technology' },
-      { src: '/uploads/jnk-chemdist-logo.svg',       alt: 'JNK Chemdist' },
-      { src: '/uploads/molygraph-logo.svg',          alt: 'Molygraph' },
-      { src: '/uploads/ncc-streetscape-logo.svg',    alt: 'NCC Streetscape' },
-      { src: '/uploads/roofsol-logo.svg',            alt: 'Roofsol' },
-      { src: '/uploads/the-wine-source-logo.svg',    alt: 'The Wine Source' },
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',         alt: 'ideaForge Technology' },
+      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',       alt: 'JNK Chemdist' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',          alt: 'Molygraph' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',    alt: 'NCC Streetscape' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',            alt: 'Roofsol' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',    alt: 'The Wine Source' },
     ]}
   />
 
