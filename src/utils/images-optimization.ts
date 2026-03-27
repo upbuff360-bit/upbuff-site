@@ -212,6 +212,7 @@ const getBreakpoints = ({
 };
 
 /* ** */
+// ✅ Fixed — calculate proportional height from known dimensions when available
 export const astroAssetsOptimizer: ImagesOptimizer = async (
   image,
   breakpoints,
@@ -225,12 +226,20 @@ export const astroAssetsOptimizer: ImagesOptimizer = async (
 
   return Promise.all(
     breakpoints.map(async (w: number) => {
-      const result = await getImage({ src: image, width: w, inferSize: true, ...(format ? { format: format } : {}) });
+      const computedHeight =
+        _width && _height ? Math.round(w * (_height / _width)) : undefined;
+
+      const result = await getImage({
+        src: image,
+        width: w,
+        ...(computedHeight ? { height: computedHeight } : { inferSize: true }),
+        ...(format ? { format: format } : {}),
+      });
 
       return {
         src: result?.src,
         width: result?.attributes?.width ?? w,
-        height: result?.attributes?.height,
+        height: result?.attributes?.height ?? computedHeight,
       };
     })
   );
