@@ -90,9 +90,9 @@ const metadata = {
     centerLogo='<svg viewBox="0 0 48 48" class="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="22" fill="white" fill-opacity="0.15"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="22" font-weight="bold" font-family="system-ui">U</text></svg>'
     centerColor="#1d4ed8"
     avatars={[
-      { src: 'http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png',    alt: 'SAP S/4HANA',     position: 'top' },
-      { src: 'http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png', alt: 'Oracle ERP',       position: 'bottom-left' },
-      { src: 'http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png', alt: 'Epicor ERP',       position: 'bottom-right' },
+      { src: '/uploads/logo/oracle-integration-with-upbuff-crm.png',    alt: 'SAP S/4HANA',     position: 'top' },
+      { src: '/uploads/logo/sap-integration-with-upbuff-crm.png', alt: 'Oracle ERP',       position: 'bottom-left' },
+      { src: '/uploads/logo/epicore-integration-with-upbuff-crm.png', alt: 'Epicor ERP',       position: 'bottom-right' },
     ]}
     badges={[
       { label: 'Clean Core',       position: 'left' },
@@ -107,14 +107,14 @@ const metadata = {
   <LogoBar
     label="Powering execution across leading enterprise"
     logos={[
-      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',          alt: 'ideaForge logo' },
-      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',        alt: 'jnk chemdist logo' },
-      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',       alt: 'molygraph logo' },
-      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',       alt: 'ncc streetscape logo' },
-      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',         alt: 'roofsol logo' },
-      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',        alt: 'the wine source logo' },
-      // { src: 'http://4.151.8.142:4000/uploads/nationalgrid.svg', alt: 'National Grid' },
-      // { src: 'http://4.151.8.142:4000/uploads/ihg.svg',          alt: 'IHG Hotels' },
+      { src: '/uploads/ideaForge-logo.svg',          alt: 'ideaForge logo' },
+      { src: '/uploads/jnk-chemdist-logo.svg',        alt: 'jnk chemdist logo' },
+      { src: '/uploads/molygraph-logo.svg',       alt: 'molygraph logo' },
+      { src: '/uploads/ncc-streetscape-logo.svg',       alt: 'ncc streetscape logo' },
+      { src: '/uploads/roofsol-logo.svg',         alt: 'roofsol logo' },
+      { src: '/uploads/the-wine-source-logo.svg',        alt: 'the wine source logo' },
+      // { src: '/uploads/nationalgrid.svg', alt: 'National Grid' },
+      // { src: '/uploads/ihg.svg',          alt: 'IHG Hotels' },
     ]}
   />
 
@@ -129,13 +129,13 @@ const metadata = {
     title="ERP stays clean.<br />Execution stays fast."
     cardTitle="Turn your ERP from a system of record into a system of action"
     cardDescription="UpBuff sits outside ERP core — connecting via official APIs (SAP Service Layer, OData, BAPI, REST) to deliver real-time operational execution for field, warehouse, sales, and shopfloor teams. No database writes. No core modifications. No upgrade risk."
-    cardImage="http://4.151.8.142:4000/uploads/upbuff-ERP-CRM-integrations-for-WhatsApp-Tally-Shopify-SAP.png"
+    cardImage="/uploads/upbuff-ERP-CRM-integrations-for-WhatsApp-Tally-Shopify-SAP.png"
     cardGradient="linear-gradient(135deg, #1d4ed8 0%, #6366f1 50%, #a855f7 100%)"
     testimonial={{
       quote: 'UpBuff gave us the execution layer we needed without touching SAP core. Our S/4HANA upgrade timeline went from 18 months to 6 months as a direct result.',
       name: 'CEO',
       company: 'Gourock Zamiba Ltd',
-      avatar: 'http://4.151.8.142:4000/uploads/gaurock-client.png',
+      avatar: '/uploads/gaurock-client.png',
     }}
     features={[
       {
@@ -197,17 +197,17 @@ const metadata = {
       {
         title: 'Clean Core — ERP stays the system of record',
         description: 'UpBuff never writes to ERP database tables directly. All data flows through SAP Service Layer, OData, BAPI, or REST — keeping ERP clean, governable, and upgrade-safe at every layer.',
-        image: '<div class="flex flex-col items-center justify-center gap-4"><img src="http://4.151.8.142:4000/uploads/erp-first-architecture-upbuff.png" alt="ERP-first architecture integrating SAP Business One, Oracle ERP, and Epicor with real-time API synchronization" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-700 text-center">SAP · Oracle · Epicor</p><p class="text-xs text-gray-400 text-center">System of Record · No core mods</p></div>',
+        image: '<div class="flex flex-col items-center justify-center gap-4"><img src="/uploads/erp-first-architecture-upbuff.png" alt="ERP-first architecture integrating SAP Business One, Oracle ERP, and Epicor with real-time API synchronization" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-700 text-center">SAP · Oracle · Epicor</p><p class="text-xs text-gray-400 text-center">System of Record · No core mods</p></div>',
       },
       {
         title: 'Mobile-first — UpBuff is the system of execution',
         description: 'Field technicians, warehouse operators, production supervisors, and sales reps get purpose-built mobile interfaces — fast, offline-capable, and built for their operational reality.',
-        image: '<div class="flex flex-col items-center justify-center gap-4"><img src="http://4.151.8.142:4000/uploads/real-time-update.png" alt="Real-time ERP mobility solution for sales, field service, warehouse, and shopfloor teams with offline and online synchronization" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-700 text-center">Field · Warehouse · Shopfloor · Sales</p><p class="text-xs text-gray-400 text-center">Offline-capable · Real-time sync</p></div>',
+        image: '<div class="flex flex-col items-center justify-center gap-4"><img src="/uploads/real-time-update.png" alt="Real-time ERP mobility solution for sales, field service, warehouse, and shopfloor teams with offline and online synchronization" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-700 text-center">Field · Warehouse · Shopfloor · Sales</p><p class="text-xs text-gray-400 text-center">Offline-capable · Real-time sync</p></div>',
       },
       {
         title: 'Enterprise security — audit-ready by architecture',
         description: 'Encrypted API communication, role-based access control mapped to ERP user roles, and full transaction audit logging — without the security gaps that come with undocumented ERP modifications.',
-        image: '<div class="flex flex-col items-center justify-center gap-4"><img src="http://4.151.8.142:4000/uploads/upbuff-data-integrity-security.png" alt="ERP data integrity and governance with role-based access control, audit logs, and compliance workflows" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-700 text-center">TLS encrypted · RBAC · Audit logs</p><p class="text-xs text-gray-400 text-center">SOC 2 · GDPR compliant</p></div>',
+        image: '<div class="flex flex-col items-center justify-center gap-4"><img src="/uploads/upbuff-data-integrity-security.png" alt="ERP data integrity and governance with role-based access control, audit logs, and compliance workflows" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-700 text-center">TLS encrypted · RBAC · Audit logs</p><p class="text-xs text-gray-400 text-center">SOC 2 · GDPR compliant</p></div>',
       },
     ]}
   />
@@ -268,32 +268,32 @@ const metadata = {
         title: 'ERP-Integrated CRM — Field Sales Execution',
         href: '/homes/erp-integrated-crm',
         description: 'Extend SAP into real-time field sales. Mobile order capture, ERP pricing enforcement, credit control, and offline sync — enabling sales teams to operate at ERP speed without ERP complexity. Reduce manual data entry by up to 40% and accelerate order-to-cash cycles without touching SAP core.',
-        image: '<img src="http://4.151.8.142:4000/uploads/modular-crm-software-for-small-and-mid-sized-businesses.png" class="w-full h-full object-contain p-2" alt="UpBuff ERP Integrated CRM for SAP sales execution" loading="lazy" />',
+        image: '<img src="/uploads/modular-crm-software-for-small-and-mid-sized-businesses.png" class="w-full h-full object-contain p-2" alt="UpBuff ERP Integrated CRM for SAP sales execution" loading="lazy" />',
       },
       {
         wide: true,
         title: 'ERP-Integrated FSM — Field Service Management',
         href: '/homes/erp-integrated-fsm',
         description: 'Connect SAP work orders, spare parts, and service records to field technicians in real time. Offline-first mobile execution, intelligent dispatch, digital sign-offs, and automated SAP updates — without any ERP core modification or upgrade risk.',
-        image: '<img src="http://4.151.8.142:4000/uploads/ERP-Integrated-Field-Service-Management.png" class="w-full h-full object-contain p-2" alt="UpBuff ERP Integrated FSM for SAP field service" loading="lazy" />',
+        image: '<img src="/uploads/ERP-Integrated-Field-Service-Management.png" class="w-full h-full object-contain p-2" alt="UpBuff ERP Integrated FSM for SAP field service" loading="lazy" />',
       },
       {
         title: 'Warehouse & Inventory',
         href: '/homes/erp-integrated-warehouse-inventory',
         description: 'Barcode-driven warehouse operations synchronized with SAP inventory — goods receipt, bin transfers, pick-pack-ship, and cycle counts in real time.',
-        image: '<img src="http://4.151.8.142:4000/uploads/SAP-Integrated-Warehouse-Inventory-Management.png" class = "w-full h-full object-contain p-2" alt="SAP Integrated Warehouse Inventory Management" loading="lazy" />',
+        image: '<img src="/uploads/SAP-Integrated-Warehouse-Inventory-Management.png" class = "w-full h-full object-contain p-2" alt="SAP Integrated Warehouse Inventory Management" loading="lazy" />',
       },
       {
         title: 'Manufacturing & Shopfloor',
         href: '/homes/erp-integrated-manufacturing-shopfloor',
         description: 'Production orders, BOM confirmations, quality checks, and shopfloor reporting directly connected to SAP PM and PP — eliminating paper-based tracking.',
-        image: '<img src="http://4.151.8.142:4000/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png" class = "w-full h-full object-contain p-2" alt="Epicore Integrated Manufacturing Shopfloor" loading="lazy" />',
+        image: '<img src="/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png" class = "w-full h-full object-contain p-2" alt="Epicore Integrated Manufacturing Shopfloor" loading="lazy" />',
       },
       {
         title: 'Sales & Distribution',
         href: '/homes/erp-integrated-sales-distribution',
         description: 'Distributor order management, secondary sales, channel partner portals, and collections — all governed by ERP pricing, credit, and tax rules.',
-        image: '<img src="http://4.151.8.142:4000/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png" class = "w-full h-full object-contain p-2" alt="SAP Businessone Integrated Sales Distribution excecution" loading="lazy" />',
+        image: '<img src="/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png" class = "w-full h-full object-contain p-2" alt="SAP Businessone Integrated Sales Distribution excecution" loading="lazy" />',
       },
     ]}
   />
@@ -356,12 +356,12 @@ const metadata = {
       {
         title: 'Dedicated ERP integration support',
         description: 'A dedicated integration engineer handles your SAP Service Layer, OData, or BAPI connection — from initial setup through go-live and beyond.',
-        illustration: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6 bg-gray-50"><div class="bg-white rounded-2xl shadow px-5 py-3 flex items-center gap-2 text-sm font-medium border border-gray-100"><span class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-xs">✓</span>SAP integration live</div><div class="flex items-center gap-3 mt-2"><div class="w-16 h-9 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500"></div><div class="w-14 h-14 rounded-full bg-gray-200 overflow-hidden border-2 border-white shadow"><img src="http://4.151.8.142:4000/uploads/common-female.svg" class="w-full h-full object-cover" alt="Integration engineer" /></div><div class="w-16 h-9 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"></div></div></div>',
+        illustration: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6 bg-gray-50"><div class="bg-white rounded-2xl shadow px-5 py-3 flex items-center gap-2 text-sm font-medium border border-gray-100"><span class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-xs">✓</span>SAP integration live</div><div class="flex items-center gap-3 mt-2"><div class="w-16 h-9 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500"></div><div class="w-14 h-14 rounded-full bg-gray-200 overflow-hidden border-2 border-white shadow"><img src="/uploads/common-female.svg" class="w-full h-full object-cover" alt="Integration engineer" /></div><div class="w-16 h-9 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"></div></div></div>',
       },
       {
         title: 'Custom ERP workflow configuration',
         description: 'We build and configure execution workflows tailored to your ERP landscape — SAP Business One, S/4HANA, Oracle, or Epicor — with full testing and documentation.',
-        illustration: '<div class="grid grid-cols-4 gap-3 w-full px-4"><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#1d4ed8"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#374151"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff.png" class="w-7 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#7c3aed"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0f766e"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" class="w-9 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ea580c"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" class="w-9 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0ea5e9"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#6366f1"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ec4899"></div></div>',
+        illustration: '<div class="grid grid-cols-4 gap-3 w-full px-4"><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#1d4ed8"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#374151"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="/uploads/logo/sap-integration-with-upbuff.png" class="w-7 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#7c3aed"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0f766e"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="/uploads/logo/oracle-integration-with-upbuff-crm.png" class="w-9 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ea580c"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="/uploads/logo/epicore-integration-with-upbuff-crm.png" class="w-9 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0ea5e9"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#6366f1"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ec4899"></div></div>',
       },
       {
         title: 'SLA guarantees & uptime commitments',
@@ -379,33 +379,33 @@ const metadata = {
     description="UpBuff bridges ERP with the operational tools, communication platforms, and business systems your teams already rely on — without disrupting ERP governance or data integrity."
     speed={30}
     tools={[
-      { name: 'Calendar', logo: '<img src="http://4.151.8.142:4000/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Calendar', logo: '<img src="/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'Epicor', logo: '<img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Epicor', logo: '<img src="/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'SAP', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP', logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'Gmail', logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Gmail', logo: '<img src="/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'IoT', logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'IoT', logo: '<img src="/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'SAP S/4HANA', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP S/4HANA', logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'Oracle', logo: '<img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Oracle', logo: '<img src="/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'Outlook', logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Outlook', logo: '<img src="/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'Power BI', logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Power BI', logo: '<img src="/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'SAP Business One', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP Business One', logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'SMS', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'SMS', logo: '<img src="/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'VoIP', logo: '<img src="http://4.151.8.142:4000/uploads/logo/voip-integration-with-upbuff-crm.png" alt="VoIP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'VoIP', logo: '<img src="/uploads/logo/voip-integration-with-upbuff-crm.png" alt="VoIP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'WhatsApp', logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'WhatsApp', logo: '<img src="/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
 
-      { name: 'Zoho', logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+      { name: 'Zoho', logo: '<img src="/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
     ]}
   />
 
@@ -444,14 +444,14 @@ const metadata = {
     row1={[
       {
         company: 'Roofsol',
-        logo: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',
+        logo: '/uploads/roofsol-logo.svg',
         quote: 'UpBuff gave us the execution layer we needed without any SAP core modifications. Our upgrade timeline dropped from 18 months to 6. That single architectural decision paid for itself in the first cycle.',
         name: 'Enterprise Architect',
         role: 'National Grid',
       },
       {
         company: 'Molygraph',
-        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        logo: '/uploads/molygraph-logo.svg',
         quote: 'The Clean Core approach was exactly what our CIO mandated. UpBuff delivered real-time field execution while keeping our SAP S/4HANA upgrade path completely intact and on schedule.',
         name: 'Head of Digital Operations',
         role: 'Miele',
@@ -465,14 +465,14 @@ const metadata = {
     row2={[
       {
         company: 'The Wine Source Inc.',
-        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        logo: '/uploads/the-wine-source-logo.svg',
         quote: 'We evaluated five ERP extension platforms. UpBuff was the only one that truly respected our SAP governance model — API-first, role-controlled, and fully auditable from day one.',
         name: 'CIO',
         role: 'IHG Hotels & Resorts',
       },
       {
         company: 'Ideaforge',
-        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        logo: '/uploads/ideaForge-logo.svg',
         quote: 'Deploying UpBuff across hybrid cloud and on-premise SAP environments simultaneously was seamless. No compromise in ERP data integrity or compliance posture — exactly what we needed.',
         name: 'IT Director',
         role: 'Opal',
