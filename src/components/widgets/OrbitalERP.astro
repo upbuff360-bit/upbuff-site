@@ -1,0 +1,273 @@
+---
+/**
+ * OrbitalERP.astro
+ * Two-ring animated ERP orbital graphic for use in HeroOrbital's visual slot.
+ *
+ * Usage in any page:
+ *   <HeroOrbital tagline="..." title="..." ...>
+ *     <OrbitalERP slot="visual" />
+ *   </HeroOrbital>
+ *
+ * Features:
+ *  - Outer ring: gold/yellow arc rotating slowly
+ *  - Inner ring: thin white circle with avatar faces
+ *  - White circles: ERP logo cards at fixed positions
+ *  - Large white center circle with UpBuff logo
+ *  - All rings animate continuously
+ */
+
+export interface Props {
+  /** Center logo — SVG string or public image path. Defaults to UpBuff icon. */
+  centerLogo?: string;
+}
+
+const { centerLogo } = Astro.props;
+---
+
+<div class="erp-orbital" aria-hidden="true">
+  <svg class="erp-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Gold arc gradient -->
+      <linearGradient id="goldArc" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="#f59e0b" stop-opacity="0"/>
+        <stop offset="30%"  stop-color="#fbbf24" stop-opacity="1"/>
+        <stop offset="60%"  stop-color="#d97706" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+      </linearGradient>
+      <!-- Center circle clip -->
+      <clipPath id="centerClip">
+        <circle cx="250" cy="250" r="130"/>
+      </clipPath>
+    </defs>
+
+    <!-- ── OUTER RING (static thin white) ─────────────────── -->
+    <circle cx="250" cy="250" r="220"
+      fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
+
+    <!-- ── GOLD ARC (rotates on outer ring) ──────────────── -->
+    <g class="gold-arc-group">
+      <circle cx="250" cy="250" r="220"
+        fill="none"
+        stroke="url(#goldArc)"
+        stroke-width="10"
+        stroke-dasharray="280 1102"
+        stroke-dashoffset="0"
+        stroke-linecap="round"/>
+    </g>
+
+    <!-- ── INNER RING (static thin white) ─────────────────── -->
+    <circle cx="250" cy="250" r="155"
+      fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+    <!-- ── CENTER CIRCLE (large white) ──────────────────── -->
+    <circle cx="250" cy="250" r="128"
+      fill="white"/>
+  </svg>
+
+  <!-- ── CENTER LOGO (absolutely positioned) ──────────────── -->
+  <div class="erp-center">
+    {centerLogo ? (
+      centerLogo.startsWith('<')
+        ? <Fragment set:html={centerLogo} />
+        : <img src={centerLogo} alt="Logo" class="w-20 h-20 object-contain" />
+    ) : (
+      /* Default: UpBuff chevron icon */
+      <svg viewBox="0 0 80 80" class="w-20 h-20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 52L40 20L68 52" stroke="#22c55e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M24 52L40 34L56 52" stroke="#22c55e" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    )}
+  </div>
+
+  <!-- ── ERP LOGO CARDS (on outer ring, counter-rotate to stay upright) ── -->
+
+  <!-- SAP S/4HANA — top (–90°) -->
+  <div class="erp-card erp-card-top">
+    <div class="erp-logo-circle erp-logo-lg">
+      <div class="flex flex-col items-center justify-center">
+        <span class="font-black text-lg leading-none" style="color:#003f7c">SAP</span>
+        <span class="font-bold text-[11px] leading-tight text-blue-800">S/4 HANA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Oracle — upper-right (~30°) -->
+  <div class="erp-card erp-card-upper-right">
+    <div class="erp-logo-circle erp-logo-md">
+      <span class="font-black text-sm leading-none" style="color:#f80000">ORACLE</span>
+    </div>
+  </div>
+
+  <!-- SAP Business One — bottom-right (~120°) -->
+  <div class="erp-card erp-card-lower-right">
+    <div class="erp-logo-circle erp-logo-lg">
+      <div class="flex flex-col items-center justify-center text-center">
+        <div class="flex items-center gap-0.5">
+          <span class="font-black text-lg leading-none" style="color:#003f7c">SAP</span>
+          <div class="flex flex-col ml-1">
+            <span class="font-bold text-[9px] leading-tight text-gray-500">Business</span>
+            <span class="font-black text-sm leading-none" style="color:#f59e0b">One</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Epicor — bottom-left (~210°) -->
+  <div class="erp-card erp-card-lower-left">
+    <div class="erp-logo-circle erp-logo-md">
+      <span class="font-black text-base leading-none" style="color:#1a2d5a;letter-spacing:-0.5px">epicor</span>
+    </div>
+  </div>
+
+  <!-- ── AVATAR FACES (on inner ring, counter-rotate) ─────── -->
+  <!-- Top-right of inner ring -->
+  <div class="erp-avatar erp-avatar-top-right">
+    <img src="/images/avatar-1.jpg" alt="User" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="avatar-fallback" style="display:none">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-gray-400" fill="currentColor"><path d="M12 12c2.7 0 4-1.3 4-4s-1.3-4-4-4-4 1.3-4 4 1.3 4 4 4zm0 2c-2.7 0-8 1.3-8 4v1h16v-1c0-2.7-5.3-4-8-4z"/></svg>
+    </div>
+  </div>
+
+  <!-- Left of inner ring -->
+  <div class="erp-avatar erp-avatar-left">
+    <img src="/images/avatar-2.jpg" alt="User" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="avatar-fallback" style="display:none">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-gray-400" fill="currentColor"><path d="M12 12c2.7 0 4-1.3 4-4s-1.3-4-4-4-4 1.3-4 4 1.3 4 4 4zm0 2c-2.7 0-8 1.3-8 4v1h16v-1c0-2.7-5.3-4-8-4z"/></svg>
+    </div>
+  </div>
+
+  <!-- Right of inner ring -->
+  <div class="erp-avatar erp-avatar-right">
+    <img src="/images/avatar-3.jpg" alt="User" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="avatar-fallback" style="display:none">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-gray-400" fill="currentColor"><path d="M12 12c2.7 0 4-1.3 4-4s-1.3-4-4-4-4 1.3-4 4 1.3 4 4 4zm0 2c-2.7 0-8 1.3-8 4v1h16v-1c0-2.7-5.3-4-8-4z"/></svg>
+    </div>
+  </div>
+
+  <!-- Bottom of inner ring -->
+  <div class="erp-avatar erp-avatar-bottom">
+    <img src="/images/avatar-4.jpg" alt="User" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="avatar-fallback" style="display:none">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-gray-400" fill="currentColor"><path d="M12 12c2.7 0 4-1.3 4-4s-1.3-4-4-4-4 1.3-4 4 1.3 4 4 4zm0 2c-2.7 0-8 1.3-8 4v1h16v-1c0-2.7-5.3-4-8-4z"/></svg>
+    </div>
+  </div>
+
+  <!-- Top-left of outer ring -->
+  <div class="erp-avatar erp-avatar-top-left">
+    <img src="/images/avatar-5.jpg" alt="User" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+    <div class="avatar-fallback" style="display:none">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-gray-400" fill="currentColor"><path d="M12 12c2.7 0 4-1.3 4-4s-1.3-4-4-4-4 1.3-4 4 1.3 4 4 4zm0 2c-2.7 0-8 1.3-8 4v1h16v-1c0-2.7-5.3-4-8-4z"/></svg>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  /* ── Root ──────────────────────────────────────────── */
+  .erp-orbital {
+    position: relative;
+    width: 340px;
+    height: 340px;
+    flex-shrink: 0;
+  }
+
+  .erp-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── Gold arc rotation ──────────────────────────────── */
+  .gold-arc-group {
+    transform-origin: 250px 250px;
+    animation: goldSpin 8s linear infinite;
+  }
+  @keyframes goldSpin {
+    from { transform: rotate(0deg);   }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* ── ERP logo circles ───────────────────────────────── */
+  .erp-logo-circle {
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 2px rgba(255,255,255,0.1);
+  }
+  .erp-logo-lg { width: 88px; height: 88px; }
+  .erp-logo-md { width: 72px; height: 72px; }
+
+  /* ── ERP card positions (on outer ring r=220, center=250,250) ── */
+  /* Convert polar to cartesian: x = cx + r*cos(θ), y = cy + r*sin(θ) */
+  /* Then normalize to % of 500px SVG viewBox */
+  .erp-card {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  /* top: 250 + 220*sin(-90°) = 30  → 30/500 = 6% */
+  .erp-card-top        { top: 6%;  left: 50%; }
+  /* upper-right: θ=30° → x=440, y=360 → 88%, 72% */
+  .erp-card-upper-right { top: 28%; left: 88%; }
+  /* lower-right: θ=115° → x=343, y=449 → 69%, 90% */
+  .erp-card-lower-right { top: 90%; left: 64%; }
+  /* lower-left: θ=205° → x=51, y=407 → 10%, 81% */
+  .erp-card-lower-left  { top: 82%; left: 14%; }
+
+  /* ── Avatar circles (small faces) ──────────────────── */
+  .erp-avatar {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.7);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    transform: translate(-50%, -50%);
+    background: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .erp-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Avatar positions on inner/outer rings */
+  /* Inner ring r=155: */
+  .erp-avatar-top-right { top: 22%; left: 72%; }   /* θ=-40° */
+  .erp-avatar-left      { top: 58%; left: 6%;  }   /* θ=195° */
+  .erp-avatar-right     { top: 48%; left: 91%; }   /* θ=5°   */
+  .erp-avatar-bottom    { top: 93%; left: 52%; }   /* θ=92°  */
+  /* Outer ring r=220: */
+  .erp-avatar-top-left  { top: 22%; left: 20%; }   /* θ=-145°*/
+
+  /* ── Center logo ────────────────────────────────────── */
+  .erp-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 12px rgba(255,255,255,0.06), 0 8px 40px rgba(0,0,0,0.5);
+    z-index: 10;
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import type { Widget } from '~/types';
+
+export interface EnterpriseCard {
+  title: string;
+  description?: string;
+  /**
+   * Content rendered inside the tall illustration area of each card.
+   * Accepts:
+   *  - A raw HTML / inline SVG string
+   *  - An Astro ImageMetadata object → passed to <Image>
+   */
+  illustration?: string | Record<string, unknown>;
+}
+
+export interface Props extends Widget {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  items?: Array<EnterpriseCard>;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  items = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <!-- ── Centered header ────────────────────────────────────── -->
+  {(tagline || title || subtitle) && (
+    <div class="text-center mb-10 md:mb-12 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-5">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300" set:html={tagline} />
+        </div>
+      )}
+      {title && (
+        <h2
+          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100"
+          set:html={title}
+        />
+      )}
+      {subtitle && (
+        <p class="mt-4 text-muted text-base md:text-lg max-w-2xl mx-auto dark:text-slate-400" set:html={subtitle} />
+      )}
+    </div>
+  )}
+
+  <!-- ── 3-column card grid ─────────────────────────────────── -->
+  {items.length > 0 && (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {items.map(({ title: ct, description, illustration }, i) => (
+        <div
+          class:list={[
+            'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900',
+            'overflow-hidden shadow-sm',
+            'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+          ]}
+          style={`animation-delay: ${i * 80}ms`}
+        >
+          <!-- Illustration area -->
+          <div class="relative h-72 flex items-center justify-center overflow-hidden dark:bg-slate-800">
+            {illustration && (
+              typeof illustration === 'string'
+                ? <Fragment set:html={illustration} />
+                : <Image
+                    class="w-full h-full object-contain"
+                    width={400}
+                    height={288}
+                    {...illustration}
+                  />
+            )}
+          </div>
+
+          <!-- Text -->
+          <div class="p-6 border-t border-gray-100 dark:border-gray-700">
+            <h3 class="text-lg font-bold text-heading dark:text-gray-100 mb-2">{ct}</h3>
+            {description && (
+              <p class="text-sm text-muted dark:text-slate-400 leading-relaxed" set:html={description} />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</WidgetWrapper>

@@ -1,0 +1,255 @@
+---
+/**
+ * HeroPanels — Chatbase-style full-width dark hero.
+ *
+ * Props:
+ *   tagline     — small pill badge top-left
+ *   title       — large bold headline (HTML allowed)
+ *   subtitle    — body copy below the title
+ *   actions     — array of { text, href, variant: 'primary'|'secondary' }
+ *   panels      — array of exactly 2 panel objects:
+ *                   { html: string }   — raw HTML rendered inside each panel
+ *   theme       — 'dark' (default) | 'white'
+ */
+
+import Button from '~/components/ui/Button.astro';
+
+export interface HeroPanelsPanel {
+  /** Raw HTML rendered inside the panel card */
+  html: string;
+  /** Optional accent colour for the panel background (CSS value) */
+  accent?: string;
+}
+
+export interface Props {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  actions?: Array<{ text: string; href: string; variant?: 'primary' | 'secondary' }>;
+  panels?: [HeroPanelsPanel, HeroPanelsPanel];
+  theme?: 'dark' | 'white';
+  id?: string;
+}
+
+const {
+  tagline,
+  title,
+  subtitle,
+  actions = [],
+  panels,
+  theme = 'dark',
+  id,
+} = Astro.props;
+
+const isDark = theme === 'dark';
+---
+
+<section
+  class:list={[
+    'hero-statement relative not-prose md:-mt-[76px] overflow-hidden',
+    isDark ? 'bg-[#0a0a0a] text-white' : 'bg-white text-gray-900',
+  ]}
+  {...id ? { id } : {}}
+>
+
+  <!-- ── Subtle noise texture overlay ──────────────────────── -->
+  <div class="absolute inset-0 pointer-events-none noise-overlay" aria-hidden="true" />
+
+  <!-- ── Ambient glow ──────────────────────────────────────── -->
+  {isDark && (
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+      aria-hidden="true"
+      style="background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.13) 0%, transparent 70%);"
+    />
+  )}
+
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="pt-0 md:pt-[76px] pointer-events-none" />
+
+    <!-- ── Content area ───────────────────────────────────── -->
+    <div class="pt-16 md:pt-24 pb-10 md:pb-14">
+
+      <!-- Top row: tagline + actions side-by-side on lg -->
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 md:mb-10">
+
+        <!-- Left: tagline + headline + subtitle -->
+        <div class="max-w-2xl">
+
+          <!-- Tagline pill -->
+          {tagline && (
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-4" style="animation-delay:0ms">
+              <span class="w-1.5 h-1.5 rounded-full bg-pink-400 shrink-0" aria-hidden="true" />
+              <span
+                class:list={['text-xs font-semibold tracking-wide', isDark ? 'text-gray-300' : 'text-gray-600']}
+                set:html={tagline}
+              />
+            </div>
+          )}
+
+          <!-- Headline -->
+          {title && (
+            <h1
+              class:list={[
+                'HeroPanelsTitle text-5xl md:text-6xl lg:text-6xl font-bold leading-none tracking-tight mb-5 font-heading hero-fade',
+                isDark ? 'text-white' : 'text-gray-950',
+              ]}
+              style="animation-delay:80ms"
+              set:html={title}
+            />
+          )}
+
+          <!-- Subtitle -->
+          {subtitle && (
+            <p
+              class:list={[
+                'mt-5 text-base md:text-lg leading-relaxed max-w-xl hero-fade',
+                isDark ? 'text-gray-400' : 'text-gray-500',
+              ]}
+              style="animation-delay:160ms"
+              set:html={subtitle}
+            />
+          )}
+        </div>
+
+        <!-- Right: CTA actions — bottom-aligned via parent lg:items-end -->
+        {actions.length > 0 && (
+          <div class="flex flex-wrap items-center gap-3 lg:shrink-0 hero-fade" style="animation-delay:220ms">
+            {actions.map((action) => (
+              <Button
+                {...action}
+                class:list={[
+                  action.variant === 'primary'
+                    ? 'hero-cta-primary'
+                    : 'hero-cta-secondary',
+                ]}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- ── Two-panel mockup row ───────────────────────────── -->
+      {panels && panels.length === 2 && (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 hero-panels hero-fade" style="animation-delay:300ms">
+          {panels.map((panel, i) => (
+            <div
+              class:list={[
+                'relative rounded-2xl overflow-hidden',
+                'panel-card',
+                i === 0 ? 'panel-left' : 'panel-right',
+              ]}
+              style={panel.accent ? `--panel-accent: ${panel.accent};` : ''}
+            >
+              <Fragment set:html={panel.html} />
+            </div>
+          ))}
+        </div>
+      )}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .HeroPanelsTitle {
+    font-size: 44px !important; /* 48px (text-5xl) - 4px */
+  }
+
+  @media (min-width: 768px) {
+    .HeroPanelsTitle {
+      font-size: 56px !important; /* 60px (text-6xl) - 4px */
+    }
+  }
+  /* ── Noise texture ──────────────────────────────────────── */
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    opacity: 0.55;
+    mix-blend-mode: overlay;
+  }
+
+  /* ── Entry animations ───────────────────────────────────── */
+  .hero-fade {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes heroFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Panel cards ────────────────────────────────────────── */
+  .panel-card {
+    min-height: 340px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  /* White theme panel border */
+  :global(.hero-statement:not(.bg-\\[\\#0a0a0a\\])) .panel-card {
+    border-color: rgba(0, 0, 0, 0.09);
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .panel-left {
+    background: var(--panel-accent, rgba(239, 68, 68, 0.85));
+    border-color: transparent;
+  }
+
+  .panel-right {
+    background: var(--panel-accent, #fff);
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  /* ── CTA button overrides ───────────────────────────────── */
+  .hero-cta-primary {
+    background: #fff !important;
+    color: #0a0a0a !important;
+    border: none !important;
+    font-weight: 600;
+    padding-inline: 1.5rem;
+    border-radius: 0.625rem;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .hero-cta-primary:hover {
+    background: #f0f0f0 !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+  }
+
+  /* White theme primary CTA: dark button */
+  :global(.hero-statement.bg-white) .hero-cta-primary {
+    background: #0a0a0a !important;
+    color: #fff !important;
+  }
+  :global(.hero-statement.bg-white) .hero-cta-primary:hover {
+    background: #222 !important;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.12);
+  }
+
+  .hero-cta-secondary {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    padding-inline: 1.5rem;
+    border-radius: 0.625rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .hero-cta-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  :global(.hero-statement.bg-white) .hero-cta-secondary {
+    border-color: rgba(0,0,0,0.18) !important;
+    color: rgba(0,0,0,0.75) !important;
+  }
+  :global(.hero-statement.bg-white) .hero-cta-secondary:hover {
+    border-color: rgba(0,0,0,0.35) !important;
+    background: rgba(0,0,0,0.04) !important;
+  }
+</style>

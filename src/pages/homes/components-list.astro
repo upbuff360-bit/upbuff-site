@@ -1,0 +1,446 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import CtaBanner  from '~/components/widgets/CtaBanner.astro';
+import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
+import { headerData } from '~/navigation';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import HeroStatement from '~/components/widgets/HeroStatement.astro';
+
+const metadata = {
+  title: 'Components page',
+};
+---
+
+<Layout metadata={metadata}>
+
+  <!-- Black theme header — white text navigation -->
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="black"
+      isSticky
+    />
+  </Fragment>
+
+    <HeroOrbital
+  title="Hire an ERP expert"
+  subtitle="Find trusted freelancers and SAP partners to help you design, build, and launch ERP integrations faster."
+  linkAction={{ text: 'Become an expert', href: '/partners' }}
+  centerLogo='<svg viewBox="0 0 40 40" class="w-12 h-12 fill-white"><text y="28" font-size="28" font-weight="bold">U</text></svg>'
+  centerColor="#2563eb"
+  avatars={[
+    { src: '/team/expert1.jpg', alt: 'SAP Expert', position: 'top' },
+    { src: '/team/expert2.jpg', alt: 'ERP Consultant', position: 'bottom-left' },
+    { src: '/team/expert3.jpg', alt: 'Developer', position: 'bottom-right' },
+  ]}
+  badges={[
+    { label: 'SAP setup',      position: 'left' },
+    { label: 'ERP specialists', position: 'right' },
+    { label: 'From $12/hr',    position: 'bottom' },
+  ]}
+/>
+<ToolsMarquee
+  title="Works with your tools"
+  description="Integrate diverse data sources to enrich your agent's knowledge and capabilities."
+  speed={30}
+  tools={[
+    { name: 'Make',       logo: `<svg .../>` },
+    { name: 'Zendesk',    logo: `<img src="/logos/zendesk.svg" />` },
+    { name: 'Notion',     logo: `<img src="/logos/notion.svg" />` },
+    { name: 'Slack',      logo: `<img src="/logos/slack.svg" />` },
+    { name: 'Stripe',     logo: `<img src="/logos/stripe.svg" />` },
+    { name: 'Salesforce', logo: `<img src="/logos/salesforce.svg" />` },
+    { name: 'Cal.com',    logo: `<img src="/logos/cal.svg" />` },
+    { name: 'Calendly',   logo: `<img src="/logos/calendly.svg" />` },
+    { name: 'WhatsApp',   logo: `<img src="/logos/whatsapp.svg" />` },
+    { name: 'Zapier',     logo: `<img src="/logos/zapier.svg" />` },
+    { name: 'Messenger',  logo: `<img src="/logos/messenger.svg" />` },
+  ]}
+/>
+
+<ContentSplitCard
+  tagline="Why us"
+  title="Why top enterprises choose UpBuff"
+  cardTitle="Turn ERP data into a repeatable execution advantage"
+  cardDescription="Launch mobile-first workflows for each operational domain, manage them centrally, and scale delivery without ERP core modification or long consulting cycles."
+  cardImage="/assets/upbuff-platform-mockup.png"
+  cardGradient="linear-gradient(135deg, #a855f7 0%, #ec4899 60%, #fbbf24 100%)"
+  testimonial={{
+    quote: 'We deploy UpBuff across all our SAP Business One sites. Real-time field execution, zero core modifications, and our S/4HANA upgrade was completely unaffected.',
+    name: 'Mark Kupferman',
+    company: 'Chuck E. Cheese',
+    avatar: '/testimonials/mark.jpg',
+  }}
+  features={[
+    {
+      icon: 'tabler:plug-connected',
+      title: 'Flexible integrations',
+      description: 'Plug UpBuff into your current ERP workflows — no disruptions, just smoother execution.',
+    },
+    {
+      icon: 'tabler:adjustments',
+      title: 'Fully customizable',
+      description: 'Tailor workflows, user permissions, and escalation rules to fit your team\'s exact needs.',
+    },
+    {
+      icon: 'tabler:sparkles',
+      title: 'ERP-enhanced execution',
+      description: 'Speed up operational response times with live ERP data and automated workflow handling.',
+    },
+  ]}
+/>
+
+<HeroStatement
+  tagline="About UpBuff"
+  image="/team/upbuff-team.jpg"
+  imageAlt="UpBuff team at SAP event"
+  imageHeight={480}
+>
+  <Fragment slot="title">
+    Enabling Enterprises to Perform{' '}
+    <span class="text-accent">High-Velocity</span>{' '}
+    Operations with Uncompromising Accuracy
+  </Fragment>
+</HeroStatement>
+
+<FeaturesBento
+  tagline="Features"
+  title="Build the perfect customer-facing AI agent"
+  subtitle="Gives you all the tools you need to train your perfect AI agent and connect it to your systems."
+  items={[
+    {
+      wide: true,
+      title: 'Sync with real-time data',
+      description: 'Connect your agent to systems like order management tools, CRMs, and more...',
+      image: `<img src="/assets/sync-mockup.png" class="w-full h-full object-cover" alt="" />`,
+    },
+    {
+      wide: true,
+      title: 'Take actions on your systems',
+      description: 'Configure actions that your agent can perform within your systems...',
+      image: `<img src="/assets/actions-mockup.png" class="w-full h-full object-cover" alt="" />`,
+    },
+    {
+      title: 'Compare AI models',
+      description: 'Experiment with various models and configurations...',
+      image: `<img src="/assets/models-mockup.png" class="w-full h-full object-cover" alt="" />`,
+    },
+    {
+      title: 'Smart escalation',
+      description: 'Give your agent instructions in natural language on when to escalate...',
+      image: `<img src="/assets/escalation-mockup.png" class="w-full h-full object-cover" alt="" />`,
+    },
+    {
+      title: 'Advanced reporting',
+      description: 'Gain insights and optimize agent performance with detailed analytics.',
+      image: `<img src="/assets/reporting-mockup.png" class="w-full h-full object-cover" alt="" />`,
+    },
+  ]}
+/>
+
+<FeaturesCarousel
+  tagline="Advantages"
+  title="Unlock the power of<br />AI-driven Agents"
+  items={[
+    {
+      gradient: 'linear-gradient(135deg, #a855f7 0%, #6366f1 100%)',
+      badge: 'Channels connected',
+      badgeIcon: `<svg .../>`,
+      image: `<img src="/assets/channels-mockup.png" class="w-4/5 object-contain" alt="" />`,
+      title: 'Works across channels',
+      description: 'Easily integrate your AI Agent with various platforms like Slack, WhatsApp, Messenger, and web widgets.',
+    },
+    {
+      gradient: 'linear-gradient(135deg, #f97316 0%, #ec4899 100%)',
+      badge: 'Violation detected',
+      image: `<img src="/assets/security-mockup.png" class="w-4/5 object-contain" alt="" />`,
+      title: 'Secure by default',
+      description: 'Your AI Agent ensures the utmost safety by refusing sensitive or unauthorized requests.',
+    },
+    {
+      gradient: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+      badge: 'Guardrails activated',
+      image: `<img src="/assets/guardrails-mockup.png" class="w-4/5 object-contain" alt="" />`,
+      title: 'Enterprise quality guardrails',
+      description: 'AI-powered guardrails prevent misinformation and off-topic responses.',
+    },
+  ]}
+/>
+
+
+<FeaturesHighlights
+  tagline="Highlights"
+  title="The complete platform for<br />AI support agents"
+  subtitle="UpBuff is designed for building execution-ready ERP integrations that solve your
+    frontline team's hardest problems while improving business outcomes."
+  items={[
+    {
+      title: 'Purpose-built for ERP',
+      description: 'Deep integrations with SAP Business One, Oracle, and Epicor — not bolt-on connectors.',
+      image: `<svg xmlns="http://www.w3.org/2000/svg" ...>...</svg>`,
+    },
+    {
+      title: 'Designed for simplicity',
+      description: 'Create, manage, and deploy field workflows easily, even without technical skills.',
+      image: `<div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-sm">Your mockup here</div>`,
+    },
+    {
+      title: 'Engineered for security',
+      description: 'Enjoy peace of mind with robust encryption and strict compliance standards.',
+      image: `<img src="/assets/security-shield.svg" class="w-40 h-40" alt="Security" />`,
+    },
+  ]}
+/>
+
+
+<SecuritySplit
+  tagline="Security"
+  title="Enterprise-grade<br />security & privacy"
+  subtitle="We take security and compliance seriously. UpBuff is SOC 2 Type II and GDPR compliant, trusted by thousands of businesses to build secure and compliant integrations."
+  badges={[
+    { image: '/logos/soc2.svg',  alt: 'SOC 2' },
+    { image: '/logos/gdpr.svg',  alt: 'GDPR'  },
+  ]}
+  features={[
+    {
+      title: 'Your data stays yours',
+      description: 'Your data is only accessible to your AI agent and is never used to train models.',
+      illustration: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 70" class="w-20 h-16"><!-- database SVG --></svg>`,
+    },
+    {
+      title: 'Data encryption',
+      description: 'All data is encrypted at rest and in transit. We use industry-standard encryption algorithms.',
+      illustration: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16"><!-- lock SVG --></svg>`,
+    },
+    {
+      title: 'Secure integrations',
+      description: 'We use verified variables to ensure users can access only their own data in your systems.',
+      illustration: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16"><!-- box SVG --></svg>`,
+    },
+  ]}
+/>
+
+
+<TestimonialsGrid
+  title="What people say"
+  subtitle='With over <strong>10,000</strong> clients served, here&apos;s what they have to say'
+  row1={[
+    {
+      company: 'OpenAI',
+      logo: '/logos/openai.svg',
+      quote: 'UpBuff is a strong signal of how field operations will evolve. An early adopter of the agentic approach, which will become increasingly effective.',
+      name: 'Marc Manara',
+      role: 'Head of Startups',
+    },
+    {
+      company: 'Sage',
+      logo: '/logos/sage.svg',
+      quote: 'The workflows are user-friendly, easy to customize, and have been effectively serving our field teams for nearly two years.',
+      name: 'Ann Donie',
+      role: 'Product Owner',
+    },
+  ]}
+  statCard={{
+    stat: '10,000+',
+    label: 'businesses trust UpBuff',
+    gradient: 'linear-gradient(135deg, #f97316 0%, #fbbf24 50%, #ec4899 100%)',
+  }}
+  row2={[
+    {
+      company: 'Chuck E. Cheese',
+      logo: '/logos/chuckecheese.svg',
+      quote: 'UpBuff gave us a powerful, flexible way to launch our field operations without the complexity we saw in other platforms.',
+      name: 'Mark Kupferman',
+      role: 'CMO',
+    },
+    {
+      company: 'Synergy Gym',
+      logo: '/logos/synergygym.svg',
+      quote: 'An excellent solution for businesses. Onboarding is fast and training is easy. The answers are accurate and it significantly reduces friction.',
+      name: 'Jesús Franco',
+      role: 'CTO',
+    },
+  ]}
+/>
+
+<LogoBar
+  label='Trusted by <strong>10,000+</strong> businesses worldwide'
+  logos={[
+    { src: '/logos/sage.svg',          alt: 'Sage' },
+    { src: '/logos/chuckecheese.svg',  alt: 'Chuck E. Cheese' },
+    { src: '/logos/miele.svg',         alt: 'Miele' },
+    { src: '/logos/ihg.svg',           alt: 'IHG Hotels & Resorts' },
+    { src: '/logos/nationalgrid.svg',  alt: 'National Grid' },
+    { src: '/logos/opal.svg',          alt: 'Opal' },
+    { src: '/logos/f45.svg',           alt: 'F45 Training' },
+    { src: '/logos/alpian.svg',        alt: 'Alpian' },
+  ]}
+/>
+
+<FeaturesGrid
+  tagline="Solution"
+  title="Trusted resolution<br />at scale"
+  subtitle="UpBuff gives you an ERP-connected execution layer that answers accurately, stays on policy, and hands off smoothly when a human is needed."
+  items={[
+    {
+      icon: 'tabler:bolt',
+      title: 'Instant answers',
+      description: 'Handle repetitive questions immediately, 24/7, without adding headcount.',
+    },
+    {
+      icon: 'tabler:shield-check',
+      title: 'Always on policy',
+      description: 'Keep responses consistent by grounding answers in your help center and rules.',
+    },
+    {
+      icon: 'tabler:inbox',
+      title: 'Smart responses',
+      description: 'Resolve issues without opening tickets, reducing volume across channels.',
+    },
+    {
+      icon: 'tabler:arrow-up-circle',
+      title: 'Faster escalations',
+      description: 'Hand off complex cases with full conversation context and clear summaries.',
+    },
+    {
+      icon: 'tabler:clock',
+      title: 'Lower handle time',
+      description: 'Reduce time spent searching docs and rewriting the same responses.',
+    },
+    {
+      icon: 'tabler:sparkles',
+      title: 'Better experience',
+      description: 'Give customers fast, confident help that feels consistent across every touchpoint.',
+    },
+  ]}
+/>
+
+
+<ProblemSplit
+  tagline="Problem"
+  title="ERP data grows faster<br />than your field team"
+  subtitle="Frontline teams expect instant, accurate data across every workflow. But as transaction volume scales, response times slip, agents repeat the same work, and inconsistencies creep in. The result is higher costs, more escalations, and a worse customer experience."
+  items={[
+    {
+      title: 'Volume overload',
+      description: 'Repeating the same lookups across SAP and email burns time, increases wait times, and pulls field agents away from complex issues.',
+    },
+    {
+      title: 'Inconsistency',
+      description: 'Different agents, shifts, and data sources lead to conflicting responses and frustrated customers.',
+    },
+    {
+      title: 'Fallout',
+      description: 'Slow resolution increases refunds, chargebacks, and churn, and forces teams to spend more time on angry follow-ups.',
+    },
+    {
+      title: 'Late responses',
+      description: 'When support is offline or backlogged, customers abandon, issues pile up, and your team starts every conversation from scratch.',
+    },
+  ]}
+/>
+
+
+<FeaturesEnterprise
+  tagline="Features"
+  title="What's included in Enterprise"
+  items={[
+    {
+      title: 'Dedicated account manager',
+      description: 'Enjoy 24/7 support, monitoring, and guidance from your expert.',
+      illustration: `
+        <div class="w-full flex flex-col items-center gap-4">
+          <div class="bg-white rounded-2xl shadow px-5 py-3 flex items-center gap-2 text-sm font-medium">
+            <span class="w-5 h-5 rounded-full bg-gray-900 flex items-center justify-center text-white text-xs">✓</span>
+            Your issue has been resolved!
+          </div>
+          <div class="flex items-center gap-3 mt-2">
+            <div class="w-16 h-9 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"></div>
+            <div class="w-14 h-14 rounded-full bg-gray-200 overflow-hidden">
+              <img src="/team/manager.jpg" class="w-full h-full object-cover" alt="Account manager" />
+            </div>
+            <div class="w-16 h-9 rounded-full bg-gradient-to-r from-orange-400 to-red-400"></div>
+          </div>
+        </div>
+      `,
+    },
+    {
+      title: 'Custom integrations',
+      description: 'We build tailored integrations to seamlessly fit your internal tools and workflows.',
+      illustration: `
+        <div class="grid grid-cols-4 gap-3 w-full px-4">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#f87171"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#374151"></div>
+          <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#7c3aed"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#4f46e5"></div>
+          <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ea580c"></div>
+          <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"></div>
+          <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0ea5e9"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#f97316"></div>
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#7c3aed"></div>
+        </div>
+      `,
+    },
+    {
+      title: 'SLA guarantees',
+      description: 'Enjoy enterprise-grade uptime, reliability, and support with SLAs.',
+      illustration: `
+        <div class="relative w-48 h-48 flex items-center justify-center">
+          <svg viewBox="0 0 160 160" class="absolute inset-0 w-full h-full -rotate-90">
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#e5e7eb" stroke-width="8" stroke-dasharray="6 4"/>
+            <circle cx="80" cy="80" r="60" fill="none" stroke="#22c55e" stroke-width="8"
+              stroke-dasharray="280 94" stroke-linecap="round"/>
+          </svg>
+          <span class="text-2xl font-bold text-heading dark:text-gray-100">1.04s</span>
+        </div>
+      `,
+    },
+  ]}
+/>
+
+<FaqAccordion
+  tagline="FAQ"
+  title="Get answers to the most<br />commonly asked questions"
+  items={[
+    {
+      question: 'What is an ERP Integrated CRM?',
+      answer: 'An ERP Integrated CRM connects directly with SAP Business One or S/4HANA, ensuring real-time data sync without replacing ERP as the system of record.',
+    },
+    {
+      question: 'Does UpBuff replace SAP CRM?',
+      answer: 'No. UpBuff extends ERP into frontline sales while keeping SAP as the single source of truth.',
+    },
+    {
+      question: 'Can field sales teams work offline?',
+      answer: 'Yes. UpBuff supports full offline order capture with automatic synchronization to ERP once connectivity is restored.',
+    },
+  ]}
+/>
+
+<CtaBanner
+  title="Make customer experience<br />your competitive edge"
+  subtitle="Use UpBuff to deliver exceptional field execution experiences that set you apart from the competition."
+  action={{
+    text: 'Build your agent for free',
+    href: '/contact',
+    variant: 'primary',
+  }}
+  note="No credit card required"
+/>
+
+</Layout>

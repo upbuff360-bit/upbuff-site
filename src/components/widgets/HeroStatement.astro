@@ -1,0 +1,151 @@
+---
+/**
+ * HeroStatement.astro
+ * 
+ * Layout:
+ *   ┌─────────────────────────────────────────────┐
+ *   │  tagline (small green)                      │
+ *   │                                             │
+ *   │  Big bold title left     · · · · · · · · ·  │
+ *   │  with accent word        · · · · · · · · ·  │
+ *   │  highlighted             · · · · · · · · ·  │
+ *   └─────────────────────────────────────────────┘
+ *   ┌─────────────────────────────────────────────┐
+ *   │         FULL-BLEED IMAGE                    │
+ *   └─────────────────────────────────────────────┘
+ *
+ * Usage:
+ *   <HeroStatement
+ *     tagline="About UpBuff"
+ *     image="/team/upbuff-team.jpg"
+ *     imageAlt="UpBuff team at SAP event"
+ *     imageHeight="480"
+ *   >
+ *     <Fragment slot="title">
+ *       Enabling Enterprises to Perform{' '}
+ *       <span class="text-accent">High-Velocity</span>{' '}
+ *       Operations with Uncompromising Accuracy
+ *     </Fragment>
+ *   </HeroStatement>
+ */
+
+import type { Widget } from '~/types';
+
+export interface Props extends Widget {
+  tagline?: string;
+  /** Public path or full URL to the image */
+  image?: string;
+  imageAlt?: string;
+  /** px height of the full-bleed image. Default 480 */
+  imageHeight?: number | string;
+}
+
+const {
+  tagline,
+  image,
+  imageAlt = '',
+  imageHeight = 480,
+  id,
+} = Astro.props;
+
+const hasTitle = Astro.slots.has('title');
+---
+
+<section
+  class="not-prose relative overflow-hidden bg-white dark:bg-slate-900"
+  {...id ? { id } : {}}
+>
+
+  <!-- ── Text + dot-grid row ─────────────────────────────── -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10 md:pt-20 md:pb-12">
+    <div class="flex items-start justify-between gap-8">
+
+      <!-- Left: tagline + title -->
+      <div class="max-w-2xl">
+        {tagline && (
+          <p class="text-sm font-semibold text-accent dark:text-accent mb-4 tracking-wide">
+            {tagline}
+          </p>
+        )}
+
+        {hasTitle && (
+          <h1 class="text-4xl sm:text-5xl md:text-[3.25rem] font-extrabold leading-tight tracking-tight text-heading dark:text-gray-100 font-heading">
+            <slot name="title" />
+          </h1>
+        )}
+
+        <!-- Optional subtitle slot -->
+        {Astro.slots.has('subtitle') && (
+          <p class="mt-5 text-lg text-muted dark:text-slate-400 leading-relaxed max-w-xl">
+            <slot name="subtitle" />
+          </p>
+        )}
+
+        <!-- Optional actions slot -->
+        {Astro.slots.has('actions') && (
+          <div class="mt-8 flex flex-wrap gap-3">
+            <slot name="actions" />
+          </div>
+        )}
+      </div>
+
+      <!-- Right: decorative dot grid -->
+      <div
+        class="hidden lg:block shrink-0 self-center"
+        aria-hidden="true"
+      >
+        <svg
+          class="dot-grid opacity-40 dark:opacity-20"
+          width="220"
+          height="140"
+          viewBox="0 0 220 140"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {Array.from({ length: 7 }, (_, row) =>
+            Array.from({ length: 13 }, (_, col) => (
+              <circle
+                cx={col * 17 + 4}
+                cy={row * 20 + 4}
+                r="2.5"
+                fill="currentColor"
+                class="text-gray-300 dark:text-gray-600"
+              />
+            ))
+          )}
+        </svg>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Full-bleed image ──────────────────────────────────── -->
+  {image && (
+    <div
+      class="w-full overflow-hidden"
+      style={`height: ${typeof imageHeight === 'number' ? imageHeight + 'px' : imageHeight}`}
+    >
+      <img
+        src={image}
+        alt={imageAlt}
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+
+  <!-- Optional: custom image slot (e.g. animated component) -->
+  {!image && Astro.slots.has('image') && (
+    <div class="w-full overflow-hidden">
+      <slot name="image" />
+    </div>
+  )}
+
+</section>
+
+<style>
+  /* Dot grid rows stagger slightly for visual rhythm */
+  .dot-grid circle:nth-child(odd)  { opacity: 0.8; }
+  .dot-grid circle:nth-child(even) { opacity: 0.5; }
+</style>

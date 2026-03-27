@@ -1,0 +1,361 @@
+---
+import type { CallToAction, Widget } from '~/types';
+
+export interface OrbitalAvatar {
+  src: string;
+  alt?: string;
+  position?: 'top' | 'bottom-left' | 'bottom-right';
+}
+
+export interface OrbitalBadge {
+  label: string;
+  position?: 'left' | 'right' | 'bottom';
+}
+
+export interface Props extends Widget {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  actions?: Array<{ text: string; href: string; variant?: 'primary' | 'secondary'; icon?: string }>;
+  /** @deprecated Use actions instead */
+  linkAction?: CallToAction;
+  /** Optional image to replace the orbital diagram */
+  image?: { src: string; alt?: string };
+  /** Center logo: inline SVG/HTML string OR public image path */
+  centerLogo?: string;
+  /** Background color of the center circle (default: #2563eb) */
+  centerColor?: string;
+  /** Up to 3 avatar photos on the orbit ring */
+  avatars?: Array<OrbitalAvatar>;
+  /** Floating pill badges around the ring */
+  badges?: Array<OrbitalBadge>;
+}
+
+const {
+  title,
+  subtitle,
+  tagline,
+  actions = [],
+  image,
+  linkAction,
+  centerLogo,
+  centerColor = '#2563eb',
+  avatars = [],
+  badges = [],
+  id,
+} = Astro.props;
+
+const resolvedActions = actions.length
+  ? actions
+  : linkAction
+    ? [{ text: linkAction.text ?? '', href: linkAction.href ?? '#', variant: 'secondary' as const }]
+    : [];
+
+// Avatar positions in degrees on the circle (0° = top)
+const avatarDegrees: Record<string, number> = {
+  'top':          -90,   // 12 o'clock
+  'bottom-left':  150,   // 7 o'clock
+  'bottom-right':  30,   // 4 o'clock
+};
+
+// Badge positions — fixed, don't rotate with ring
+const badgePositions: Record<string, { top: string; left: string; transform: string }> = {
+  'left':   { top: '46%',  left: '-2%',   transform: 'translate(-100%, -50%)' },
+  'right':  { top: '28%',  left: '102%',  transform: 'translate(0%, -50%)' },
+  'bottom': { top: '104%', left: '50%',   transform: 'translate(-50%, 0%)' },
+};
+---
+
+<section
+  class="relative not-prose md:-mt-[76px] bg-black text-white overflow-hidden"
+  role="banner"
+  aria-label={title}
+  {...id ? { id } : {}}
+>
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
+
+    <div class="py-16 md:py-24 flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-8">
+
+      <!-- ── Left: text content ──────────────────────────────── -->
+      <div class="lg:basis-1/2 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+
+        {tagline && (
+          <p class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm mb-5 text-sm font-medium text-white/80">
+            <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+            {tagline}
+          </p>
+        )}
+
+        {title && (
+          <h1
+            class="heroOrbitalTitle text-5xl md:text-6xl lg:text-6xl font-bold leading-none tracking-tight text-white mb-5 font-heading"
+            itemprop="name"
+            set:html={title}
+          />
+        )}
+
+        {subtitle && (
+          <p
+            class="text-base text-gray-400 leading-relaxed mb-7 max-w-sm"
+            itemprop="description"
+            set:html={subtitle}
+          />
+        )}
+
+        {resolvedActions.length > 0 && (
+          <div class="flex flex-wrap items-center gap-3 mt-7" role="group" aria-label="Call to action">
+            {resolvedActions.map((action) =>
+              action.variant === 'primary' ? (
+                <a
+                  href={action.href}
+                  class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors duration-150"
+                  role="button"
+                  aria-label={action.text}
+                >
+                  {action.text}
+                </a>
+              ) : (
+                <a
+                  href={action.href}
+                  class="inline-flex items-center gap-1.5 text-white font-semibold text-sm hover:opacity-75 transition-opacity group"
+                  aria-label={action.text}
+                >
+                  {action.text}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              )
+            )}
+          </div>
+        )}
+      </div>
+
+      <!-- ── Right: slot > image > orbital diagram ────────────── -->
+      <div class="lg:basis-1/2 flex items-center justify-center intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+
+        {Astro.slots.has('visual') ? (
+          <slot name="visual" />
+        ) : image ? (
+          <img
+            src={image.src}
+            alt={image.alt ?? ''}
+            class="w-full max-w-lg rounded-2xl shadow-2xl object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+
+        <!-- ── Orbital diagram ─────────────────────────── -->
+        <div class="orbital-root" aria-hidden="true">
+
+          <!-- Static layers: outer glow ring + dotted inner grid -->
+          <div class="orbital-static">
+            <svg class="orbital-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Circular clip for the dot grid -->
+                <clipPath id="orbital-clip">
+                  <circle cx="200" cy="200" r="148"/>
+                </clipPath>
+              </defs>
+
+              <!-- Outer subtle glow band -->
+              <circle cx="200" cy="200" r="185" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="60"/>
+
+              <!-- Outer ring — thin clean line -->
+              <circle cx="200" cy="200" r="168" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+
+              <!-- Inner ring -->
+              <circle cx="200" cy="200" r="148" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+              <!-- Dot grid inside the circle -->
+              <g clip-path="url(#orbital-clip)">
+                {Array.from({ length: 19 }, (_, row) =>
+                  Array.from({ length: 19 }, (_, col) => {
+                    const x = 52 + col * 16;
+                    const y = 52 + row * 16;
+                    const dx = x - 200;
+                    const dy = y - 200;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist > 145) return null;
+                    const opacity = dist < 80 ? 0.12 : dist < 120 ? 0.18 : 0.25;
+                    return <circle cx={x} cy={y} r="1.5" fill={`rgba(100,140,255,${opacity})`}/>;
+                  })
+                )}
+              </g>
+            </svg>
+          </div>
+
+          <!-- Spinning layer: ring with avatars rotating on it -->
+          <div class="orbital-spinner">
+            <svg class="orbital-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+              <!-- Dashed ring that rotates -->
+              <circle cx="200" cy="200" r="168" fill="none" stroke="rgba(255,255,255,0.0)" stroke-width="1" stroke-dasharray="4 10"/>
+            </svg>
+
+            <!-- Avatar photos — they sit on the spinning layer so they orbit -->
+            <!-- Counter-rotated via CSS so they stay upright while ring spins -->
+            {avatars.map(({ src, alt = '', position = 'top' }) => {
+              const deg = avatarDegrees[position] ?? -90;
+              const rad = (deg * Math.PI) / 180;
+              const r = 178;
+              const cx = 200 + r * Math.cos(rad);
+              const cy = 200 + r * Math.sin(rad);
+              // Convert SVG coords (400x400) to % of the orbital-root size
+              const leftPct = (cx / 400) * 100;
+              const topPct  = (cy / 400) * 100;
+              return (
+                <div
+                  class="orbital-avatar"
+                  style={`left:${leftPct}%;top:${topPct}%;`}
+                >
+                  <img src={src} alt={alt} loading="lazy" />
+                </div>
+              );
+            })}
+          </div>
+
+          <!-- Static center circle — does NOT rotate -->
+          <div class="orbital-center" style={`background: radial-gradient(circle at 40% 35%, color-mix(in srgb, ${centerColor} 80%, white 20%), ${centerColor});`}>
+            {centerLogo && (
+              centerLogo.startsWith('<')
+                ? <Fragment set:html={centerLogo} />
+                : <img src={centerLogo} alt="Logo" class="w-14 h-14 object-contain" />
+            )}
+          </div>
+
+          <!-- Static badge pills — never rotate -->
+          {badges.map(({ label, position = 'left' }) => {
+            const pos = badgePositions[position] ?? badgePositions['left'];
+            return (
+              <div
+                class="orbital-badge"
+                style={`top:${pos.top};left:${pos.left};transform:${pos.transform};`}
+              >
+                {label}
+              </div>
+            );
+          })}
+
+        </div>
+        )}
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .heroOrbitalTitle {
+    font-size: 44px !important; /* 48px (text-5xl) - 4px */
+  }
+
+  @media (min-width: 768px) {
+    .heroOrbitalTitle {
+      font-size: 56px !important; /* 60px (text-6xl) - 4px */
+    }
+  }
+  /* ── Root container — sized to match the visual diagram ── */
+  .orbital-root {
+    position: relative;
+    width: 340px;
+    height: 340px;
+  }
+
+  /* ── SVG layers fill the root exactly ─────────────────── */
+  .orbital-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* ── Static background layer ─────────────────────────── */
+  .orbital-static {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* ── Spinning layer — ring + avatars rotate together ──── */
+  .orbital-spinner {
+    position: absolute;
+    inset: 0;
+    animation: orbitSpin 20s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes orbitSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* ── Avatar circles on the spinning ring ─────────────── */
+  .orbital-avatar {
+    position: absolute;
+    width: 72px;   /* was 56px */
+    height: 72px;  /* was 56px */
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.85);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+
+    /* 👇 ADD THIS (important for centering) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translate(-50%, -50%);
+  }
+  .orbital-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* 👈 ensures center alignment */
+  }
+
+  /* ── Center circle ────────────────────────────────────── */
+  .orbital-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow:
+      0 0 0 8px rgba(37,99,235,0.15),
+      0 0 40px rgba(37,99,235,0.5),
+      0 0 80px rgba(37,99,235,0.2);
+  }
+
+  /* ── Pill badges ──────────────────────────────────────── */
+  .orbital-badge {
+    position: absolute;
+    z-index: 20;
+    white-space: nowrap;
+    background: white;
+    color: #111;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 999px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    letter-spacing: -0.01em;
+    /* Subtle float animation */
+    animation: badgeFloat 4s ease-in-out infinite;
+  }
+  .orbital-badge:nth-child(2) { animation-delay: 0.8s; }
+  .orbital-badge:nth-child(3) { animation-delay: 1.6s; }
+
+  @keyframes badgeFloat {
+    0%,100% { transform: translate(var(--tx, -100%), -50%) translateY(0px); }
+    50%      { transform: translate(var(--tx, -100%), -50%) translateY(-5px); }
+  }
+
+  /* Per-badge float directions */
+  .orbital-badge[style*="translate(-100%"] { --tx: -100%; }
+  .orbital-badge[style*="translate(0%"]    { --tx: 0%; }
+  .orbital-badge[style*="translate(-50%"]  { --tx: -50%; }
+</style>

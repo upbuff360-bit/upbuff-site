@@ -1,0 +1,403 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
+
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'ERP-Integrated Field Service Management for SAP | UpBuff FSM Platform',
+  description:
+    'Extend SAP S/4HANA, ECC, and SAP Business One to field technicians with UpBuff ERP-Integrated FSM. Real-time work orders, mobile execution, offline support, and secure SAP integration without core customization.',
+  canonical: 'https://www.upbuff.com/products/erp-integrated-field-service-management',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/products/erp-integrated-field-service-management',
+    title: 'ERP-Integrated Field Service Management for SAP | UpBuff',
+    description: 'Enable real-time field service execution integrated with SAP S/4HANA, ECC, and SAP Business One. Mobile-first, offline-capable, and enterprise-ready.',
+    image: 'https://www.upbuff.com/images/erp-fsm-og.jpg',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'ERP-Integrated Field Service Management | UpBuff FSM',
+    description: 'Connect SAP with field technicians for real-time work order execution — without modifying ERP core.',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UpBuff ERP-Integrated Field Service Management",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "description": "ERP-integrated field service management platform extending SAP S/4HANA, ECC, and SAP Business One with real-time mobile execution capabilities.",
+      "url": "https://www.upbuff.com/products/erp-integrated-field-service-management",
+      "provider": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is ERP-Integrated Field Service Management?", "acceptedAnswer": { "@type": "Answer", "text": "It extends SAP ERP to field technicians, enabling real-time work order updates, inventory tracking, and service reporting without modifying core ERP." } },
+        { "@type": "Question", "name": "Does UpBuff FSM replace SAP Service Management?", "acceptedAnswer": { "@type": "Answer", "text": "No. It complements SAP by enabling mobile-first execution while keeping SAP as the system of record." } },
+        { "@type": "Question", "name": "Does it work with SAP S/4HANA?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It integrates with SAP S/4HANA, ECC, and SAP Business One using secure OData, BAPI, and Service Layer APIs." } },
+        { "@type": "Question", "name": "Is offline mode supported?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Technicians can work offline and sync data securely when connectivity is restored." } },
+        { "@type": "Question", "name": "Is it secure for enterprise environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Role-based access, audit logging, encrypted communication, and controlled integration ensure enterprise-grade security." } }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="black"
+      actions={[
+        { variant: 'secondary', text: 'Login',      href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ── 1. HERO ───────────────────────────────────────────────── -->
+  <HeroOrbital
+    tagline="ERP-Integrated Field Service Management"
+    title="Extend SAP to the Field. Execute in Real Time."
+    subtitle="UpBuff ERP-Integrated Field Service Management connects SAP with field technicians, service teams, and on-site operations — enabling real-time service execution without modifying core ERP. Transform SAP from a system of record into a system of action at the edge."
+    actions={[
+      { text: 'Request Demo',       href: '/contact', variant: 'primary' },
+      { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
+    ]}
+    image={{
+      src: 'http://4.151.8.142:4000/uploads/ERP-Integrated-Field-Service-Management.png',
+      alt: 'UpBuff ERP-Integrated Field Service Management — real-time work orders for SAP technicians',
+    }}
+  />
+
+  <!-- ── 2. LOGO BAR ──────────────────────────────────────────── -->
+  <LogoBar
+    label="Trusted by field service enterprises &amp; SAP partners worldwide"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',          alt: 'ideaForge logo' },
+      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',        alt: 'jnk chemdist logo' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',       alt: 'molygraph logo' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',       alt: 'ncc streetscape logo' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',         alt: 'roofsol logo' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',        alt: 'the wine source logo' },
+    ]}
+  />
+
+  <!-- ── 3. PROBLEM ───────────────────────────────────────────── -->
+  <ProblemSplit
+    tagline="Problem"
+    title="Field service teams are disconnected from SAP"
+    subtitle="SAP holds all the critical data — work orders, spare parts, customer history — but field technicians can't access it in real time. The result is delays, errors, missed SLAs, and mounting operational costs."
+    items={[
+      {
+        title: 'Work order delays',
+        description: 'Technicians receive paper-based or emailed job sheets — disconnected from live SAP service orders, causing missed updates and rework.',
+      },
+      {
+        title: 'Spare parts blind spots',
+        description: 'Without real-time SAP inventory access, technicians carry wrong parts or make return trips, increasing resolution times and costs.',
+      },
+      {
+        title: 'No offline field capability',
+        description: 'Field sites often have poor connectivity. Without offline support, technicians cannot capture service data or update SAP from the field.',
+      },
+      {
+        title: 'Manual ERP data re-entry',
+        description: 'Service teams manually key completed job data back into SAP — introducing errors, audit gaps, and hours of avoidable administrative overhead.',
+      },
+    ]}
+  />
+
+  <!-- ── 4. FEATURES GRID ─────────────────────────────────────── -->
+  <FeaturesGrid
+    tagline="Solution"
+    title="Why Choose UpBuff ERP-Integrated FSM?"
+    subtitle="Each capability is purpose-built to extend SAP S/4HANA, ECC, and SAP Business One to field operations — without modifying ERP core."
+    items={[
+      {
+        icon: 'tabler:database',
+        title: 'Native SAP Integration',
+        description: 'Secure real-time sync using SAP Service Layer, OData, and BAPI. No core customization required. Maintain ERP integrity while enabling mobile-first execution.',
+      },
+      {
+        icon: 'tabler:clipboard-check',
+        title: 'Real-Time Work Order Execution',
+        description: 'Technicians receive service orders instantly, update job status, capture photos, record parts usage, and sync back to SAP automatically.',
+      },
+      {
+        icon: 'tabler:wifi-off',
+        title: 'Offline-First Mobile Experience',
+        description: 'Field technicians operate in remote environments. UpBuff FSM works fully offline and synchronizes all data once connectivity is restored.',
+      },
+      {
+        icon: 'tabler:calendar-event',
+        title: 'Intelligent Dispatch & Scheduling',
+        description: 'AI-assisted job allocation based on technician availability, skill, and location. Improve SLA compliance and reduce response times.',
+      },
+      {
+        icon: 'tabler:packages',
+        title: 'ERP-Driven Spare Parts Management',
+        description: 'Technicians access real-time spare parts availability directly from SAP. Inventory updates automatically after consumption — no manual re-entry.',
+      },
+      {
+        icon: 'tabler:shield-lock',
+        title: 'Audit-Ready & Role-Based Security',
+        description: 'All field actions logged and mapped to SAP user roles. Enterprise-grade compliance with full data integrity enforcement.',
+      },
+    ]}
+  />
+
+  <!-- ── 5. HIGHLIGHTS (Platform pillars) ─────────────────────── -->
+  <FeaturesHighlights
+    tagline="Platform"
+    title="The complete FSM execution layer<br />for SAP enterprises"
+    subtitle="UpBuff FSM bridges the gap between SAP and field technicians — purpose-built for enterprise environments that cannot afford ERP core modifications."
+    items={[
+      {
+        title: 'Purpose-Built for SAP',
+        description: 'Native connectors for SAP S/4HANA, SAP ECC, and SAP Business One — not generic middleware. Real-time, bi-directional sync with full ERP governance.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-64 p-4 flex flex-col items-center"><div class="grid grid-cols-2 w-full text-center"><div class="flex flex-col items-center gap-1"><div class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs font-semibold rounded-lg border border-blue-100">SAP B1</div><span class="text-[10px] text-gray-400">Service Layer</span></div><div class="flex flex-col items-center gap-1"><div class="px-3 py-1.5 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-100">S/4HANA</div><span class="text-[10px] text-gray-400">OData · RFC</span></div></div><div class="grid grid-cols-2 w-full relative h-5"><div class="flex justify-center"><div class="w-px h-5 bg-gray-200 overflow-hidden relative"><div class="absolute inset-0 bg-blue-400 animate-[flowY_1.8s_linear_infinite]"></div></div></div><div class="flex justify-center"><div class="w-px h-5 bg-gray-200 overflow-hidden relative"><div class="absolute inset-0 bg-blue-400 animate-[flowY_1.8s_linear_infinite]"></div></div></div></div><div class="flex items-center justify-center"><div class="px-4 py-2 bg-gray-900 text-white text-xs font-semibold rounded-lg shadow animate-pulse">UpBuff Integration Layer</div></div><div class="flex justify-center w-full h-5"><div class="w-px h-5 bg-gray-200 overflow-hidden relative"><div class="absolute inset-0 bg-green-400 animate-[flowY_1.8s_linear_infinite]"></div></div></div><div class="flex justify-center"><div class="px-3 py-1.5 bg-green-50 text-green-700 text-xs font-semibold rounded-lg border border-green-100">Mobile · Web · Field Apps</div></div><div class="text-[10px] text-gray-400 text-center">Real-time sync · Clean core · No customization</div></div></div>'
+      },
+      {
+        title: 'Mobile-First Field Execution',
+        description: 'Intuitive Android and iOS apps built for field technicians — work order management, checklists, photo capture, and digital sign-off in one place.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-48 p-4 flex flex-col gap-3 animate-[fadeIn_0.6s_ease-out]"><div class="h-3 bg-gray-200 rounded w-3/4 overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="h-3 bg-gray-100 rounded w-full overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="h-3 bg-gray-100 rounded w-5/6 overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs font-medium mt-2">Update Work Order</div></div></div>',
+      },
+      {
+        title: 'Offline Sync & Reliability',
+        description: 'Full offline capability — technicians capture service data in basements, remote sites, or low-signal areas. Secure sync resumes automatically.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-52 p-4 flex flex-col gap-3 animate-[fadeIn_0.6s_ease-out]"><div class="h-3 bg-gray-200 rounded w-3/4 overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="h-3 bg-gray-100 rounded w-full overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="h-3 bg-gray-100 rounded w-5/6 overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="mt-2 bg-gray-100 rounded-lg px-3 py-2 flex items-center justify-between text-xs text-gray-600"><span>Saved locally</span><span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-[10px] font-medium animate-pulse">Offline</span></div><div class="h-1 bg-gray-200 rounded overflow-hidden"><div class="h-full bg-yellow-400 rounded animate-[progressGrow_10s_linear_infinite]"></div></div><div class="text-[10px] text-gray-400 text-center">Sync will resume automatically</div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ── 6. USE CASES (Bento) ──────────────────────────────────── -->
+  <FeaturesBento
+    tagline="Use Cases"
+    title="How SAP enterprises use UpBuff FSM"
+    subtitle="Discover how ERP-Integrated FSM transforms field execution across industries — from industrial maintenance to medical device servicing."
+    items={[
+      {
+        wide: true,
+        title: 'Industrial Equipment Service: Reduce Downtime with Real-Time Execution',
+        description: 'Enable preventive and corrective maintenance directly connected to SAP PM or service modules. Field technicians receive live work orders, capture parts usage, and close jobs in SAP — achieving faster service closure, reduced downtime, SLA compliance visibility, and accurate spare part consumption tracking.',
+        image: '<img src="http://4.151.8.142:4000/uploads/industrial-equipmentservice.png" class="w-full p-6" alt="Industrial equipment field service integrated with SAP" loading="lazy" />',
+      },
+      {
+        wide: true,
+        title: 'Utilities & Infrastructure: Manage Distributed Assets Seamlessly',
+        description: 'Support large-scale field teams managing geographically dispersed assets. GPS-enabled job tracking, real-time reporting, asset lifecycle management, and centralized operational control — all synchronized with SAP in real time.',
+        image: '<img src="http://4.151.8.142:4000/uploads/utilities-and-infrastructure-maintenance.png" class="w-full p-6" alt="Utilities and infrastructure maintenance with SAP FSM" loading="lazy" />',
+      },
+      {
+        title: 'Medical & Technical Service Teams',
+        description: 'Capture digital service reports, compliance checklists, digital sign-offs, and regulatory documentation directly in the field — with automated SAP updates and full service history visibility.',
+        image: '<img src="http://4.151.8.142:4000/uploads/medical-and-technical-service-teams.png" class="w-full h-full object-cover" alt="Medical and technical field service compliance documentation" loading="lazy" />',
+      },
+      {
+        title: 'After-Sales Service Operations',
+        description: 'Deliver transparent service updates and faster response times. Track customer communication, service history, and first-time fix rates — reducing manual entry errors and improving customer experience.',
+        image: '<img src="http://4.151.8.142:4000/uploads/after-sales-service-operations.png" class="w-full h-full object-cover" alt="After-sales field service operations integrated with ERP" loading="lazy" />',
+      },
+      {
+        title: 'SAP-Ready Architecture',
+        description: 'For enterprises migrating from SAP ECC to S/4HANA, UpBuff FSM protects upgrade stability while extending field service capabilities — no ERP re-customization required.',
+        image: '<img src="http://4.151.8.142:4000/uploads/UpBuff-ERP-Extension-Process.png" class="h-full" alt="SAP-ready FSM architecture for S/4HANA migration" loading="lazy" />',
+      },
+    ]}
+  />
+
+  <!-- ── 7. SAP COMPATIBILITY ─────────────────────────────────── -->
+  <SecuritySplit
+    tagline="Built for SAP Enterprises"
+    title="UpBuff FSM does not replace SAP. It extends SAP."
+    subtitle="UpBuff FSM is purpose-built to complement your SAP investment — not disrupt it. Every field action flows back into SAP as the authoritative system of record."
+    features={[
+      {
+        title: 'Works with SAP S/4HANA & ECC',
+        description: 'Full integration using OData, BAPI, and secure APIs for real-time field execution across S/4HANA and ECC landscapes.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" class="w-20 h-16" fill="none"><ellipse cx="40" cy="16" rx="28" ry="10" stroke="url(#db1)" stroke-width="2.5"/><path d="M12 16v20c0 5.523 12.536 10 28 10s28-4.477 28-10V16" stroke="url(#db1)" stroke-width="2.5"/><path d="M12 36v16c0 5.523 12.536 10 28 10s28-4.477 28-10V36" stroke="url(#db1)" stroke-width="2.5"/><circle cx="40" cy="38" r="3" fill="#06b6d4"/><defs><linearGradient id="db1" x1="12" y1="0" x2="68" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Works with SAP Business One',
+        description: 'Native integration using SAP Service Layer for real-time bi-directional synchronization across all field service operations.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="20" y="36" width="40" height="30" rx="6" stroke="url(#lk1)" stroke-width="2.5"/><path d="M28 36V26a12 12 0 0 1 24 0v10" stroke="url(#lk1)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#22c55e"/><defs><linearGradient id="lk1" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Supports Hybrid, On-Prem & Cloud',
+        description: 'Deploy across hybrid, on-premise, or cloud environments. Enterprise-grade scalability with full audit trails and role-based access control.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="14" y="14" width="52" height="52" rx="8" stroke="url(#bx1)" stroke-width="2.5"/><path d="M26 40h28M26 52h18M26 28h28" stroke="url(#bx1)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="bx1" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#f97316"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>',
+      },
+    ]}
+  />
+
+  <!-- ── 8. TOOLS MARQUEE ─────────────────────────────────────── -->
+  <ToolsMarquee
+    title="Integrates with your service ecosystem"
+    description="UpBuff FSM connects SAP with the tools your service teams already rely on — from scheduling and communication to compliance and analytics platforms."
+    speed={30}
+    tools={[
+      { name: 'Calendar', logo: '<img src="http://4.151.8.142:4000/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Epicor', logo: '<img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SAP', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Gmail', logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'IoT', logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SAP S/4HANA', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Oracle', logo: '<img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Outlook', logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Power BI', logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SAP Business One', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SMS', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'VoIP', logo: '<img src="http://4.151.8.142:4000/uploads/logo/voip-integration-with-upbuff-crm.png" alt="VoIP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'WhatsApp', logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Zoho', logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ── 9. TESTIMONIALS ──────────────────────────────────────── -->
+  <TestimonialsGrid
+    title="What field service teams say"
+    subtitle="Trusted by enterprises running SAP S/4HANA, SAP Business One, and Oracle ERP for field operations"
+    row1={[
+      {
+        company: 'Roofsol',
+        logo: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',
+        quote: 'UpBuff FSM gave our field crews real-time access to SAP work orders and spare parts — without any core ERP modifications. SLA compliance improved dramatically in the first quarter.',
+        name: 'Operations Director',
+        role: 'National Grid',
+      },
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'Our technicians now close service jobs directly in SAP from the field. The offline capability was the game-changer — no more paper job sheets or manual re-entry at end of day.',
+        name: 'Head of Service Operations',
+        role: 'Miele',
+      },
+    ]}
+    statCard={{
+      stat: '40%',
+      label: 'faster field service closure with UpBuff FSM',
+      gradient: 'linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #22c55e 100%)',
+    }}
+    row2={[
+      {
+        company: 'The Wine Source Inc.',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'Integrating UpBuff FSM with our SAP environment was straightforward. The team handled the SAP Service Layer connection cleanly and our maintenance teams were live within weeks.',
+        name: 'IT Director',
+        role: 'IHG Hotels & Resorts',
+      },
+      {
+        company: 'Ideaforge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'The audit trail and role-based access controls gave our compliance team confidence from day one. Field data flows directly into SAP with full traceability — exactly what we needed.',
+        name: 'Compliance Manager',
+        role: 'Opal',
+      },
+    ]}
+  />
+
+  <!-- ── 10. FAQs ──────────────────────────────────────────────── -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="ERP-Integrated Field Service Management — questions answered"
+    items={[
+      {
+        question: 'What is ERP-Integrated Field Service Management?',
+        answer: 'ERP-Integrated FSM extends SAP to field technicians, allowing real-time work order updates, parts tracking, service reporting, and digital sign-offs — without modifying the ERP core.',
+      },
+      {
+        question: 'Does UpBuff FSM replace SAP Service Management?',
+        answer: 'No. UpBuff FSM complements SAP by enabling mobile-first execution for field technicians while keeping SAP as the authoritative system of record for all service data.',
+      },
+      {
+        question: 'How does data synchronization work?',
+        answer: 'UpBuff uses secure APIs — SAP OData, Service Layer, and BAPI — to synchronize data bi-directionally in real time between field devices and SAP.',
+      },
+      {
+        question: 'Can technicians work offline?',
+        answer: 'Yes. The platform supports fully offline operation. Technicians can complete jobs, capture photos, record parts usage, and collect signatures without connectivity. All data syncs securely when connection resumes.',
+      },
+      {
+        question: 'Which SAP versions are supported?',
+        answer: 'UpBuff FSM integrates with SAP S/4HANA (OData/RFC), SAP ECC (BAPI), and SAP Business One (Service Layer). Oracle and Epicor integrations are also supported via REST/SOAP APIs.',
+      },
+      {
+        question: 'Is it secure for enterprise environments?',
+        answer: 'Yes. Role-based access control, full audit logging, TLS encrypted communication, and controlled API-based integration ensure enterprise-grade security. ERP remains the system of record at all times.',
+      },
+    ]}
+  />
+
+  <SecuritySplit
+    tagline="Get Started"
+    title="Get started with ERP-Integrated CRM"
+    subtitle="Whether you're a growing SAP Business One customer or a large enterprise on S/4HANA, UpBuff adapts to your ERP landscape."
+
+    features={[
+      {
+        title: 'Schedule a Demo',
+        description: 'See live ERP sync, mobile order capture, and pricing enforcement in action. Schedule a 30-minute demo with our SAP integration specialists.',
+        href: '/contact',
+      },
+      {
+        title: 'Join Partner Program',
+        description: 'SAP reseller and ERP channel partner program for VARs and system integrators. Earn commissions on every UpBuff deployment you bring to market.',
+        href: '/partners',
+      },
+      {
+        title: 'Explore CRM Modules',
+        description: 'Browse field sales, distribution management, collections, and performance reporting modules organized by industry and ERP platform.',
+        href: '/solutions',
+      },
+    ]}
+  />
+
+  <!-- ── 12. CTA BANNER ───────────────────────────────────────── -->
+  <CtaBanner
+    title="Connect your SAP to the field — in real time"
+    subtitle="Use UpBuff FSM to extend SAP S/4HANA, ECC, and Business One to field technicians without risky core modifications or expensive consulting projects."
+    action={{
+      text: 'Request a Free Demo',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="No SAP core modifications required"
+  />
+
+</Layout>

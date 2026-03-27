@@ -1,0 +1,188 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { Icon } from 'astro-icon/components';
+import type { Widget } from '~/types';
+
+export interface Testimonial {
+  quote: string;
+  name?: string;
+  company?: string;
+  /** Public path to avatar image */
+  avatar?: string;
+}
+
+export interface FeatureItem {
+  /** astro-icon name, e.g. 'tabler:plug-connected' */
+  icon?: string;
+  title: string;
+  description?: string;
+}
+
+export interface Props extends Widget {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+
+  /** Left column of the split card */
+  cardTitle?: string;
+  cardDescription?: string;
+  testimonial?: Testimonial;
+
+  /**
+   * Right column illustration:
+   * - Raw HTML / inline SVG string
+   * - Public <img> path string (will be wrapped in an <img> tag)
+   */
+  cardImage?: string;
+  /** CSS gradient for the right column background. Default: purple → pink */
+  cardGradient?: string;
+
+  /** Up to 3 feature items rendered below the card */
+  features?: Array<FeatureItem>;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+
+  cardTitle,
+  cardDescription,
+  testimonial,
+  cardImage,
+  cardGradient = 'linear-gradient(135deg, #a855f7 0%, #ec4899 60%, #fbbf24 100%)',
+
+  features = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- ── Centered header ────────────────────────────────────── -->
+  {(tagline || title || subtitle) && (
+    <div class="text-center mb-10 md:mb-12 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-5">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{tagline}</span>
+        </div>
+      )}
+      {title && (
+        <h2
+          class="text-4xl md:text-5xl lg:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100"
+          set:html={title}
+        />
+      )}
+      {subtitle && (
+        <p class="mt-4 text-muted text-lg max-w-2xl mx-auto dark:text-slate-400" set:html={subtitle} />
+      )}
+    </div>
+  )}
+
+  <!-- ── Main split card ───────────────────────────────────── -->
+  <div
+    class="rounded-2xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col lg:flex-row min-h-[420px] intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter"
+  >
+
+    <!-- Left: text + testimonial -->
+    <div class="lg:w-5/12 flex flex-col justify-between p-8 md:p-10">
+
+      <!-- Card copy -->
+      <div>
+        {cardTitle && (
+          <h3 class="text-xl md:text-2xl font-bold text-heading dark:text-gray-100 leading-snug mb-3">
+            {cardTitle}
+          </h3>
+        )}
+        {cardDescription && (
+          <p class="text-sm text-muted dark:text-slate-400 leading-relaxed" set:html={cardDescription} />
+        )}
+      </div>
+
+      <!-- Testimonial block -->
+      {testimonial && (
+        <blockquote class="mt-8 pt-8 border-t border-gray-100 dark:border-gray-700">
+          <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            &ldquo;{testimonial.quote}&rdquo;
+          </p>
+          <footer class="flex items-center gap-3">
+            {testimonial.avatar && (
+              <img
+                src={testimonial.avatar}
+                alt={testimonial.name ?? ''}
+                class="w-8 h-8 rounded-full object-cover shrink-0"
+                loading="lazy"
+              />
+            )}
+            {(testimonial.name || testimonial.company) && (
+              <div class="text-sm">
+                {testimonial.name && (
+                  <span class="font-semibold text-heading dark:text-gray-100">{testimonial.name}</span>
+                )}
+                {testimonial.company && (
+                  <span class="text-muted dark:text-slate-400 ml-1">{testimonial.company}</span>
+                )}
+              </div>
+            )}
+          </footer>
+        </blockquote>
+      )}
+    </div>
+
+    <!-- Right: gradient bg + illustration -->
+    <div
+      class="lg:w-7/12 relative overflow-hidden min-h-[280px] lg:min-h-0 flex items-end justify-end pt-6"
+      style={`background: #ffffff;`}
+    >
+      {cardImage && (
+        <div class="w-full h-full flex items-end justify-end">
+          {cardImage.startsWith('<')
+            ? <Fragment set:html={cardImage} />
+            : <img
+                src={cardImage}
+                alt={cardTitle ?? ''}
+                class="w-full h-full object-cover object-left"
+                loading="lazy"
+              />
+          }
+        </div>
+      )}
+    </div>
+
+  </div>
+
+  <!-- ── 3-column feature strip below card ─────────────────── -->
+  {features.length > 0 && (
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-10 md:mt-12">
+      {features.map(({ icon, title: ft, description }, i) => (
+        <div
+          class:list={[
+            'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+          ]}
+          style={`animation-delay: ${i * 80}ms`}
+        >
+          {icon && (
+            <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-slate-800 mb-3">
+              <Icon name={icon} class="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            </div>
+          )}
+          <h3 class="text-base font-bold text-heading dark:text-gray-100 mb-1.5">{ft}</h3>
+          {description && (
+            <p class="text-sm text-muted dark:text-slate-400 leading-relaxed" set:html={description} />
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+
+</WidgetWrapper>

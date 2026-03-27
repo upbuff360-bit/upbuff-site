@@ -1,0 +1,243 @@
+---
+// ─── Types ───────────────────────────────────────────────────────────────────
+// `type` is a plain string so it never conflicts with HTMLInputTypeAttribute.
+// Valid values: 'text' | 'email' | 'select' | 'textarea'  (default: 'text')
+export interface FormField {
+  name:         string;
+  label:        string;
+  placeholder?: string;
+  type?:        string;
+  options?:     string[];  // used when type === 'select'
+  rows?:        number;    // used when type === 'textarea'
+}
+
+export interface HCFTestimonial {
+  quote:   string;
+  name?:   string;
+  role?:   string;
+  avatar?: string;
+}
+
+export interface Props {
+  tagline?:     string;
+  title?:       string;
+  subtitle?:    string;
+  testimonial?: HCFTestimonial;
+  formTitle?:   string;
+  fields?:      FormField[];
+  submitLabel?: string;
+  formNote?:    string;
+  id?:          string;
+}
+
+// ─── Props ───────────────────────────────────────────────────────────────────
+const {
+  tagline,
+  title,
+  subtitle,
+  testimonial,
+  formTitle   = 'Talk to our team',
+  fields      = [],
+  submitLabel = 'Request a Demo',
+  formNote,
+  id,
+} = Astro.props;
+
+// ─── Field layout ─────────────────────────────────────────────────────────────
+// Read the first two field types via optional chaining (strict-mode safe)
+const f0 = fields[0]?.type;
+const f1 = fields[1]?.type;
+
+// Pair the first two fields side-by-side only when both are text/email
+const hasPair =
+  fields.length >= 2 &&
+  f0 !== 'select' && f0 !== 'textarea' &&
+  f1 !== 'select' && f1 !== 'textarea';
+
+const pairFields   = hasPair ? fields.slice(0, 2) : [];
+const stackFields  = hasPair ? fields.slice(2)    : fields;
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+// Returns a safe HTMLInputTypeAttribute-compatible literal.
+// Only 'email' needs special treatment; everything else is 'text'.
+const htmlType = (t: string | undefined): 'text' | 'email' =>
+  t === 'email' ? 'email' : 'text';
+
+// Select arrow as a pre-built CSS value (avoids escaped quotes in template)
+const svgArrow    = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E";
+const selectStyle = `background-image:url("${svgArrow}");background-repeat:no-repeat;background-position:right 14px center;`;
+
+// Pre-map paired fields to objects that carry a resolved `htmlType` property
+// so the template never calls a function — avoids TSX inference edge-cases.
+const pairMapped = pairFields.map((f) => ({
+  name:        f.name,
+  label:       f.label,
+  placeholder: f.placeholder,
+  itype:       htmlType(f.type),   // 'text' | 'email' — safe for <input type>
+}));
+---
+
+<section
+  class="relative not-prose md:-mt-[76px] bg-[#0a0a0a] text-white overflow-hidden"
+  {...id ? { id } : {}}
+>
+  <!-- Ambient glow — matches HeroPanels dark theme -->
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+    aria-hidden="true"
+    style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.13) 0%,transparent 70%);"
+  />
+  <!-- Noise texture overlay -->
+  <div class="absolute inset-0 pointer-events-none noise-overlay opacity-30" aria-hidden="true" />
+
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
+    <!-- Header spacer -->
+    <div class="pt-0 md:pt-[76px] pointer-events-none" />
+
+    <div class="py-16 md:py-24 flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-10">
+
+      <!-- ── Left: headline + subtitle + testimonial ──────────── -->
+      <div class="lg:w-1/2 flex flex-col gap-6 lg:pt-4">
+
+        {tagline && (
+          <div class="inline-flex w-fit items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-purple-400 shrink-0" aria-hidden="true" />
+            <span class="text-sm font-medium text-white/80">{tagline}</span>
+          </div>
+        )}
+
+        {title && (
+          <h1
+            class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white"
+            set:html={title}
+          />
+        )}
+
+        {subtitle && (
+          <p
+            class="text-base md:text-lg text-white/60 leading-relaxed max-w-md"
+            set:html={subtitle}
+          />
+        )}
+
+        {testimonial && (
+          <blockquote class="mt-auto pt-8 border-t border-white/10">
+            <p class="text-base text-white/70 leading-relaxed italic mb-5">
+              &ldquo;{testimonial.quote}&rdquo;
+            </p>
+            <footer class="flex items-center gap-3">
+              {testimonial.avatar && (
+                <img
+                  src={testimonial.avatar}
+                  alt={testimonial.name ?? ''}
+                  class="w-9 h-9 rounded-full object-cover ring-2 ring-white/20 shrink-0"
+                  loading="lazy"
+                />
+              )}
+              <div class="text-sm">
+                {testimonial.name && (
+                  <span class="font-semibold text-white">{testimonial.name}</span>
+                )}
+                {testimonial.role && (
+                  <span class="text-white/50 ml-1">{testimonial.role}</span>
+                )}
+              </div>
+            </footer>
+          </blockquote>
+        )}
+      </div>
+
+      <!-- ── Right: form card ──────────────────────────────────── -->
+      <div class="lg:w-1/2 shrink-0">
+        <div class="bg-white rounded-2xl shadow-2xl p-7 md:p-8">
+
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-5">
+            {formTitle}
+          </p>
+
+          <form class="flex flex-col gap-4">
+
+            <!-- Two-column row: first two text / email fields -->
+            {hasPair && (
+              <div class="grid grid-cols-2 gap-4">
+                {pairMapped.map((f) => (
+                  <div class="flex flex-col gap-1.5">
+                    <label for={`hcf-${f.name}`} class="text-xs font-semibold text-gray-600">
+                      {f.label}
+                    </label>
+                    <input
+                      id={`hcf-${f.name}`}
+                      name={f.name}
+                      type={f.itype}
+                      placeholder={f.placeholder}
+                      class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <!-- Stacked fields: select / textarea / text -->
+            {stackFields.map((f) => (
+              <div class="flex flex-col gap-1.5">
+                <label for={`hcf-${f.name}`} class="text-xs font-semibold text-gray-600">
+                  {f.label}
+                </label>
+
+                {f.type === 'select' && (
+                  <select
+                    id={`hcf-${f.name}`}
+                    name={f.name}
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow appearance-none"
+                    style={selectStyle}
+                  >
+                    {f.placeholder && (
+                      <option value="" disabled selected={true}>{f.placeholder}</option>
+                    )}
+                    {(f.options ?? []).map((opt) => (
+                      <option value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                )}
+
+                {f.type === 'textarea' && (
+                  <textarea
+                    id={`hcf-${f.name}`}
+                    name={f.name}
+                    rows={f.rows ?? 4}
+                    placeholder={f.placeholder}
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow resize-none"
+                  />
+                )}
+
+                {f.type !== 'select' && f.type !== 'textarea' && (
+                  <input
+                    id={`hcf-${f.name}`}
+                    name={f.name}
+                    type={htmlType(f.type)}
+                    placeholder={f.placeholder}
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
+                  />
+                )}
+              </div>
+            ))}
+
+            <!-- Submit button -->
+            <button
+              type="submit"
+              class="w-full mt-1 px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors"
+            >
+              {submitLabel}
+            </button>
+
+            {formNote && (
+              <p class="text-xs text-center text-gray-400 mt-1" set:html={formNote} />
+            )}
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

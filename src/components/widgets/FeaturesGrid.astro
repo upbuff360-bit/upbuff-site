@@ -1,0 +1,149 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { Icon } from 'astro-icon/components';
+import type { Widget } from '~/types';
+
+export interface GridFeature {
+  title: string;
+  description?: string;
+  /**
+   * astro-icon name (e.g. 'tabler:bolt') — rendered with a pink-to-purple gradient overlay.
+   * Alternatively pass `iconHtml` for a raw SVG/HTML string.
+   */
+  icon?: string;
+  /** Raw SVG/HTML string used instead of `icon` */
+  iconHtml?: string;
+}
+
+export interface Props extends Widget {
+  tagline?: string;
+  title?: string;
+  /** Appears on the right side of the split header row */
+  subtitle?: string;
+  /** Exactly 6 items fill the 2-row × 3-col grid; fewer items are also fine */
+  items?: Array<GridFeature>;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  items = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <!-- ── Split header ────────────────────────────────────────── -->
+  <div class="flex flex-col md:flex-row md:items-end gap-6 md:gap-12 mb-10 md:mb-12 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+
+    <!-- Left: tagline + title -->
+    <div class="md:w-1/2">
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-4">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300" set:html={tagline} />
+        </div>
+      )}
+      {title && (
+        <h2
+          class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100"
+          set:html={title}
+        />
+      )}
+    </div>
+
+    <!-- Right: subtitle -->
+    {subtitle && (
+      <div class="md:w-1/2">
+        <p class="text-muted text-base md:text-lg leading-relaxed dark:text-slate-400" set:html={subtitle} />
+      </div>
+    )}
+  </div>
+
+  <!-- ── 2 × 3 bordered feature grid ───────────────────────── -->
+  {items.length > 0 && (
+    <div class="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-slate-900 shadow-sm">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 divide-y divide-x-0 sm:divide-x divide-gray-200 dark:divide-gray-700 sm:[&>*:nth-child(3n+1)]:border-l-0">
+        {items.map(({ title: ft, description, icon, iconHtml }, i) => (
+          <div
+            class:list={[
+              'p-7 flex flex-col gap-6',
+              // add top border for 2nd row cells on lg
+              i >= 3 ? 'lg:border-t lg:border-gray-200 dark:lg:border-gray-700' : '',
+              i >= 2 ? 'sm:border-t sm:border-gray-200 dark:sm:border-gray-700 lg:border-t-0' : '',
+              'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+            ]}
+            style={`animation-delay: ${i * 60}ms`}
+          >
+            <!-- Icon -->
+            <div class="w-9 h-9 flex items-center justify-center">
+              {iconHtml
+                ? <Fragment set:html={iconHtml} />
+                : icon
+                  ? (
+                    <span class="gradient-icon-wrap">
+                      <Icon name={icon} class="w-8 h-8" />
+                    </span>
+                  )
+                  : null
+              }
+            </div>
+
+            <!-- Text -->
+            <div>
+              <h3 class="text-lg font-bold text-heading dark:text-gray-100 mb-2">{ft}</h3>
+              {description && (
+                <p class="text-sm text-muted dark:text-slate-400 leading-relaxed" set:html={description} />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</WidgetWrapper>
+
+<style>
+  /*
+   * Pink-to-purple gradient applied to astro-icon SVGs via CSS mask trick.
+   * Works because Icon renders an inline <svg>.
+   */
+  .gradient-icon-wrap {
+    display: inline-flex;
+    position: relative;
+  }
+
+  .gradient-icon-wrap :global(svg) {
+    /* paint the SVG with a pink-to-purple gradient */
+    fill: url(#icon-gradient) #e879a0;
+    stroke: url(#icon-gradient) #e879a0;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Define the gradient once globally */
+  :global(body) {
+    --icon-grad-start: #f472b6; /* pink-400 */
+    --icon-grad-end:   #a855f7; /* purple-500 */
+  }
+</style>
+
+<!-- Inline SVG gradient definition (injected once, referenced by fill:url(#icon-gradient)) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,612 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'SAP Business One Integration & Generative AI Reporting Platform | UpBuff',
+  description:
+    'Integrate SAP Business One using Clean Core Service Layer APIs. Enable mobile execution for manufacturing, warehouse, field service, and sales — plus Generative AI-powered ERP intelligence without core modification.',
+  canonical: 'https://www.upbuff.com/integrations/sap-business-one/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/integrations/sap-business-one/',
+    title: 'SAP Business One Integration & Generative AI Reporting | UpBuff',
+    description: 'Extend SAP Business One with Clean Core execution workflows and secure Generative AI-powered ERP intelligence — upgrade-safe, API-first.',
+    image: 'https://www.upbuff.com/images/sap-business-one-gen-ai.png',
+    site_name: 'UpBuff',
+    locale: 'en_US',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'SAP Business One Integration & Gen AI Reporting | UpBuff',
+    description: 'Clean Core SAP Business One execution — mobile workflows, warehouse mobility, and Generative AI ERP intelligence.',
+    site: '@upbufftech',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <!-- ── Core meta ──────────────────────────────────────── -->
+    <meta name="author"   content="UpBuff Technologies" />
+    <meta name="keywords" content="SAP Business One integration, SAP B1 Service Layer, SAP Business One mobile execution, SAP B1 warehouse mobility, SAP Business One Clean Core, Generative AI SAP reporting, SAP Business One Gen AI, SAP B1 API integration, upgrade-safe SAP Business One extension, SAP Business One execution platform" />
+    <meta name="robots"   content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- ── Open Graph (full set) ─────────────────────────── -->
+    <meta property="og:site_name"    content="UpBuff" />
+    <meta property="og:locale"       content="en_US" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"    content="SAP Business One Clean Core integration and Generative AI ERP reporting — UpBuff execution platform" />
+
+    <!-- ── Twitter Card (full set) ──────────────────────── -->
+    <meta name="twitter:site"    content="@upbufftech" />
+    <meta name="twitter:creator" content="@upbufftech" />
+    <meta name="twitter:image"   content="https://www.upbuff.com/images/sap-business-one-gen-ai.png" />
+
+    <!-- ── Preconnect ────────────────────────────────────── -->
+    <link rel="preconnect" href="http://4.151.8.142:4000" />
+
+    <!-- ── Schema: Organization ─────────────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.upbuff.com/logo.png",
+        "width": 200,
+        "height": 60
+      },
+      "description": "UpBuff is an ERP Execution and Generative AI platform integrating with SAP Business One using Clean Core Service Layer architecture.",
+      "sameAs": ["https://www.linkedin.com/company/upbuff"],
+      "areaServed": "Worldwide",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "url": "https://www.upbuff.com/contact"
+      }
+    })} />
+
+    <!-- ── Schema: WebSite ───────────────────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "UpBuff ERP Execution Platform",
+      "url": "https://www.upbuff.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.upbuff.com/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+
+    <!-- ── Schema: WebPage ───────────────────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "SAP Business One Integration & Generative AI Reporting Platform | UpBuff",
+      "description": "Integrate SAP Business One using Clean Core Service Layer APIs. Enable mobile execution for manufacturing, warehouse, field service, and sales — plus Generative AI-powered ERP intelligence.",
+      "url": "https://www.upbuff.com/integrations/sap-business-one/",
+      "inLanguage": "en-US",
+      "isPartOf": { "@type": "WebSite", "url": "https://www.upbuff.com" },
+      "about": { "@type": "Thing", "name": "SAP Business One Integration" },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",         "item": "https://www.upbuff.com" },
+          { "@type": "ListItem", "position": 2, "name": "Integrations", "item": "https://www.upbuff.com/integrations/" },
+          { "@type": "ListItem", "position": 3, "name": "SAP Business One", "item": "https://www.upbuff.com/integrations/sap-business-one/" }
+        ]
+      }
+    })} />
+
+    <!-- ── Schema: BreadcrumbList (standalone) ───────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",            "item": "https://www.upbuff.com" },
+        { "@type": "ListItem", "position": 2, "name": "Integrations",    "item": "https://www.upbuff.com/integrations/" },
+        { "@type": "ListItem", "position": 3, "name": "SAP Business One","item": "https://www.upbuff.com/integrations/sap-business-one/" }
+      ]
+    })} />
+
+    <!-- ── Schema: SoftwareApplication ──────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UpBuff ERP Execution Platform — SAP Business One",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "url": "https://www.upbuff.com/integrations/sap-business-one/",
+      "description": "Clean Core execution and Generative AI platform integrating with SAP Business One via official Service Layer APIs — mobile workflows, warehouse operations, shopfloor execution, field service, and intelligent ERP reporting.",
+      "featureList": [
+        "SAP Business One Service Layer API integration",
+        "Clean Core architecture — no ERP core modification",
+        "Mobile manufacturing & shopfloor execution",
+        "Warehouse mobility — GRPO, picking, put-away, batch tracking",
+        "Field service work order management",
+        "Sales & distribution mobile execution",
+        "Generative AI natural language ERP queries",
+        "AI-powered KPI summaries and anomaly detection",
+        "Offline capability for warehouse and field teams",
+        "Real-time bidirectional SAP Business One synchronization",
+        "Role-based secure data access",
+        "Upgrade-safe API-first integration"
+      ],
+      "softwareRequirements": "SAP Business One 9.x or later",
+      "provider": {
+        "@type": "Organization",
+        "name": "UpBuff Technologies",
+        "url": "https://www.upbuff.com"
+      }
+    })} />
+
+    <!-- ── Schema: FAQPage — all 6 FAQs ─────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does UpBuff modify SAP Business One core?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. UpBuff integrates exclusively using official SAP Business One Service Layer APIs — no core modifications, no direct database writes, no upgrade-blocking enhancements. The SAP Business One core remains completely intact." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the SAP Business One integration upgrade-safe?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Because UpBuff uses only official Service Layer APIs and avoids core modifications, SAP Business One upgrades proceed without regression testing or rework of the execution layer." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Generative AI-powered ERP reporting for SAP Business One?",
+          "acceptedAnswer": { "@type": "Answer", "text": "UpBuff's Generative AI layer lets users query SAP Business One data using natural language — asking questions like 'Show production orders delayed due to material shortages' or 'Summarize outstanding receivables above 30 days' — and receiving contextual answers, KPI summaries, and operational insights automatically." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is SAP Business One data secure when using Generative AI?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. All data access goes through secure Service Layer APIs with role-based permissions. No ERP data is stored or processed outside your defined security boundary. Generative AI responses respect existing SAP Business One user authorization levels." }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a SAP Business One integration take?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Standard SAP Business One integrations for manufacturing, warehouse, or field service workflows are typically live in 3–6 weeks. Generative AI reporting activation adds approximately 1–2 weeks depending on data scope." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can UpBuff work offline with SAP Business One?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Warehouse scanning and field service workflows continue in offline mode and sync automatically to SAP Business One via Service Layer when connectivity is restored — critical for shopfloor and remote environments." }
+        }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'secondary', text: 'Login', href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO
+       ══════════════════════════════════════════════════════════ -->
+  <Hero2
+    tagline="SAP Business One Integration"
+    actions={[
+      { variant: 'primary', text: 'Request SAP B1 Integration Assessment', href: '/contact', icon: 'tabler:plug-connected' },
+      { text: 'Explore Generative AI ERP Reporting', href: '/contact', icon: 'tabler:brain' },
+    ]}
+    image={{
+      src: 'http://4.151.8.142:4000/uploads/UpBuff-ERP-Extension-Process.png',
+      alt: 'SAP Business One Integration & Generative AI Execution Platform — UpBuff',
+    }}
+  >
+    <Fragment slot="title">
+      SAP Business One Integration &{' '}
+      <span class="text-accent dark:text-white">Generative AI Execution</span>
+    </Fragment>
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        SAP Business One is a powerful ERP for growing manufacturing, distribution, and service enterprises. UpBuff
+        extends it further — using official <strong>Service Layer APIs</strong> for Clean Core mobile execution, and a
+        secure <strong>Generative AI intelligence layer</strong> that turns static ERP data into real-time operational
+        insight. No core modifications. No upgrade risk. Just faster execution and smarter decisions.
+      </span>
+      <span class="block sm:hidden">
+        Clean Core SAP B1 execution — mobile workflows, warehouse mobility, and Generative AI ERP intelligence.
+      </span>
+    </Fragment>
+  </Hero2>
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Trusted by SAP Business One enterprises in manufacturing, distribution, and field service"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png',     alt: 'SAP Business One' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png', alt: 'SAP S/4HANA' },
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',                           alt: 'ideaForge' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',                           alt: 'Molygraph' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',                     alt: 'NCC Streetscape' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',                             alt: 'Roofsol' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',                     alt: 'The Wine Source' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. PROBLEM SPLIT
+       ══════════════════════════════════════════════════════════ -->
+  <ProblemSplit
+    tagline="The Problem"
+    title="Traditional SAP Business One extensions create fragile architecture"
+    subtitle="When enterprises try to extend SAP Business One for warehouse, shopfloor, and field operations through add-ons and core modifications, they accumulate technical debt that compounds at every upgrade cycle."
+    items={[
+      {
+        title: 'Heavy third-party add-ons block upgrade paths',
+        description: 'Every third-party add-on installed inside SAP Business One becomes a compatibility liability. SAP version upgrades require each add-on to be re-certified, re-tested, and often re-purchased — turning routine upgrades into months-long projects.',
+      },
+      {
+        title: 'DI-API overuse creates instability',
+        description: 'The DI-API was designed for specific programmatic operations — not for high-frequency operational workflows. Overusing it for warehouse scanning, field service updates, and shopfloor confirmations creates performance bottlenecks and stability risks.',
+      },
+      {
+        title: 'Core modifications destroy upgrade safety',
+        description: 'Customizations made directly inside SAP Business One core — custom objects, modified UDFs, altered business logic — must be manually migrated or rebuilt at every major version upgrade. The cost compounds with each release cycle.',
+      },
+      {
+        title: 'Reporting stays static while operations move fast',
+        description: 'Traditional Crystal Reports and Query Manager outputs require IT involvement for every change. Business leaders cannot access real-time operational intelligence without waiting for report development cycles — slowing every decision.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       4. CONTENT SPLIT CARD — Clean Core approach
+       ══════════════════════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="Clean Core Integration"
+    title="SAP Business One stays your System of Record. UpBuff becomes your System of Execution and Intelligence."
+    cardTitle="Service Layer first. Everything else is optional."
+    cardDescription="UpBuff integrates with SAP Business One exclusively via the official Service Layer REST API — the same integration pattern SAP itself recommends for all external connectivity. No direct database manipulation. No ODBC hacks. No core object modifications. Every transaction, every data read, every synchronization flows through the Service Layer — keeping your upgrade path clean and your audit trail intact."
+    cardImage="http://4.151.8.142:4000/uploads/UpBuff-ERP-Integrated-Sales-and-Distribution-Execution.png"
+    cardGradient="linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)"
+    testimonial={{
+      quote: 'UpBuff connected our SAP Business One to the field team in weeks using the Service Layer. Real-time pricing, credit control, and order sync — without touching SAP core. Our upgrade path stayed completely intact.',
+      name: 'Head of IT',
+      company: 'Spartan Engineering Industries Pvt. Ltd',
+      avatar: 'http://4.151.8.142:4000/uploads/spartan-client.png',
+    }}
+    features={[
+      {
+        icon: 'tabler:api',
+        title: 'Service Layer REST API — exclusively',
+        description: 'All data exchange via official SAP B1 Service Layer endpoints. Zero direct DB writes, zero core object changes.',
+      },
+      {
+        icon: 'tabler:rocket',
+        title: 'Upgrade-safe from day one',
+        description: 'Service Layer integrations survive SAP B1 version upgrades intact — no rework, no re-certification required.',
+      },
+      {
+        icon: 'tabler:shield-check',
+        title: 'Full audit trail',
+        description: 'Every API call logged, every transaction traceable — compliance and audit readiness built in.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. FEATURES HIGHLIGHTS — 4 execution domains
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesHighlights
+    tagline="Execution Domains"
+    title="Four operational domains extended via SAP Business One"
+    subtitle="UpBuff extends SAP Business One into every major operational domain — without touching the ERP core. Each execution area connects via Service Layer APIs and synchronizes transactions in real time."
+    items={[
+      {
+        title: 'Manufacturing & Shopfloor Execution',
+        description: 'Mobile production order processing, barcode-driven material issue and goods receipt, real-time WIP tracking across production lines, operator-level quality checkpoints, and instant posting to SAP B1 production and inventory modules. Shopfloor teams get purpose-built interfaces — not SAP B1 screens on a tablet.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 bg-gradient-to-br from-blue-50 to-indigo-100 p-6"><div class="w-20 h-20 rounded-2xl bg-blue-700 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><path d="M12 12v5M9.5 12v5M14.5 12v5"/></svg></div><p class="text-sm font-semibold text-blue-900 text-center">Shopfloor · WIP · QC</p><p class="text-xs text-blue-600 text-center mt-1">Barcode scan · SAP B1 Production sync</p></div>',
+      },
+      {
+        title: 'Warehouse & Inventory Mobility',
+        description: 'Mobile GRPO and put-away, picking and packing workflows with barcode and QR scanning, batch and serial number traceability, offline capability for low-connectivity environments, and direct posting to SAP Business One inventory and warehouse modules — no custom SAP add-ons required.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 bg-gradient-to-br from-green-50 to-emerald-100 p-6"><div class="w-20 h-20 rounded-2xl bg-green-700 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14M5 8a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v0a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8M10 12h4"/></svg></div><p class="text-sm font-semibold text-green-900 text-center">GRPO · Picking · Batch · Serial</p><p class="text-xs text-green-600 text-center mt-1">Offline scan · SAP B1 IM sync</p></div>',
+      },
+      {
+        title: 'Field Service Enablement',
+        description: 'Mobile work order management connected to SAP Business One service and sales modules. Geo-tagged job updates, parts consumption and goods issue capture, digital signature collection, proof-of-service photo upload, and automatic ERP posting — eliminating billing delays and paper-based back-office entry.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 bg-gradient-to-br from-orange-50 to-red-100 p-6"><div class="w-20 h-20 rounded-2xl bg-orange-600 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><p class="text-sm font-semibold text-orange-900 text-center">Work orders · Geo · Signatures</p><p class="text-xs text-orange-600 text-center mt-1">Proof-of-service · SAP B1 Service</p></div>',
+      },
+      {
+        title: 'Sales & Distribution Execution',
+        description: 'Mobile order creation with live SAP Business One pricing, inventory availability, and customer credit limit checks. Lead and opportunity tracking, collection and payment capture, customer visit logging, and real-time synchronization to SAP B1 Sales and AR modules — no duplicate entry, no ERP screens for field reps.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 bg-gradient-to-br from-purple-50 to-violet-100 p-6"><div class="w-20 h-20 rounded-2xl bg-purple-600 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><p class="text-sm font-semibold text-purple-900 text-center">Orders · Visits · Collections</p><p class="text-xs text-purple-600 text-center mt-1">Live SAP B1 pricing · AR sync</p></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       6. FEATURES CAROUSEL — Generative AI layer
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Generative AI for SAP Business One"
+    title="Turn SAP Business One data into real-time operational intelligence"
+    subtitle="UpBuff's Generative AI reporting layer is purpose-built for SAP Business One environments — secured through the Service Layer, aligned with your existing user permissions, and delivering conversational ERP intelligence without any data leaving your security boundary."
+    items={[
+      {
+        badge: 'Natural Language Queries',
+        title: 'Ask SAP Business One anything — in plain English',
+        description: 'Instead of building Crystal Reports or writing SQL queries, business users ask plain English questions: "Show production orders delayed due to raw material shortages." "Which warehouses have increasing stock variance?" "Summarize outstanding receivables above 30 days by territory." UpBuff retrieves the data via Service Layer, processes it through the AI layer, and returns a structured, contextual answer — instantly.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 10h8M8 14h5"/></svg></div>',
+      },
+      {
+        badge: 'AI-Powered KPI Summaries',
+        title: 'Automatic context-aware KPI explanations',
+        description: 'UpBuff does not just show numbers — it explains them. When AR overdue balance increases by 18% this week, the AI layer surfaces which customers drove the change, which territories are affected, and what the trend looks like versus the previous period. Executives and operations leads get narrative summaries alongside the data — without waiting for analyst input.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>',
+      },
+      {
+        badge: 'Anomaly Detection',
+        title: 'Proactive detection of operational exceptions',
+        description: 'UpBuff continuously monitors SAP Business One transactional data and surfaces anomalies before they become problems — stock variance spikes, unusual goods issue patterns, overdue service calls clustering in a territory, or sudden drops in production order confirmation rates. Alerts are delivered in plain language with contextual detail, not raw ERP notification codes.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v3M11 14h.01"/></svg></div>',
+      },
+      {
+        badge: 'Enterprise-Safe Architecture',
+        title: 'AI intelligence within your security boundary',
+        description: 'All Generative AI data access flows through SAP Business One Service Layer — never via direct database connections. Responses respect existing SAP B1 user authorizations and role-based data visibility. No ERP data is stored externally. No training on your data. The AI layer is a query processor, not a data repository — audit-ready and compliance-aligned from day one.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       7. FEATURES GRID — Clean Core benefits
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="Clean Core Benefits"
+    title="What Service Layer integration guarantees"
+    subtitle="Choosing Service Layer over add-ons and core modifications is not just a technical preference — it determines your SAP Business One upgrade health for the next decade."
+    items={[
+      {
+        icon: 'tabler:rocket',
+        title: 'Upgrade-safe by design',
+        description: 'Service Layer integrations survive SAP Business One version upgrades intact. No regression testing, no re-certification, no re-implementation after every release.',
+      },
+      {
+        icon: 'tabler:database-off',
+        title: 'Zero database manipulation',
+        description: 'No direct ODBC connections, no SQL writes to SAP B1 tables. Every transaction flows through the official Service Layer — keeping the ERP pristine and auditable.',
+      },
+      {
+        icon: 'tabler:coin-off',
+        title: 'Lower total cost of ownership',
+        description: 'Eliminate add-on license costs, specialist consultant dependency, and upgrade rework. The Clean Core model reduces long-term SAP B1 maintenance overhead significantly.',
+      },
+      {
+        icon: 'tabler:wifi-off',
+        title: 'Offline-capable operations',
+        description: 'Warehouse scanning and field service workflows run offline and sync via Service Layer when connectivity resumes — no business interruption in remote or shopfloor environments.',
+      },
+      {
+        icon: 'tabler:world',
+        title: 'Multi-site scalability',
+        description: 'Deploy the same Clean Core execution layer across multiple plants, warehouses, and territories without replicating SAP B1 configurations or add-on licenses per site.',
+      },
+      {
+        icon: 'tabler:clipboard-check',
+        title: 'Audit and compliance ready',
+        description: 'Every Service Layer call is logged with full transaction context — providing complete traceability for internal audit, financial compliance, and regulatory reporting.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       8. FEATURES BENTO — architecture layers
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesBento
+    tagline="Integration Architecture"
+    title="Four layers. Zero core modifications."
+    subtitle="The UpBuff integration architecture for SAP Business One follows a strict four-layer model — each layer communicating via official APIs, with no shortcuts, no database hooks, and no fragile add-on dependencies."
+    items={[
+      {
+        wide: true,
+        title: 'SAP Business One — untouched system of record',
+        description: 'SAP Business One remains your authoritative system for master data, financials, inventory, sales, and purchasing. UpBuff reads and writes exclusively through the Service Layer REST API — the same method SAP officially endorses for external integrations. The core is never modified, never directly queried, and never at risk from the execution layer.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-8"><div class="text-center"><div class="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg" style="background:linear-gradient(135deg,#003f7c,#0070c0)"><span class="text-white font-black text-xl">SAP</span></div><p class="text-sm font-bold text-blue-900">SAP Business One</p><p class="text-xs text-blue-600 mt-1">Service Layer · Clean Core · Upgrade-safe</p></div></div>',
+      },
+      {
+        wide: true,
+        title: 'Generative AI layer — intelligence on top of ERP data',
+        description: 'The Generative AI reporting layer sits above the execution engine — reading SAP Business One data via Service Layer, processing queries through a secured AI inference pipeline, and returning structured operational intelligence. It never writes to ERP, never stores data externally, and always respects existing SAP B1 user authorization levels.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-100 p-8"><div class="text-center"><div class="w-20 h-20 rounded-2xl bg-purple-700 flex items-center justify-center mx-auto mb-4 shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><p class="text-sm font-bold text-purple-900">Generative AI Layer</p><p class="text-xs text-purple-600 mt-1">Natural language · KPI summaries · Anomaly detection</p></div></div>',
+      },
+      {
+        title: 'Mobile execution apps',
+        description: 'Purpose-built iOS and Android apps for shopfloor, warehouse, field service, and sales teams — designed for operational speed, not ERP complexity.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-green-600 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01M9 7h6M9 11h6M9 15h3"/></svg></div>',
+      },
+      {
+        title: 'Secure integration middleware',
+        description: 'Encrypted, authenticated communication layer between UpBuff and SAP B1 Service Layer — supporting on-premise, private cloud, and SAP HANA Cloud deployments.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-slate-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>',
+      },
+      {
+        title: 'Offline sync engine',
+        description: 'Local data store with automatic Service Layer reconciliation — warehouse and field workflows continue without connectivity and sync cleanly on reconnection.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-100 p-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-orange-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       9. FEATURES ENTERPRISE — who this is built for
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesEnterprise
+    tagline="Who This Is For"
+    title="Built for SAP Business One enterprises that want more"
+    subtitle="UpBuff is chosen by growing enterprises that need execution agility and data intelligence — without disrupting the SAP Business One investment they have already made."
+    items={[
+      {
+        title: 'Manufacturing & Distribution Enterprises',
+        description: 'SAP Business One customers in manufacturing and distribution who need mobile shopfloor execution, warehouse scanning, and real-time inventory visibility — without adding fragile add-ons or risking upgrade safety. UpBuff gives shopfloor and warehouse teams a mobile-first interface while keeping SAP B1 as the single source of truth.',
+        illustration: '<style>.mfei{width:100%;height:100%;background:#eff6ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px}.mfei-ic{width:60px;height:60px;border-radius:14px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;margin:0 auto}.mfei-rows{display:flex;flex-direction:column;gap:6px;width:100%}.mfei-row{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #bfdbfe;border-radius:8px;padding:7px 10px}.mfei-dot{width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0}.mfei-t{font-size:10px;font-weight:500;color:#1e3a5f}</style><div class="mfei"><div class="mfei-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><path d="M12 12v5M9.5 12v5M14.5 12v5"/></svg></div><div class="mfei-rows"><div class="mfei-row"><div class="mfei-dot"></div><span class="mfei-t">Mobile shopfloor execution</span></div><div class="mfei-row"><div class="mfei-dot"></div><span class="mfei-t">Warehouse scanning workflows</span></div><div class="mfei-row"><div class="mfei-dot"></div><span class="mfei-t">Real-time SAP B1 sync</span></div></div></div>',
+      },
+      {
+        title: 'IT Leaders & SAP B1 Implementation Partners',
+        description: 'IT managers and SAP Business One implementation partners who want to extend client environments with Clean Core architecture — recommending execution capability that passes SAP governance reviews, avoids add-on license costs, and keeps clients upgrade-safe. UpBuff is designed to complement, not compete with, the SAP Business One implementation.',
+        illustration: '<style>.itlei{width:100%;height:100%;background:#f0fdf4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px}.itlei-avs{display:flex;justify-content:center}.itlei-av{width:44px;height:44px;border-radius:50%;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}.itlei-a1{background:#dcfce7;color:#15803d;z-index:2}.itlei-a2{background:#15803d;color:#fff;margin-left:-12px;z-index:1}.itlei-chips{display:flex;flex-direction:column;gap:5px;width:100%}.itlei-chip{font-size:10px;font-weight:600;padding:5px 10px;border-radius:7px;background:#fff;border:0.5px solid #bbf7d0;color:#166534;text-align:center}</style><div class="itlei"><div class="itlei-avs"><div class="itlei-av itlei-a1">IT</div><div class="itlei-av itlei-a2">B1</div></div><div class="itlei-chips"><div class="itlei-chip">Clean Core architecture</div><div class="itlei-chip">No add-on licensing</div><div class="itlei-chip">Upgrade-safe extension</div></div></div>',
+      },
+      {
+        title: 'Operations & Finance Leaders Wanting AI Intelligence',
+        description: 'Plant managers, CFOs, and operations directors who need real-time SAP Business One intelligence without waiting for IT report development cycles. UpBuff\'s Generative AI layer puts live ERP data in plain English — surfacing production delays, AR anomalies, inventory variance, and service performance directly to the leaders who need to act on them.',
+        illustration: '<style>.aiei{width:100%;height:100%;background:#faf5ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px}.aiei-ic{width:60px;height:60px;border-radius:14px;background:#7c3aed;display:flex;align-items:center;justify-content:center;margin:0 auto;animation:aieip 3s ease-in-out infinite}.aiei-msgs{display:flex;flex-direction:column;gap:5px;width:100%}.aiei-q{font-size:9px;font-style:italic;color:#6d28d9;background:#ede9fe;border-radius:7px;padding:5px 8px}.aiei-a{font-size:9px;font-weight:500;color:#4c1d95;background:#fff;border:0.5px solid #ddd6fe;border-radius:7px;padding:5px 8px}@keyframes aieip{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}</style><div class="aiei"><div class="aiei-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div><div class="aiei-msgs"><div class="aiei-q">"Show overdue receivables above 30 days"</div><div class="aiei-a">3 customers · ₹12.4L outstanding · 2 new this week</div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       10. TOOLS MARQUEE
+       ══════════════════════════════════════════════════════════ -->
+  <ToolsMarquee
+    title="SAP Business One — connected to your entire enterprise ecosystem"
+    description="UpBuff extends SAP Business One beyond the ERP boundary — connecting it with the communication tools, analytics platforms, and operational channels your teams already use."
+    speed={30}
+    tools={[
+      { name: 'SAP B1',    logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png"          alt="SAP Business One" class="w-10 h-10 object-contain" />' },
+      { name: 'WhatsApp',  logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png"     alt="WhatsApp"         class="w-10 h-10 object-contain" />' },
+      { name: 'Power BI',  logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png"    alt="Power BI"         class="w-10 h-10 object-contain" />' },
+      { name: 'Outlook',   logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png"      alt="Outlook"          class="w-10 h-10 object-contain" />' },
+      { name: 'Gmail',     logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png"        alt="Gmail"            class="w-10 h-10 object-contain" />' },
+      { name: 'Zoho',      logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png"         alt="Zoho"             class="w-10 h-10 object-contain" />' },
+      { name: 'IoT',       logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png"                         alt="IoT"              class="w-10 h-10 object-contain" />' },
+      { name: 'SMS',       logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png"          alt="SMS"              class="w-10 h-10 object-contain" />' },
+      { name: 'VoIP',      logo: '<img src="http://4.151.8.142:4000/uploads/logo/voip-integration-with-upbuff-crm.png"         alt="VoIP"             class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       11. TESTIMONIALS
+       ══════════════════════════════════════════════════════════ -->
+  <TestimonialsGrid
+    title="What SAP Business One enterprises say about UpBuff"
+    subtitle="From shopfloor execution to Generative AI reporting — here's how SAP Business One teams extended their ERP without touching the core"
+    row1={[
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'Our shopfloor supervisors now confirm production orders from mobile devices. It posts directly to SAP B1 in real time via Service Layer. Our upgrade timeline stayed intact because nothing touched the ERP core.',
+        name: 'Head of Manufacturing Operations',
+        role: 'Molygraph',
+      },
+      {
+        company: 'NCC Streetscape',
+        logo: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',
+        quote: 'Warehouse scanning used to require a custom add-on that blocked every upgrade. UpBuff replaced it entirely via Service Layer — scanning-friendly, offline-capable, and posting directly to SAP B1 inventory.',
+        name: 'IT Director',
+        role: 'NCC Streetscape',
+      },
+    ]}
+    statCard={{
+      stat: '3–6 wks',
+      label: 'typical time to live SAP Business One integration for manufacturing or warehouse execution',
+      gradient: 'linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)',
+    }}
+    row2={[
+      {
+        company: 'The Wine Source',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'Our sales reps create orders in the field with live SAP B1 pricing and credit checks via Service Layer. Collections captured on the spot. The whole order-to-cash cycle now closes in hours.',
+        name: 'Head of Sales Operations',
+        role: 'The Wine Source',
+      },
+      {
+        company: 'ideaForge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'Field service job closures now happen at the site. Technicians capture parts, signatures, and proof-of-service on mobile — it posts to SAP B1 automatically. Billing cycles cut by 60%.',
+        name: 'VP Field Operations',
+        role: 'ideaForge Technologies',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       12. FAQ ACCORDION
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="SAP Business One integration — questions answered"
+    items={[
+      {
+        question: 'Does UpBuff modify SAP Business One core?',
+        answer: 'No. UpBuff integrates exclusively using official SAP Business One Service Layer REST APIs — no core modifications, no direct database writes, no ODBC connections, no upgrade-blocking custom objects. The SAP Business One core remains completely intact.',
+      },
+      {
+        question: 'Is the SAP Business One integration upgrade-safe?',
+        answer: 'Yes. Because UpBuff uses only official Service Layer APIs and avoids core modifications, SAP Business One version upgrades proceed without regression testing or rework of the execution layer. This is by design — not an afterthought.',
+      },
+      {
+        question: 'What is Generative AI-powered ERP reporting for SAP Business One?',
+        answer: 'UpBuff\'s Generative AI layer lets business users query SAP Business One data in plain English — asking questions like "Show production orders delayed due to material shortages" or "Summarize outstanding receivables above 30 days" — and receiving structured, contextual answers automatically. No Crystal Reports. No IT involvement.',
+      },
+      {
+        question: 'Is SAP Business One data secure when using Generative AI?',
+        answer: 'Yes. All AI data access flows through the SAP Business One Service Layer — never via direct database connections. Responses respect existing SAP B1 user authorization levels. No ERP data is stored or processed outside your defined security boundary. The AI layer is a query processor, not a data repository.',
+      },
+      {
+        question: 'How long does a SAP Business One integration take?',
+        answer: 'Standard integrations for manufacturing, warehouse, or field service are typically live in 3–6 weeks depending on module scope. Generative AI reporting activation adds approximately 1–2 weeks. Most integrations go live faster because there is no ERP customization to build or test.',
+      },
+      {
+        question: 'Can UpBuff work offline with SAP Business One?',
+        answer: 'Yes. Warehouse scanning and field service workflows run offline and sync automatically to SAP Business One via Service Layer when connectivity resumes — critical for shopfloor and remote environments with unreliable connectivity.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       13. CTA BANNER
+       ══════════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Ready to extend SAP Business One with Clean Core execution and Generative AI intelligence?"
+    subtitle="Our SAP Business One architects will assess your environment and design an upgrade-safe execution layer — with Generative AI reporting included. No ERP core modifications required."
+    action={{
+      text: 'Request SAP B1 Integration Assessment',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    secondaryAction={{
+      text: 'Explore Generative AI ERP Reporting',
+      href: '/contact',
+      icon: 'tabler:brain',
+    }}
+    note="No ERP core modifications required · Service Layer API-first · Upgrade-safe"
+  />
+
+</Layout>

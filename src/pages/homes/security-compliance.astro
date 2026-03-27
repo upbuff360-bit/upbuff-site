@@ -1,0 +1,483 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import HeroPanels from '~/components/widgets/HeroPanels.astro';
+
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'Security & Compliance | UpBuff ERP Execution Platform',
+  description:
+    'Enterprise-grade encryption, role-based access control, audit traceability, and Clean Core ERP security built into every layer of the UpBuff platform.',
+  canonical: 'https://www.upbuff.com/security-compliance/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/security-compliance/',
+    title: 'Security & Compliance | UpBuff ERP Execution Platform',
+    description: 'Enterprise-grade security for SAP and enterprise ERP execution environments — encryption, RBAC, audit logs, and data boundary enforcement built in.',
+    image: 'https://www.upbuff.com/images/security-compliance.png',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'Security & Compliance | UpBuff',
+    description: 'Enterprise-grade security for SAP, Oracle, and Epicor ERP execution environments.',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Does UpBuff store ERP data externally?", "acceptedAnswer": { "@type": "Answer", "text": "No. UpBuff never stores ERP master data externally. All ERP data is accessed via scoped API calls and never duplicated outside your ERP boundary." } },
+        { "@type": "Question", "name": "How does UpBuff handle data encryption?", "acceptedAnswer": { "@type": "Answer", "text": "All data in transit is encrypted using TLS 1.3. API credentials and secrets are managed with industry-standard secret management and never exposed in application code or logs." } },
+        { "@type": "Question", "name": "How does UpBuff enforce access control?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff uses role-based access control mapped directly to ERP user roles. Every user permission is governed by ERP authorization logic — no permission exists outside ERP governance." } },
+        { "@type": "Question", "name": "Can UpBuff be deployed on-premise?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. UpBuff supports full on-premise deployment within your own infrastructure. No data leaves your network perimeter." } }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <!-- White header — matches white hero theme -->
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'secondary', text: 'Login',        href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO — HeroPanels white theme
+       ══════════════════════════════════════════════════════════ -->
+  <HeroPanels
+    theme="white"
+    tagline="Security & Compliance"
+    title="Security is architecture, not a feature added on top."
+    subtitle="UpBuff is designed for enterprise security, compliance, and data governance at scale. Every security control is built into the platform architecture, not bolted on after deployment. Because ERP data deserves enterprise-grade protection at every layer, every API call, and every transaction."
+    actions={[
+      { variant: 'primary',   text: 'Request Security Review',    href: '/contact' },
+      { variant: 'secondary', text: 'Download Security Overview', href: '/docs/security-overview.pdf' },
+    ]}
+    panels={[
+      {
+        accent: 'linear-gradient(160deg, #0f172a 0%, #1e3a5f 100%)',
+        html: `
+          <div style="padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; height: 100%;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <span style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.9);">Security Posture — Live Status</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;flex:1;justify-content:center;">
+              <div style="background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;"></div>
+                <span style="font-size:14.5px;color:rgba(255,255,255,0.85);font-weight:500;">TLS 1.3 — All connections encrypted</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;"></div>
+                <span style="font-size:14.5px;color:rgba(255,255,255,0.85);font-weight:500;">Role-Based Access — ERP governed</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;"></div>
+                <span style="font-size:14.5px;color:rgba(255,255,255,0.85);font-weight:500;">Audit Logs — Tamper-evident</span>
+              </div>
+              <div style="background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;box-shadow:0 0 6px #4ade80;"></div>
+                <span style="font-size:14.5px;color:rgba(255,255,255,0.85);font-weight:500;">Zero ERP data stored externally</span>
+              </div>
+            </div>
+          </div>
+        `,
+      },
+      {
+        html: `
+          <div style="padding: 22px 20px; background:#f8fafc; height:100%; border:0.5px solid rgba(0,0,0,0.07);">
+            <p style="font-size:15px;font-weight:600;color:#09090b;margin-bottom:14px;">Security Controls</p>
+            ${[
+              ['End-to-End TLS Encryption',    'Transport layer · TLS 1.3'],
+              ['Role-Based Access Control',     'Mapped to ERP user roles'],
+              ['Secret & Credential Vault',     'Auto-rotation · No plaintext'],
+              ['Transaction Audit Logs',        'Tamper-evident · Exportable'],
+              ['ERP Data Boundary Enforcement', 'API-only · No external store'],
+            ].map(([name, meta]) => `
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-top:0.5px solid rgba(0,0,0,0.06);">
+                <div style="width:30px;height:30px;border-radius:7px;background:rgba(0,0,0,0.04);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:14px;font-weight:500;color:#09090b;">${name}</div>
+                  <div style="font-size:15px;color:rgba(0,0,0,0.4);">${meta}</div>
+                </div>
+                <div style="width:16px;height:16px;border-radius:50%;background:rgba(74,222,128,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `,
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Enterprise-Grade Security for SAP and Enterprise ERP Environments"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png', alt: 'SAP S/4HANA' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png',          alt: 'SAP Business One' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png',       alt: 'Oracle ERP' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png',      alt: 'Epicor ERP' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png',         alt: 'Zoho' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. SECURITY PHILOSOPHY — ContentSplitCard
+       ══════════════════════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="Security Philosophy"
+    title="Built secure from the ground up — not secured after the fact"
+    cardTitle="Every design decision starts with security"
+    cardDescription="Most platforms add security features after the product is built. UpBuff is different — security is the foundation on which every feature is designed. From the first API call to the final ERP posting, every action is encrypted, authenticated, authorized, and logged. There are no exceptions."
+    cardImage="http://4.151.8.142:4000/uploads/upbuff-ERP-CRM-integrations-for-WhatsApp-Tally-Shopify-SAP.png"
+    cardGradient="linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%)"
+    testimonial={{
+      quote: 'UpBuff was the only ERP extension platform that could satisfy our enterprise security review. API-first, fully auditable, and role-controlled — it passed every checkpoint our InfoSec team set.',
+      name: 'CEO',
+      company: 'Spartan Engineering Industries Pvt. Ltd',
+      avatar: 'http://4.151.8.142:4000/uploads/spartan-client.png',
+    }}
+    features={[
+      {
+        icon: 'tabler:lock',
+        title: 'TLS 1.3 encryption in transit',
+        description: 'All data moving between UpBuff, ERP systems, and mobile clients is encrypted with TLS 1.3.',
+      },
+      {
+        icon: 'tabler:shield-check',
+        title: 'API-only ERP integration',
+        description: 'No direct database writes. All ERP integration flows through official APIs — SAP Service Layer, OData, BAPI. Upgrade-safe and audit-clean.',
+      },
+      {
+        icon: 'tabler:clipboard-check',
+        title: 'Full transaction audit trail',
+        description: 'Every action is logged with timestamp, user ID, and transaction reference — nothing is anonymous.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       4. CORE SECURITY CAPABILITIES — FeaturesGrid 2×3
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="Core Security"
+    title="Six foundational security capabilities"
+    subtitle="Every capability listed here is built into the platform architecture — not available as an optional add-on or enterprise-tier upgrade."
+    items={[
+      {
+        icon: 'tabler:lock',
+        title: 'End-to-End TLS Encryption',
+        description: 'All data in transit between UpBuff, ERP systems, mobile clients, and third-party integrations uses TLS 1.3 — the current industry gold standard for transport encryption.',
+      },
+      {
+        icon: 'tabler:key',
+        title: 'Secret & Credential Management',
+        description: 'API keys, ERP service credentials, and integration secrets are stored using vault-based secret management — never in application code, config files, or logs.',
+      },
+      {
+        icon: 'tabler:users',
+        title: 'Role-Based Access Control',
+        description: 'Granular RBAC mapped directly to ERP user roles and organizational structures. Field reps see only their territory. Warehouse operators access only their warehouse. No permission exists outside ERP governance.',
+      },
+      {
+        icon: 'tabler:clipboard-list',
+        title: 'Full Transaction Audit Logs',
+        description: 'Every user action, API call, data access, and ERP transaction is logged with timestamp, user identifier, session context, and transaction reference — providing complete audit traceability.',
+      },
+      {
+        icon: 'tabler:git-merge',
+        title: 'Multi-Level Approval Workflows',
+        description: 'Configurable approval chains for credit, pricing, discounts, and order authorization — integrated with ERP business logic to ensure no transaction bypasses governance controls.',
+      },
+      {
+        icon: 'tabler:database-export',
+        title: 'ERP Data Boundary Enforcement',
+        description: 'UpBuff never stores ERP master data externally. All data is accessed via scoped API calls and never duplicated outside your ERP boundary — preserving data sovereignty and governance.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. THREE SECURITY LAYERS — FeaturesHighlights
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesHighlights
+    tagline="Security Layers"
+    title="Three layers of enterprise security"
+    subtitle="UpBuff security is structured in three independent layers — each protecting a different surface area of the ERP integration. A vulnerability at one layer is isolated and cannot cascade to the others."
+    items={[
+      {
+        title: 'Layer 1 — API & Transport Security',
+        description: 'All communication between UpBuff and ERP systems flows through official API endpoints — SAP Service Layer, OData, BAPI, REST. TLS 1.3 encryption on every request. No direct database access. No custom transport protocols. Certificate pinning on mobile clients prevents man-in-the-middle attacks.',
+        image: '<style>.l1{width:100%;height:100%;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 14px;gap:14px;box-sizing:border-box}.l1-row{display:flex;align-items:center;width:100%}.l1-node{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:54px}.l1-ni{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center}.l1-nl{font-size:14px;font-weight:600;color:#1e293b;text-align:center}.l1-ns{font-size:14px;color:#94a3b8}.l1-ch{flex:1;position:relative;height:36px;display:flex;align-items:center;margin:0 4px}.l1-track{position:absolute;left:0;right:0;height:1.5px;background:#bfdbfe}.l1-pkt{position:absolute;top:50%;width:7px;height:7px;border-radius:2px;transform:translateY(-50%);animation:l1move 2.4s linear infinite}.l1-p1{background:#3b82f6}.l1-p2{background:#6366f1;animation-delay:.8s}.l1-p3{background:#3b82f6;animation-delay:1.6s}.l1-lock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:1px solid #93c5fd;border-radius:6px;padding:3px 6px;display:flex;align-items:center;gap:3px;z-index:2}.l1-lt{font-size:14px;font-weight:700;color:#1d4ed8}.l1-tags{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}.l1-tag{font-size:10.5px;font-weight:600;padding:2px 5px;border-radius:4px;background:#eff6ff;color:#1e40af}.l1-tg{background:#f0fdf4;color:#15803d}@keyframes l1move{0%{left:-8px;opacity:0}8%{opacity:1}42%{left:calc(50% - 16px);opacity:0}58%{left:calc(50% + 16px);opacity:0}92%{opacity:1}100%{left:calc(100% + 8px);opacity:0}}</style><div class="l1"><div class="l1-row"><div class="l1-node"><div class="l1-ni" style="background:#eff6ff;border:0.5px solid #bfdbfe"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><span class="l1-nl">UpBuff</span><span class="l1-ns">Client</span></div><div class="l1-ch"><div class="l1-track"></div><div class="l1-pkt l1-p1"></div><div class="l1-pkt l1-p2"></div><div class="l1-pkt l1-p3"></div><div class="l1-lock"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span class="l1-lt">TLS 1.3</span></div></div><div class="l1-node"><div class="l1-ni" style="background:#f0fdf4;border:0.5px solid #bbf7d0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg></div><span class="l1-nl">SAP ERP</span><span class="l1-ns">System</span></div></div><div class="l1-tags"><span class="l1-tag">OData</span><span class="l1-tag">BAPI</span><span class="l1-tag">Service Layer</span><span class="l1-tag l1-tg">No direct DB</span></div></div>',
+      },
+      {
+        title: 'Layer 2 — Identity & Access Control',
+        description: 'Every user, every session, and every permission is authenticated and authorized before any ERP data is accessed. RBAC mapped to ERP roles. Multi-factor authentication supported. Session tokens are short-lived, scoped, and automatically rotated. No shared credentials between users or teams.',
+        image: '<style>.l2{width:100%;height:100%;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 14px;gap:12px;box-sizing:border-box}.l2-av{width:40px;height:40px;border-radius:50%;background:#eef2ff;border:1.5px solid #c7d2fe;display:flex;align-items:center;justify-content:center;position:relative}.l2-ring{position:absolute;inset:-5px;border-radius:50%;border:1.5px solid #818cf8;animation:l2rp 2.5s ease-in-out infinite}.l2-steps{display:flex;flex-direction:column;gap:6px;width:100%}.l2-step{display:flex;align-items:center;gap:7px;background:#fff;border:0.5px solid #e2e8f0;border-radius:8px;padding:6px 9px}.l2-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}.l2-stxt{font-size:14px;font-weight:500;color:#334155;flex:1}.l2-badge{font-size:14px;font-weight:600;padding:2px 5px;border-radius:4px}.l2-d0{animation:l2d0 4.5s ease-in-out infinite}.l2-d1{animation:l2d1 4.5s ease-in-out infinite}.l2-d2{animation:l2d2 4.5s ease-in-out infinite}.l2-b0{animation:l2b0 4.5s ease-in-out infinite;background:#eef2ff;color:#4f46e5;opacity:0}.l2-b1{animation:l2b1 4.5s ease-in-out infinite;background:#eef2ff;color:#4f46e5;opacity:0}.l2-b2{animation:l2b2 4.5s ease-in-out infinite;background:#f0fdf4;color:#15803d;opacity:0}@keyframes l2rp{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.1);opacity:1}}@keyframes l2d0{0%,10%{background:#e5e7eb;box-shadow:none}15%,35%{background:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.2)}40%,100%{background:#6366f1;box-shadow:none}}@keyframes l2d1{0%,30%{background:#e5e7eb;box-shadow:none}35%,55%{background:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.2)}60%,100%{background:#6366f1;box-shadow:none}}@keyframes l2d2{0%,55%{background:#e5e7eb;box-shadow:none}60%,80%{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2)}85%,100%{background:#22c55e;box-shadow:none}}@keyframes l2b0{0%,14%{opacity:0}15%,100%{opacity:1}}@keyframes l2b1{0%,34%{opacity:0}35%,100%{opacity:1}}@keyframes l2b2{0%,59%{opacity:0}60%,100%{opacity:1}}</style><div class="l2"><div class="l2-av"><div class="l2-ring"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="l2-steps"><div class="l2-step"><div class="l2-dot l2-d0"></div><span class="l2-stxt">Authenticate</span><span class="l2-badge l2-b0">MFA verified</span></div><div class="l2-step"><div class="l2-dot l2-d1"></div><span class="l2-stxt">Check ERP role</span><span class="l2-badge l2-b1">RBAC mapped</span></div><div class="l2-step"><div class="l2-dot l2-d2"></div><span class="l2-stxt">Issue scoped token</span><span class="l2-badge l2-b2">Access granted</span></div></div></div>',
+      },
+      {
+        title: 'Layer 3 — Data & Audit Governance',
+        description: 'Every data access, modification, approval, and ERP posting is logged immutably with full context — user, timestamp, action, transaction reference, and outcome. Logs are tamper-evident and exportable for audit teams. Data never leaves ERP boundaries without explicit authorization.',
+        image: '<style>.l3{width:100%;height:100%;background:#f8fafc;display:flex;flex-direction:column;padding:14px;gap:8px;box-sizing:border-box}.l3-hd{display:flex;align-items:center;justify-content:space-between}.l3-ht{font-size:14px;font-weight:600;color:#1e293b}.l3-seal{font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:#f0fdf4;color:#15803d;border:0.5px solid #bbf7d0}.l3-entries{display:flex;flex-direction:column;gap:5px;flex:1;justify-content:center}.l3-row{display:flex;align-items:center;gap:6px;background:#fff;border:0.5px solid #e2e8f0;border-radius:7px;padding:5px 8px}.l3-ts{font-size:14px;color:#94a3b8;flex-shrink:0;font-family:monospace}.l3-av{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}.l3-act{font-size:15px;color:#334155;flex:1;font-weight:500}.l3-chk{width:14px;height:14px;border-radius:50%;background:#f0fdf4;border:0.5px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0}.l3-r1{animation:l3in 4.5s ease-in-out infinite}.l3-r2{animation:l3in 4.5s ease-in-out infinite .75s}.l3-r3{animation:l3in 4.5s ease-in-out infinite 1.5s}.l3-pills{display:flex;gap:3px;justify-content:center}.l3-pill{font-size:9.5px;font-weight:600;padding:2px 5px;border-radius:4px;background:#f1f5f9;color:#475569}.l3-pb{background:#eff6ff;color:#1d4ed8}@keyframes l3in{0%,5%{opacity:0;transform:translateY(5px)}18%,78%{opacity:1;transform:translateY(0)}92%,100%{opacity:0;transform:translateY(-3px)}}</style><div class="l3"><div class="l3-hd"><span class="l3-ht">Audit Log</span><span class="l3-seal">IMMUTABLE</span></div><div class="l3-entries"><div class="l3-row l3-r1"><span class="l3-ts">14:22:01</span><div class="l3-av" style="background:#eff6ff;color:#1d4ed8">AK</div><span class="l3-act">Order posted to SAP SD</span><div class="l3-chk"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="l3-row l3-r2"><span class="l3-ts">14:22:04</span><div class="l3-av" style="background:#f0fdf4;color:#15803d">RS</div><span class="l3-act">Pricing rule applied</span><div class="l3-chk"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="l3-row l3-r3"><span class="l3-ts">14:22:09</span><div class="l3-av" style="background:#fef3c7;color:#92400e">MJ</div><span class="l3-act">Credit limit checked</span><div class="l3-chk"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div><div class="l3-pills"><span class="l3-pill">Tamper-evident</span><span class="l3-pill">Exportable</span><span class="l3-pill l3-pb">ERP bound</span></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       6. COMPLIANCE FRAMEWORKS — FeaturesCarousel
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Compliance Readiness"
+    title="Built for enterprise compliance requirements"
+    subtitle="UpBuff's architecture is designed to support the compliance and governance frameworks your enterprise relies on — giving your security and legal teams the controls they need."
+    items={[
+      {
+        gradient: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)',
+        badge: 'Data governance',
+        title: 'ERP Data Sovereignty & Boundary Enforcement',
+        description: 'UpBuff accesses ERP data via scoped API calls only. No ERP master data, financial records, or transactional data is stored in UpBuff databases. Your ERP remains the single authoritative source — all data stays within your defined boundary at all times.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #065f46 0%, #047857 100%)',
+        badge: 'Access governance',
+        title: 'Role-Based Access Mapped to ERP Authorization',
+        description: 'Every user permission in UpBuff is governed by ERP user roles and organizational structures. No permission exists outside ERP authorization logic. Access is scoped, auditable, and revocable — with full traceability back to the ERP user record.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1" fill="#111827"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7c2d12 0%, #c2410c 100%)',
+        badge: 'Regional compliance',
+        title: 'Global E-Invoicing & Regional Tax Compliance',
+        description: 'UpBuff supports regional compliance frameworks built into execution workflows — India GST & e-invoicing (GSTN), ZATCA Phase 2 (Saudi Arabia), ZRA e-invoicing (Zambia), and other regional tax and invoicing mandates. Compliance is built into the ERP integration layer, not optional configuration.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%)',
+        badge: 'Audit & traceability',
+        title: 'Immutable Audit Trails for Every ERP Transaction',
+        description: 'Every action taken through UpBuff — order creation, pricing application, approval, data access — is logged immutably with full context: user identity, timestamp, session, action type, and ERP document reference. Logs are tamper-evident, retained per your policy, and exportable for compliance and legal teams.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12l2 2 4-4"/></svg></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       7. SECURITY SPLIT — detailed technical controls
+       ══════════════════════════════════════════════════════════ -->
+  <SecuritySplit
+    tagline="Technical Security"
+    title="Enterprise security controls<br />in every integration"
+    subtitle="These are implemented, verifiable controls that apply to every UpBuff deployment, every ERP connection, and every user session — built into the platform architecture from day one."
+    features={[
+      {
+        title: 'No ERP data stored outside ERP boundary',
+        description: 'UpBuff accesses ERP data via scoped API calls only. No master data, financial records, or transactional data is stored in UpBuff databases. Your ERP remains the single authoritative source — always.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" class="w-20 h-16" fill="none"><ellipse cx="40" cy="16" rx="28" ry="10" stroke="url(#sc1)" stroke-width="2.5"/><path d="M12 16v20c0 5.523 12.536 10 28 10s28-4.477 28-10V16" stroke="url(#sc1)" stroke-width="2.5"/><path d="M12 36v16c0 5.523 12.536 10 28 10s28-4.477 28-10V36" stroke="url(#sc1)" stroke-width="2.5"/><circle cx="40" cy="38" r="3" fill="#1d4ed8"/><defs><linearGradient id="sc1" x1="12" y1="0" x2="68" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#1d4ed8"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Encrypted credentials & secret rotation',
+        description: 'ERP API credentials, service tokens, and integration secrets are stored in a dedicated secrets vault with automatic rotation policies. No credential is ever stored in plaintext, environment variables, or application logs.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="20" y="36" width="40" height="30" rx="6" stroke="url(#sc2)" stroke-width="2.5"/><path d="M28 36V26a12 12 0 0124 0v10" stroke="url(#sc2)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#22c55e"/><defs><linearGradient id="sc2" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Tamper-evident audit logs with compliance export',
+        description: 'All audit logs are written to an append-only, tamper-evident log store. Logs include full context: user, timestamp, IP, action, ERP document reference, and outcome. Exportable in standard formats for your compliance and legal teams.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="14" y="14" width="52" height="52" rx="8" stroke="url(#sc3)" stroke-width="2.5"/><path d="M26 40h28M26 52h18M26 28h28" stroke="url(#sc3)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="sc3" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       8. DEPLOYMENT SECURITY — FeaturesBento
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesBento
+    tagline="Infrastructure Security"
+    title="Secure across every deployment model"
+    subtitle="UpBuff supports on-premise, private cloud, public cloud, and hybrid deployments — with the same security posture applied regardless of where your ERP and execution layer runs."
+    items={[
+      {
+        wide: true,
+        title: 'On-Premise & Private Cloud Deployments',
+        description: 'For enterprises with strict data residency requirements, UpBuff can be deployed entirely within your own infrastructure — on-premise or in a private cloud environment. No data leaves your network perimeter. All ERP API calls remain within your security boundary. Full compatibility with SAP Business One on-premise, SAP ECC, and Oracle on-premise deployments.',
+        image: '<style>.op2{width:100%;height:100%;background:#f8fafc;display:flex;align-items:center;justify-content:center;gap:24px;padding:24px}.op2-block{display:flex;flex-direction:column;align-items:center;gap:8px}.op2-icon{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center}.op2-lbl{font-size:11px;font-weight:600;color:#475569;text-align:center}.op2-conn{display:flex;flex-direction:column;align-items:center;gap:3px;padding-bottom:20px}.op2-wire{width:44px;height:2.5px;background:#e2e8f0;position:relative;overflow:hidden;border-radius:2px}.op2-wire::after{content:"";position:absolute;left:-100%;top:0;height:100%;width:40%;background:#64748b;border-radius:2px;animation:op2flow 2s ease-in-out infinite}.op2-w2::after{animation-delay:.65s}.op2-sub{font-size:9px;color:#94a3b8;font-weight:500}.op2-fence{display:flex;align-items:center;gap:20px;padding:22px 28px;border-radius:14px;border:1.5px dashed #cbd5e1;position:relative}.op2-ft{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:#64748b;letter-spacing:.06em;background:#f8fafc;padding:0 10px;white-space:nowrap}@keyframes op2flow{0%{left:-100%}100%{left:200%}}</style><div class="op2"><div class="op2-fence"><span class="op2-ft">YOUR NETWORK PERIMETER</span><div class="op2-block"><div class="op2-icon" style="background:#eff6ff;border:1px solid #bfdbfe"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><span class="op2-lbl">UpBuff</span></div><div class="op2-conn"><div class="op2-wire"></div><span class="op2-sub">API only</span></div><div class="op2-block"><div class="op2-icon" style="background:#f0fdf4;border:1px solid #bbf7d0"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg></div><span class="op2-lbl">SAP ERP</span></div><div class="op2-conn"><div class="op2-wire op2-w2"></div><span class="op2-sub">No egress</span></div><div class="op2-block"><div class="op2-icon" style="background:#fafafa;border:1px solid #e2e8f0"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 14h.01M10 14h.01"/></svg></div><span class="op2-lbl">Server</span></div></div></div>'
+      },
+      {
+        wide: true,
+        title: 'Public Cloud & Hybrid Deployments',
+        description: 'Cloud and hybrid deployments use dedicated tenancy, encrypted storage at rest (AES-256), and VPC-isolated networking. No shared infrastructure with other tenants. Data residency regions configurable to meet local regulatory requirements. Compatible with SAP RISE, SAP BTP, Oracle Cloud, and Azure/AWS-hosted ERP environments.',
+        image: '<style>.pc{width:100%;height:100%;background:#f0f9ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:18px}.pc-nodes{display:flex;gap:18px;align-items:center}.pc-node{display:flex;flex-direction:column;align-items:center;gap:6px}.pc-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center}.pc-lbl{font-size:11px;font-weight:600;color:#1e40af}.pc-wire{width:32px;height:2.5px;background:#bfdbfe;position:relative;overflow:hidden}.pc-wire::after{content:"";position:absolute;left:-100%;top:-1px;width:50%;height:4px;background:#3b82f6;border-radius:2px;animation:pcflow 1.8s linear infinite}.pc-w2::after{animation-delay:.6s}.pc-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}.pc-tag{font-size:9px;font-weight:600;padding:3px 8px;border-radius:5px;background:#dbeafe;color:#1e40af}@keyframes pcflow{0%{left:-100%}100%{left:200%}}</style><div class="pc"><div class="pc-nodes"><div class="pc-node"><div class="pc-icon" style="background:#eff6ff;border:1px solid #bfdbfe"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><span class="pc-lbl">UpBuff</span></div><div class="pc-wire"></div><div class="pc-node"><div class="pc-icon" style="background:#dbeafe;border:1px solid #93c5fd"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="1.5"><path d="M17.5 19H9a7 7 0 110-14h.5A5.5 5.5 0 0121 8.5a5.5 5.5 0 01-3.5 10.5z"/></svg></div><span class="pc-lbl">VPC</span></div><div class="pc-wire pc-w2"></div><div class="pc-node"><div class="pc-icon" style="background:#eff6ff;border:1px solid #bfdbfe"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg></div><span class="pc-lbl">SAP ERP</span></div></div><div class="pc-tags"><span class="pc-tag">Dedicated tenancy</span><span class="pc-tag">AES-256 at rest</span><span class="pc-tag">VPC isolated</span></div></div>',
+      },
+      {
+        title: 'Mobile Security',
+        description: 'Certificate pinning, encrypted local storage, and automatic session expiry on all mobile clients. Offline data is encrypted at rest on device.',
+        image: '<style>.mob{width:100%;height:100%;background:#f0fdf4;display:flex;align-items:center;justify-content:center;padding:14px;gap:20px}.mob-phone{width:62px;height:100px;border-radius:14px;border:2.5px solid #166534;background:#fff;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.mob-screen{width:44px;height:58px;border-radius:7px;background:#dcfce7;display:flex;align-items:center;justify-content:center}.mob-home{width:10px;height:10px;border-radius:50%;border:1.5px solid #166534;margin-top:3px}.mob-shield{position:absolute;top:-15px;right:-15px;width:32px;height:32px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;animation:mobp 2s ease-in-out infinite}.mob-info{display:flex;flex-direction:column;gap:7px}.mob-row{display:flex;align-items:center;gap:7px;background:#fff;border:0.5px solid #bbf7d0;border-radius:7px;padding:6px 10px}.mob-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0}.mob-t{font-size:11px;font-weight:500;color:#166534}@keyframes mobp{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}</style><div class="mob"><div class="mob-phone"><div class="mob-screen"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="mob-home"></div><div class="mob-shield"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div></div><div class="mob-info"><div class="mob-row"><div class="mob-dot"></div><span class="mob-t">Cert pinning</span></div><div class="mob-row"><div class="mob-dot"></div><span class="mob-t">Encrypted storage</span></div><div class="mob-row"><div class="mob-dot"></div><span class="mob-t">Session expiry</span></div></div></div>',
+      },
+      {
+        title: 'Network Security',
+        description: 'VPC isolation, IP allowlisting, DDoS protection, and WAF coverage on all API endpoints and integration gateways.',
+        image: '<style>.net{width:100%;height:100%;background:#faf5ff;display:flex;align-items:center;justify-content:center;padding:14px;gap:18px}.net-c{width:68px;height:68px;border-radius:50%;background:#7c3aed;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}.net-r1{position:absolute;inset:-9px;border-radius:50%;border:1.5px solid #a78bfa;animation:netr 2s ease-in-out infinite}.net-r2{position:absolute;inset:-18px;border-radius:50%;border:1px solid #ddd6fe;animation:netr 2s ease-in-out infinite .5s}.net-ns{display:flex;flex-direction:column;gap:9px}.net-n{display:flex;align-items:center;gap:6px}.net-l{width:26px;height:1.5px;background:#c4b5fd}.net-b{font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;background:#ede9fe;color:#6d28d9}@keyframes netr{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}</style><div class="net"><div class="net-c"><div class="net-r1"></div><div class="net-r2"></div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="net-ns"><div class="net-n"><div class="net-l"></div><span class="net-b">VPC isolation</span></div><div class="net-n"><div class="net-l"></div><span class="net-b">IP allowlist</span></div><div class="net-n"><div class="net-l"></div><span class="net-b">DDoS protection</span></div><div class="net-n"><div class="net-l"></div><span class="net-b">WAF coverage</span></div></div></div>',
+      },
+      {
+        title: 'Penetration Testing',
+        description: 'Regular third-party penetration testing across all API endpoints, authentication flows, and mobile clients. Results and remediation available on request.',
+        image: '<style>.pt{width:100%;height:100%;background:#0f172a;display:flex;flex-direction:column;padding:18px;gap:10px}.pt-bar{display:flex;align-items:center;gap:5px;margin-bottom:3px}.pt-d{width:9px;height:9px;border-radius:50%}.pt-ti{font-size:10px;color:#64748b;flex:1;font-family:monospace}.pt-ln{font-family:monospace;font-size:11px;display:flex;align-items:center;gap:6px;animation:ptf 4s ease-in-out infinite}.pt-l2{animation-delay:.6s}.pt-l3{animation-delay:1.2s}.pt-l4{animation-delay:1.8s}.pt-p{color:#4ade80}.pt-c{color:#e2e8f0}.pt-ok{color:#22c55e;font-weight:700}.pt-w{color:#fb923c;font-weight:700}@keyframes ptf{0%{opacity:.3}20%{opacity:1}80%{opacity:1}100%{opacity:.3}}</style><div class="pt"><div class="pt-bar"><div class="pt-d" style="background:#ef4444"></div><div class="pt-d" style="background:#f59e0b;margin-left:3px"></div><div class="pt-d" style="background:#22c55e;margin-left:3px"></div><span class="pt-ti">security-scan.sh</span></div><div class="pt-ln"><span class="pt-p">$</span><span class="pt-c"> scan --target api.upbuff.com</span></div><div class="pt-ln pt-l2"><span class="pt-ok">&#10003;</span><span class="pt-c"> auth endpoints — clear</span></div><div class="pt-ln pt-l3"><span class="pt-ok">&#10003;</span><span class="pt-c"> API gateway — hardened</span></div><div class="pt-ln pt-l4"><span class="pt-w">!</span><span class="pt-c"> report ready — 0 critical</span></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       9. ENTERPRISE SECURITY PROGRAM — FeaturesEnterprise
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesEnterprise
+    tagline="Enterprise Security Program"
+    title="What enterprise customers get"
+    subtitle="Enterprise customers receive a dedicated security program — not just platform access."
+    items={[
+      {
+        title: 'Security Architecture Documentation',
+        description: 'Full security architecture documentation, data flow diagrams, integration security overview, and penetration test summaries available for enterprise security reviews.',
+        illustration: '<style>.sd{width:100%;height:100%;background:#f8fafc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px}.sd-stack{position:relative;width:90px;height:106px}.sd-page{position:absolute;border-radius:7px;background:#fff;border:1px solid #e2e8f0}.sd-p3{width:78px;height:94px;top:10px;left:10px;background:#f1f5f9}.sd-p2{width:82px;height:98px;top:5px;left:5px;background:#f8fafc}.sd-p1{width:86px;height:102px;top:0;left:0;display:flex;flex-direction:column;gap:5px;padding:10px}.sd-line{height:3px;border-radius:2px;background:#e2e8f0}.sd-line-s{width:55%;background:#bfdbfe}.sd-line-m{width:80%}.sd-line-l{width:70%}.sd-badge{position:absolute;bottom:-8px;right:-8px;background:#1e293b;border-radius:7px;padding:4px 8px;display:flex;align-items:center;gap:3px;animation:sdbadge 3s ease-in-out infinite}.sd-bd{width:6px;height:6px;border-radius:50%;background:#4ade80}.sd-bt{font-size:9px;color:#fff;font-weight:600}.sd-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}.sd-tag{font-size:9px;font-weight:600;padding:3px 7px;border-radius:4px;background:#f1f5f9;color:#475569}@keyframes sdbadge{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}</style><div class="sd"><div class="sd-stack"><div class="sd-page sd-p3"></div><div class="sd-page sd-p2"></div><div class="sd-page sd-p1"><div class="sd-line sd-line-s"></div><div class="sd-line sd-line-m"></div><div class="sd-line sd-line-l"></div><div class="sd-line" style="width:45%"></div><div style="margin-top:4px;display:flex;gap:3px"><div style="width:22px;height:15px;border-radius:3px;background:#eff6ff;border:1px solid #bfdbfe"></div><div style="width:22px;height:15px;border-radius:3px;background:#f0fdf4;border:1px solid #bbf7d0"></div></div><div class="sd-line" style="width:60%"></div><div class="sd-line" style="width:50%"></div></div><div class="sd-badge"><div class="sd-bd"></div><span class="sd-bt">Verified</span></div></div><div class="sd-tags"><span class="sd-tag">Architecture docs</span><span class="sd-tag">Data flow</span><span class="sd-tag">Pen test</span></div></div>',
+      },
+      {
+        title: 'Dedicated Security Review',
+        description: 'Our security team works directly with your InfoSec team — answering questionnaires, completing vendor assessments, and providing custom security architecture documentation.',
+        illustration: '<style>.sr{width:100%;height:100%;background:#eff6ff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px}.sr-avs{display:flex;justify-content:center}.sr-av{width:44px;height:44px;border-radius:50%;border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}.sr-av1{background:#dbeafe;color:#1e40af;z-index:2}.sr-av2{background:#1d4ed8;color:#fff;margin-left:-12px;z-index:1}.sr-msgs{display:flex;flex-direction:column;gap:6px;width:100%}.sr-msg{border-radius:9px;padding:8px 11px;font-size:10px;font-weight:500;line-height:1.4;max-width:88%}.sr-m1{background:#fff;color:#1e3a5f;border:0.5px solid #bfdbfe;align-self:flex-start;animation:srfade 4s ease-in-out infinite}.sr-m2{background:#1d4ed8;color:#fff;align-self:flex-end;animation:srfade 4s ease-in-out infinite .8s}.sr-m3{background:#fff;color:#1e3a5f;border:0.5px solid #bfdbfe;align-self:flex-start;animation:srfade 4s ease-in-out infinite 1.6s}@keyframes srfade{0%,10%{opacity:.3}25%,75%{opacity:1}90%,100%{opacity:.3}}</style><div class="sr"><div class="sr-avs"><div class="sr-av sr-av1">IS</div><div class="sr-av sr-av2">UB</div></div><div class="sr-msgs"><div class="sr-msg sr-m1">Vendor security questionnaire received</div><div class="sr-msg sr-m2">Reviewing architecture docs now</div><div class="sr-msg sr-m3">API-only, no core mods — approved</div></div></div>',
+      },
+      {
+        title: 'Incident Response SLA',
+        description: 'Dedicated incident response team with defined SLAs — critical security incidents receive a 1-hour response commitment with direct escalation to senior engineering.',
+        illustration: '<style>.sl{width:100%;height:100%;background:#f0fdf4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px}.sl-ring{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center}.sl-num{font-size:26px;font-weight:900;color:#166534;line-height:1;text-align:center}.sl-unit{font-size:11px;font-weight:600;color:#16a34a;text-align:center}.sl-steps{display:flex;flex-direction:column;gap:6px;width:100%}.sl-step{display:flex;align-items:center;gap:7px;background:#fff;border:0.5px solid #bbf7d0;border-radius:7px;padding:6px 9px}.sl-ic{width:20px;height:20px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;flex-shrink:0}.sl-t{font-size:10px;font-weight:500;color:#166534}.sl-s1{animation:slp 4s ease-in-out infinite}.sl-s2{animation:slp 4s ease-in-out infinite .5s}.sl-s3{animation:slp 4s ease-in-out infinite 1s}@keyframes slp{0%,5%{opacity:.5}20%,80%{opacity:1}95%,100%{opacity:.5}}</style><div class="sl"><div class="sl-ring"><svg viewBox="0 0 160 160" style="position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)"><circle cx="80" cy="80" r="60" fill="none" stroke="#e5e7eb" stroke-width="8" stroke-dasharray="6 4"/><circle cx="80" cy="80" r="60" fill="none" stroke="#22c55e" stroke-width="8" stroke-dasharray="300 77" stroke-linecap="round"/></svg><div style="display:flex;flex-direction:column;align-items:center"><span class="sl-num">1</span><span class="sl-unit">hour</span></div></div><div class="sl-steps"><div class="sl-step sl-s1"><div class="sl-ic"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07"/><path d="M14.05 2a9 9 0 018 7.94"/><path d="M22 22L2 2"/></svg></div><span class="sl-t">Alert detected</span></div><div class="sl-step sl-s2"><div class="sl-ic"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span class="sl-t">Team escalated</span></div><div class="sl-step sl-s3"><div class="sl-ic"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="sl-t">Resolved &amp; reported</span></div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       10. TESTIMONIALS
+       ══════════════════════════════════════════════════════════ -->
+  <TestimonialsGrid
+    title="What enterprise security teams say"
+    subtitle="Enterprise security leaders explain why UpBuff passed their toughest security reviews"
+    row1={[
+      {
+        company: 'NCC Streetscape',
+        logo: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',
+        quote: 'UpBuff was the first ERP extension platform to pass our critical infrastructure security review without exceptions. Fully auditable, API-only integration — exactly what our security posture requires.',
+        name: 'Head of Cyber Security',
+        role: 'NCC Streetscape',
+      },
+      {
+        company: 'The Wine Source',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'Our InfoSec team ran UpBuff through a comprehensive vendor security assessment. API-first architecture, no ERP data stored externally, RBAC mapped to our SAP roles — it passed every checkpoint we set.',
+        name: 'CIO',
+        role: 'The Wine Source',
+      },
+    ]}
+    statCard={{
+      stat: '100%',
+      label: 'of enterprise security reviews passed without exceptions',
+      gradient: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%)',
+    }}
+    row2={[
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'Data governance was non-negotiable for our operations. UpBuff provided the data flow documentation and processing records we needed. Our legal team reviewed and approved quickly.',
+        name: 'Data Protection Officer',
+        role: 'Molygraph',
+      },
+      {
+        company: 'ideaForge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'We needed on-premise deployment for data residency requirements. UpBuff deployed entirely within our network boundary — no external data transfer, no shared infrastructure. Full control retained.',
+        name: 'IT Director',
+        role: 'ideaForge Technologies',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       11. FAQ ACCORDION
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="Security FAQs"
+    title="Security & compliance questions"
+    items={[
+      {
+        question: 'Does UpBuff store ERP data externally?',
+        answer: 'No. UpBuff never stores ERP master data, financial records, or transactional data in UpBuff databases. All ERP data is accessed via scoped API calls in real time and never duplicated outside your ERP boundary — preserving data sovereignty and governance.',
+      },
+      {
+        question: 'How does UpBuff handle data encryption?',
+        answer: 'All data in transit uses TLS 1.3 encryption. Data at rest in cloud deployments is encrypted with AES-256. API credentials and secrets are stored in a dedicated secrets vault with automatic rotation — never in application code, config files, or logs.',
+      },
+      {
+        question: 'How does UpBuff enforce access control?',
+        answer: 'UpBuff uses role-based access control mapped directly to ERP user roles and organizational structures. Every user permission is governed by ERP authorization logic — no permission exists outside ERP governance. Session tokens are short-lived, scoped, and automatically rotated.',
+      },
+      {
+        question: 'Can UpBuff be deployed on-premise for data residency requirements?',
+        answer: 'Yes. UpBuff supports full on-premise deployment within your own infrastructure for enterprises with strict data residency requirements. No data leaves your network perimeter. On-premise deployments are fully compatible with SAP Business One, SAP ECC, and Oracle on-premise environments.',
+      },
+      {
+        question: 'How does UpBuff handle security incidents?',
+        answer: 'Enterprise customers receive a dedicated incident response SLA — critical security incidents receive a 1-hour response commitment with direct escalation to senior engineering. We also conduct post-incident reviews and provide full incident reports to affected customers.',
+      },
+      {
+        question: 'How does UpBuff integrate with ERP systems securely?',
+        answer: 'UpBuff integrates exclusively via official ERP APIs — SAP Service Layer, OData, BAPI, and REST. There are no direct database connections, no core modifications, and no undocumented integration methods. Every API call is authenticated, scoped, and logged.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       12. CTA BANNER
+       ══════════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Ready to put UpBuff through your security review?"
+    subtitle="Our security team works directly with your InfoSec team — architecture documentation, vendor assessment questionnaires, and data flow diagrams available on request."
+    action={{
+      text: 'Request Security Review',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="Security documentation available on request"
+  />
+
+</Layout>

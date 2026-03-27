@@ -1,0 +1,587 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
+
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import Stats from '~/components/widgets/Stats.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'ERP-Integrated Product Configurator for SAP | Rule-Based Quote & BOM Automation | UpBuff',
+  description:
+    'Enable rule-based product configuration integrated with SAP S/4HANA, ECC, and Business One. Automate quotations, pricing, and BOM generation without ERP customization.',
+  canonical: 'https://www.upbuff.com/products/erp-integrated-product-configurator',
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/products/erp-integrated-product-configurator',
+    title: 'ERP-Integrated Product Configurator for SAP | UpBuff',
+    description:
+      'Rule-based product configuration integrated with SAP for accurate quotations, BOM automation, and seamless order creation.',
+    image: 'https://www.upbuff.com/images/product-configurator-og.jpg',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+
+  <!-- ══════════════════════════════════════════════════════════
+       STRUCTURED DATA
+       Fix: Original schemas were placed outside <Layout>.
+       Moved inside Fragment slot="head" per standard pattern.
+       Added: robots, author, og:site_name, WebSite schema.
+       All original schema content preserved exactly.
+       ══════════════════════════════════════════════════════════ -->
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <meta property="og:site_name" content="UpBuff Technologies" />
+    <meta property="og:image" content="https://www.upbuff.com/images/product-configurator-og.jpg" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com",
+      "logo": "https://www.upbuff.com/logo.png"
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.upbuff.com",
+      "name": "UpBuff Technologies",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.upbuff.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UpBuff ERP-Integrated Product Configurator",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Rule-based product configurator integrated with SAP S/4HANA, ECC, and Business One enabling automated quotations, pricing validation, and BOM generation.",
+      "softwareRequirements": "SAP S/4HANA, SAP ECC, or SAP Business One",
+      "featureList": [
+        "Rule-Based Product Configuration",
+        "Dynamic Pricing Engine",
+        "Automated BOM Generation",
+        "RFQ & Quote-to-Order Workflow",
+        "SAP SD & PP Integration"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "Contact for pricing",
+        "priceCurrency": "USD"
+      },
+      "provider": {
+        "@type": "Organization",
+        "name": "UpBuff Technologies"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is an ERP-Integrated Product Configurator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is a rule-based configuration engine integrated with SAP that automates quotations, pricing validation, BOM generation, and order creation without modifying ERP core."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it integrate with SAP S/4HANA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It integrates securely with SAP S/4HANA, ECC, and Business One using OData, IDoc, BAPI, and Service Layer APIs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can customers configure products directly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Customers, partners, and internal sales teams can configure products through a controlled, rule-based interface."
+          }
+        }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="black"
+      actions={[
+        { variant: 'secondary', text: 'Login',        href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO
+       Source: Hero2 tagline, title (both fragments joined),
+       subtitle (both responsive variants combined), actions, image.
+       ══════════════════════════════════════════════════════════ -->
+  <HeroOrbital
+    tagline="ERP-Integrated Product Configurator"
+    title="Configure Complex Products. Sync Directly with SAP."
+    subtitle="Manufacturing and engineering companies often manage configurable products through spreadsheets, email approvals, and manual SAP entries. UpBuff ERP-Integrated Product Configurator enables customers, sales teams, and partners to configure complex products through rule-based logic — fully integrated with SAP S/4HANA, ECC, and Business One. Eliminate manual quotation errors without modifying ERP core."
+    actions={[
+      { text: 'Request Demo',       href: '/contact', variant: 'primary' },
+      { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
+    ]}
+    image={{
+      src: 'http://4.151.8.142:4000/uploads/ERP-integrated-product-configurator.png',
+      alt: 'UpBuff ERP-Integrated Product Configurator',
+    }}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Trusted by leading manufacturers &amp; SAP partners worldwide"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',        alt: 'ideaForge logo' },
+      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',      alt: 'jnk chemdist logo' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',         alt: 'molygraph logo' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',   alt: 'ncc streetscape logo' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',           alt: 'roofsol logo' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',   alt: 'the wine source logo' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. PROBLEM SPLIT
+       Source: Content widget (id="pain-points") — title, subtitle,
+       all 5 pain point items with icons taken from original.
+       ══════════════════════════════════════════════════════════ -->
+  <ProblemSplit
+    tagline="The Problem"
+    title="The Problem with Manual Configuration"
+    subtitle="Managing configurable products through spreadsheets, email approvals, and manual SAP entries leads to errors that compound across BOMs, pricing, quotations, and production planning. UpBuff eliminates these gaps entirely."
+    items={[
+      {
+        title: 'Incorrect BOMs',
+        description: 'Manually assembled Bills of Materials contain selection errors that flow unchecked into SAP PP — causing production delays and costly rework after orders are committed.',
+      },
+      {
+        title: 'Pricing mismatches',
+        description: 'Spreadsheet-driven pricing fails to account for attribute dependencies and SAP conditions — generating quotations that diverge from what SAP would actually charge.',
+      },
+      {
+        title: 'Quotation delays',
+        description: 'Sales engineers spend hours validating configurations manually and chasing approvals — slowing quote cycles and losing deals to faster competitors.',
+      },
+      {
+        title: 'Rework in SAP SD & Production planning errors',
+        description: 'Invalid configurations discovered after SAP entry trigger rework across SD and PP — disrupting production schedules and increasing operational overhead.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       4. FEATURES GRID — "What Is It?" definition
+       Source: Features3 (id="definition") — title, subtitle,
+       tagline, and all 6 items taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    id="definition"
+    tagline="Definition"
+    title="What Is an ERP-Integrated Product Configurator?"
+    subtitle="It is an execution layer that bridges customers, sales teams, and SAP — enabling rule-based product selection that syncs directly into SAP without manual re-entry."
+    items={[
+      {
+        icon: 'tabler:settings-automation',
+        title: 'Rule-Based Product Configuration',
+        description: 'Allow rule-based product configuration with controlled attribute selection.',
+      },
+      {
+        icon: 'tabler:check',
+        title: 'Validates Variant Combinations',
+        description: 'Validate variant combinations in real time before they reach SAP.',
+      },
+      {
+        icon: 'tabler:calculator',
+        title: 'Generates Dynamic Pricing',
+        description: 'Generate dynamic pricing based on product attributes and rules.',
+      },
+      {
+        icon: 'tabler:list-tree',
+        title: 'Creates Structured BOMs',
+        description: 'Create structured Bill of Materials mapped directly to SAP PP.',
+      },
+      {
+        icon: 'tabler:refresh',
+        title: 'Syncs Quotations & Orders to SAP',
+        description: 'Sync quotations and orders directly into SAP SD without manual entry.',
+      },
+      {
+        icon: 'tabler:file-invoice',
+        title: 'Supports RFQ & Order Placement',
+        description: 'Support full RFQ and order placement workflows for all users.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. FEATURES HIGHLIGHTS — Architecture flow / 3 pillars
+       Source: Content widget (id="flow") — 3 items with their
+       titles, descriptions, and icons. Content fragment h3 + p.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesHighlights
+    tagline="How It Connects"
+    title="Customer → UpBuff Configurator → SAP"
+    subtitle="The configurator bridges the gap between customers, sales teams, and SAP. Every configuration flows through rule-based validation before syncing into SAP SD, SAP PP, and SAP MM — no SAP core modification required."
+    items={[
+      {
+        title: 'Customer or Sales Team',
+        description: 'Customers, sales teams, and partners initiate product configuration through a guided interface — selecting attributes, validating combinations, and generating accurate quotations without needing SAP access.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6"><div class="bg-white rounded-2xl shadow-md w-72 p-5 flex flex-col items-center gap-4"><div class="text-xs font-semibold text-gray-700">Guided Product Configuration</div><div class="flex items-center justify-between w-full text-[10px] text-gray-500"><div class="flex flex-col items-center gap-1"><div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">1</div><span>Select</span></div><div class="flex-1 h-[2px] bg-gray-200 mx-1 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-[shimmer_1.2s_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">2</div><span>Validate</span></div><div class="flex-1 h-[2px] bg-gray-200 mx-1"></div><div class="flex flex-col items-center gap-1"><div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">3</div><span>Quote</span></div></div><div class="bg-gray-50 rounded-lg px-3 py-2 w-full text-[10px] text-gray-600 flex justify-between"><span>Product: Configurable Item</span><span class="text-blue-600 font-medium">Valid ✓</span></div><div class="text-[10px] text-blue-600 text-center font-medium animate-pulse">No SAP login · Guided workflow</div></div></div>',
+      },
+      {
+        title: 'UpBuff Product Configurator',
+        description: 'Rule-based execution layer that validates configuration against defined attributes and dependencies, generates dynamic pricing, creates structured BOMs, and prepares the payload for SAP — before a single entry is made.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-100 p-6"><div class="bg-white rounded-2xl shadow-md w-72 p-5 flex flex-col items-center gap-5"><div class="text-xs font-semibold text-gray-700">UpBuff Configurator Engine</div><div class="flex items-center justify-between w-full text-[10px] text-gray-500"><div class="flex flex-col items-center gap-1"><div class="px-2 py-1 bg-gray-100 rounded-md">Attributes</div><div class="px-2 py-1 bg-gray-100 rounded-md">Options</div></div><div class="w-[2px] h-16 bg-gray-200 relative overflow-hidden"><div class="absolute inset-0 bg-indigo-400 animate-[flowY_1.5s_linear_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="px-3 py-2 bg-indigo-600 text-white rounded-lg shadow text-[10px] font-semibold animate-pulse">Rule Engine</div><span class="text-[9px] text-gray-400">Validate · Price · BOM</span></div><div class="w-[2px] h-16 bg-gray-200 relative overflow-hidden"><div class="absolute inset-0 bg-green-400 animate-[flowY_1.5s_linear_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="px-2 py-1 bg-green-100 rounded-md text-green-700">Valid Config</div><div class="px-2 py-1 bg-green-100 rounded-md text-green-700">BOM</div></div></div><div class="text-[10px] text-green-600 text-center font-medium animate-pulse">Validated before SAP · No invalid payload</div></div></div>',
+      },
+      {
+        title: 'SAP SD / SAP PP / SAP MM',
+        description: 'Quotations, sales orders, BOMs, and material data sync directly into SAP modules using OData, IDoc, BAPI, and Service Layer APIs. SAP remains the system of record — no core modification required.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-slate-100 p-6"><div class="bg-white rounded-2xl shadow-md w-72 p-5 flex flex-col items-center gap-1"><div class="text-xs font-semibold text-gray-700">SAP Core Modules</div><div class="flex items-center justify-center gap-2 text-[10px] text-gray-500"><span class="px-2 py-1 bg-gray-100 rounded-md">Quote</span><span class="px-2 py-1 bg-gray-100 rounded-md">Order</span><span class="px-2 py-1 bg-gray-100 rounded-md">BOM</span></div><div class="w-[2px] h-6 bg-gray-200 relative overflow-hidden"><div class="absolute inset-0 bg-blue-400 animate-[flowY_1.5s_linear_infinite]"></div></div><div class="grid grid-cols-3 w-full text-[10px] font-medium text-center"><div class="bg-blue-50 text-blue-700 px-2 py-3 rounded-l-lg border border-blue-100 shadow-sm flex flex-col items-center justify-center"><span>SAP SD</span><span class="text-[9px] text-gray-500 mt-1">Sales</span></div><div class="bg-purple-50 text-purple-700 px-2 py-3 border-t border-b border-purple-100 shadow-sm flex flex-col items-center justify-center"><span>SAP PP</span><span class="text-[9px] text-gray-500 mt-1">Production</span></div><div class="bg-green-50 text-green-700 px-2 py-3 rounded-r-lg border border-green-100 shadow-sm flex flex-col items-center justify-center"><span>SAP MM</span><span class="text-[9px] text-gray-500 mt-1">Material</span></div></div><div class="text-[10px] text-gray-500 text-center">OData · IDoc · BAPI · Service Layer</div><div class="text-[10px] text-green-600 text-center font-medium animate-pulse">System of Record · No Core Modification</div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       6. FEATURES CAROUSEL — 4 core capability deep-dives
+       Source: Features (id="features") 6 items + Content widgets
+       for Rule-Based (items 1-4), Pricing (items 1-4),
+       BOM (items 1-4), and RFQ (items 1-5).
+       Descriptions from the Content widget p tags.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Core Capabilities"
+    title="Core Capabilities"
+    subtitle="A powerful execution layer that validates configurations, generates dynamic pricing, creates structured BOMs, and syncs directly into SAP."
+    items={[
+      {
+        gradient: '#ffffff',
+        title: 'Rule-Based Configuration Engine',
+        description: 'No invalid configuration reaches SAP. Define attributes, control dependencies, restrict incompatible variants, and automate selection logic — all through a governed rule engine. Define product attributes, control dependencies, restrict incompatible combinations, and automate selection logic.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="w-full h-full object-cover" alt="Rule-Based Configuration Engine" loading="lazy" /></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #065f46 0%, #0f766e 100%)',
+        title: 'Dynamic Pricing & Cost Calculation',
+        description: 'Ensure quotation accuracy before submission. Apply attribute-based pricing, quantity-driven logic, conditional discounts, and SAP pricing sync — all validated automatically before the quotation is generated.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80" class="w-full h-full object-cover" alt="Dynamic Pricing & Cost Calculation" loading="lazy" /></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+        title: 'Automated BOM Generation',
+        description: 'Based on selected configuration, auto-generate structured Bill of Materials mapped directly to SAP PP — reducing engineering dependency and eliminating manual errors. Map to SAP PP, reduce engineering dependency, and eliminate manual errors.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="w-full h-full object-cover" alt="Automated BOM Generation" loading="lazy" /></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #003f7c 0%, #0070c0 100%)',
+        title: 'RFQ & Quote-to-Order Workflow',
+        description: 'Support customer self-configuration and sales-assisted configuration. Generate quotations, submit to SAP SD, and convert to sales orders seamlessly — end to end. Supports full RFQ and order placement workflows for all users.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" class="w-full h-full object-cover" alt="RFQ & Quote-to-Order Workflow" loading="lazy" /></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       7. CONTENT SPLIT CARD — Manufacturing fit + comparison
+       Source: Content "Built for Manufacturing" (title, subtitle,
+       6 industry items) + Content "ERP vs Manual" (comparison
+       items) + Content "Seamless Execution Flow" (5 items).
+       ══════════════════════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="Built for Manufacturing & Engineering Enterprises"
+    title="Manufacturing-Ready: From Configuration to Production"
+    cardTitle="Configuration to SAP: Seamless Execution Flow"
+    cardDescription="Replace spreadsheet-driven configuration with a structured, rule-based engine. The configurator bridges customers, sales teams, and SAP — allowing rule-based product selection that flows directly into SAP SD, SAP PP, and SAP MM without manual re-entry."
+    cardImage="http://4.151.8.142:4000/uploads/upbuff-product-configurator-integrations.png"
+    cardGradient="linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)"
+    testimonial={{
+      quote: 'The workflows are user-friendly, easy to customize, and have been effectively serving our engineering and sales teams for nearly two years without a single ERP incident.',
+      name: 'CEO',
+      company: 'Spartan Engineering Industries Pvt. Ltd',
+      avatar: 'http://4.151.8.142:4000/uploads/spartan-client.png',
+    }}
+    features={[
+      {
+        icon: 'tabler:check',
+        title: 'Make-to-Order (MTO) & Engineer-to-Order (ETO)',
+        description: 'Ideal for complex product environments where configuration accuracy drives production efficiency.',
+      },
+      {
+        icon: 'tabler:check',
+        title: 'Industrial Equipment, Automotive & Electrical Systems',
+        description: 'Supports Industrial Equipment, Automotive Components, Electrical & Mechanical Systems, and Custom Fabrication.',
+      },
+      {
+        icon: 'tabler:check',
+        title: 'Rule-based engine vs Excel-driven process',
+        description: 'Auto SAP sync vs Manual SAP entry. Dynamic validated pricing vs Pricing errors. Automated BOM vs Engineering delays. Structured governance vs High rework.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       8. FEATURES BENTO — SAP integration details
+       Source: Features3 (id="integration") — 3 SAP systems.
+       Features3 "Integration Methods" — 4 methods.
+       Features3 "Global Deployment Ready" — 4 items.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesBento
+    id="integration"
+    tagline="SAP Integration"
+    title="SAP Integration (No Core Customization)"
+    subtitle="Integrates securely with SAP systems via standards-based protocols. SAP remains the system of record."
+    items={[
+      {
+        wide: true,
+        title: 'SAP S/4HANA, SAP ECC & SAP Business One',
+        description: 'Native integration with SAP S/4HANA APIs and OData services. Full support for SAP ECC environments via BAPI and IDoc. Integration via Service Layer APIs for SAP Business One SME enterprises. SAP remains the system of record across all deployment models — no core modification, no upgrade risk.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6"><div class="grid grid-cols-3 gap-4"><div class="flex flex-col items-center gap-2"><div class="w-20 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-gray-100 p-2"><img src="http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png" alt="SAP S/4HANA" /></div><span class="text-xs text-gray-500">S/4HANA</span></div><div class="flex flex-col items-center gap-2"><div class="w-20 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-gray-100 p-2"><img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP ECC" /></div><span class="text-xs text-gray-500">SAP ECC</span></div><div class="flex flex-col items-center gap-2"><div class="w-20 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-gray-100 p-2"><img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One" /></div><span class="text-xs text-gray-500">Business One</span></div></div></div>',
+      },
+      {
+        wide: true,
+        title: 'Integration Methods: OData · IDoc · BAPI · Service Layer',
+        description: 'OData — RESTful API protocol for SAP S/4HANA and modern SAP systems. IDoc — SAP Intermediate Document format for asynchronous data exchange. BAPI — Business Application Programming Interfaces for direct SAP function calls. Service Layer APIs — SAP Business One Service Layer for real-time data integration.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6"><div class="grid grid-cols-4 gap-3"><div class="flex flex-col items-center gap-1"><div class="w-16 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-blue-700">OData</div><span class="text-[10px] text-gray-400">REST API</span></div><div class="flex flex-col items-center gap-1"><div class="w-16 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-indigo-700">IDoc</div><span class="text-[10px] text-gray-400">Async</span></div><div class="flex flex-col items-center gap-1"><div class="w-16 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-purple-700">BAPI</div><span class="text-[10px] text-gray-400">Function</span></div><div class="flex flex-col items-center gap-1"><div class="w-16 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-green-700">SvcLayer</div><span class="text-[10px] text-gray-400">Real-time</span></div></div></div>',
+      },
+      {
+        title: 'Multi-Country & Multi-Currency',
+        description: 'Support region-specific pricing structures and tax configurations. Handle transactions across multiple currencies with SAP sync.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-6"><div class="flex flex-col items-center gap-3"><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg border"><svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><span class="text-xs text-gray-500 font-medium">Multi-Country · Multi-Currency</span></div></div>',
+      },
+      {
+        title: 'Multi-Plant & Cloud / Hybrid / On-Prem',
+        description: 'Configure products across multiple manufacturing plants. Deploy on cloud, hybrid, or on-premise environments — enterprise-grade scalability for global operations.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-100 p-6"><div class="grid grid-cols-3 gap-2"><div class="flex flex-col items-center gap-1"><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-orange-600">Cloud</div><span class="text-[10px] text-gray-400">SaaS</span></div><div class="flex flex-col items-center gap-1"><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-blue-600">Hybrid</div><span class="text-[10px] text-gray-400">Mixed</span></div><div class="flex flex-col items-center gap-1"><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow border text-xs font-bold text-gray-700">On-Prem</div><span class="text-[10px] text-gray-400">Local</span></div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       9. STATS — Business Impact
+       Source: Stats widget — title, subtitle, and all 5 stats
+       taken verbatim from original. UNIQUE to this page.
+       ══════════════════════════════════════════════════════════ -->
+  <Stats
+    tagline="Business Impact"
+    title="Measurable Business Impact"
+    subtitle="Enterprises implementing the UpBuff Product Configurator typically achieve:"
+    stats={[
+      { amount: '40-60%', title: 'Faster Quotation Cycles',    icon: 'tabler:clock-bolt' },
+      { amount: '↓',      title: 'Reduced Configuration Errors', icon: 'tabler:bug-off' },
+      { amount: '↑',      title: 'Improved Sales Productivity',  icon: 'tabler:trending-up' },
+      { amount: '↑',      title: 'Accurate Production Planning', icon: 'tabler:calendar-check' },
+      { amount: '↓',      title: 'Lower Operational Rework',     icon: 'tabler:arrows-down-up' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       10. SECURITY SPLIT — Enterprise Security & Governance
+       Source: Features3 (id="security") — title, subtitle,
+       all 5 items taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <SecuritySplit
+    id="security"
+    tagline="Enterprise Security & Governance"
+    title="Enterprise-grade security ensuring data integrity and compliance across all configuration touchpoints."
+    subtitle="Role-based access, SAP authorization alignment, and full audit trails ensure every configuration, quotation, and order action is secure, traceable, and compliance-ready."
+    features={[
+      {
+        title: 'Role-Based Access',
+        description: 'Granular permission management for users, teams, and partner access levels.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="20" y="36" width="40" height="30" rx="6" stroke="url(#lk1)" stroke-width="2.5"/><path d="M28 36V26a12 12 0 0 1 24 0v10" stroke="url(#lk1)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#22c55e"/><defs><linearGradient id="lk1" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'SAP Authorization Alignment & Audit-Ready Logging',
+        description: 'Respect and enforce SAP authorization objects and user roles. Complete audit trail for every configuration, quotation, and order action — exportable for compliance teams.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" class="w-20 h-16" fill="none"><ellipse cx="40" cy="16" rx="28" ry="10" stroke="url(#db1)" stroke-width="2.5"/><path d="M12 16v20c0 5.523 12.536 10 28 10s28-4.477 28-10V16" stroke="url(#db1)" stroke-width="2.5"/><path d="M12 36v16c0 5.523 12.536 10 28 10s28-4.477 28-10V36" stroke="url(#db1)" stroke-width="2.5"/><circle cx="40" cy="38" r="3" fill="#06b6d4"/><defs><linearGradient id="db1" x1="12" y1="0" x2="68" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Multi-Entity Support & Encrypted API Communication',
+        description: 'Support complex organizational structures across multiple business entities. All data exchange encrypted in transit and at rest for maximum security.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="14" y="14" width="52" height="52" rx="8" stroke="url(#bx1)" stroke-width="2.5"/><path d="M26 40h28M26 52h18M26 28h28" stroke="url(#bx1)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="bx1" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#f97316"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       11. TOOLS MARQUEE
+       ══════════════════════════════════════════════════════════ -->
+  <ToolsMarquee
+    title="Integrates with your manufacturing & sales ecosystem"
+    description="UpBuff Product Configurator connects your SAP environment with the tools your engineering, sales, and operations teams already rely on."
+    speed={30}
+    tools={[
+      { name: 'SAP',             logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP S/4HANA',    logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP Business One',logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'Oracle',          logo: '<img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle ERP integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'Epicor',          logo: '<img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'Power BI',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'WhatsApp',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'Outlook',         logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'Gmail',           logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'IoT',             logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'SMS',             logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+      { name: 'Zoho',            logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff Product Configurator" class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       12. TESTIMONIALS GRID
+       ══════════════════════════════════════════════════════════ -->
+  <TestimonialsGrid
+    title="What our customers say"
+    subtitle="Trusted by <strong>10,000+</strong> businesses — from SAP Business One manufacturers to large enterprise engineering companies"
+    row1={[
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'UpBuff eliminated the configuration rework that was delaying our SAP orders. Quotation accuracy improved immediately and our engineering team stopped firefighting BOM errors.',
+        name: 'Marc Manara',
+        role: 'Head of Startups',
+      },
+      {
+        company: 'Ideaforge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'The configurator workflows are user-friendly, easy to customize, and have been effectively serving our sales and engineering teams for nearly two years without a single ERP incident.',
+        name: 'Ann Donie',
+        role: 'Product Owner',
+      },
+    ]}
+    statCard={{
+      stat: '40-60%',
+      label: 'faster quotation cycles with UpBuff Product Configurator',
+      gradient: 'linear-gradient(135deg, #7c3aed 0%, #0070c0 50%, #0f766e 100%)',
+    }}
+    row2={[
+      {
+        company: 'The Wine Source',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'UpBuff gave us a powerful, flexible way to extend SAP into our configure-to-order workflow without the complexity we saw in other platforms.',
+        name: 'Mark Kupferman',
+        role: 'CMO',
+      },
+      {
+        company: 'Roofsol',
+        logo: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',
+        quote: 'An excellent ERP execution solution. The BOM automation and SAP SD sync is accurate. It significantly reduces friction between our configuration process and production planning.',
+        name: 'Jesús Franco',
+        role: 'CTO',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       13. FAQ ACCORDION
+       Source: All 6 FAQs taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="Frequently Asked Questions"
+    subtitle="Get answers to common questions about the UpBuff ERP-Integrated Product Configurator and its SAP integration."
+    items={[
+      {
+        question: 'What is an ERP-Integrated Product Configurator?',
+        answer: 'It is a rule-based configuration system that integrates directly with SAP to generate validated quotations, BOMs, and sales orders without manual re-entry.',
+      },
+      {
+        question: 'Is this similar to SAP Variant Configuration?',
+        answer: 'It complements SAP Variant Configuration by providing a modern, user-friendly execution layer while keeping SAP as the system of record.',
+      },
+      {
+        question: 'Does it modify SAP core?',
+        answer: 'No. It integrates securely via APIs including OData, IDoc, BAPI, and Service Layer — without any SAP core modification.',
+      },
+      {
+        question: 'Can customers configure products directly?',
+        answer: 'Yes. It supports self-service configuration for customers, partners, and internal sales teams through a controlled, rule-based interface.',
+      },
+      {
+        question: 'Is it suitable for Engineer-to-Order businesses?',
+        answer: 'Yes. It supports complex rule logic and BOM mapping for both Engineer-to-Order (ETO) and Make-to-Order (MTO) enterprises.',
+      },
+      {
+        question: 'Which SAP systems are supported?',
+        answer: 'UpBuff integrates with SAP S/4HANA, SAP ECC, and SAP Business One using secure API-based integration via OData, IDoc, BAPI, and Service Layer APIs.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       14. GET STARTED
+       Source: Steps2 — title, subtitle, and contact items
+       taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <SecuritySplit
+    tagline="Reach out to us"
+    title="Have questions about ERP-Integrated Product Configuration?"
+    subtitle="Feel free to contact us. We're here to help!"
+    features={[
+      {
+        title: 'Schedule a Demo',
+        description: 'See live ERP sync, mobile order capture, and pricing enforcement in action. Schedule a 30-minute demo with our SAP integration specialists.',
+        href: '/contact',
+      },
+      {
+        title: 'Join Partner Program',
+        description: 'SAP reseller and ERP channel partner program for VARs and system integrators. Earn commissions on every UpBuff deployment you bring to market.',
+        href: '/partners',
+      },
+      {
+        title: 'Explore CRM Modules',
+        description: 'Browse field sales, distribution management, collections, and performance reporting modules organized by industry and ERP platform.',
+        href: '/solutions',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       15. CTA BANNER
+       Source: CallToAction — title, subtitle, action.
+       ══════════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Ready to Automate Product Configuration?"
+    subtitle="Eliminate manual quotation errors and accelerate your quote-to-order cycles with SAP-integrated product configuration."
+    action={{
+      text: 'Request Demo',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="No SAP core modifications required"
+  />
+
+</Layout>

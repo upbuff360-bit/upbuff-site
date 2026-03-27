@@ -1,0 +1,169 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import type { Widget } from '~/types';
+
+export interface TestimonialItem {
+  /** Company / source name shown above the quote */
+  company?: string;
+  /** Company logo: inline HTML/SVG string or public path used in <img> */
+  logo?: string;
+  quote: string;
+  name?: string;
+  role?: string;
+  /** Set true to make the card span 2 columns (wide card) */
+  wide?: boolean;
+}
+
+export interface StatCard {
+  /** Large number/text e.g. "10,000+" */
+  stat: string;
+  label?: string;
+  /** Optional watercolor / gradient background HTML string */
+  backgroundImage?: string;
+  /** Inline CSS gradient fallback, e.g. 'linear-gradient(135deg,#f97316,#ec4899)' */
+  gradient?: string;
+}
+
+export interface Props extends Widget {
+  title?: string;
+  subtitle?: string;
+  /** Row 1 items. The stat card replaces the last slot automatically if provided */
+  row1?: Array<TestimonialItem>;
+  /** Row 2 items */
+  row2?: Array<TestimonialItem>;
+  /** Optional stat/highlight card — appears as the 3rd column in row 1 */
+  statCard?: StatCard;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  row1 = [],
+  row2 = [],
+  statCard,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- ── Centered heading ───────────────────────────────────── -->
+  {(title || subtitle) && (
+    <div class="text-center mb-10 md:mb-12 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+      {title && (
+        <h2
+          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100 mb-3"
+          set:html={title}
+        />
+      )}
+      {subtitle && (
+        <p class="text-muted text-base md:text-lg dark:text-slate-400 max-w-5xl mx-auto" set:html={subtitle} />
+      )}
+    </div>
+  )}
+
+  <!-- ── Row 1: up to 2 testimonials + optional stat card ───── -->
+  {row1.length > 0 && (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+      {row1.map(({ company, logo, quote, name, role, wide }, i) => (
+        <div
+          class:list={[
+            'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 flex flex-col justify-between shadow-sm',
+            wide ? 'sm:col-span-2 lg:col-span-1' : '',
+            'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+          ]}
+          style={`animation-delay: ${i * 80}ms`}
+        >
+          <!-- Logo / company name -->
+          <div class="mb-4">
+            {logo
+              ? logo.startsWith('<')
+                ? <div class="h-8 flex items-center"><Fragment set:html={logo} /></div>
+                : <img src={logo} alt={company ?? ''} class="h-5 object-contain" loading="lazy" />
+              : company && (
+                <span class="text-sm font-medium text-gray-400 dark:text-gray-500">{company}</span>
+              )
+            }
+          </div>
+
+          <!-- Quote -->
+          <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed flex-1 mb-5" set:html={`"${quote}"`} />
+
+          <!-- Attribution -->
+          {(name || role) && (
+            <div>
+              {name && <p class="text-sm font-bold text-heading dark:text-gray-100">{name}</p>}
+              {role && <p class="text-xs text-muted dark:text-slate-400">{role}</p>}
+            </div>
+          )}
+        </div>
+      ))}
+
+      <!-- Stat card (3rd slot in row 1) -->
+      {statCard && (
+        <div
+          class="rounded-2xl overflow-hidden shadow-sm relative flex flex-col justify-end intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+          style={`animation-delay: ${row1.length * 80}ms`}
+        >
+          <!-- Background -->
+          <div class="absolute inset-0">
+            {statCard.backgroundImage
+              ? <Fragment set:html={statCard.backgroundImage} />
+              : <div class="w-full h-full" style={statCard.gradient ? `background: ${statCard.gradient}` : 'background: linear-gradient(135deg, #f97316, #ec4899)'} />
+            }
+          </div>
+          <!-- Stat text (bottom-left overlay on white bg) -->
+          <div class="relative bg-white dark:bg-slate-900 m-0 p-6">
+            <p class="text-4xl font-bold text-heading dark:text-gray-100 leading-none mb-1" set:html={statCard.stat} />
+            {statCard.label && (
+              <p class="text-sm text-muted dark:text-slate-400 leading-snug" set:html={statCard.label} />
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )}
+
+  <!-- ── Row 2: full-width 2-col testimonials ─────────────── -->
+  {row2.length > 0 && (
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {row2.map(({ company, logo, quote, name, role }, i) => (
+        <div
+          class:list={[
+            'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 flex flex-col justify-between shadow-sm',
+            'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+          ]}
+          style={`animation-delay: ${i * 80}ms`}
+        >
+          <div class="mb-4">
+            {logo
+              ? logo.startsWith('<')
+                ? <div class="h-8 flex items-center"><Fragment set:html={logo} /></div>
+                : <img src={logo} alt={company ?? ''} class="h-5 object-contain grayscale" loading="lazy" />
+              : company && (
+                <span class="text-sm font-medium text-gray-400 dark:text-gray-500">{company}</span>
+              )
+            }
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed flex-1 mb-5" set:html={`"${quote}"`} />
+          {(name || role) && (
+            <div>
+              {name && <p class="text-sm font-bold text-heading dark:text-gray-100">{name}</p>}
+              {role && <p class="text-xs text-muted dark:text-slate-400">{role}</p>}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+
+</WidgetWrapper>

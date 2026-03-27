@@ -1,0 +1,226 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import type { Widget, Headline } from '~/types';
+
+export interface HighlightItem {
+  title?: string;
+  description?: string;
+  /**
+   * Accepts either:
+   *  - A raw HTML/SVG string  (e.g. an inline <svg> or an <img> tag)
+   *  - An Astro ImageMetadata object  (imported image)
+   *  - An object with `src` + optional `alt` for the Image component
+   */
+  image?: string | Record<string, unknown>;
+  classes?: {
+    panel?: string;
+    image?: string;
+    content?: string;
+    title?: string;
+    description?: string;
+  };
+}
+
+export interface Props extends Omit<Headline, 'classes'>, Widget {
+  items?: Array<HighlightItem>;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  items = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <!-- ── Split Headline ─────────────────────────────────────────── -->
+  {
+    (title || subtitle || tagline) && (
+      <div class="mb-10 md:mb-14">
+        {tagline && (
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-5 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
+            <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+            <span
+              class="text-sm font-medium text-gray-700 dark:text-gray-300"
+              set:html={tagline}
+            />
+          </div>
+        )}
+
+        <div class="md:flex md:items-start md:gap-12">
+          {title && (
+            <h2
+              class="font-bold leading-tight tracking-tight font-heading text-heading text-4xl md:text-5xl md:w-1/2 text-left dark:text-gray-200 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+              set:html={title}
+            />
+          )}
+          {subtitle && (
+            <p
+              class="mt-4 md:mt-1 text-muted text-lg md:text-base md:w-1/2 dark:text-slate-400 intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter"
+              set:html={subtitle}
+            />
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  <!-- ── Feature Card Grid ──────────────────────────────────────── -->
+  {
+    items.length > 0 && (
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map(({ title: itemTitle, description, image, classes: itemClasses = {} }) => (
+          <div
+            class:list={[
+              'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900',
+              'overflow-hidden shadow-sm',
+              'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+              itemClasses?.panel,
+            ]}
+          >
+            <!-- Illustration / image area -->
+            <div
+              class:list={[
+                'relative h-72 bg-gray-50 dark:bg-slate-800 overflow-hidden',
+                'flex items-center justify-center',
+                itemClasses?.image,
+              ]}
+            >
+              {image &&
+  (typeof image === 'string' ? (
+    <div class="w-full flex items-center justify-center h-full">
+      <Fragment set:html={image} />
+    </div>
+  ) : typeof image?.src === 'string' ? (
+    <!-- Remote image -->
+    <img
+      src={image.src}
+      alt={typeof image.alt === 'string' ? image.alt : ''}
+      class="max-h-[220px] w-auto object-contain mx-auto"
+      loading="lazy"
+    />
+  ) : (
+    <!-- Local Astro image -->
+    <Image
+      class="max-h-[220px] w-auto object-contain mx-auto"
+      width={480}
+      height={288}
+      {...image}
+    />
+  ))}
+            </div>
+
+            <!-- Card text content -->
+            <div class:list={['p-6', itemClasses?.content]}>
+              {itemTitle && (
+                <h3
+                  class:list={[
+                    'text-lg font-bold text-heading dark:text-gray-100 mb-2',
+                    itemClasses?.title,
+                  ]}
+                >
+                  {itemTitle}
+                </h3>
+              )}
+              {description && (
+                <p
+                  class:list={[
+                    'text-muted text-sm leading-relaxed dark:text-slate-400',
+                    itemClasses?.description,
+                  ]}
+                  set:html={description}
+                />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+</WidgetWrapper>
+
+<style>
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progressGrow {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes flowY {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0.2;
+  }
+}
+
+/* scanning line */
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0.2;
+  }
+}
+
+@keyframes scanY {
+  0% {
+    top: 0%;
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 2px);
+    opacity: 0.4;
+  }
+}
+</style>

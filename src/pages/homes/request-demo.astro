@@ -1,0 +1,242 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+
+import HeroContactForm from '~/components/widgets/HeroContactForm.astro';
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'Request a Demo | UpBuff ERP Execution Platform',
+  description:
+    'See UpBuff in action. Book a personalised demo of the ERP Execution Platform extending SAP S/4HANA, SAP Business One, Oracle, and Epicor into real-time field, warehouse, and sales operations.',
+  canonical: 'https://www.upbuff.com/request-demo',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/request-demo',
+    title: 'Request a Demo | UpBuff ERP Execution Platform',
+    description:
+      'Book a personalised UpBuff demo — see live SAP integration, real-time field execution, and Clean Core architecture in action.',
+    image: 'https://www.upbuff.com/images/request-demo-og.png',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'Request a Demo | UpBuff',
+    description:
+      'See UpBuff extend SAP, Oracle, and Epicor into real-time operations — no core modification, no upgrade risk.',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+
+  <!-- ── Structured Data ─────────────────────────────────────── -->
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <meta property="og:site_name" content="UpBuff Technologies" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com",
+      "logo": "https://www.upbuff.com/logo.png",
+      "description": "UpBuff is an ERP Execution Platform extending SAP, Oracle, and Epicor into field service, warehouse, sales, and shopfloor operations."
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What will I see in the UpBuff demo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The demo covers live ERP integration (SAP, Oracle, or Epicor), real-time field execution on mobile, warehouse scanning, sales order flows, and the Clean Core API architecture — all mapped to your specific use case."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does the demo take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A standard demo runs 30 to 45 minutes. For larger enterprise engagements we offer a 90-minute deep-dive session tailored to your ERP environment and operational modules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to prepare anything before the demo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No preparation is required. It helps to know which ERP system you use and which operational areas you want to improve — field service, warehouse, sales, or shopfloor — so we can tailor the session, but we can also run a full platform overview."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the demo free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The demo is completely free with no commitment required. You will be connected with an UpBuff solutions specialist familiar with your ERP environment."
+          }
+        }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="black"
+      actions={[
+        { variant: 'secondary', text: 'Login',        href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/homes/request-demo' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO — demo request form
+       ══════════════════════════════════════════════════════════ -->
+  <HeroContactForm
+    tagline="Request a Demo"
+    title="See UpBuff extend your<br />ERP in 30 minutes."
+    subtitle="Book a personalised session with an UpBuff solutions specialist. We&rsquo;ll show you live SAP integration, real-time execution on mobile, and Clean Core architecture — scoped to your ERP and your operations."
+    testimonial={{
+      quote: "The demo alone clarified more than six months of vendor calls. We saw our exact SAP Business One flows running on UpBuff within the first fifteen minutes.",
+      name: "Head of Operations",
+      role: "Molygraph Lubricants",
+      avatar: "http://4.151.8.142:4000/uploads/gaurock-client.png",
+    }}
+    formTitle="Book your demo"
+    fields={[
+      { name: 'name',       label: 'Full name',   placeholder: 'Jane Smith',           type: 'text'  },
+      { name: 'email',      label: 'Work email',  placeholder: 'you@company.com',      type: 'email' },
+      { name: 'erp',        label: 'ERP system',  placeholder: 'Select your ERP',      type: 'select',
+        options: ['SAP S/4HANA', 'SAP Business One', 'SAP ECC', 'Oracle ERP Cloud', 'Oracle NetSuite', 'Epicor Kinetic', 'Microsoft Dynamics 365', 'Other'] },
+      { name: 'focus',      label: 'Area of interest', placeholder: 'Select a module', type: 'select',
+        options: ['Field Service Management', 'Warehouse & Inventory', 'Sales & Distribution', 'Manufacturing / Shopfloor', 'CRM & Customer Portal', 'Enterprise Partner Portals', 'Full platform overview'] },
+      { name: 'message',    label: 'Anything specific you want to see?', placeholder: 'Optional — describe your use case or challenge…', type: 'textarea', rows: 3 },
+    ]}
+    submitLabel="Book my demo"
+    formNote="Free &amp; no commitment required. We typically respond within one business day."
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Trusted by operations teams already running on UpBuff"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',         alt: 'ideaForge Technology' },
+      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',       alt: 'JNK Chemdist' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',          alt: 'Molygraph' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',    alt: 'NCC Streetscape' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',            alt: 'Roofsol' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',    alt: 'The Wine Source' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. WHAT YOU'LL SEE — FeaturesGrid
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="What's in the demo"
+    title="A real platform.<br />Your real ERP."
+    subtitle="Every demo is mapped to your ERP system and the operational modules most relevant to your team. No generic slides — you see UpBuff running live against SAP, Oracle, or Epicor data."
+    items={[
+      {
+        icon: 'tabler:plug-connected',
+        title: 'Live ERP connection',
+        description: 'Watch UpBuff pull real-time data from SAP Business One, S/4HANA, Oracle, or Epicor via official APIs — no screenshots, no mock data.',
+      },
+      {
+        icon: 'tabler:device-mobile',
+        title: 'Mobile execution in action',
+        description: 'See field technicians, warehouse operators, or sales reps executing ERP workflows on mobile — with offline support and instant ERP sync.',
+      },
+      {
+        icon: 'tabler:arrows-exchange',
+        title: 'Real-time ERP sync',
+        description: 'Every action in the demo — a service order update, a goods issue, a sales confirmation — syncs back to ERP in real time through the official API layer.',
+      },
+      {
+        icon: 'tabler:shield-check',
+        title: 'Clean Core architecture',
+        description: 'We walk through how UpBuff integrates without any ERP core modification — keeping your SAP or Oracle environment upgrade-safe from day one.',
+      },
+      {
+        icon: 'tabler:layout-dashboard',
+        title: 'Your module, your flow',
+        description: 'Choose field service, warehouse, sales distribution, shopfloor, or CRM — we demo the module most relevant to the problem you are trying to solve.',
+      },
+      {
+        icon: 'tabler:clock',
+        title: '30 to 45 minutes',
+        description: 'A focused session with an UpBuff specialist who knows your ERP. No sales theatre — just a clear view of what UpBuff can do for your specific operations.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       4. ENTERPRISE INCLUSION
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesEnterprise
+    tagline="What to expect"
+    title="What happens after your demo"
+    items={[
+      {
+        title: 'Meet your integration engineer',
+        description: 'Every demo ends with an intro to the engineer who would own your SAP or Oracle integration from day one — no handoffs, no account managers in between.',
+        illustration: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6 bg-gray-50"><div class="bg-white rounded-2xl shadow px-5 py-3 flex items-center gap-2 text-sm font-medium border border-gray-100"><span class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-xs">✓</span>SAP integration live</div><div class="flex items-center gap-3 mt-2"><div class="w-16 h-9 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500"></div><div class="w-14 h-14 rounded-full bg-gray-200 overflow-hidden border-2 border-white shadow"><img src="http://4.151.8.142:4000/uploads/common-female.svg" class="w-full h-full object-cover" alt="Integration engineer" /></div><div class="w-16 h-9 rounded-full bg-gradient-to-r from-purple-400 to-pink-400"></div></div></div>',
+      },
+      {
+        title: 'A workflow scoped to your ERP',
+        description: 'During the demo we map at least one live workflow to your ERP — SAP Business One, S/4HANA, Oracle, or Epicor — so you leave with a concrete picture of execution, not a generic slide deck.',
+        illustration: '<div class="grid grid-cols-4 gap-3 w-full px-4"><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#1d4ed8"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#374151"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff.png" class="w-7 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#7c3aed"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0f766e"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" class="w-9 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ea580c"></div><div class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center overflow-hidden"><img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" class="w-9 h-7 object-contain"/></div><div class="w-12 h-12 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#0ea5e9"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#6366f1"></div><div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:#ec4899"></div></div>',
+      },
+      {
+        title: 'Enterprise commitments from day one',
+        description: 'Enterprise deployments come with documented uptime SLAs and a dedicated support queue. We walk through exactly what those commitments mean for your team during the session.',
+        illustration: '<div class="relative w-48 h-48 flex items-center justify-center"><svg viewBox="0 0 160 160" class="absolute inset-0 w-full h-full -rotate-90"><circle cx="80" cy="80" r="60" fill="none" stroke="#e5e7eb" stroke-width="8" stroke-dasharray="6 4"/><circle cx="80" cy="80" r="60" fill="none" stroke="#22c55e" stroke-width="8" stroke-dasharray="350 90" stroke-linecap="round"/></svg><span class="text-2xl font-bold text-heading dark:text-gray-100">99.9%</span></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. FAQ
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="Demo FAQ"
+    title="Questions about the demo"
+    items={[
+      {
+        question: "What will I see in the demo?",
+        answer: "The demo covers live ERP integration (SAP, Oracle, or Epicor), real-time field execution on mobile, warehouse scanning, sales order flows, and Clean Core API architecture — all mapped to the modules you selected in your request.",
+      },
+      {
+        question: "How long does the demo take?",
+        answer: "A standard demo runs 30 to 45 minutes. For larger enterprise engagements we offer a 90-minute deep-dive session tailored to your ERP environment and multiple operational modules.",
+      },
+      {
+        question: "Who will I be speaking with?",
+        answer: "You will be connected with an UpBuff solutions specialist who is familiar with your ERP system — SAP, Oracle, or Epicor. They will have reviewed your request before the session.",
+      },
+      {
+        question: "Do I need to prepare anything?",
+        answer: "No preparation is required. It helps to know which ERP system you run and which operational areas you want to improve — but we can also run a full platform overview if you are still exploring.",
+      },
+      {
+        question: "Is this demo free?",
+        answer: "Yes — completely free with no commitment required. Fill in the form and we will send you a calendar link within one business day.",
+      },
+    ]}
+  />
+
+</Layout>

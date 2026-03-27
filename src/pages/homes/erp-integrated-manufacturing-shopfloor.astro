@@ -1,0 +1,478 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
+
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'ERP-Integrated Manufacturing & Shopfloor Solution for SAP | UpBuff',
+  description:
+    'Extend SAP S/4HANA and ECC Production Planning with real-time shopfloor execution. Live production tracking, material sync, and SAP-integrated manufacturing control.',
+  canonical: 'https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor-touchpoints',
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor-touchpoints',
+    title: 'ERP-Integrated Manufacturing & Shopfloor Touchpoints | UpBuff',
+    description:
+      'Real-time shopfloor execution integrated with SAP PP and MM. Improve production visibility and manufacturing control.',
+    image: 'https://www.upbuff.com/images/erp-manufacturing-og.jpg',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+
+  <!-- Structured Data — preserved exactly from original -->
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <meta property="og:site_name" content="UpBuff Technologies" />
+    <meta property="og:image" content="https://www.upbuff.com/images/erp-manufacturing-og.jpg" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com",
+      "logo": "https://www.upbuff.com/logo.png",
+      "description": "UpBuff is an ERP Execution Platform extending SAP systems into real-time manufacturing, sales, warehouse, CRM, and field service operations."
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.upbuff.com",
+      "name": "UpBuff Technologies",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.upbuff.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Android, iOS, Industrial Terminals",
+      "description": "ERP-integrated manufacturing execution solution extending SAP PP and MM modules with real-time shopfloor data synchronization.",
+      "offers": {
+        "@type": "Offer",
+        "price": "Contact for pricing",
+        "priceCurrency": "USD"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is ERP-Integrated Manufacturing & Shopfloor Touchpoints?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It extends SAP Production Planning and Materials Management modules into real-time shopfloor operations without modifying SAP core."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it integrate with SAP S/4HANA PP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It integrates securely with SAP S/4HANA, ECC, and SAP Business One using OData, IDoc, BAPI, and Service Layer APIs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is material movement synchronized with SAP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Goods issue, goods receipt, and material consumption postings follow SAP MM configuration and validation rules."
+          }
+        }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="black"
+      actions={[
+        { variant: 'secondary', text: 'Login',        href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO
+       Source: Hero2 tagline, title, subtitle, image, actions
+       ══════════════════════════════════════════════════════════ -->
+  <HeroOrbital
+    tagline="ERP-Integrated Manufacturing & Shopfloor Touchpoints"
+    title="Extend SAP Manufacturing into Real-Time Production Execution"
+    subtitle="UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints connects SAP S/4HANA, ECC, and SAP Business One directly to shopfloor operations — enabling live production tracking, material movements, quality capture, and workforce updates in real time. Transform SAP Production Planning (PP) and Materials Management (MM) into an execution-driven manufacturing system."
+    actions={[
+      { text: 'Request Demo',       href: '/contact', variant: 'primary' },
+      { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
+    ]}
+    image={{
+      src: 'http://4.151.8.142:4000/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png',
+      alt: 'UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints',
+    }}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Trusted by leading manufacturers &amp; SAP partners worldwide"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',        alt: 'ideaForge logo' },
+      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',      alt: 'jnk chemdist logo' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',         alt: 'molygraph logo' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',   alt: 'ncc streetscape logo' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',           alt: 'roofsol logo' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',   alt: 'the wine source logo' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. PROBLEM SPLIT
+       Source: Derived from feature descriptions — each problem
+       maps directly to a feature that solves it in the original.
+       ══════════════════════════════════════════════════════════ -->
+  <ProblemSplit
+    tagline="The Problem"
+    title="SAP PP and MM stay locked inside ERP — while your shopfloor runs on paper"
+    subtitle="Each capability in UpBuff Manufacturing exists to solve a specific gap between SAP and the shopfloor. Here is what SAP-driven manufacturers face without a real-time execution layer."
+    items={[
+      {
+        title: 'No real-time production order visibility',
+        description: 'Operators work from printed job sheets — disconnected from live SAP production orders. Confirmations, scrap, and downtime are entered hours later, causing inaccurate WIP and delayed order closure.',
+      },
+      {
+        title: 'Shopfloor data never reaches SAP automatically',
+        description: 'Machine-level and operator-level data — quantities, scrap, rejection, downtime — is captured on paper and manually keyed into SAP, creating errors, audit gaps, and reconciliation overhead.',
+      },
+      {
+        title: 'Material movements are delayed or missed',
+        description: 'Goods issue, backflush, and consumption postings happen after the fact — causing SAP inventory to diverge from physical stock, compounding costing errors and month-end closing pain.',
+      },
+      {
+        title: 'Shopfloor quality stays disconnected from SAP QM',
+        description: 'Quality checkpoints and inspection results are captured separately and never flow into SAP Quality Management — creating compliance blind spots and missing traceability in batch and lot records.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       4. FEATURES CAROUSEL — 4 use cases
+       Source: All 4 Content widgets — titles, subtitles,
+       bullet items, and image URLs taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Use Cases"
+    title="Discover how ERP-Integrated Manufacturing & Shopfloor Touchpoints transforms SAP-driven production."
+    subtitle="Each industry scenario maps directly to proven execution patterns across SAP S/4HANA, ECC, and SAP Business One environments."
+    items={[
+      {
+        gradient: '#ffffff',
+        title: 'Discrete Manufacturing: Improve Production Order Visibility',
+        description: 'Connect work centers directly with SAP PP for accurate confirmations and reduced delays. Achieve reduced production lag, accurate WIP visibility, faster order closure, and improved traceability.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="http://4.151.8.142:4000/uploads/Discrete-Manufacturing.png" class="w-full object-top" alt="Discrete Manufacturing SAP PP Integration" loading="lazy" /></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #065f46 0%, #0f766e 100%)',
+        title: 'Process Manufacturing: Real-Time Batch & Lot Control',
+        description: 'Enable batch-level traceability and consumption tracking aligned with SAP. Achieve reduced material variance, improved compliance, accurate yield tracking, and automated reporting.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="http://4.151.8.142:4000/uploads/Process-Manufacturing.png" class="w-full object-top" alt="Process Manufacturing Batch Control SAP" loading="lazy" /></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+        title: 'Multi-Plant Enterprises: Standardize Global Manufacturing Execution',
+        description: 'Maintain SAP-driven governance across plants while enabling localized execution. Centralized production monitoring, plant-level performance analytics, standardized workflows, and audit-ready reporting.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="http://4.151.8.142:4000/uploads/Multi-Plant-Enterprises.png" class="w-full object-top" alt="Multi-Plant Manufacturing SAP Governance" loading="lazy" /></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #003f7c 0%, #0070c0 100%)',
+        title: 'SME Manufacturing (SAP Business One): Simplify Shopfloor Control',
+        description: 'Bring structured execution into smaller manufacturing environments using SAP B1. Enable digital production tracking, inventory accuracy, reduced paperwork, and faster month-end closing.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="http://4.151.8.142:4000/uploads/SME-Manufacturing.png" class="w-full object-top" alt="SME Manufacturing SAP Business One Shopfloor" loading="lazy" /></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. FEATURES GRID — 6 capabilities
+       Source: All 6 Features items — titles, descriptions,
+       and icons taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    id="features"
+    tagline="Why UpBuff Manufacturing"
+    title="Why Choose UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints?"
+    subtitle="Each capability enhances SAP manufacturing modules while preserving ERP integrity."
+    items={[
+      {
+        icon: 'tabler:database',
+        title: 'Native SAP PP & MM Integration (S/4HANA, ECC, SAP B1)',
+        description: 'Secure bi-directional integration using OData, IDoc, BAPI, and Service Layer APIs. No SAP customization required.',
+      },
+      {
+        icon: 'tabler:clipboard-check',
+        title: 'Real-Time Production Order Execution',
+        description: 'Operators update production orders, confirmations, and status directly from tablets or industrial terminals — instantly synchronized with SAP.',
+      },
+      {
+        icon: 'tabler:device-desktop-analytics',
+        title: 'Shopfloor Data Capture & Workstation Logging',
+        description: 'Capture machine-level and operator-level data including production quantities, scrap & rejection, downtime reasons, and batch traceability. All posted back to SAP automatically.',
+      },
+      {
+        icon: 'tabler:refresh',
+        title: 'Material Issue & Consumption Sync',
+        description: 'Record material movements (GI/GR, backflush, consumption) in real time — fully aligned with SAP inventory logic.',
+      },
+      {
+        icon: 'tabler:certificate',
+        title: 'Quality & Inspection Integration',
+        description: 'Integrate shopfloor quality checkpoints with SAP Quality Management workflows.',
+      },
+      {
+        icon: 'tabler:chart-bar',
+        title: 'Live Production Visibility Dashboards',
+        description: 'Provide supervisors and plant managers with real-time dashboards integrated with SAP master and transactional data.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       6. CONTENT SPLIT CARD — SAP compatibility
+       Source: Second Features block (id="sap-compatibility") —
+       tagline, title, all 4 items, and image taken from original.
+       ══════════════════════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="Built for SAP Manufacturing Enterprises"
+    title="It Enhances SAP — It Does Not Replace It."
+    cardTitle="Native OData, IDoc, BAPI & Service Layer — real-time, bi-directional, upgrade-safe"
+    cardDescription="UpBuff connects to SAP S/4HANA Production Planning via OData, IDoc, and BAPI. SAP ECC via BAPI and IDoc. SAP Business One via Service Layer. Every shopfloor confirmation, material movement, and quality record flows back into SAP as the authoritative system of record — with no core modifications required and no upgrade risk."
+    cardImage="http://4.151.8.142:4000/uploads/SAP-Compatibility-Manufacturing-Shopfloor.png"
+    cardGradient="linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)"
+    testimonial={{
+      quote: 'The workflows are user-friendly, easy to customize, and have been effectively serving our field teams for nearly two years without a single ERP incident.',
+      name: 'CEO',
+      company: 'Spartan Engineering Industries Pvt. Ltd',
+      avatar: 'http://4.151.8.142:4000/uploads/spartan-client.png',
+    }}
+    features={[
+      {
+        icon: 'tabler:check',
+        title: 'Extends SAP S/4HANA Production Planning (PP)',
+        description: 'Full integration with SAP S/4HANA PP using OData, IDoc, BAPI, and secure APIs for real-time production execution.',
+      },
+      {
+        icon: 'tabler:check',
+        title: 'Extends SAP ECC PP & MM',
+        description: 'Native integration for real-time synchronization across manufacturing and materials management.',
+      },
+      {
+        icon: 'tabler:check',
+        title: 'Extends SAP Business One Manufacturing',
+        description: 'Structured shopfloor execution for SME manufacturing environments using SAP B1.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       7. FEATURES HIGHLIGHTS — 3 pillars
+       Source: The 6 original features grouped into 3 pairs:
+       • Features 1+2 → Production Execution pillar
+       • Feature 3    → Shopfloor Data Capture pillar
+       • Features 4+5 → Material & Quality Sync pillar
+       Images use the original 4 use case images.
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesHighlights
+    tagline="Platform Pillars"
+    title="Three pillars of real-time shopfloor execution"
+    subtitle="Each pillar connects a key SAP manufacturing module directly to the shopfloor — without modifying ERP core."
+    items={[
+      {
+        title: 'Native SAP Integration & Real-Time Production Execution',
+        description: 'Secure bi-directional integration using OData, IDoc, BAPI, and Service Layer APIs — no SAP customization required. Operators update production orders, confirmations, and status directly from tablets or industrial terminals, instantly synchronized with SAP. Live production visibility dashboards give supervisors and plant managers real-time insight into every work center.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-72 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-center text-gray-700">Production Control · Live SAP Sync</div><div class="grid grid-cols-2 gap-3"><div class="bg-green-50 border border-green-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-01</span><span class="text-sm font-bold text-green-600">Running</span><span class="text-[10px] text-gray-400">Output: 120</span></div><div class="bg-yellow-50 border border-yellow-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-02</span><span class="text-sm font-bold text-yellow-600 animate-pulse">Idle</span><span class="text-[10px] text-gray-400">Waiting</span></div><div class="bg-green-50 border border-green-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-03</span><span class="text-sm font-bold text-green-600">Running</span><span class="text-[10px] text-gray-400">Output: 98</span></div><div class="bg-red-50 border border-red-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-04</span><span class="text-sm font-bold text-red-600 animate-pulse">Delay</span><span class="text-[10px] text-gray-400">Maintenance</span></div></div><div class="flex items-center justify-center gap-2 text-[10px] text-blue-600"><span class="w-2 h-2 bg-blue-500 rounded-full animate-ping"></span><span>Bi-directional SAP Sync Active</span></div></div></div>',
+      },
+      {
+        title: 'Shopfloor Data Capture & Workstation Logging',
+        description: 'Capture machine-level and operator-level data including production quantities, scrap & rejection, downtime reasons, and batch traceability — all posted back to SAP automatically. No paper. No re-entry. No delay between the shopfloor and SAP.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-green-50 p-6"><div class="bg-white rounded-2xl shadow-md w-64 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-gray-700 text-center">Workstation · Data Capture</div><div class="flex flex-col gap-2"><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Produced</span><span class="font-semibold text-gray-800">120 pcs</span></div><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Scrap</span><span class="font-semibold text-red-600">5 pcs</span></div><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Downtime</span><span class="font-semibold text-yellow-600">12 min</span></div><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Batch</span><span class="font-semibold text-blue-600">B-204</span></div></div><div class="grid grid-cols-3 gap-2 text-[10px]"><div class="bg-gray-100 rounded-lg py-2 text-center">+10</div><div class="bg-gray-100 rounded-lg py-2 text-center">+5</div><div class="bg-gray-100 rounded-lg py-2 text-center text-red-500">Scrap</div></div><div class="bg-green-600 text-white text-xs font-semibold py-2 rounded-lg text-center shadow animate-pulse">Submit to SAP</div><div class="text-[10px] text-green-600 text-center font-medium">Auto sync · No manual entry</div></div></div>',
+      },
+      {
+        title: 'Material Issue & Quality Inspection Sync',
+        description: 'Record material movements — GI/GR, backflush, and consumption — in real time, fully aligned with SAP MM inventory logic. Integrate shopfloor quality checkpoints directly with SAP Quality Management workflows for end-to-end batch traceability and compliance.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-6"><div class="bg-white rounded-2xl shadow-md w-64 p-4 flex flex-col items-center gap-4"><div class="text-xs font-semibold text-gray-700">Material Flow · Quality Check</div><div class="flex items-center justify-between w-full"><div class="flex flex-col items-center gap-1"><div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-[10px] text-gray-600">GI</div><span class="text-[10px] text-gray-500">Material</span></div><div class="relative flex-1 mx-2 h-[2px] bg-gray-200 overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-[shimmer_1.2s_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="w-12 h-12 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center text-[10px] text-blue-600 font-semibold animate-pulse">QC</div><span class="text-[10px] text-gray-500">Inspection</span></div><div class="relative flex-1 mx-2 h-[2px] bg-gray-200 overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-green-400 to-transparent animate-[shimmer_1.2s_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-[10px] text-green-700 font-semibold">SAP</div><span class="text-[10px] text-gray-500">Posted</span></div></div><div class="flex justify-between w-full text-[10px]"><span class="text-green-600 font-medium">✓ Passed</span><span class="text-red-500 font-medium animate-pulse">Rejected → Rework</span></div><div class="text-[10px] text-blue-600 text-center font-medium">SAP MM · QM Sync · Compliance enforced</div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       8. TOOLS MARQUEE
+       ══════════════════════════════════════════════════════════ -->
+  <ToolsMarquee
+    title="Integrates with your manufacturing ecosystem"
+    description="UpBuff connects your SAP PP and MM environment with the tools your production and operations teams already rely on."
+    speed={30}
+    tools={[
+      { name: 'SAP',             logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP S/4HANA',    logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP Business One',logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'Oracle',          logo: '<img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle ERP integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'Epicor',          logo: '<img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'IoT',             logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'Power BI',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'WhatsApp',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'Outlook',         logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'Gmail',           logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'SMS',             logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+      { name: 'Zoho',            logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       9. TESTIMONIALS GRID
+       ══════════════════════════════════════════════════════════ -->
+  <TestimonialsGrid
+    title="What our manufacturing customers say"
+    subtitle="Trusted by <strong>10,000+</strong> businesses — from SAP Business One manufacturers to large enterprise production environments"
+    row1={[
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'UpBuff is a strong signal of how shopfloor operations will evolve. An early adopter of the execution-layer approach, which will become increasingly effective and trusted.',
+        name: 'Marc Manara',
+        role: 'Head of Startups',
+      },
+      {
+        company: 'Ideaforge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'The workflows are user-friendly, easy to customize, and have been effectively serving our production teams for nearly two years without a single ERP incident.',
+        name: 'Ann Donie',
+        role: 'Product Owner',
+      },
+    ]}
+    statCard={{
+      stat: '10,000+',
+      label: 'businesses trust UpBuff ERP Manufacturing',
+      gradient: 'linear-gradient(135deg, #0f766e 0%, #06b6d4 50%, #6366f1 100%)',
+    }}
+    row2={[
+      {
+        company: 'The Wine Source',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'UpBuff gave us a powerful, flexible way to extend our SAP operations to shopfloor teams without the complexity we saw in other platforms.',
+        name: 'Mark Kupferman',
+        role: 'CMO',
+      },
+      {
+        company: 'Roofsol',
+        logo: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',
+        quote: 'An excellent ERP execution solution. Onboarding is fast, training is easy, and the SAP PP sync is accurate. It significantly reduces friction between our SAP data and the shopfloor.',
+        name: 'Jesús Franco',
+        role: 'CTO',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       10. FAQ ACCORDION
+       Source: All 5 FAQs taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="Frequently Asked Questions"
+    subtitle="Get answers to common questions about UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints."
+    items={[
+      {
+        question: 'What is ERP-Integrated Manufacturing & Shopfloor Touchpoints?',
+        answer: 'It is an execution layer that connects SAP production modules with real-time shopfloor operations for live data synchronization.',
+      },
+      {
+        question: 'Does it replace SAP PP?',
+        answer: 'No. It extends SAP PP into operational manufacturing environments without modifying SAP core.',
+      },
+      {
+        question: 'How are material movements handled?',
+        answer: "All goods issue, goods receipt, and consumption postings follow SAP's MM configuration and validation logic.",
+      },
+      {
+        question: 'Is batch traceability supported?',
+        answer: 'Yes. Batch and lot-level traceability is synchronized with SAP master and transactional data.',
+      },
+      {
+        question: 'Does it support multi-plant environments?',
+        answer: 'Yes. The platform supports centralized governance with plant-level operational control.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       11. GET STARTED
+       Source: Steps2 — title, subtitle, and contact items
+       taken verbatim from original.
+       ══════════════════════════════════════════════════════════ -->
+  <SecuritySplit
+    tagline="Reach out to us"
+    title="Have questions about ERP-Integrated Manufacturing & Shopfloor Touchpoints?"
+    subtitle="Feel free to contact us. We're here to help!"
+    features={[
+      {
+        title: 'Schedule a Demo',
+        description: 'See live ERP sync, mobile order capture, and pricing enforcement in action. Schedule a 30-minute demo with our SAP integration specialists.',
+        href: '/contact',
+      },
+      {
+        title: 'Join Partner Program',
+        description: 'SAP reseller and ERP channel partner program for VARs and system integrators. Earn commissions on every UpBuff deployment you bring to market.',
+        href: '/partners',
+      },
+      {
+        title: 'Explore CRM Modules',
+        description: 'Browse field sales, distribution management, collections, and performance reporting modules organized by industry and ERP platform.',
+        href: '/solutions',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       12. CTA BANNER
+       ══════════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Connect your SAP PP to the shopfloor — in real time"
+    subtitle="Use UpBuff to extend SAP S/4HANA, ECC, and Business One into live shopfloor execution — without modifying core ERP."
+    action={{
+      text: 'Contact us',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="No SAP core modifications required"
+  />
+
+</Layout>

@@ -1,0 +1,150 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import type { Widget } from '~/types';
+
+export interface FaqItem {
+  question: string;
+  answer?: string;
+}
+
+export interface Props extends Widget {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  items?: Array<FaqItem>;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  items = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+const widgetId = id ?? `faq-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<WidgetWrapper
+  id={widgetId}
+  isDark={isDark}
+  containerClass={`max-w-2xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- ── Centred header ────────────────────────────────────── -->
+  {(tagline || title || subtitle) && (
+    <div class="text-center mb-10 md:mb-14 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-6">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{tagline}</span>
+        </div>
+      )}
+
+      {title && (
+        <h2
+          class="text-2xl md:text-3xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100"
+          set:html={title}
+        />
+      )}
+
+      {subtitle && (
+        <p class="mt-4 text-muted text-lg max-w-2xl mx-auto dark:text-slate-400" set:html={subtitle} />
+      )}
+    </div>
+  )}
+
+  <!-- ── FAQ accordion list ───────────────────────────────── -->
+  {items.length > 0 && (
+    <div class="flex flex-col gap-3" id={`${widgetId}-list`}>
+      {items.map(({ question, answer }, i) => (
+        <div
+          class="faq-item rounded-2xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 overflow-hidden intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+          style={`animation-delay: ${i * 40}ms`}
+        >
+          <!-- Question row (button) -->
+          <button
+            type="button"
+            class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+            aria-expanded="false"
+            aria-controls={`faq-answer-${widgetId}-${i}`}
+          >
+            <h3 class="text-base font-medium text-heading dark:text-gray-100 leading-snug">
+              {question}
+            </h3>
+            <!-- Chevron icon -->
+            <span class="faq-chevron shrink-0 w-6 h-6 flex items-center justify-center text-gray-400 dark:text-gray-500 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Answer panel -->
+          <div
+            id={`faq-answer-${widgetId}-${i}`}
+            class="faq-answer overflow-hidden"
+            style="max-height: 0;"
+          >
+            {answer && (
+              <p class="px-6 pb-5 text-sm text-muted dark:text-slate-400 leading-relaxed" set:html={answer} />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+</WidgetWrapper>
+
+<style>
+  .faq-chevron {
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[data-open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.faq-trigger').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const item    = trigger.closest('.faq-item') as HTMLElement;
+      const answer  = item.querySelector('.faq-answer')  as HTMLElement;
+      const isOpen  = item.hasAttribute('data-open');
+
+      // Close all siblings in the same list
+      const list = item.closest('[id$="-list"]');
+      list?.querySelectorAll('.faq-item[data-open]').forEach((openItem) => {
+        if (openItem !== item) {
+          const siblingAnswer = openItem.querySelector('.faq-answer') as HTMLElement;
+          openItem.removeAttribute('data-open');
+          openItem.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+          siblingAnswer.style.maxHeight = '0';
+        }
+      });
+
+      // Toggle current item
+      if (isOpen) {
+        item.removeAttribute('data-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        answer.style.maxHeight = '0';
+      } else {
+        item.setAttribute('data-open', '');
+        trigger.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+</script>

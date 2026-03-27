@@ -1,0 +1,521 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import HeroSolutionsIllustration from '~/components/widgets/HeroSolutionsIllustration.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'ERP Execution Solutions by Industry | SAP Clean Core Extension Platform | UpBuff',
+  description:
+    'Industry-based ERP execution solutions for SAP S/4HANA, ECC, and Business One. Extend manufacturing, warehouse, field service, and sales operations without modifying your SAP core.',
+  canonical: 'https://www.upbuff.com/solutions/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/solutions/',
+    title: 'ERP Execution Solutions for SAP Industries | UpBuff',
+    description:
+      'Extend SAP without customization. UpBuff enables manufacturing, warehouse, field service, and sales execution while keeping your ERP core clean.',
+    image: 'https://www.upbuff.com/images/industry-execution-layer.png',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'ERP Execution Solutions by Industry | UpBuff',
+    description: 'Extend SAP without customization. Clean Core execution for manufacturing, warehouse, field service, and sales.',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+
+    <!-- Organization schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com",
+      "logo": "https://www.upbuff.com/logo.png",
+      "description": "UpBuff is an ERP Execution Platform extending SAP environments without modifying the ERP core.",
+      "sameAs": ["https://www.linkedin.com/company/upbuff"]
+    })} />
+
+    <!-- WebSite schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.upbuff.com",
+      "name": "UpBuff ERP Execution Platform"
+    })} />
+
+    <!-- SoftwareApplication schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UpBuff ERP Execution Platform",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "description": "Industry-focused ERP execution platform extending SAP S/4HANA, ECC, and Business One without ERP customization.",
+      "url": "https://www.upbuff.com/solutions/",
+      "featureList": [
+        "Manufacturing & Shopfloor Execution",
+        "Warehouse & Inventory Management",
+        "Field Service Management",
+        "Sales & Distribution Execution",
+        "Clean Core SAP Integration",
+        "Mobile-First Operations"
+      ],
+      "softwareRequirements": "SAP S/4HANA, SAP ECC, SAP Business One, Epicor ERP, or Oracle ERP",
+      "provider": {
+        "@type": "Organization",
+        "name": "UpBuff Technologies",
+        "url": "https://www.upbuff.com"
+      }
+    })} />
+
+    <!-- FAQPage schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does UpBuff modify SAP core?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. UpBuff follows a Clean Core strategy and integrates via secure APIs without modifying SAP S/4HANA, ECC, or Business One." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which industries benefit from UpBuff?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Manufacturing, distribution, warehouse-intensive enterprises, field service industries, SAP-driven sales organizations, plant maintenance teams, and retail/trade execution teams benefit from UpBuff's execution layer model." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does UpBuff integrate with SAP?",
+          "acceptedAnswer": { "@type": "Answer", "text": "UpBuff integrates via SAP Service Layer, OData, and BAPI — official API-based integration methods that require no ERP core modification and remain upgrade-safe." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can UpBuff work offline?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. UpBuff supports offline scanning and execution for warehouse and field service workflows, syncing automatically when connectivity is restored." }
+        }
+      ]
+    })} />
+  </Fragment>
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'secondary', text: 'Login', href: '#' },
+        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO — animated ERP execution layer
+       ══════════════════════════════════════════════════════════ -->
+  <Hero2
+    tagline="Industry Solutions"
+    actions={[
+      { variant: 'primary', text: 'Request an ERP Execution Assessment', href: '/contact' },
+      { text: 'Speak with Our SAP Experts', href: '/contact', icon: 'tabler:message-circle' },
+    ]}
+    image={{ src: 'http://4.151.8.142:4000/uploads/Industry-Solutions.png', alt: 'UpBuff ERP Execution Solutions by Industry' }}
+  >
+    <Fragment slot="title">
+      Extend SAP. Transform Industry Execution. <span class="text-accent dark:text-white">Keep the Core Clean.</span>
+    </Fragment>
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        Enterprise SAP systems like SAP S/4HANA, SAP ECC, and SAP Business One are built as systems of record. They
+        manage finance, compliance, and enterprise data integrity. But industry operations — shopfloors, warehouses,
+        field teams, and sales mobility — require speed, mobility, and adaptability. UpBuff acts as an
+        <strong>ERP Execution Layer</strong>, extending SAP environments without modifying the ERP core.
+      </span>
+    </Fragment>
+  </Hero2>
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="ERP Integration and Scalable Solutions for Industry Operations and Execution"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png', alt: 'SAP S/4HANA' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png',          alt: 'SAP Business One' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png',       alt: 'Oracle ERP' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png',      alt: 'Epicor ERP' },
+      { src: 'http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png',         alt: 'Zoho' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. PROBLEM SPLIT — why SAP customization fails
+       ══════════════════════════════════════════════════════════ -->
+  <ProblemSplit
+    tagline="The Problem"
+    title="SAP customization blocks industry execution"
+    subtitle="Most enterprises try to extend SAP for field, warehouse, and shopfloor operations by customizing the ERP core. That creates compounding risk at every upgrade cycle."
+    items={[
+      {
+        title: 'Shopfloor & field teams lack mobile interfaces',
+        description: 'SAP screens were designed for desk-based users. Operators, technicians, and field reps work from mobile devices in conditions where ERP complexity is a liability, not an asset.',
+      },
+      {
+        title: 'Custom SAP modifications block upgrades',
+        description: 'Every customization inside SAP becomes a regression risk at upgrade time. Routine upgrade cycles become multi-month re-implementation projects with significant consultant cost.',
+      },
+      {
+        title: 'Industry operations need speed — ERP needs stability',
+        description: 'Shopfloor confirmations, warehouse scans, and field service updates happen in real time. ERP governance requirements mean these workflows cannot live safely inside a customized SAP core.',
+      },
+      {
+        title: 'Scaling to new sites means replicating fragile custom code',
+        description: 'Custom SAP configurations do not scale cleanly across multiple plants, warehouses, or territories — each new location inherits the same technical debt and fragility.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       4. FEATURES HIGHLIGHTS — 4 industry verticals
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesHighlights
+    tagline="Industry Verticals"
+    title="Built for six industry execution challenges"
+    subtitle="UpBuff delivers purpose-built execution workflows for each industry — all connecting to SAP without any ERP core modification."
+    items={[
+      {
+        title: 'Manufacturing & Shopfloor Execution',
+        description: 'Mobile production order execution, barcode-driven material issue, real-time WIP tracking, quality checkpoints at operator level, and instant synchronization with SAP PP and MM. Shopfloor operators get purpose-built interfaces — SAP stays the system of record.',
+        image: '<style>.mf{width:100%;height:100%;background:#f0f9ff;display:flex;align-items:center;justify-content:center;gap:20px;padding:20px}.mf-line{display:flex;flex-direction:column;gap:8px}.mf-step{display:flex;align-items:center;gap:10px;background:#fff;border:0.5px solid #bfdbfe;border-radius:10px;padding:9px 14px;min-width:148px}.mf-ic{width:30px;height:30px;border-radius:8px;background:#1d4ed8;display:flex;align-items:center;justify-content:center;flex-shrink:0}.mf-t{font-size:11px;font-weight:600;color:#1e3a5f;flex:1}.mf-ok{width:18px;height:18px;border-radius:50%;background:#f0fdf4;border:0.5px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0}.mf-s1{animation:mfin 4s ease-in-out infinite 0s}.mf-s2{animation:mfin 4s ease-in-out infinite .5s}.mf-s3{animation:mfin 4s ease-in-out infinite 1s}.mf-s4{animation:mfin 4s ease-in-out infinite 1.5s}.mf-bar{width:6px;height:110px;background:#dbeafe;border-radius:3px;position:relative;overflow:hidden}.mf-bar::after{content:"";position:absolute;bottom:0;left:0;width:100%;background:#1d4ed8;border-radius:2px;animation:mfbar 3s ease-in-out infinite}.mf-b2::after{animation-delay:.8s;background:#0891b2}.mf-b3::after{animation-delay:1.6s}@keyframes mfin{0%,5%{opacity:.4;transform:translateX(-4px)}20%,80%{opacity:1;transform:translateX(0)}95%,100%{opacity:.4}}@keyframes mfbar{0%,100%{height:20%}50%{height:85%}}</style><div class="mf"><div style="display:flex;gap:4px;align-items:flex-end"><div class="mf-bar"></div><div class="mf-bar mf-b2"></div><div class="mf-bar mf-b3"></div></div><div class="mf-line"><div class="mf-step mf-s1"><div class="mf-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 12v5M9.5 12v5M14.5 12v5"/></svg></div><span class="mf-t">Confirm order</span><div class="mf-ok"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="mf-step mf-s2"><div class="mf-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><span class="mf-t">Scan material</span><div class="mf-ok"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="mf-step mf-s3"><div class="mf-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><span class="mf-t">QC check</span><div class="mf-ok"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="mf-step mf-s4"><div class="mf-ic"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg></div><span class="mf-t">Post to SAP PP</span><div class="mf-ok"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div></div>',
+      },
+      {
+        title: 'Warehouse & Distribution Execution',
+        description: 'Mobile GRPO and put-away, picking and packing workflows, batch and serial tracking, offline scanning capability, and direct SAP synchronization. Warehouse operators get scanning-friendly workflows — no custom SAP add-ons required.',
+        image: '<style>.wh{width:100%;height:100%;background:#f0fdf4;display:flex;align-items:center;justify-content:center;padding:14px;gap:18px}.wh-phone{width:60px;height:96px;border-radius:12px;border:2.5px solid #15803d;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative}.wh-scan{width:42px;height:26px;border:1.5px solid #15803d;border-radius:4px;display:flex;align-items:center;justify-content:center}.wh-beam{width:30px;height:2px;background:#22c55e;animation:whbeam 1.2s ease-in-out infinite}.wh-home{width:11px;height:11px;border-radius:50%;border:2px solid #15803d;margin-top:2px}.wh-rows{display:flex;flex-direction:column;gap:7px}.wh-row{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #bbf7d0;border-radius:8px;padding:7px 11px}.wh-sku{font-size:11px;font-weight:700;color:#15803d;width:54px}.wh-tag{font-size:10px;color:#94a3b8;flex:1}.wh-ok{width:16px;height:16px;border-radius:50%;background:#f0fdf4;border:0.5px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:whok 3s ease-in-out infinite}.wh-ok2{animation-delay:.5s}.wh-ok3{animation-delay:1s}@keyframes whbeam{0%,100%{transform:translateY(-4px);opacity:.4}50%{transform:translateY(4px);opacity:1}}@keyframes whok{0%,30%{background:#f0fdf4}35%,100%{background:#dcfce7}}</style><div class="wh"><div class="wh-phone"><div class="wh-scan"><div class="wh-beam"></div></div><div class="wh-home"></div></div><div class="wh-rows"><div class="wh-row"><span class="wh-sku">SKU-4821</span><span class="wh-tag">Put-away</span><div class="wh-ok"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wh-row"><span class="wh-sku">SKU-0032</span><span class="wh-tag">Pick · B12</span><div class="wh-ok wh-ok2"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="wh-row"><span class="wh-sku">SKU-1109</span><span class="wh-tag">GRPO</span><div class="wh-ok wh-ok3"><svg width="9" height="9" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div></div>',
+      },
+      {
+        title: 'Field Service & Asset Management',
+        description: 'Mobile work order management, geo-tagged job updates, parts consumption capture, digital signatures and proof-of-service, and direct SAP integration. Field technicians close jobs in the field — billing delays are eliminated.',
+        image: '<style>.fs{width:100%;height:100%;background:#fff7ed;display:flex;align-items:center;justify-content:center;padding:20px;gap:18px}.fs-map{width:106px;height:120px;background:#fff;border:0.5px solid #fed7aa;border-radius:12px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}.fs-pin{position:absolute;animation:fspin 3s ease-in-out infinite}.fs-p1{top:20%;left:25%}.fs-p2{top:52%;left:58%;animation-delay:.8s}.fs-p3{top:68%;left:18%;animation-delay:1.6s}.fs-info{display:flex;flex-direction:column;gap:7px}.fs-row{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #fed7aa;border-radius:8px;padding:7px 12px}.fs-t{font-size:11px;font-weight:500;color:#9a3412}@keyframes fspin{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}</style><div class="fs"><div class="fs-map"><svg style="position:absolute;inset:0;opacity:.25" viewBox="0 0 80 90"><path d="M0 30h80M0 60h80M27 0v90M53 0v90" stroke="#fed7aa" stroke-width="0.5"/></svg><div class="fs-pin fs-p1"><svg width="14" height="14" viewBox="0 0 24 24" fill="#ea580c"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div><div class="fs-pin fs-p2"><svg width="12" height="12" viewBox="0 0 24 24" fill="#fb923c"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div><div class="fs-pin fs-p3"><svg width="10" height="10" viewBox="0 0 24 24" fill="#fdba74"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div></div><div class="fs-info"><div class="fs-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg><span class="fs-t">WO-2241 open</span></div><div class="fs-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="fs-t">Geo-tagged</span></div><div class="fs-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="2"><path d="M15 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V9z"/><polyline points="15 3 15 9 21 9"/></svg><span class="fs-t">Signed · posted</span></div></div></div>',
+      },
+      {
+        title: 'Sales & Distribution Execution',
+        description: 'Mobile order creation, lead and opportunity tracking, collection capture, customer visit logging, and real-time SAP sync. Sales reps create orders in the field with live SAP pricing and inventory — no duplicate entry, no ERP customization required.',
+        image: '<style>.sl{width:100%;height:100%;background:#f5f3ff;display:flex;align-items:center;justify-content:center;padding:14px;gap:18px}.sl-phone{width:58px;height:96px;border-radius:12px;border:2.5px solid #7c3aed;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:5px}.sl-order{width:42px;background:#ede9fe;border-radius:5px;padding:4px 5px}.sl-ol{height:2.5px;border-radius:1px;background:#7c3aed;margin-bottom:2px}.sl-total{font-size:9px;font-weight:700;color:#6d28d9;text-align:right}.sl-btn{width:40px;height:13px;background:#7c3aed;border-radius:4px}.sl-steps{display:flex;flex-direction:column;gap:7px}.sl-step{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #ddd6fe;border-radius:8px;padding:7px 11px;animation:slstep 4s ease-in-out infinite}.sl-step:nth-child(2){animation-delay:.6s}.sl-step:nth-child(3){animation-delay:1.2s}.sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.sl-t{font-size:11px;font-weight:500;color:#4c1d95}@keyframes slstep{0%,10%{opacity:.4}25%,80%{opacity:1}95%,100%{opacity:.4}}</style><div class="sl"><div class="sl-phone"><div class="sl-order"><div class="sl-ol" style="width:70%"></div><div class="sl-ol" style="width:90%"></div><div class="sl-ol" style="width:55%"></div><div class="sl-total">₹4,200</div></div><div class="sl-btn"></div></div><div class="sl-steps"><div class="sl-step"><div class="sl-dot" style="background:#7c3aed"></div><span class="sl-t">Visit logged</span></div><div class="sl-step"><div class="sl-dot" style="background:#6366f1"></div><span class="sl-t">Order created</span></div><div class="sl-step"><div class="sl-dot" style="background:#22c55e"></div><span class="sl-t">SAP SD synced</span></div></div></div>',
+      },
+      {
+        title: 'Plant Maintenance & Asset Inspection',
+        description: 'Mobile preventive and corrective maintenance workflows, equipment inspection checklists, breakdown notifications, spare parts consumption capture, and automatic posting to SAP PM — all from the plant floor. Maintenance crews get structured work order interfaces without navigating complex SAP screens.',
+        image: '<style>.pm{width:100%;height:100%;background:#f8fafc;display:flex;align-items:center;justify-content:center;padding:20px;gap:18px}.pm-asset{width:92px;height:108px;background:#fff;border:0.5px solid #cbd5e1;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative}.pm-gear{animation:pmgear 4s linear infinite}.pm-status{font-size:10px;font-weight:700;color:#475569;margin-top:2px}.pm-alert{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:#f97316;display:flex;align-items:center;justify-content:center;animation:pmalert 2s ease-in-out infinite}.pm-at{font-size:12px;font-weight:800;color:#fff;line-height:1}.pm-checklist{display:flex;flex-direction:column;gap:7px}.pm-item{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #e2e8f0;border-radius:8px;padding:7px 11px}.pm-cb{width:16px;height:16px;border-radius:4px;border:1.5px solid #94a3b8;flex-shrink:0;animation:pmcb 6s ease-in-out infinite}.pm-cb2{animation-delay:1s}.pm-cb3{animation-delay:2s}.pm-ct{font-size:11px;color:#334155;font-weight:500}@keyframes pmgear{to{transform:rotate(360deg)}}@keyframes pmalert{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes pmcb{0%,20%{background:#fff;border-color:#94a3b8}30%,100%{background:#f0fdf4;border-color:#22c55e}}</style><div class="pm"><div class="pm-asset"><div class="pm-alert"><span class="pm-at">!</span></div><svg class="pm-gear" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span class="pm-status">Asset A-14</span></div><div class="pm-checklist"><div class="pm-item"><div class="pm-cb"></div><span class="pm-ct">Inspection done</span></div><div class="pm-item"><div class="pm-cb pm-cb2"></div><span class="pm-ct">Parts issued</span></div><div class="pm-item"><div class="pm-cb pm-cb3"></div><span class="pm-ct">Posted to SAP PM</span></div></div></div>',
+      },
+      {
+        title: 'Retail & Trade Execution',
+        description: 'Route-based van sales, beat planning, secondary sales capture, merchandising visit checklists, competitor data collection, and outlet-level order creation with live SAP pricing and credit checks. FMCG and distribution sales teams get a complete trade execution platform — connected directly to SAP SD and CRM.',
+        image: '<style>.rt{width:100%;height:100%;background:#fff1f2;display:flex;align-items:center;justify-content:center;padding:20px;gap:18px}.rt-route{display:flex;flex-direction:column;align-items:center;gap:4px}.rt-stop{width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid #e11d48;display:flex;align-items:center;justify-content:center;animation:rtstop 4s ease-in-out infinite}.rt-stop:nth-child(3){animation-delay:.7s}.rt-stop:nth-child(5){animation-delay:1.4s}.rt-sn{font-size:12px;font-weight:800;color:#be123c}.rt-seg{width:2px;height:22px;background:#fecdd3;position:relative;overflow:hidden}.rt-seg::after{content:"";position:absolute;top:-100%;left:0;width:100%;height:50%;background:#e11d48;animation:rtseg 2s linear infinite}.rt-seg2::after{animation-delay:.6s}.rt-info{display:flex;flex-direction:column;gap:7px}.rt-row{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #fecdd3;border-radius:8px;padding:7px 11px}.rt-t{font-size:11px;font-weight:500;color:#9f1239}@keyframes rtstop{0%,100%{border-color:#fecdd3}50%{border-color:#e11d48;background:#fff1f2}}@keyframes rtseg{0%{top:-100%}100%{top:200%}}</style><div class="rt"><div class="rt-route"><div class="rt-stop"><span class="rt-sn">A</span></div><div class="rt-seg"></div><div class="rt-stop"><span class="rt-sn">B</span></div><div class="rt-seg rt-seg2"></div><div class="rt-stop"><span class="rt-sn">C</span></div></div><div class="rt-info"><div class="rt-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#be123c" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="rt-t">Beat plan active</span></div><div class="rt-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#be123c" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="rt-t">Van order placed</span></div><div class="rt-row"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#be123c" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg><span class="rt-t">SAP SD synced</span></div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. FEATURES GRID — business outcomes across all industries
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="Business Outcomes"
+    title="Measurable outcomes across every industry vertical"
+    subtitle="UpBuff execution workflows deliver consistent operational improvements — with no ERP customization, no upgrade risk, and no consultant dependency for ongoing changes."
+    items={[
+      {
+        icon: 'tabler:rocket',
+        title: 'Faster transaction cycles',
+        description: 'Production confirmations, warehouse GRPO, field job closures, and sales orders happen in real time from mobile devices — not hours later from a desk.',
+      },
+      {
+        icon: 'tabler:shield-check',
+        title: 'Clean Core compliance',
+        description: 'No direct database writes, no ERP core modifications, API-only integration — SAP upgrades proceed on schedule without regression risk from custom code.',
+      },
+      {
+        icon: 'tabler:device-mobile',
+        title: 'Mobile-first for every role',
+        description: 'Operators, warehouse staff, field technicians, and sales reps get purpose-built mobile interfaces designed for their work — not adapted SAP screens.',
+      },
+      {
+        icon: 'tabler:wifi-off',
+        title: 'Offline capability',
+        description: 'Warehouse scanning and field service workflows continue offline and sync automatically when connectivity is restored — critical for remote and shopfloor environments.',
+      },
+      {
+        icon: 'tabler:coin-off',
+        title: 'Lower total cost of ownership',
+        description: 'Eliminate custom SAP add-on maintenance, reduce consultant dependency for workflow changes, and remove upgrade regression testing cost from every release cycle.',
+      },
+      {
+        icon: 'tabler:world',
+        title: 'Multi-site scalability',
+        description: 'Roll out to new plants, warehouses, and territories without replicating custom SAP configurations — the same execution layer deploys cleanly across every location.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       6. CONTENT SPLIT CARD — Clean Core approach
+       ══════════════════════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="The Clean Core Approach"
+    title="ERP stays the system of record. UpBuff becomes the system of execution."
+    cardTitle="Two layers. One strategy."
+    cardDescription="SAP ERP manages finance, compliance, master data, and governance. UpBuff manages execution — mobile workflows, barcode scanning, field job management, and order creation. The two layers communicate via official SAP APIs. ERP never needs to be modified. Upgrades remain on schedule. Operations become agile."
+    cardImage="http://4.151.8.142:4000/uploads/UpBuff-ERP-Integrated-Sales-and-Distribution-Execution.png"
+    cardGradient="linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 50%, #6366f1 100%)"
+    testimonial={{
+      quote: 'We needed shopfloor execution without disrupting our SAP upgrade roadmap. UpBuff gave us exactly that — mobile-first production confirmations with zero modifications to our SAP core.',
+      name: 'Head of IT',
+      company: 'Spartan Engineering Industries Pvt. Ltd',
+      avatar: 'http://4.151.8.142:4000/uploads/spartan-client.png',
+    }}
+    features={[
+      {
+        icon: 'tabler:database',
+        title: 'ERP remains the source of truth',
+        description: 'All master data, pricing, inventory, and financial records stay in SAP. UpBuff never stores ERP data externally.',
+      },
+      {
+        icon: 'tabler:api',
+        title: 'API-only integration',
+        description: 'SAP Service Layer, OData, and BAPI — official integration methods with no core modifications required.',
+      },
+      {
+        icon: 'tabler:arrows-exchange',
+        title: 'Bidirectional real-time sync',
+        description: 'Execution actions post immediately to SAP — production confirmations, goods movements, service completions, and sales orders.',
+      },
+    ]}
+  />
+ <!-- ══════════════════════════════════════════════════════════
+       9. TOOLS MARQUEE
+       ══════════════════════════════════════════════════════════ -->
+  <ToolsMarquee
+    title="Connects SAP to your operational ecosystem"
+    description="UpBuff bridges SAP with the tools your operations and field teams already use — without disrupting ERP data integrity or governance."
+    speed={30}
+    tools={[
+      { name: 'SAP S/4HANA',   logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-s4-hanna-integration-with-upbuff-crm.png" alt="SAP S/4HANA"  class="w-10 h-10 object-contain" />' },
+      { name: 'SAP B1',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png"          alt="SAP"          class="w-10 h-10 object-contain" />' },
+      { name: 'Oracle',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png"       alt="Oracle"       class="w-10 h-10 object-contain" />' },
+      { name: 'Epicor',        logo: '<img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png"      alt="Epicor"       class="w-10 h-10 object-contain" />' },
+      { name: 'WhatsApp',      logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png"     alt="WhatsApp"     class="w-10 h-10 object-contain" />' },
+      { name: 'Outlook',       logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png"      alt="Outlook"      class="w-10 h-10 object-contain" />' },
+      { name: 'Power BI',      logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png"    alt="Power BI"     class="w-10 h-10 object-contain" />' },
+      { name: 'Gmail',         logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png"        alt="Gmail"        class="w-10 h-10 object-contain" />' },
+      { name: 'Zoho',          logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png"         alt="Zoho"         class="w-10 h-10 object-contain" />' },
+      { name: 'IoT',           logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png"                         alt="IoT"          class="w-10 h-10 object-contain" />' },
+      { name: 'SMS',           logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png"          alt="SMS"          class="w-10 h-10 object-contain" />' },
+      { name: 'VoIP',          logo: '<img src="http://4.151.8.142:4000/uploads/logo/voip-integration-with-upbuff-crm.png"         alt="VoIP"         class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       7. FEATURES CAROUSEL — industry-specific capabilities
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Industry Capabilities"
+    title="Purpose-built for each industry's execution needs"
+    subtitle="Every industry has different execution requirements. UpBuff ships pre-built workflows for each vertical — configured for SAP, not built on top of a generic platform."
+    items={[
+      {
+        gradient: 'linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%)',
+        badge: 'Manufacturing',
+        title: 'Shopfloor execution without SAP complexity',
+        description: 'Mobile production order confirmations, barcode-driven material issue and goods receipt, real-time WIP visibility across production lines, quality checkpoint capture at operator level, and instant posting to SAP PP and MM — all from a scanning-friendly mobile interface.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><path d="M12 12v5M9.5 12v5M14.5 12v5"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #064e3b 0%, #059669 100%)',
+        badge: 'Warehouse',
+        title: 'High-volume warehouse execution for SAP',
+        description: 'Mobile GRPO, put-away, picking, packing, and transfer workflows with barcode and QR scanning. Batch and serial number tracking, offline capability for low-connectivity environments, and direct posting to SAP IM and WM — with no custom SAP scanning add-ons required.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M5 8h14M5 8a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v0a2 2 0 01-2 2M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8M10 12h4"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)',
+        badge: 'Field Service',
+        title: 'Field service execution connected to SAP PM',
+        description: 'Mobile work order management with geo-tagged job updates, parts consumption and material issue capture, digital signature collection, proof-of-service photo upload, and automatic posting to SAP PM and CS — eliminating billing delays and back-office data entry.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%)',
+        badge: 'Sales',
+        title: 'Mobile sales execution integrated with SAP SD',
+        description: 'Mobile order creation with live SAP pricing, inventory, and customer credit checks. Lead and opportunity tracking, collection and payment capture, customer visit logging, and real-time posting to SAP SD — all without any CRM customization inside SAP.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #1e293b 0%, #475569 100%)',
+        badge: 'Plant Maintenance',
+        title: 'Preventive & corrective maintenance on SAP PM',
+        description: 'Mobile work order execution for internal maintenance crews — preventive inspection checklists, breakdown notifications with photo capture, spare parts consumption and goods issue, functional location scanning, and automatic posting to SAP PM. Maintenance supervisors get real-time visibility of open and overdue work orders across every asset.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #881337 0%, #e11d48 100%)',
+        badge: 'Retail & Trade',
+        title: 'Route-based trade execution integrated with SAP SD',
+        description: 'Beat planning, van sales, secondary sales capture, outlet-level order creation with live SAP pricing and credit limits, merchandising visit checklists, competitor data capture, and collection recording — all posting directly to SAP SD. Purpose-built for FMCG and distribution teams covering high-volume retail routes.',
+        image: '<div class="w-full h-full flex items-center justify-center p-6"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       8. FEATURES BENTO — who should explore UpBuff
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesBento
+    tagline="Who It's For"
+    title="Built for the leaders running SAP-dependent operations"
+    subtitle="UpBuff is chosen by technology and operations leaders who need execution agility without disrupting their ERP governance or upgrade roadmaps."
+    items={[
+      {
+        wide: true,
+        title: 'CIOs implementing Clean Core SAP strategy',
+        description: 'Technology leaders who have committed to SAP Clean Core — or are preparing for S/4HANA migration — and need execution capability that works alongside their ERP strategy, not against it. UpBuff is designed to pass SAP governance reviews and align with official Clean Core principles.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-8"><div class="text-center"><div class="w-20 h-20 rounded-2xl bg-blue-700 flex items-center justify-center mx-auto mb-4 shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><p class="text-sm font-bold text-blue-900">Clean Core · SAP Governance</p><p class="text-xs text-blue-600 mt-1">S/4HANA ready · Upgrade-safe</p></div></div>',
+      },
+      {
+        wide: true,
+        title: 'Operations Leaders driving industry execution',
+        description: 'Plant managers, warehouse directors, field service heads, and sales operations leaders who need mobile-first execution tools for their teams — without waiting for IT to build and maintain custom SAP workflows. UpBuff ships pre-built industry workflows that go live in weeks.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-8"><div class="text-center"><div class="w-20 h-20 rounded-2xl bg-green-700 flex items-center justify-center mx-auto mb-4 shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><p class="text-sm font-bold text-green-900">Pre-built workflows · Live in weeks</p><p class="text-xs text-green-700 mt-1">Manufacturing · Warehouse · Field · Sales</p></div></div>',
+      },
+      {
+        title: 'IT Heads reducing SAP customization',
+        description: 'Technology managers looking to migrate custom execution logic out of SAP core to reduce maintenance burden, upgrade risk, and consultant dependency.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-slate-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>',
+      },
+      {
+        title: 'Enterprises planning SAP upgrades',
+        description: 'Organizations preparing for SAP S/4HANA migration or ECC upgrades who need to ensure execution workflows survive the upgrade without regression testing custom code.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100 p-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-purple-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>',
+      },
+      {
+        title: 'Multi-site industrial enterprises',
+        description: 'Manufacturers and distributors operating across multiple plants, warehouses, or territories who need a scalable execution layer that deploys consistently across every location.',
+        image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-100 p-4"><svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-orange-500 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>',
+      },
+    ]}
+  />
+
+ 
+  <!-- ══════════════════════════════════════════════════════════
+       10. TESTIMONIALS
+       ══════════════════════════════════════════════════════════ -->
+  <TestimonialsGrid
+    title="What industry leaders say about UpBuff"
+    subtitle="From manufacturing shopfloors to field service operations — enterprise teams explain how UpBuff extended their SAP execution without touching ERP core"
+    row1={[
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'Our shopfloor supervisors now confirm production orders from mobile devices. It posts directly to SAP PP in real time. Our upgrade timeline stayed intact because nothing touched the ERP core.',
+        name: 'Head of Manufacturing Operations',
+        role: 'Molygraph',
+      },
+      {
+        company: 'NCC Streetscape',
+        logo: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',
+        quote: 'Warehouse scanning used to require a custom SAP add-on that blocked every upgrade. UpBuff replaced it entirely — scanning-friendly, offline-capable, and fully integrated with our SAP IM.',
+        name: 'IT Director',
+        role: 'NCC Streetscape',
+      },
+    ]}
+    statCard={{
+      stat: '6×',
+      label: 'industry verticals covered with a single Clean Core execution platform',
+      gradient: 'linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 50%, #6366f1 100%)',
+    }}
+    row2={[
+      {
+        company: 'The Wine Source',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'Our sales reps create orders in the field with live SAP pricing and stock checks. Collections are captured on the spot. The whole cycle closes in hours, not days.',
+        name: 'Head of Sales Operations',
+        role: 'The Wine Source',
+      },
+      {
+        company: 'ideaForge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'Field service job closures now happen at the site. Technicians capture parts, signatures, and proof-of-service on mobile — it posts to SAP PM automatically. Billing cycles cut by 60%.',
+        name: 'VP Field Operations',
+        role: 'ideaForge Technologies',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       11. FAQ ACCORDION
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="Frequently asked questions"
+    items={[
+      {
+        question: 'Does UpBuff modify SAP core?',
+        answer: 'No. UpBuff follows a Clean Core strategy and integrates via secure APIs — SAP Service Layer, OData, and BAPI — without modifying SAP S/4HANA, ECC, or Business One. ERP upgrades proceed on schedule without regression risk.',
+      },
+      {
+        question: 'Which industries benefit from UpBuff?',
+        answer: 'Manufacturing and shopfloor operations, distribution and warehouse-intensive enterprises, field service and asset-heavy industries, and SAP-driven sales organizations all benefit from UpBuff\'s execution layer model.',
+      },
+      {
+        question: 'How does UpBuff integrate with SAP?',
+        answer: 'UpBuff integrates via SAP Service Layer (SAP Business One), OData and RFC (SAP S/4HANA), and BAPI (SAP ECC). All integration is API-based — no direct database connections, no core enhancements, no custom SAP objects.',
+      },
+      {
+        question: 'Can UpBuff work offline?',
+        answer: 'Yes. UpBuff supports offline scanning and execution for warehouse and field service workflows. Data is stored locally on the device and syncs automatically when connectivity is restored — critical for shopfloor and remote environments.',
+      },
+      {
+        question: 'How quickly can UpBuff be deployed?',
+        answer: 'UpBuff ships pre-built industry workflows for manufacturing, warehouse, field service, and sales. Most deployments go live within weeks — not months — because there is no ERP customization to build, test, or migrate.',
+      },
+      {
+        question: 'Can UpBuff scale across multiple plants and locations?',
+        answer: 'Yes. UpBuff deploys cleanly across multiple plants, warehouses, and territories without replicating custom SAP configurations. Each location inherits the same execution layer — no per-site ERP customization required.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       12. CTA BANNER
+       ══════════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Ready to extend SAP execution without customization risk?"
+    subtitle="Extend SAP S/4HANA, ECC, and Business One into real-time industry execution — manufacturing, warehouse, field service, and sales — without touching ERP core or disrupting upgrade roadmaps."
+    action={{
+      text: 'Request an ERP Execution Assessment',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="No ERP core modifications required"
+  />
+
+</Layout>

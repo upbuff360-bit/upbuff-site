@@ -1,0 +1,661 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+import HeroDashboard from '~/components/widgets/HeroDashboard.astro';
+import Steps from '~/components/widgets/Steps.astro';
+
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'UpBuff Technologies | ERP Execution Platform for SAP & Enterprise ERP',
+  ignoreTitleTemplate: true,
+  description:
+    'UpBuff Technologies is an ERP-integrated execution platform extending SAP Business One, Oracle, and Epicor into sales, field service, warehouse, and manufacturing operations without modifying your ERP core.',
+  canonical: 'https://www.upbuff.com/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/',
+    title: 'UpBuff Technologies | ERP Execution Platform for SAP & Enterprise ERP',
+    description:
+      'Extend SAP Business One, Oracle, and Epicor into frontline sales, service, warehouse, and manufacturing operations without modifying your ERP core.',
+    image: 'https://www.upbuff.com/assets/og-image.jpg',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'UpBuff Technologies | ERP Execution Platform for SAP & Enterprise ERP',
+    description: 'ERP-integrated execution platform for SAP Business One and enterprise ERP systems.',
+    image: 'https://www.upbuff.com/assets/og-image.jpg',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Structured Data -->
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com",
+      "logo": "https://www.upbuff.com/assets/logo.png",
+      "description": "UpBuff Technologies is an ERP-integrated execution platform extending SAP Business One, Oracle ERP, and Epicor ERP into frontline enterprise operations.",
+      "sameAs": ["https://www.linkedin.com/company/upbuff-technologies"],
+      "knowsAbout": [
+        "SAP Business One Integration",
+        "ERP Execution Platform",
+        "ERP Integrated CRM",
+        "ERP Integrated Field Service",
+        "ERP Integrated Warehouse Management",
+        "Enterprise Mobility",
+        "ERP Data Synchronization"
+      ]
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "UpBuff Technologies",
+      "url": "https://www.upbuff.com/"
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UpBuff ERP Execution Platform",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "description": "UpBuff is an ERP-integrated execution platform that extends SAP Business One, Oracle ERP, and Epicor into CRM, field service, warehouse, sales, and manufacturing workflows.",
+      "offers": { "@type": "Offer", "price": "Contact for pricing", "priceCurrency": "USD" }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "UpBuff Products",
+      "description": "UpBuff offers 7 ERP-integrated products that extend SAP, Oracle, and Epicor into frontline enterprise operations without modifying ERP core.",
+      "numberOfItems": 7,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ERP-Integrated CRM",                         "url": "https://www.upbuff.com/homes/erp-integrated-crm",                          "description": "Synchronize sales opportunities, quotations, pricing, credit limits, and customer master data directly with SAP and enterprise ERP systems." },
+        { "@type": "ListItem", "position": 2, "name": "ERP-Integrated Field Service Management",    "url": "https://www.upbuff.com/homes/erp-integrated-fsm",                          "description": "Manage work orders, assets, warranties, and technician workflows with mobile execution connected to ERP financial and service modules." },
+        { "@type": "ListItem", "position": 3, "name": "Warehouse & Inventory Management",           "url": "https://www.upbuff.com/homes/erp-integrated-warehouse-inventory",          "description": "Mobile inventory audits, goods receipt, inter-warehouse transfers, and batch tracking with real-time ERP synchronization." },
+        { "@type": "ListItem", "position": 4, "name": "Sales & Distribution Execution",             "url": "https://www.upbuff.com/homes/erp-integrated-sales-distribution",           "description": "Route-to-market with ERP-integrated order booking, van sales POS, distributor management, and secondary sales visibility." },
+        { "@type": "ListItem", "position": 5, "name": "Manufacturing & Shopfloor",                  "url": "https://www.upbuff.com/homes/erp-integrated-manufacturing-shopfloor",      "description": "Production updates, maintenance records, and operational data at the shopfloor while preserving ERP as the financial backbone." },
+        { "@type": "ListItem", "position": 6, "name": "Enterprise & Partner Portals",               "url": "https://www.upbuff.com/homes/enterprise-partner-portals",                  "description": "Secure digital portals for suppliers, dealers, and partners connected directly to ERP master data and transactional workflows." },
+        { "@type": "ListItem", "position": 7, "name": "ERP-Integrated Product Configurator",        "url": "https://www.upbuff.com/homes/erp-integrated-product-configurator",         "description": "Configure products, pricing, and variants in real time with seamless ERP and SAP integration." }
+      ]
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What products does UpBuff offer?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff offers 7 ERP-integrated products: ERP-Integrated CRM, ERP-Integrated Field Service Management, Warehouse and Inventory Management, Sales and Distribution Execution, Manufacturing and Shopfloor, Enterprise and Partner Portals, and ERP-Integrated Product Configurator. All connect to SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor via official APIs without ERP core modification." } },
+        { "@type": "Question", "name": "What is an ERP Execution Platform?", "acceptedAnswer": { "@type": "Answer", "text": "An ERP Execution Platform extends systems like SAP Business One or Oracle ERP into frontline operations such as sales, field service, warehouse, and manufacturing while preserving ERP as the system of record." } },
+        { "@type": "Question", "name": "Does UpBuff replace SAP or Oracle ERP?", "acceptedAnswer": { "@type": "Answer", "text": "No. UpBuff integrates with SAP Business One, Oracle ERP, and Epicor ERP and acts as the execution layer, ensuring real-time synchronization without modifying ERP core systems." } },
+        { "@type": "Question", "name": "Which ERP systems does UpBuff integrate with?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff integrates with SAP Business One, Oracle ERP, Epicor ERP, and custom ERP systems using secure API-based and ERP-native integration methods." } }
+      ]
+    })} />
+  </Fragment>
+
+  <!-- Hide announcement bar on home page -->
+  <Fragment slot="announcement" />
+
+  <!-- White header -->
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'secondary', text: 'Login',  href: '#' },
+        { variant: 'primary',   text: 'Sign Up', href: '#' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ══════════════════════════════════════════════════════════
+       1. HERO — white, product-led, full-width
+       ══════════════════════════════════════════════════════════ -->
+  <Hero2
+    actions={[
+      { variant: 'primary', text: 'Explore Products', href: '#products'},
+      { text: 'Talk to Our Team', href: '/contact'},
+    ]}
+  >
+    <Fragment slot="title">
+      The ERP Execution Platform Built for{' '}
+      <span class="text-accent dark:text-white">SAP</span> & Enterprise ERP
+    </Fragment>
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        Extend SAP, Oracle, and Epicor into frontline sales, field service, warehouse, manufacturing, and partner
+        operations — without modifying your ERP core.
+      </span>
+      <span class="block sm:hidden font-bold text-blue-600">
+        ERP remains the system of record. UpBuff becomes the system of action.
+      </span>
+      <span class="hidden sm:block mt-2 text-sm text-muted">
+        ERP remains the system of record. UpBuff becomes the system of action.
+      </span>
+    </Fragment>
+    <Fragment slot="image">
+      <HeroDashboard />
+    </Fragment>
+  </Hero2>
+
+  <!-- ══════════════════════════════════════════════════════════
+       2. LOGO BAR — ERP & enterprise platforms
+       ══════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Powering execution across leading enterprise"
+    logos={[
+      { src: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',          alt: 'ideaForge logo' },
+      { src: 'http://4.151.8.142:4000/uploads/jnk-chemdist-logo.svg',        alt: 'jnk chemdist logo' },
+      { src: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',       alt: 'molygraph logo' },
+      { src: 'http://4.151.8.142:4000/uploads/ncc-streetscape-logo.svg',       alt: 'ncc streetscape logo' },
+      { src: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',         alt: 'roofsol logo' },
+      { src: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',        alt: 'the wine source logo' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       3. CORE SOLUTIONS — FeaturesBento
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesBento
+    id="products"
+    tagline="Our Products"
+    title="7 ERP-integrated products for enterprise operations"
+    subtitle="Each product extends ERP workflows into real-world execution environments — without modifying ERP core. All products integrate with SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor."
+    items={[
+      {
+        wide: true,
+        title: 'ERP-Integrated CRM',
+        href: '/homes/erp-integrated-crm',
+        description: 'Synchronize sales opportunities, quotations, pricing, credit limits, and customer master data directly with SAP and enterprise ERP systems. Eliminate duplicate entry, improve sales visibility, and enable field reps to create ERP-governed orders from mobile devices — online or offline.',
+        image: '<img src="http://4.151.8.142:4000/uploads/modular-crm-software-for-small-and-mid-sized-businesses.png" class="w-full h-full object-contain p-2" alt="ERP-Integrated CRM for SAP Business One and enterprise ERP" loading="lazy" />',
+        // h-full object-cover 
+      },
+      {
+        wide: true,
+        title: 'ERP-Integrated Field Service Management',
+        href: '/homes/erp-integrated-fsm',
+        description: 'Manage work orders, assets, warranties, and technician workflows with mobile execution connected to ERP financial and service modules. Real-time work order dispatch, offline job capture, spare parts tracking, and automated SAP updates — without modifying ERP core.',
+        image: '<img src="http://4.151.8.142:4000/uploads/ERP-Integrated-Field-Service-Management.png" class="w-full h-full object-contain p-2"  alt="ERP-Integrated Field Service Management for SAP" loading="lazy" />',
+      },
+      {
+        title: 'Warehouse & Inventory',
+        href: '/homes/erp-integrated-warehouse-inventory',
+        description: 'Mobile inventory audits, goods receipt, inter-warehouse transfers, and batch tracking with real-time ERP synchronization.',
+        image: '<img src="http://4.151.8.142:4000/uploads/SAP-Integrated-Warehouse-Inventory-Management.png" class = "w-full h-full object-contain p-2" alt="SAP Integrated Warehouse Inventory Management" loading="lazy" />',
+      },
+      {
+        title: 'Sales & Distribution Execution',
+        href: '/homes/erp-integrated-sales-distribution',
+        description: 'Route-to-market with ERP-integrated order booking, van sales POS, distributor management, and secondary sales visibility.',
+        image: '<img src="http://4.151.8.142:4000/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png" class = "w-full h-full object-contain p-2" alt="SAP Businessone Integrated Sales Distribution excecution" loading="lazy" />',
+      },
+      {
+        title: 'Manufacturing & Shopfloor',
+        href: '/homes/erp-integrated-manufacturing-shopfloor',
+        description: 'Production updates, maintenance records, and operational data at the shopfloor while preserving ERP as the financial backbone.',
+        image: '<img src="http://4.151.8.142:4000/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png" class = "w-full h-full object-contain p-2" alt="Epicore Integrated Manufacturing Shopfloor" loading="lazy" />',
+      },
+      {
+        wide: true,
+        title: 'Enterprise & Partner Portals',
+        href: '/homes/enterprise-partner-portals',
+        description: 'Secure digital portals for suppliers, dealers, and partners — connected directly to ERP master data and transactional workflows.',
+        image: '<img src="http://4.151.8.142:4000/uploads/Oracle-integrated-Enterprise-Partner-Portals.png" class="w-full h-full object-contain p-2"  alt="ERP-Integrated Field Service Management for SAP" loading="lazy" />',
+      },
+      {
+  wide: true,
+  title: 'ERP-Integrated Product Configurator',
+  href: '/homes/erp-integrated-product-configurator',
+  description: 'Configure products, pricing, and variants in real time with seamless ERP and SAP integration.',
+  image: '<img src="http://4.151.8.142:4000/uploads/ERP-integrated-product-configurator.png" class="w-full h-full object-contain p-2" alt="ERP Integrated Product Configurator for SAP and enterprise ERP systems" loading="lazy" />',
+}
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5. ERP CONNECTIVITY — ContentSplitCard
+       ══════════════════════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="ERP & Platform Integrations"
+    title="Seamless ERP connectivity — agnostic by design"
+    cardTitle="UpBuff integrates with every major enterprise ERP platform"
+    cardDescription="UpBuff is ERP-agnostic by design — integrating securely using ERP-native APIs and service layers. SAP Business One via Service Layer, SAP S/4HANA via OData and RFC, Oracle ERP via REST, and Epicor via flexible API connectivity. No direct database writes. No core modifications. ERP governance preserved at every layer."
+    cardImage="http://4.151.8.142:4000/uploads/upbuff-ERP-CRM-integrations-for-WhatsApp-Tally-Shopify-SAP.png"
+    cardGradient="linear-gradient(135deg, #1d4ed8 0%, #0891b2 50%, #0f766e 100%)"
+    testimonial={{
+      quote: 'UpBuff connected our SAP Business One to the field team in weeks. Real-time pricing, credit control, and order sync — without touching SAP core. The team was live and productive immediately.',
+      name: 'CEO',
+      company: 'Gourock Zamiba Ltd',
+      avatar: 'http://4.151.8.142:4000/uploads/gaurock-client.png',
+    }}
+    features={[
+      {
+        icon: 'tabler:building-store',
+        title: 'SAP Business One & S/4HANA',
+        description: 'Native integration via Service Layer, OData, BAPI, and RFC — Clean Core compliant.',
+      },
+      {
+        icon: 'tabler:plug-connected',
+        title: 'Oracle, Epicor & Custom ERP',
+        description: 'Flexible REST and SOAP connectivity for Oracle, Epicor, and legacy ERP systems.',
+      },
+      {
+        icon: 'tabler:apps',
+        title: 'WhatsApp, Shopify & 100+ tools',
+        description: 'Connect ERP with communication platforms, marketplaces, and enterprise applications.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       9. INTEGRATION ECOSYSTEM — ToolsMarquee
+       ══════════════════════════════════════════════════════════ -->
+  <ToolsMarquee
+    title="Connects your ERP to your entire business ecosystem"
+    description="UpBuff bridges SAP, Oracle, and Epicor with the communication platforms, marketplaces, and enterprise applications your teams already rely on — creating a connected digital enterprise without silos."
+    speed={30}
+    tools={[
+      { name: 'Calendar', logo: '<img src="http://4.151.8.142:4000/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Epicor', logo: '<img src="http://4.151.8.142:4000/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SAP', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Gmail', logo: '<img src="http://4.151.8.142:4000/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'IoT', logo: '<img src="http://4.151.8.142:4000/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SAP S/4HANA', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Oracle', logo: '<img src="http://4.151.8.142:4000/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Outlook', logo: '<img src="http://4.151.8.142:4000/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Power BI', logo: '<img src="http://4.151.8.142:4000/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SAP Business One', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'SMS', logo: '<img src="http://4.151.8.142:4000/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'VoIP', logo: '<img src="http://4.151.8.142:4000/uploads/logo/voip-integration-with-upbuff-crm.png" alt="VoIP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'WhatsApp', logo: '<img src="http://4.151.8.142:4000/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+
+      { name: 'Zoho', logo: '<img src="http://4.151.8.142:4000/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       6. VALUE PROPOSITIONS — FeaturesCarousel
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Value Proposition"
+    title="Why UpBuff for SAP & enterprise ERP customers"
+    subtitle="Designed to extend ERP into execution — without disruption to your core system, upgrade roadmap, or compliance posture."
+    items={[
+      {
+        gradient: 'linear-gradient(135deg, #1d4ed8 0%, #6366f1 100%)',
+        badge: 'No heavy customization',
+        title: 'Extend SAP without modifying ERP core',
+        description: 'Leverage your existing ERP investment without complex modifications to the core system. UpBuff connects via official APIs — protecting your upgrade path and long-term ERP roadmap while delivering full execution capability to frontline teams.',
+        image: '<div class="w-full h-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 text-black opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #0f766e 0%, #16a34a 100%)',
+        badge: 'Frontline ERP adoption',
+        title: 'Improve frontline ERP adoption with mobile-first interfaces',
+        description: 'Mobile-first execution tools make ERP data accessible and actionable for field teams, warehouse operators, and production supervisors — replacing paper-based and offline workflows with real-time ERP-synchronized execution.',
+        image: '<div class="w-full h-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 text-black opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01M9 7h6M9 11h6M9 15h3"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)',
+        badge: 'Digital transformation',
+        title: 'Accelerate enterprise digital transformation',
+        description: 'Fast-track your enterprise digitisation initiatives with pre-built ERP execution workflows for sales, field service, warehouse, and manufacturing. Go live in weeks — not months — without disrupting existing ERP operations.',
+        image: '<div class="w-full h-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 text-black opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #fbbf24 0%, #f97316 100%)',
+        badge: 'ERP ROI optimization',
+        title: 'Maximize SAP ERP ROI and reduce operational costs',
+        description: 'Improve return on investment from SAP and enterprise ERP systems by eliminating manual processes, reducing custom development costs, and streamlining operations. UpBuff enhances ERP efficiency while minimizing implementation and maintenance overhead.',
+        image: '<div class="w-full h-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 text-black opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #1e293b 0%, #4f46e5 100%)',
+        badge: 'ERP governance & compliance',
+        title: 'Ensure ERP data governance, security, and compliance',
+        description: 'Maintain enterprise-grade governance across SAP and ERP operations with role-based access control, audit trails, and approval workflows. UpBuff ensures secure, compliant execution aligned with enterprise IT policies and regulatory requirements.',
+        image: '<div class="w-full h-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 text-black opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       7. SECURITY & COMPLIANCE — FeaturesGrid
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    id="compliance"
+    tagline="Built for Enterprise Control"
+    title="Security, compliance & audit readiness"
+    subtitle="Enterprise SAP and ERP customers demand governance. UpBuff delivers execution without compromising compliance."
+    items={[
+      {
+        icon: 'tabler:lock',
+        title: 'Role-Based Security',
+        description: 'Granular user access control aligned with ERP roles and approval hierarchies — mapped directly to your SAP or Oracle governance model.',
+      },
+      {
+        icon: 'tabler:file-search',
+        title: 'Comprehensive Audit Logs',
+        description: 'Track user actions, document changes, and financial workflows across all execution layers with full timestamp and user attribution.',
+      },
+      {
+        icon: 'tabler:git-merge',
+        title: 'Approval & Workflow Management',
+        description: 'Customizable multi-level approvals integrated with ERP business logic — credit checks, pricing validations, and authorization workflows.',
+      },
+      {
+        icon: 'tabler:file-certificate',
+        title: 'Document Traceability',
+        description: 'Complete lifecycle tracking for sales, service, inventory, and financial documents — from field capture to ERP posting.',
+      },
+      {
+        icon: 'tabler:receipt',
+        title: 'Global E-Invoicing Compliance',
+        description: 'Support for India GST, ZATCA (Saudi Arabia), ZRA (Zambia), and regional compliance frameworks built into execution workflows.',
+      },
+      {
+        icon: 'tabler:database-export',
+        title: 'Enterprise Data Integrity',
+        description: 'Secure ERP data synchronization ensuring consistency across branches, subsidiaries, and multi-country enterprise deployments.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       8. HOW IT WORKS — FeaturesEnterprise
+       ══════════════════════════════════════════════════════════ 
+  <FeaturesEnterprise
+    tagline="How It Works"
+    title="How UpBuff extends your ERP"
+    subtitle="Three steps from assessment to live ERP-integrated execution — without disrupting your existing systems or upgrade roadmap."
+    items={[
+      {
+        title: 'Step 1 — ERP Assessment',
+        description: 'We analyze your SAP or ERP workflows, integration points, and operational gaps to design the optimal execution layer for your enterprise environment.',
+        illustration: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 p-6 bg-gradient-to-br from-blue-50 to-indigo-100"><div class="w-16 h-16 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div><div class="text-center mt-2"><p class="text-sm font-bold text-blue-900">ERP workflow analysis</p><p class="text-xs text-blue-600 mt-1">SAP · Oracle · Epicor · Custom ERP</p></div></div>',
+      },
+      {
+        title: 'Step 2 — Execution Layer Deployment',
+        description: 'UpBuff connects using secure APIs and service layers without altering ERP core logic — ensuring zero disruption to your existing systems, data, and upgrade roadmap.',
+        illustration: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 p-6 bg-gradient-to-br from-green-50 to-emerald-100"><div class="w-16 h-16 rounded-2xl bg-green-600 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div><div class="text-center mt-2"><p class="text-sm font-bold text-green-900">API-based connection</p><p class="text-xs text-green-600 mt-1">No core mods · Zero disruption</p></div></div>',
+      },
+      {
+        title: 'Step 3 — Controlled Rollout',
+        description: 'Mobile, warehouse, and execution teams are onboarded with governance controls intact — ensuring compliance, audit readiness, and ERP data integrity from day one.',
+        illustration: '<div class="w-full h-full flex flex-col items-center justify-center gap-5 p-6 bg-gradient-to-br from-purple-50 to-pink-100"><div class="w-16 h-16 rounded-2xl bg-purple-600 flex items-center justify-center shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="text-center mt-2"><p class="text-sm font-bold text-purple-900">Team onboarding</p><p class="text-xs text-purple-600 mt-1">Governance intact · Compliance day 1</p></div></div>',
+      },
+    ]}
+  />
+    -->
+  <Steps
+    tagline="How It Works"
+    title="How UpBuff Extends Your ERP"
+    items={[
+      {
+        title: 'Step 1: <span class="font-medium">ERP Assessment</span>',
+        description:
+          'We analyze your SAP or ERP workflows, integration points, and operational gaps to design the optimal execution layer for your enterprise.',
+        icon: 'tabler:search',
+      },
+      {
+        title: 'Step 2: <span class="font-medium">Execution Layer Deployment</span>',
+        description:
+          'UpBuff connects using secure APIs and service layers without altering ERP core logic — ensuring zero disruption to your existing systems.',
+        icon: 'tabler:plug-connected',
+      },
+      {
+        title: 'Step 3: <span class="font-medium">Controlled Rollout</span>',
+        description:
+          'Mobile, warehouse, and execution teams are onboarded with governance controls intact — ensuring compliance from day one.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Ready to modernize ERP execution!',
+        icon: 'tabler:check',
+      },
+    ]}
+    image={{
+      src: 'http://4.151.8.142:4000/uploads/UpBuff-ERP-Extension-Process.png',
+      alt: 'UpBuff ERP Extension Process',
+    }}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       10b. INTEGRATIONS CAROUSEL
+       ══════════════════════════════════════════════════════════ 
+  <FeaturesCarousel
+    tagline="Integrations"
+    title="Connects to every tool your enterprise already uses"
+    subtitle="UpBuff bridges your ERP with the platforms, marketplaces, and communication tools your teams rely on — all via secure API-based connectivity."
+    items={[
+      {
+        gradient: 'linear-gradient(135deg, #003f7c 0%, #0070c0 100%)',
+        badge: 'SAP Integration',
+        title: 'SAP S/4HANA, SAP ECC & SAP Business One',
+        description: 'Native integration with SAP S/4HANA via OData and Standard APIs, SAP ECC via RFC/BAPI, and SAP Business One via Service Layer. Clean Core compliant — no core modifications, no direct database writes. Supports on-premise, RISE, and hybrid SAP deployments.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg mb-2" style="background:linear-gradient(135deg,#003f7c,#0070c0)"><span class="text-white font-black text-2xl">SAP</span></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">S/4HANA</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">SAP ECC</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Business One</span></div><p class="text-white/70 text-xs mt-3 text-center">OData · BAPI · Service Layer · BTP</p></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #c00000 0%, #e05000 100%)',
+        badge: 'Oracle Integration',
+        title: 'Oracle ERP & Oracle Cloud ERP',
+        description: 'Seamless connectivity with Oracle ERP on-premise via REST APIs and Oracle Cloud ERP via Oracle Integration Cloud (OIC). Supports manufacturing mobility, warehouse workflows, field operations, and sales execution — without touching Oracle core.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="w-20 h-20 rounded-2xl bg-white flex items-center justify-center shadow-lg mb-2"><span class="font-black text-xl" style="color:#f80000">ORACLE</span></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Oracle ERP</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Oracle Cloud</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">OIC</span></div><p class="text-white/70 text-xs mt-3 text-center">REST APIs · Oracle Integration Cloud</p></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #8b0000 0%, #c0392b 100%)',
+        badge: 'Epicor Integration',
+        title: 'Epicor ERP & Custom ERP via API',
+        description: 'Full integration with Epicor ERP via REST APIs and Epicor Service Connect. Custom and legacy ERP systems supported via flexible REST, SOAP, and middleware connectors. No core modifications, no vendor lock-in — the same Clean Core approach applied to every ERP platform.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="w-20 h-20 rounded-2xl bg-white flex items-center justify-center shadow-lg mb-2"><span class="font-black text-xl" style="color:#e00000">epicor</span></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Epicor ERP</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Custom ERP</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Legacy ERP</span></div><p class="text-white/70 text-xs mt-3 text-center">REST · Service Connect · Middleware</p></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #25d366 0%, #075e54 100%)',
+        badge: 'Communication',
+        title: 'WhatsApp Business',
+        description: 'WhatsApp Business integration for customer communication and field team workflows linked directly to ERP. Send order confirmations, service updates, and operational alerts through WhatsApp — all governed by ERP business logic and synchronized in real time.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg mb-2" style="background:#25d366"><svg class="w-12 h-12 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Customer Comms</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Field Alerts</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Order Updates</span></div><p class="text-white/70 text-xs mt-3 text-center">WhatsApp Business API · ERP-governed</p></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #96bf48 0%, #5a8a1e 100%)',
+        badge: 'E-Commerce & Marketplaces',
+        title: 'Shopify, Unicommerce & IndiaMART',
+        description: 'Shopify order and inventory sync with ERP for unified e-commerce operations. Unicommerce multi-channel order management connected to ERP stock and fulfillment. IndiaMART marketplace integration for B2B lead and order management — all governed by ERP master data.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="flex gap-4 mb-2"><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg"><span class="font-black text-sm" style="color:#96bf48">Shopify</span></div><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-[10px] text-center text-gray-700 px-1 leading-tight">Uni<br/>comm</span></div><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-[9px] text-center text-orange-600 px-1 leading-tight">India<br/>MART</span></div></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Orders</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Inventory</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Marketplace</span></div><p class="text-white/70 text-xs mt-3 text-center">Real-time ERP inventory sync</p></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #4285f4 0%, #1a73e8 100%)',
+        badge: 'Google Workspace',
+        title: 'Gmail, Google Calendar & Google Drive',
+        description: 'Gmail integration for ERP-triggered email communication. Google Calendar for scheduling linked to field service and sales workflows. Google Drive for document management connected to ERP transactions. Full Google Workspace connectivity for enterprise operational teams.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="flex gap-4 mb-2"><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-2xl" style="color:#EA4335">M</span></div><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-xl" style="color:#1a73e8">31</span></div><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg"><svg class="w-8 h-8" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="#4285f4"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#4285f4" stroke-width="2" stroke-linecap="round"/></svg></div></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Gmail</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Calendar</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Drive</span></div><p class="text-white/70 text-xs mt-3 text-center">Google Workspace · Microsoft 365</p></div>',
+      },
+      {
+        gradient: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+        badge: 'Scheduling & Productivity',
+        title: 'Calendly, Cal.com, Outlook & Zoho',
+        description: 'Calendly and Cal.com for appointment booking and field scheduling connected to ERP service workflows. Microsoft Outlook for enterprise email and calendar integration. Zoho CRM and Zoho suite integration for sales and customer management. HR and communication platform connectors for complete enterprise connectivity.',
+        image: '<div class="w-full h-full flex flex-col items-center justify-center gap-4 p-6"><div class="flex gap-3 mb-2 flex-wrap justify-center"><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-xs text-blue-600 text-center leading-tight">Calen<br/>dly</span></div><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-xs text-gray-700 text-center leading-tight">Cal<br/>.com</span></div><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-lg" style="color:#0078d4">O</span></div><div class="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg"><span class="font-bold text-sm text-red-600">Zoho</span></div></div><div class="flex gap-2 flex-wrap justify-center"><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Scheduling</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Outlook</span><span class="px-3 py-1 bg-white/20 text-white text-xs font-semibold rounded-full">Zoho</span></div><p class="text-white/70 text-xs mt-3 text-center">HR · Payroll · Communication platforms</p></div>',
+      },
+    ]}
+  />
+
+   ══════════════════════════════════════════════════════════
+       11. TESTIMONIALS
+       ══════════════════════════════════════════════════════════ -->
+  <TestimonialsGrid
+    title="What enterprise teams say"
+    subtitle="Trusted by leading SAP Business One customers, Oracle enterprises, and field service organizations worldwide"
+    row1={[
+      {
+        company: 'Molygraph',
+        logo: 'http://4.151.8.142:4000/uploads/molygraph-logo.svg',
+        quote: 'UpBuff extended our SAP operations to field crews without any core modifications. The integration was live in weeks and our upgrade timeline improved dramatically as a direct result.',
+        name: 'Operations Director',
+        role: 'National Grid',
+      },
+      {
+        company: 'Roofsol',
+        logo: 'http://4.151.8.142:4000/uploads/roofsol-logo.svg',
+        quote: 'Real-time field execution connected to SAP — without touching the core. Our field technicians were productive from day one and our S/4HANA upgrade path remained completely intact.',
+        name: 'Head of Digital Operations',
+        role: 'Miele',
+      },
+    ]}
+    statCard={{
+      stat: '10,000+',
+      label: 'enterprise users on the UpBuff execution platform',
+      gradient: 'linear-gradient(135deg, #1d4ed8 0%, #0891b2 50%, #0f766e 100%)',
+    }}
+    row2={[
+      {
+        company: 'Ideaforge',
+        logo: 'http://4.151.8.142:4000/uploads/ideaForge-logo.svg',
+        quote: 'UpBuff gave us a powerful, flexible way to extend our SAP operations to field teams without the complexity of traditional ERP customization. Guests report strong satisfaction and the system scales effortlessly.',
+        name: 'Mark Kupferman',
+        role: 'CMO',
+      },
+      {
+        company: 'The Wine Source Inc.',
+        logo: 'http://4.151.8.142:4000/uploads/the-wine-source-logo.svg',
+        quote: 'We evaluated multiple ERP extension platforms. UpBuff was the only one that truly respected our SAP governance model — API-first, role-controlled, and fully auditable. The clear enterprise choice.',
+        name: 'CIO',
+        role: 'IHG Hotels & Resorts',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       11. ENTERPRISE SECURITY — SecuritySplit
+       ══════════════════════════════════════════════════════════ -->
+  <SecuritySplit
+    tagline="Enterprise Security"
+    title="Built on enterprise principles —<br />security, compliance & ERP integrity"
+    subtitle="Our values guide how we design, build, and deliver ERP execution solutions. ERP-centric thinking, operational precision, and continuous innovation — ensuring enterprise-grade security and compliance at every layer."
+    
+    features={[
+      {
+        title: 'ERP-centric thinking',
+        description: 'We respect ERP as the system of record and design execution solutions that extend — not disrupt — enterprise governance. Every API call, every transaction, every workflow is governed by ERP rules.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" class="w-20 h-16" fill="none"><ellipse cx="40" cy="16" rx="28" ry="10" stroke="url(#db6)" stroke-width="2.5"/><path d="M12 16v20c0 5.523 12.536 10 28 10s28-4.477 28-10V16" stroke="url(#db6)" stroke-width="2.5"/><path d="M12 36v16c0 5.523 12.536 10 28 10s28-4.477 28-10V36" stroke="url(#db6)" stroke-width="2.5"/><circle cx="40" cy="38" r="3" fill="#1d4ed8"/><defs><linearGradient id="db6" x1="12" y1="0" x2="68" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#1d4ed8"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Operational precision',
+        description: 'Execution workflows are engineered to reflect real-world operational complexity with structured ERP alignment. No shortcuts — every integration point is validated, tested, and audit-ready.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="20" y="36" width="40" height="30" rx="6" stroke="url(#lk6)" stroke-width="2.5"/><path d="M28 36V26a12 12 0 0124 0v10" stroke="url(#lk6)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#22c55e"/><defs><linearGradient id="lk6" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Continuous ERP innovation',
+        description: 'We evolve with SAP, Oracle, and enterprise technology landscapes to keep execution future-ready. As ERP platforms release new APIs and capabilities, UpBuff integrations stay current and upgrade-safe.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="14" y="14" width="52" height="52" rx="8" stroke="url(#bx6)" stroke-width="2.5"/><path d="M26 40h28M26 52h18M26 28h28" stroke="url(#bx6)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="bx6" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       12. WHY UPBUFF — moved here before FAQ
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesHighlights
+    tagline="Why UpBuff"
+    title="Why enterprises choose UpBuff"
+    subtitle="Enterprise ERP systems are powerful — but they were not designed for real-time frontline execution. UpBuff bridges the gap between ERP control and operational reality."
+    items={[
+    {
+      title: 'ERP-First Architecture',
+      description: 'Built natively around SAP Business One, Oracle ERP, and Epicor. Real-time synchronization using secure ERP APIs — SAP Service Layer, OData, BAPI — ensures data integrity without core customization or upgrade risk.',
+      image: '<div class="flex flex-col items-center justify-center gap-4"><img src="http://4.151.8.142:4000/uploads/erp-first-architecture-upbuff.png" alt="ERP-first architecture integrating SAP Business One, Oracle ERP, and Epicor with real-time API synchronization" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">SAP · Oracle · Epicor</p><p class="text-xs text-blue-600 text-center">No core modification · API-native</p></div>',
+    },
+    {
+      title: 'Real-Time Frontline Mobility',
+      description: 'Mobile-first applications for sales reps, field engineers, warehouse teams, and distributors connected directly to ERP master data — online or offline — with automatic synchronization.',
+      image: '<div class="flex flex-col items-center justify-center gap-4"><img src="http://4.151.8.142:4000/uploads/real-time-update.png" alt="Real-time ERP mobility solution for sales, field service, warehouse, and shopfloor teams with offline and online synchronization" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">Sales · Field · Warehouse · Shopfloor</p><p class="text-xs text-green-600 text-center">Offline-capable · Real-time sync</p></div>',
+    },
+    {
+      title: 'Data Integrity & Governance',
+      description: 'Role-based access control, audit logs, and approval workflows ensure enterprise compliance across multi-entity operations. ERP governance intact at every execution step.',
+      image: '<div class="flex flex-col items-center justify-center gap-4"><img src="http://4.151.8.142:4000/uploads/upbuff-data-integrity-security.png" alt="ERP data integrity and governance with role-based access control, audit logs, and compliance workflows" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">RBAC · Audit logs · Approvals</p><p class="text-xs text-gray-500 text-center">SOC 2 · GDPR · Compliance-ready</p></div>',
+    }
+]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       13. FAQ ACCORDION
+       ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="Frequently asked questions"
+    items={[
+      {
+        question: 'What products does UpBuff offer?',
+        answer: 'UpBuff offers 7 ERP-integrated products: (1) ERP-Integrated CRM, (2) ERP-Integrated Field Service Management, (3) Warehouse & Inventory Management, (4) Sales & Distribution Execution, (5) Manufacturing & Shopfloor, (6) Enterprise & Partner Portals, and (7) ERP-Integrated Product Configurator. All products connect to SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor via official APIs without modifying ERP core.',
+      },
+      {
+        question: 'What is an ERP Execution Platform?',
+        answer: 'An ERP Execution Platform extends systems like SAP Business One or Oracle ERP into frontline operations — sales, field service, warehouse, and manufacturing — while preserving ERP as the system of record. UpBuff handles real-time execution and synchronizes outcomes back to ERP via official APIs.',
+      },
+      {
+        question: 'Does UpBuff replace SAP or Oracle ERP?',
+        answer: 'No. UpBuff integrates with SAP Business One, Oracle ERP, and Epicor ERP and acts as the execution layer — ensuring real-time synchronization without modifying ERP core systems. ERP remains the system of record.',
+      },
+      {
+        question: 'Which ERP systems does UpBuff integrate with?',
+        answer: 'UpBuff integrates with SAP Business One, SAP S/4HANA, SAP ECC, Oracle ERP, Epicor ERP, and custom ERP systems using secure API-based and ERP-native integration methods including Service Layer, OData, BAPI, and REST.',
+      },
+      {
+        question: 'How is UpBuff different from standalone CRM or FSM tools?',
+        answer: 'Unlike standalone applications that operate separately and require manual ERP sync, UpBuff is built ERP-first — ensuring data integrity, compliance, and real-time synchronization across enterprise workflows at every transaction.',
+      },
+      {
+        question: 'Is UpBuff suitable for multi-country enterprises?',
+        answer: 'Yes. UpBuff supports multi-entity operations with compliance-ready workflows, centralized ERP governance, and regional e-invoicing support for India GST, ZATCA (Saudi Arabia), ZRA (Zambia), and other frameworks.',
+      },
+      {
+        question: 'Can UpBuff integrate with external platforms like Shopify or WhatsApp?',
+        answer: 'Yes. UpBuff connects ERP systems with WhatsApp Business, Shopify, Salesforce, Zapier, Tally, Unicommerce, IndiaMART, Zoho, and other enterprise applications — enabling a fully connected digital ecosystem with ERP at the core.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       13. CTA BANNER
+       ══════════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Ready to modernize ERP execution?"
+    subtitle="Extend your SAP, Oracle, or Epicor ERP into frontline operations — without disrupting your core system, upgrade roadmap, or compliance posture."
+    action={{
+      text: 'Schedule a Consultation',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="No ERP core modifications required"
+  />
+
+</Layout>

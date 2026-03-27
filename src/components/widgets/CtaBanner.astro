@@ -1,0 +1,115 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+import type { CallToAction, Widget } from '~/types';
+
+export interface Props extends Widget {
+  title?: string;
+  subtitle?: string;
+  /** Primary CTA button */
+  action?: CallToAction;
+  /** Small trust note shown below the button (e.g. "No credit card required") */
+  note?: string;
+  /** Icon HTML rendered before the note text */
+  noteIcon?: string;
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  action,
+  note,
+  noteIcon,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto !py-0 !px-0 md:!py-0 lg:!py-0 ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <!-- Outer rounded card -->
+  <div class="relative overflow-hidden rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow-sm min-h-[320px] flex items-center justify-center px-6 py-16 md:py-20">
+
+    <!-- ── Left decorative circle ──────────────────────────── -->
+    <div
+  class="pointer-events-none absolute -left-16 top-1/2 w-64 h-64 md:w-80 md:h-80 rounded-full blur-3xl opacity-70"
+  style="background: radial-gradient(circle, #e879f9 0%, #d946ef 40%, #a855f7 100%); animation: floatLoop 8s linear infinite;"
+  aria-hidden="true"
+/>
+
+    <!-- ── Right decorative circle ─────────────────────────── -->
+    <div
+  class="pointer-events-none absolute -right-16 top-1/2 w-64 h-64 md:w-80 md:h-80 rounded-full blur-3xl opacity-70"
+  style="background: radial-gradient(circle, #fb923c 0%, #f97316 40%, #ef4444 100%); animation: floatLoopReverse 10s linear infinite;"
+  aria-hidden="true"
+/>
+
+    <!-- ── Centre content ──────────────────────────────────── -->
+    <div class="relative z-10 text-center max-w-2xl mx-auto intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+
+      {title && (
+        <h2
+          class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100 mb-4"
+          set:html={title}
+        />
+      )}
+
+      {subtitle && (
+        <p
+          class="text-muted text-base md:text-lg leading-relaxed dark:text-slate-400 mb-8 max-w-lg mx-auto"
+          set:html={subtitle}
+        />
+      )}
+
+      {action && (
+        <div class="flex justify-center mb-4">
+          <!-- Button with gradient underline accent -->
+          <div class="relative inline-block">
+            <Button
+              {...action}
+              class="relative z-10 btn-primary !bg-gray-900 !text-white hover:!bg-gray-700 dark:!bg-white dark:!text-gray-900 dark:hover:!bg-gray-100 px-8 py-3 rounded-xl text-base font-semibold transition-colors"
+            />
+            <!-- Gradient underline bar -->
+            <span
+              class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1 h-1 w-4/5 rounded-full"
+              style="background: linear-gradient(90deg, #a855f7, #ec4899, #f97316);"
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+      )}
+
+      {note && (
+        <p class="inline-flex items-center gap-1.5 text-sm text-muted dark:text-slate-400">
+          <span set:html={note} />
+        </p>
+      )}
+
+    </div>
+  </div>
+</WidgetWrapper>
+
+<style is:global>
+@keyframes floatLoop {
+  0%   { transform: translate(-50px, -50%) scale(1); }
+  25%  { transform: translate(70px, -70%) scale(1.1); }
+  50%  { transform: translate(90px, -50%) scale(1); }
+  75%  { transform: translate(10px, -30%) scale(1.1); }
+  100% { transform: translate(-50px, -50%) scale(1); }
+}
+
+@keyframes floatLoopReverse {
+  0%   { transform: translate(50px, -50%) scale(1); }
+  25%  { transform: translate(-70px, -30%) scale(1.1); }
+  50%  { transform: translate(-90px, -50%) scale(1); }
+  75%  { transform: translate(-10px, -70%) scale(1.1); }
+  100% { transform: translate(50px, -50%) scale(1); }
+}
+</style>

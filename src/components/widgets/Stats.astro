@@ -1,0 +1,153 @@
+---
+import type { Stats as Props } from '~/types';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { Icon } from 'astro-icon/components';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  stats = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- ── Split header — matches FeaturesGrid pattern ──────── -->
+  <div class="flex flex-col md:flex-row md:items-end gap-6 md:gap-12 mb-10 md:mb-12 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+
+    <!-- Left: tagline pill + title -->
+    <div class="md:w-1/2">
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-4">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300" set:html={tagline} />
+        </div>
+      )}
+      {title && (
+        <h2
+          class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100"
+          set:html={title}
+        />
+      )}
+    </div>
+
+    <!-- Right: subtitle -->
+    {subtitle && (
+      <div class="md:w-1/2">
+        <p class="text-muted text-base md:text-lg leading-relaxed dark:text-slate-400" set:html={subtitle} />
+      </div>
+    )}
+  </div>
+
+  <!-- ── Stat cards grid ──────────────────────────────────── -->
+  {stats.length > 0 && (
+    <div class="rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden bg-white dark:bg-slate-900 shadow-sm">
+      <div
+        class:list={[
+          'grid grid-cols-1 sm:grid-cols-2 divide-y divide-gray-200 dark:divide-gray-700',
+          stats.length >= 3 ? 'lg:grid-cols-3' : '',
+          stats.length >= 4 ? 'xl:grid-cols-4 lg:grid-cols-4' : '',
+          stats.length >= 5 ? 'xl:grid-cols-5 lg:grid-cols-5' : '',
+        ]}
+      >
+        {stats.map(({ amount, title: statTitle, icon }, i) => (
+          <div
+            class="relative p-8 flex flex-col items-start gap-4 group overflow-hidden intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+            style={`animation-delay: ${i * 80}ms`}
+          >
+
+            <!-- Subtle gradient accent top-left on hover -->
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              aria-hidden="true"
+              style="background: radial-gradient(ellipse at 0% 0%, rgba(244,114,182,0.07) 0%, transparent 65%);"
+            />
+
+            <!-- Icon -->
+            {icon && (
+              <div class="w-9 h-9 flex items-center justify-center shrink-0">
+                <span class="gradient-icon-wrap">
+                  <Icon name={icon} class="w-8 h-8" />
+                </span>
+              </div>
+            )}
+
+            <!-- Amount — large gradient number -->
+            {amount && (
+              <div
+                class="font-heading font-extrabold leading-none tracking-tight text-4xl md:text-5xl lg:text-6xl stat-amount"
+                set:html={amount}
+              />
+            )}
+
+            <!-- Divider -->
+            <div class="w-8 h-0.5 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 shrink-0" />
+
+            <!-- Label -->
+            {statTitle && (
+              <p class="text-sm font-semibold uppercase tracking-widest text-gray-600 dark:text-slate-400 leading-snug">
+                {statTitle}
+              </p>
+            )}
+
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</WidgetWrapper>
+
+<!-- Reuse the same gradient definition from FeaturesGrid -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="stat-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f472b6" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<style>
+  /* Icon gradient — same technique as FeaturesGrid */
+  .gradient-icon-wrap {
+    display: inline-flex;
+    position: relative;
+  }
+
+  .gradient-icon-wrap :global(svg) {
+    fill: url(#stat-icon-gradient) #e879a0;
+    stroke: url(#stat-icon-gradient) #e879a0;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Amount — pink-to-purple gradient text */
+  .stat-amount {
+    background: linear-gradient(135deg, #f472b6 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Right border between cards on lg — mirrors FeaturesGrid dividers */
+  @media (min-width: 1024px) {
+    .grid > *:not(:last-child) {
+      border-right: 1px solid #e5e7eb;
+    }
+
+    :global(.dark) .grid > *:not(:last-child) {
+      border-right-color: #374151;
+    }
+  }
+</style>

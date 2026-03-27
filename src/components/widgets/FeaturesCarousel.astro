@@ -1,0 +1,182 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import type { Widget } from '~/types';
+
+export interface CarouselItem {
+  title?: string;
+  description?: string;
+  image?: string | Record<string, unknown>;
+  gradient?: string;
+  badge?: string;
+  badgeIcon?: string;
+}
+
+export interface Props extends Widget {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  items?: Array<CarouselItem>;
+  showArrows?: boolean;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  items = [],
+  showArrows = true,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<WidgetWrapper
+  id={widgetId}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- Header -->
+  {(title || subtitle || tagline) && (
+    <div class="text-center mb-10 md:mb-14">
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-5">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300" set:html={tagline} />
+        </div>
+      )}
+      {title && (
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-heading dark:text-gray-100" set:html={title} />
+      )}
+      {subtitle && (
+        <p class="mt-4 text-muted text-lg max-w-2xl mx-auto dark:text-slate-400" set:html={subtitle} />
+      )}
+    </div>
+  )}
+
+  <!-- Carousel -->
+  <div class="fc-viewport overflow-hidden" id={`${widgetId}-viewport`}>
+    <div class="fc-track flex gap-5 transition-transform duration-500 ease-in-out" id={`${widgetId}-track`}>
+      {items.map(({ title: t, description, image, badge, badgeIcon }) => (
+        <div class="fc-slide shrink-0 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
+
+          <!-- Card -->
+          <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900">
+
+            <!-- Image Area -->
+            <div class="relative h-80 flex items-center justify-center p-6 pb-0 text-center">
+
+              {image && (
+                <div class="flex items-center justify-center w-full h-full">
+                  {typeof image === 'string'
+                    ? <Fragment set:html={image} />
+                    : <Image
+                        class="max-h-[240px] w-auto object-contain"
+                        width={400}
+                        height={320}
+                        {...image}
+                      />
+                  }
+                </div>
+              )}
+
+              <!-- Badge -->
+              {badge && (
+                <div class="absolute bottom-5 left-1/2 -translate-x-1/2">
+                  <div class="inline-flex items-center gap-2 bg-gray-900 dark:bg-gray-800 text-white rounded-full px-4 py-2 text-sm font-medium shadow-lg">
+                    {badgeIcon && <span set:html={badgeIcon} />}
+                    <span>{badge}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Content -->
+            <div class="border-gray-200 dark:border-gray-700 p-5 pt-0">
+              {t && <h3 class="text-lg font-bold text-heading dark:text-gray-100 mb-2">{t}</h3>}
+              {description && (
+                <p class="text-sm text-muted leading-relaxed dark:text-slate-400" set:html={description} />
+              )}
+            </div>
+
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Arrows -->
+  {showArrows && items.length > 1 && (
+    <div class="flex justify-center gap-3 mt-8">
+      <button id={`${widgetId}-prev`} class="w-11 h-11 rounded-full border border-gray-200 bg-white flex items-center justify-center">
+        ←
+      </button>
+      <button id={`${widgetId}-next`} class="w-11 h-11 rounded-full border border-gray-900 bg-gray-900 text-white flex items-center justify-center">
+        →
+      </button>
+    </div>
+  )}
+
+</WidgetWrapper>
+
+<style>
+.fc-viewport {
+  padding: 0 0.25rem;
+}
+</style>
+
+<script define:vars={{ widgetId, itemCount: items.length }}>
+(function () {
+  const track = document.getElementById(`${widgetId}-track`);
+  const prevBtn = document.getElementById(`${widgetId}-prev`);
+  const nextBtn = document.getElementById(`${widgetId}-next`);
+  if (!track) return;
+
+  let current = 0;
+
+  function slidesPerView() {
+    const w = window.innerWidth;
+    if (w >= 1024) return 3;
+    if (w >= 640) return 2;
+    return 1;
+  }
+
+  function maxIndex() {
+    return Math.max(0, itemCount - slidesPerView());
+  }
+
+  function update() {
+    const slides = Array.from(track.querySelectorAll('.fc-slide'));
+    if (!slides.length) return;
+    const slideW = slides[0].offsetWidth;
+    const gap = 20;
+    track.style.transform = `translateX(-${current * (slideW + gap)}px)`;
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) nextBtn.disabled = current >= maxIndex();
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    current = Math.max(0, current - 1);
+    update();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    current = Math.min(maxIndex(), current + 1);
+    update();
+  });
+
+  window.addEventListener('resize', () => {
+    current = Math.min(current, maxIndex());
+    update();
+  });
+
+  update();
+})();
+</script>

@@ -1,0 +1,211 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import type { Widget } from '~/types';
+
+export interface BentoItem {
+  title?: string;
+  description?: string;
+  /**
+   * Raw HTML / inline SVG illustration string, or an Astro ImageMetadata object.
+   * Rendered in the upper card area.
+   */
+  image?: string | Record<string, unknown>;
+  /** When true the card spans 2 columns (used for the two large top cards) */
+  wide?: boolean;
+  /**
+   * Optional page link. When provided:
+   * - title renders as a <a> with hover:text-accent
+   * - a "Learn more →" arrow link appears below the description
+   * When omitted, the card renders with no links (plain text only).
+   */
+  href?: string;
+  classes?: {
+    panel?: string;
+    image?: string;
+    content?: string;
+    title?: string;
+    description?: string;
+  };
+}
+
+export interface Props extends Widget {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  /** Pass all cards in order: wide cards first, then narrow cards */
+  items?: Array<BentoItem>;
+}
+
+const {
+  tagline,
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  items = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+const wideItems   = items.filter((i) => i.wide);
+const narrowItems = items.filter((i) => !i.wide);
+
+// Build ordered row groups — consecutive items of the same type are grouped together
+type RowGroup = { type: 'wide' | 'narrow'; items: typeof items };
+const rowGroups: RowGroup[] = [];
+for (const item of items) {
+  const type = item.wide ? 'wide' : 'narrow';
+  const last = rowGroups[rowGroups.length - 1];
+  if (last && last.type === type) {
+    last.items.push(item);
+  } else {
+    rowGroups.push({ type, items: [item] });
+  }
+}
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- ── Header ───────────────────────────────────────────────── -->
+  {(title || subtitle || tagline) && (
+    <div class="mb-10 md:mb-12 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+      {tagline && (
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 shadow-sm mb-5">
+          <span class="w-2 h-2 rounded-full bg-pink-500 shrink-0" aria-hidden="true" />
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300" set:html={tagline} />
+        </div>
+      )}
+      <div class="flex flex-col md:flex-row md:items-start md:gap-12">
+        {title && (
+          <h2
+            class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-heading dark:text-gray-100 font-heading md:w-1/2 shrink-0"
+            set:html={title}
+          />
+        )}
+        {subtitle && (
+          <p class="mt-3 md:mt-1 text-muted text-base md:text-lg dark:text-slate-400 md:w-1/2" set:html={subtitle} />
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- ── Bento grid — rendered in item order ─────────────────── -->
+  {rowGroups.map((group) => (
+    group.type === 'wide' ? (
+      /* ── Wide row: 2-col grid ─────────────────────────────── */
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 first:mt-0">
+        {group.items.map(({ title: t, description, image, href, classes: ic = {} }) => (
+          <div
+            class:list={[
+              'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900',
+              'overflow-hidden shadow-sm',
+              'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+              ic?.panel,
+            ]}
+          >
+            <div class:list={['relative h-64 dark:bg-slate-800 overflow-hidden flex items-center justify-center', ic?.image]}>
+              {image && (typeof image === 'string'
+                ? <Fragment set:html={image} />
+                : <Image class="w-full h-full object-cover" width={600} height={256} {...image} />
+              )}
+            </div>
+            <div class:list={['p-6', ic?.content]}>
+              {t && (
+                href
+                  ? <h3 class:list={['text-lg font-bold text-heading dark:text-gray-100 mb-2', ic?.title]}>
+                      <a href={href} class="hover:text-accent transition-colors duration-150">{t}</a>
+                    </h3>
+                  : <h3 class:list={['text-lg font-bold text-heading dark:text-gray-100 mb-2', ic?.title]}>{t}</h3>
+              )}
+              {description && (
+                <p class:list={['text-sm text-muted leading-relaxed dark:text-slate-400', ic?.description]} set:html={description} />
+              )}
+              {href && (
+                <a href={href} class="inline-flex items-center gap-1 mt-4 text-xs font-semibold text-accent hover:underline">
+                  Learn more
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      /* ── Narrow rows: chunked into rows of 3, last row 2-col if < 3 ── */
+      <>
+        {Array.from({ length: Math.ceil(group.items.length / 3) }, (_, rowIdx) => {
+          const row = group.items.slice(rowIdx * 3, rowIdx * 3 + 3);
+          return (
+            <div
+              class:list={[
+                'grid gap-4 mt-4',
+                row.length < 3
+                  ? 'grid-cols-1 sm:grid-cols-2'
+                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+              ]}
+            >
+              {row.map(({ title: t, description, image, href, classes: ic = {} }) => (
+                <div
+                  class:list={[
+                    'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900',
+                    'overflow-hidden shadow-sm',
+                    'intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+                    ic?.panel,
+                  ]}
+                >
+                  <div class:list={['relative h-52 dark:bg-slate-800 overflow-hidden flex items-center justify-center', ic?.image]}>
+                    {image && (typeof image === 'string'
+                      ? <Fragment set:html={image} />
+                      : <Image class="w-full h-full object-cover" width={400} height={208} {...image} />
+                    )}
+                  </div>
+                  <div class:list={['p-5', ic?.content]}>
+                    {t && (
+                      href
+                        ? <h3 class:list={['text-base font-bold text-heading dark:text-gray-100 mb-1.5', ic?.title]}>
+                            <a href={href} class="hover:text-accent transition-colors duration-150">{t}</a>
+                          </h3>
+                        : <h3 class:list={['text-base font-bold text-heading dark:text-gray-100 mb-1.5', ic?.title]}>{t}</h3>
+                    )}
+                    {description && (
+                      <p class:list={['text-sm text-muted leading-relaxed dark:text-slate-400', ic?.description]} set:html={description} />
+                    )}
+                    {href && (
+                      <a href={href} class="inline-flex items-center gap-1 mt-3 text-xs font-semibold text-accent hover:underline">
+                        Learn more
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </>
+    )
+  ))}
+</WidgetWrapper>
+
+<style>
+@keyframes moveX {
+  0% {
+    left: 0%;
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 12px);
+    opacity: 0.4;
+  }
+}
+</style>

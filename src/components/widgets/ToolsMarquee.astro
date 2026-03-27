@@ -1,0 +1,158 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import type { Widget } from '~/types';
+
+export interface ToolItem {
+  name: string;
+  /** logo: inline SVG string, an <img> HTML string, or an image src path */
+  logo?: string;
+  /** ImageMetadata object for Astro Image component */
+  image?: { src: string; alt?: string };
+}
+
+export interface Props extends Widget {
+  title?: string;
+  description?: string;
+  /** Tools split across two rows automatically */
+  tools?: Array<ToolItem>;
+  /** Speed of marquee in seconds (default: 30) */
+  speed?: number;
+}
+
+const {
+  title = 'Works with your tools',
+  description,
+  tools = [],
+  speed = 30,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+// Split tools into two rows
+const mid = Math.ceil(tools.length / 2);
+const row1 = tools.slice(0, mid);
+const row2 = tools.slice(mid);
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto !py-6 md:!py-8 ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+  <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+
+    <!-- ── Left: Title + description ──────────────────────────── -->
+    <div class="md:w-72 shrink-0">
+      {title && (
+        <h3 class="text-lg font-bold text-heading dark:text-gray-100">{title}</h3>
+      )}
+      {description && (
+        <p class="mt-1.5 text-sm text-muted dark:text-slate-400 leading-relaxed" set:html={description} />
+      )}
+    </div>
+
+    <!-- ── Right: Scrolling marquee rows ─────────────────────── -->
+    <div class="flex-1 overflow-hidden min-w-0">
+
+      <!-- Row 1 -->
+      <div class="marquee-track mb-3" style={`--speed: ${speed}s`}>
+        <div class="marquee-inner">
+          {[...row1, ...row1].map(({ name, logo, image }) => (
+            <div class="marquee-chip">
+              <span class="marquee-logo" aria-hidden="true">
+                {logo
+                  ? <Fragment set:html={logo} />
+                  : image
+                    ? <Image src={image.src} alt={image.alt ?? name} width={20} height={20} class="w-5 h-5 object-contain" />
+                    : null}
+              </span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Row 2 (offset start) -->
+      <div class="marquee-track" style={`--speed: ${speed}s; --delay: -${speed / 2}s`}>
+        <div class="marquee-inner">
+          {[...row2, ...row2].map(({ name, logo, image }) => (
+            <div class="marquee-chip">
+              <span class="marquee-logo" aria-hidden="true">
+                {logo
+                  ? <Fragment set:html={logo} />
+                  : image
+                    ? <Image src={image.src} alt={image.alt ?? name} width={20} height={20} class="w-5 h-5 object-contain" />
+                    : null}
+              </span>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</WidgetWrapper>
+
+<style>
+  .marquee-track {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  .marquee-inner {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll var(--speed, 30s) linear var(--delay, 0s) infinite;
+    gap: 0.625rem; /* gap-2.5 */
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .marquee-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    border: 1px solid #e5e7eb; /* border-gray-200 */
+    background-color: white;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  :global(.dark) .marquee-chip {
+    border-color: #374151;
+    background-color: #1e293b;
+  }
+
+  .marquee-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+  }
+
+  .marquee-logo :global(svg),
+  .marquee-logo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Pause on hover */
+  .marquee-track:hover .marquee-inner {
+    animation-play-state: paused;
+  }
+</style>

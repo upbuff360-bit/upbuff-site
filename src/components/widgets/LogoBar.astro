@@ -1,0 +1,65 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Image from '~/components/common/Image.astro';
+import type { Widget } from '~/types';
+
+export interface LogoItem {
+  /** Public path or URL to the logo image */
+  src?: string;
+  /** Inline SVG/HTML string alternative */
+  html?: string;
+  alt?: string;
+}
+
+export interface Props extends Widget {
+  /**
+   * Small centred label rendered above the logos.
+   * Supports inline HTML (e.g. bold highlight): 'Trusted by <strong>10,000+</strong> businesses worldwide'
+   */
+  label?: string;
+  logos?: Array<LogoItem>;
+}
+
+const {
+  label,
+  logos = [],
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper
+  id={id}
+  isDark={isDark}
+  containerClass={`max-w-5xl mx-auto !py-8 md:!py-10 ${(classes as Record<string, string>)?.container ?? ''}`}
+  bg={bg}
+>
+
+  <!-- Centred label -->
+  {label && (
+    <p
+      class="text-center text-sm text-muted dark:text-slate-400 mb-6 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter"
+      set:html={label}
+    />
+  )}
+
+  <!-- Logo strip -->
+  {logos.length > 0 && (
+    <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-6 intersect-once motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade intersect-quarter">
+      {logos.map(({ src, html, alt = '' }) => (
+        <div class="h-8 flex items-center opacity-100 grayscale hover:opacity-80 hover:grayscale-0 transition-all duration-300">
+          {html
+            ? <Fragment set:html={html} />
+            : src
+              ? <img src={src} alt={alt} class="h-full w-auto object-contain max-w-[150px]" loading="lazy" />
+              : null
+          }
+        </div>
+      ))}
+    </div>
+  )}
+
+</WidgetWrapper>
