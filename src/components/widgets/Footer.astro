@@ -1,6 +1,5 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { SITE } from 'astrowind:config';
 import { getHomePermalink } from '~/utils/permalinks';
 
 interface Link {
@@ -20,49 +19,84 @@ export interface Props {
   secondaryLinks: Array<Link>;
   socialLinks: Array<Link>;
   footNote?: string;
+  phone?: string;
   theme?: string;
 }
 
-const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme = 'light' } = Astro.props;
+const { socialLinks = [], links = [], footNote = '', phone } = Astro.props;
 ---
 
-<footer class:list={[{ dark: theme === 'dark' }, 'relative border-t border-gray-200 dark:border-slate-800 not-prose']}>
-  <div class="dark:bg-dark absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-  <div
-    class="relative max-w-5xl mx-auto px-4 sm:px-6 dark:text-slate-300 intersect-once intersect-quarter intersect-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
-  >
-    <div class="grid grid-cols-12 gap-4 gap-y-8 sm:gap-8 py-8 md:py-12">
-      <div class="col-span-12 lg:col-span-4">
-        <div class="mb-2">
-          <a class="inline-block font-bold text-xl" href={getHomePermalink()}>{SITE?.name}</a>
-        </div>
-        <div class="text-sm text-muted flex gap-1">
-          {
-            secondaryLinks.map(({ text, href }, index) => (
-              <>
-                {index !== 0 ? ' · ' : ''}
-                <a
-                  class="text-muted hover:text-gray-700 dark:text-gray-400 hover:underline transition duration-150 ease-in-out"
-                  href={href}
-                  set:html={text}
-                />
-              </>
-            ))
-          }
-        </div>
+<footer class="relative bg-white border-t border-gray-100 not-prose overflow-hidden pb-0">
+
+  <!-- Main footer content -->
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-10">
+    <div class="flex flex-col lg:flex-row lg:justify-between gap-12">
+
+      <!-- Left column: logo, copyright, social icons -->
+      <div class="flex flex-col gap-5 lg:w-56 shrink-0">
+
+        <!-- Logo — place upbuff-logo.svg in /public/ -->
+        <a href={getHomePermalink()} class="inline-flex items-center" aria-label="UpBuff home">
+          <img
+            src="/uploads/upbuff-logo-black.svg"
+            alt="UpBuff"
+            class="h-8 w-auto"
+            loading="lazy"
+          />
+        </a>
+
+        <!-- Copyright -->
+        {footNote && (
+          <p class="text-xs text-gray-500 leading-relaxed">
+            <Fragment set:html={footNote} />
+          </p>
+        )}
+
+        <!-- Social icon buttons — bordered squares like Chatbase -->
+        {socialLinks?.length > 0 && (
+          <div class="flex items-center gap-2 flex-wrap">
+            {socialLinks.map(({ ariaLabel, href, icon }) => (
+              <a
+                href={href}
+                aria-label={ariaLabel}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-400 transition-colors duration-150"
+              >
+                {icon && <Icon name={icon} class="w-4 h-4" />}
+              </a>
+            ))}
+          </div>
+        )}
+
+        <!-- Contact phone -->
+        {phone && (
+          <a
+            href={`tel:${phone.replace(/\s/g, '')}`}
+            class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors duration-150"
+          >
+            <Icon name="tabler:phone" class="w-4 h-4 shrink-0" />
+            {phone}
+          </a>
+        )}
+
       </div>
-      {
-        links.map(({ title, links }) => (
-          <div class="col-span-6 md:col-span-3 lg:col-span-2">
-            <div class="dark:text-gray-300 font-medium mb-2">{title}</div>
-            {links && Array.isArray(links) && links.length > 0 && (
-              <ul class="text-sm">
-                {links.map(({ text, href, ariaLabel }) => (
-                  <li class="mb-2">
+
+      <!-- Right: nav columns -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 flex-1">
+        {links.map(({ title, links: colLinks }) => (
+          <div>
+            <p class="text-[0.65rem] font-bold uppercase tracking-widest text-gray-900 mb-4">
+              {title}
+            </p>
+            {colLinks?.length > 0 && (
+              <ul class="flex flex-col gap-4">
+                {colLinks.map(({ text, href, ariaLabel }) => (
+                  <li class="leading-4">
                     <a
-                      class="text-muted hover:text-gray-700 hover:underline dark:text-gray-400 transition duration-150 ease-in-out"
                       href={href}
                       aria-label={ariaLabel}
+                      class="text-sm text-gray-500 hover:text-gray-900 transition-colors duration-150 leading-tight"
                     >
                       <Fragment set:html={text} />
                     </a>
@@ -71,34 +105,24 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = '', theme 
               </ul>
             )}
           </div>
-        ))
-      }
-    </div>
-    <div class="md:flex md:items-center md:justify-between py-6 md:py-8">
-      {
-        socialLinks?.length ? (
-          <ul class="flex mb-4 md:order-1 -ml-2 md:ml-4 md:mb-0 rtl:ml-0 rtl:-mr-2 rtl:md:ml-0 rtl:md:mr-4">
-            {socialLinks.map(({ ariaLabel, href, text, icon }) => (
-              <li>
-                <a
-                  class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
-                  aria-label={ariaLabel}
-                  href={href}
-                >
-                  {icon && <Icon name={icon} class="w-5 h-5" />}
-                  <Fragment set:html={text} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          ''
-        )
-      }
-
-      <div class="text-sm mr-4 dark:text-muted">
-        <Fragment set:html={footNote} />
+        ))}
       </div>
+
     </div>
   </div>
+
+  <!-- Half-cut watermark logo — overflows the footer bottom -->
+  <div
+    class="relative max-w-5xl ml-auto px-4 sm:px-6 select-none pointer-events-none mt-8"
+    aria-hidden="true"
+    style="height: clamp(5rem, 14vw, 9rem); overflow: hidden;"
+  >
+    <img
+      src="/uploads/upbuff-logo-black.svg"
+      alt="upbuff logo"
+      class="absolute bottom-0 right-0 w-auto opacity-[0.07]"
+      style="height: clamp(10rem, 28vw, 18rem); transform: translateY(43%); filter: grayscale(1);"
+    />
+  </div>
+
 </footer>

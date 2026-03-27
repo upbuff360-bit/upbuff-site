@@ -12,14 +12,20 @@ export const headerData = {
         {
           text: 'Overview',
           href: getPermalink('/platform/overview'),
+          icon: 'tabler:layout-dashboard',
+          description: 'How the UpBuff execution layer works',
         },
         {
           text: 'Why UpBuff',
           href: getPermalink('/platform/why-upbuff'),
+          icon: 'tabler:award',
+          description: 'The Clean Core advantage explained',
         },
         {
           text: 'Security & Compliance',
           href: getPermalink('/platform/security-compliance'),
+          icon: 'tabler:shield-check',
+          description: 'Enterprise-grade governance and audit readiness',
         },
       ],
     },
@@ -29,30 +35,44 @@ export const headerData = {
         {
           text: 'ERP-Integrated CRM',
           href: getPermalink('/products/erp-integrated-crm'),
+          icon: 'tabler:users',
+          description: 'Sales, quotations, and customer data in ERP',
         },
         {
           text: 'ERP-Integrated Field Service Management',
           href: getPermalink('/products/erp-integrated-fsm'),
+          icon: 'tabler:tool',
+          description: 'Work orders, assets, and technician workflows',
         },
         {
           text: 'Warehouse & Inventory Management',
           href: getPermalink('/products/erp-integrated-warehouse-inventory'),
+          icon: 'tabler:building-warehouse',
+          description: 'Mobile GRN, transfers, and batch tracking',
         },
         {
           text: 'Sales & Distribution Execution',
           href: getPermalink('/products/erp-integrated-sales-distribution'),
+          icon: 'tabler:truck-delivery',
+          description: 'Van sales, route-to-market, and distributor management',
         },
         {
           text: 'Manufacturing & Shopfloor',
           href: getPermalink('/products/erp-integrated-manufacturing-shopfloor'),
+          icon: 'tabler:settings-cog',
+          description: 'Production updates and shopfloor execution',
         },
         {
           text: 'Enterprise & Partner Portals',
           href: getPermalink('/products/enterprise-partner-portals'),
+          icon: 'tabler:world',
+          description: 'Secure portals for dealers, suppliers, and partners',
         },
         {
           text: 'ERP-Integrated Product Configurator',
           href: getPermalink('/products/erp-integrated-product-configurator'),
+          icon: 'tabler:adjustments-horizontal',
+          description: 'Configure products, pricing, and variants in real time',
         },
       ],
     },
@@ -66,10 +86,14 @@ export const headerData = {
         {
           text: 'Overview',
           href: getPermalink('/integrations/integrations'),
+          icon: 'tabler:plug-connected',
+          description: 'All ERP and platform integrations at a glance',
         },
         {
           text: 'SAP Business One',
           href: getPermalink('/integrations/sap-business-one'),
+          icon: 'tabler:circle-letter-s',
+          description: 'Service Layer, DI API, and Clean Core integration',
         },
       ],
     },
@@ -84,6 +108,7 @@ export const headerData = {
 };
 
 export const footerData = {
+  phone: '+91 98765 43210',
   links: [
     {
       title: 'Products',
@@ -136,5 +161,5 @@ export const footerData = {
     { ariaLabel: 'Facebook',  icon: 'tabler:brand-facebook',  href: 'https://www.facebook.com/upbuff.crm/' },
     { ariaLabel: 'YouTube',   icon: 'tabler:brand-youtube',   href: 'https://www.youtube.com/channel/UCZRjZv8JTKev2fVdFzhPXyw' },
   ],
-  footNote: `&copy; ${new Date().getFullYear()} UpBuff Technologies. All rights reserved.`,
+  footNote: `&copy; ${new Date().getFullYear()} UpBuff Technologies Pvt. Ltd. All Rights Reserved. Various trademarks held by their respective owners.`,
 };

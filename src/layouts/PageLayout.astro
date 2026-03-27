@@ -29,18 +29,19 @@ const headerActions = (headerData.actions ?? []) as CallToAction[];
     <slot name="head" />
   </Fragment>
 
-  <slot name="announcement">
-    <Announcement />
-  </slot>
+  <slot name="announcement" />
 
-  <!-- Common header — no Login button, theme controlled via prop -->
+  <!-- Common header — Announcement + nav bar together, both sticky -->
   <slot name="header">
-    <Header
-      links={headerData.links}
-      actions={headerActions}
-      theme={headerTheme}
-      isSticky
-    />
+    <div class="sticky top-0 z-40">
+      <Announcement />
+      <Header
+        links={headerData.links}
+        actions={headerActions}
+        theme={headerTheme}
+        isSticky={false}
+      />
+    </div>
   </slot>
 
   <main>

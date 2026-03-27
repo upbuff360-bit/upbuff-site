@@ -14,6 +14,7 @@ interface Link {
   href?: string;
   ariaLabel?: string;
   icon?: string;
+  description?: string;
 }
 
 interface MenuLink extends Link {
@@ -93,7 +94,7 @@ const dropdownItemHoverClass =
 <header
   class:list={[
     { sticky: isSticky, relative: !isSticky, dark: forceDark },
-    'top-0 z-40 flex-none mx-auto w-full border-b border-gray-50/0 transition-[opacity] ease-in-out',
+    'top-0 z-40 flex-none mx-auto w-full border-t border-b border-gray-50/0 border-t-[rgb(48,48,48)] transition-[opacity] ease-in-out',
     headerBgClass,
   ]}
   {...isSticky ? { 'data-aw-sticky-header': true } : {}}
@@ -136,25 +137,52 @@ const dropdownItemHoverClass =
                     {text}{' '}
                     <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
                   </button>
-                  <ul class:list={[
-                    'dropdown-menu md:backdrop-blur-md rounded md:absolute pl-4 md:pl-0 md:hidden font-medium md:min-w-[180px] drop-shadow-xl',
-                    dropdownBgClass,
-                  ]}>
-                    {links.map(({ text: text2, href: href2 }) => (
-                      <li>
-                        <a
-                          class:list={[
-                            'first:rounded-t last:rounded-b py-1.5 px-4 block whitespace-no-wrap text-[0.8125rem]',
-                            dropdownItemHoverClass,
-                            { 'aw-link-active': href2 === currentPath },
-                          ]}
-                          href={href2}
-                        >
-                          {text2}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                  <div class:list={[
+                    'dropdown-menu md:backdrop-blur-md rounded-2xl md:absolute pl-4 md:pl-0 md:hidden border dropdown-animate',
+                    isBlackTheme ? 'md:bg-[#111] border-white/10' : 'md:bg-white border-gray-300',
+                  ]}
+                    style={`min-width: ${links.length > 4 ? '640px' : '400px'}; left: 50%; transform: translateX(-50%);`}
+                  >
+                    <ul class:list={[
+                      'p-3 grid gap-0.5',
+                      links.length > 4 ? 'grid-cols-2' : 'grid-cols-1',
+                    ]}>
+                      {links.map(({ text: text2, href: href2, icon: icon2, description: desc2 }) => (
+                        <li>
+                          <a
+                            href={href2}
+                            class:list={[
+                              'flex items-start gap-3 px-3 py-2 rounded-xl transition-colors duration-150',
+                              isBlackTheme
+                                ? 'hover:bg-white/10 text-white'
+                                : 'hover:bg-gray-50 text-gray-900',
+                              { 'aw-link-active': href2 === currentPath },
+                            ]}
+                          >
+                            {icon2 && (
+                              <span class:list={[
+                                'w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5',
+                                isBlackTheme ? 'bg-white/10' : 'bg-gray-100',
+                              ]}>
+                                <Icon name={icon2} class="w-3.5 h-3.5" />
+                              </span>
+                            )}
+                            <span class="flex flex-col gap-0.5 min-w-0">
+                              <span class="text-[0.75rem] font-semibold leading-snug">{text2}</span>
+                              {desc2 && (
+                                <span class:list={[
+                                  'text-[0.65rem] font-normal leading-snug',
+                                  isBlackTheme ? 'text-white/50' : 'text-gray-400',
+                                ]}>
+                                  {desc2}
+                                </span>
+                              )}
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </>
               ) : (
                 <a
@@ -208,3 +236,23 @@ const dropdownItemHoverClass =
     </div>
   </div>
 </header>
+
+<style>
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-10px) scaleY(0.95);
+      transform-origin: top center;
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scaleY(1);
+      transform-origin: top center;
+    }
+  }
+
+  .dropdown-animate {
+    animation: dropdown-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: top center;
+  }
+</style>
