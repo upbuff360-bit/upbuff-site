@@ -41,7 +41,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <!-- ── Core meta ──────────────────────────────────────── -->
     <meta name="author"   content="UpBuff Technologies" />
@@ -199,18 +199,6 @@ const metadata = {
     })} />
   </Fragment>
 
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      actions={[
-        { variant: 'secondary', text: 'Login', href: '#' },
-        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
-      ]}
-      isSticky
-    />
-  </Fragment>
-
   <!-- ══════════════════════════════════════════════════════════
        1. HERO
        ══════════════════════════════════════════════════════════ -->
@@ -221,7 +209,7 @@ const metadata = {
       { text: 'Explore Generative AI ERP Reporting', href: '/contact', icon: 'tabler:brain' },
     ]}
     image={{
-      src: '/uploads/UpBuff-ERP-Extension-Process.png',
+      src: '/uploads/SAP-ready-architecture.png',
       alt: 'SAP Business One Integration & Generative AI Execution Platform — UpBuff',
     }}
   >
@@ -245,7 +233,7 @@ const metadata = {
   <!-- ══════════════════════════════════════════════════════════
        2. LOGO BAR
        ══════════════════════════════════════════════════════════ -->
-  <LogoBar
+  <!-- <LogoBar
     label="Trusted by SAP Business One enterprises in manufacturing, distribution, and field service"
     logos={[
       { src: '/uploads/logo/sap-integration-with-upbuff-crm.png',     alt: 'SAP Business One' },
@@ -255,7 +243,7 @@ const metadata = {
       { src: '/uploads/ncc-streetscape-logo.svg',                     alt: 'NCC Streetscape' },
       { src: '/uploads/roofsol-logo.svg',                             alt: 'Roofsol' },
       { src: '/uploads/the-wine-source-logo.svg',                     alt: 'The Wine Source' },
-    ]}
+    ]} -->
   />
 
   <!-- ══════════════════════════════════════════════════════════
@@ -601,12 +589,7 @@ const metadata = {
       href: '/contact',
       variant: 'primary',
     }}
-    secondaryAction={{
-      text: 'Explore Generative AI ERP Reporting',
-      href: '/contact',
-      icon: 'tabler:brain',
-    }}
-    note="No ERP core modifications required · Service Layer API-first · Upgrade-safe"
+    note="No ERP core modifications required &middot; Service Layer API-first &middot; Upgrade-safe"
   />
 
 </Layout>

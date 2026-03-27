@@ -13,7 +13,7 @@ const metadata = {
   title: 'About UpBuff | Clean Core ERP Execution & Generative AI Platform',
   description:
     'UpBuff was built on one conviction: enterprise ERP should never need to be modified to support execution. Learn our story, mission, and the principles behind every product decision.',
-  canonical: 'https://www.upbuff.com/about/',
+  canonical: 'https://www.upbuff.com/platform/overview/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
@@ -94,18 +94,6 @@ const leaderItems = leaders.map((p) => {
   </Fragment>
 
   <Fragment slot="announcement" />
-
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="black"
-      actions={[
-        { variant: 'secondary', text: 'Login',        href: '#' },
-        { variant: 'primary',   text: 'Get in Touch', href: '/contact' },
-      ]}
-      isSticky
-    />
-  </Fragment>
 
   <!-- ══════════════════════════════════════════════════════════
        1. HERO — dark, centered story headline + team photo

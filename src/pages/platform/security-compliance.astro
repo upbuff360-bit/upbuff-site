@@ -21,7 +21,7 @@ const metadata = {
   title: 'Security & Compliance | UpBuff ERP Execution Platform',
   description:
     'Enterprise-grade encryption, role-based access control, audit traceability, and Clean Core ERP security built into every layer of the UpBuff platform.',
-  canonical: 'https://www.upbuff.com/security-compliance/',
+  canonical: 'https://www.upbuff.com/platform/security-compliance/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
@@ -38,7 +38,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <meta name="author" content="UpBuff Technologies" />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -54,19 +54,6 @@ const metadata = {
   </Fragment>
 
   <Fragment slot="announcement" />
-
-  <!-- White header — matches white hero theme -->
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      actions={[
-        { variant: 'secondary', text: 'Login',        href: '#' },
-        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
-      ]}
-      isSticky
-    />
-  </Fragment>
 
   <!-- ══════════════════════════════════════════════════════════
        1. HERO — HeroPanels white theme

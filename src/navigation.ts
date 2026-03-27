@@ -1,4 +1,4 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -11,15 +11,15 @@ export const headerData = {
       links: [
         {
           text: 'Overview',
-          href: getPermalink('/homes/overview'),
+          href: getPermalink('/platform/overview'),
         },
         {
           text: 'Why UpBuff',
-          href: getPermalink('/homes/why-upbuff'),
+          href: getPermalink('/platform/why-upbuff'),
         },
         {
           text: 'Security & Compliance',
-          href: getPermalink('/homes/security-compliance'),
+          href: getPermalink('/platform/security-compliance'),
         },
       ],
     },
@@ -28,59 +28,50 @@ export const headerData = {
       links: [
         {
           text: 'ERP-Integrated CRM',
-          href: getPermalink('/homes/erp-integrated-crm'),
+          href: getPermalink('/products/erp-integrated-crm'),
         },
         {
           text: 'ERP-Integrated Field Service Management',
-          href: getPermalink('/homes/erp-integrated-fsm'),
+          href: getPermalink('/products/erp-integrated-fsm'),
         },
         {
           text: 'Warehouse & Inventory Management',
-          href: getPermalink('/homes/erp-integrated-warehouse-inventory'),
+          href: getPermalink('/products/erp-integrated-warehouse-inventory'),
         },
         {
           text: 'Sales & Distribution Execution',
-          href: getPermalink('/homes/erp-integrated-sales-distribution'),
+          href: getPermalink('/products/erp-integrated-sales-distribution'),
         },
         {
           text: 'Manufacturing & Shopfloor',
-          href: getPermalink('/homes/erp-integrated-manufacturing-shopfloor'),
+          href: getPermalink('/products/erp-integrated-manufacturing-shopfloor'),
         },
         {
           text: 'Enterprise & Partner Portals',
-          href: getPermalink('/homes/enterprise-partner-portals'),
+          href: getPermalink('/products/enterprise-partner-portals'),
         },
         {
           text: 'ERP-Integrated Product Configurator',
-          href: getPermalink('/homes/erp-integrated-product-configurator'),
+          href: getPermalink('/products/erp-integrated-product-configurator'),
         },
       ],
     },
     {
       text: 'By Industry',
-      links: [
-        {
-          text: 'Industry Solutions Overview',
-          href: getPermalink('/homes/solutions'),
-        },
-      ],
+      href: getPermalink('/industry/industry-solutions'),
     },
     {
       text: 'Integrations',
       links: [
         {
           text: 'Overview',
-          href: getPermalink('/homes/integrations'),
+          href: getPermalink('/integrations/integrations'),
         },
         {
           text: 'SAP Business One',
-          href: getPermalink('/homes/sap-business-one'),
+          href: getPermalink('/integrations/sap-business-one'),
         },
       ],
-    },
-    {
-      text: 'Blog',
-      href: getBlogPermalink(),
     },
     {
       text: 'About',
@@ -88,7 +79,7 @@ export const headerData = {
     },
   ],
   actions: [
-    { text: 'Request Demo', href: getPermalink('/homes/request-demo') },
+    { text: 'Request Demo', href: getPermalink('/request-demo'), variant: 'primary' },
   ],
 };
 
@@ -97,52 +88,53 @@ export const footerData = {
     {
       title: 'Products',
       links: [
-        { text: 'ERP-Integrated CRM',                 href: getPermalink('/homes/erp-integrated-crm') },
-        { text: 'Field Service Management',            href: getPermalink('/homes/erp-integrated-fsm') },
-        { text: 'Warehouse & Inventory',               href: getPermalink('/homes/erp-integrated-warehouse-inventory') },
-        { text: 'Sales & Distribution',                href: getPermalink('/homes/erp-integrated-sales-distribution') },
-        { text: 'Manufacturing & Shopfloor',           href: getPermalink('/homes/erp-integrated-manufacturing-shopfloor') },
-        { text: 'Enterprise & Partner Portals',        href: getPermalink('/homes/enterprise-partner-portals') },
-        { text: 'ERP-Integrated Product Configurator', href: getPermalink('/homes/erp-integrated-product-configurator') },
+        { text: 'ERP-Integrated CRM',                 href: getPermalink('/products/erp-integrated-crm') },
+        { text: 'Field Service Management',            href: getPermalink('/products/erp-integrated-fsm') },
+        { text: 'Warehouse & Inventory',               href: getPermalink('/products/erp-integrated-warehouse-inventory') },
+        { text: 'Sales & Distribution',                href: getPermalink('/products/erp-integrated-sales-distribution') },
+        { text: 'Manufacturing & Shopfloor',           href: getPermalink('/products/erp-integrated-manufacturing-shopfloor') },
+        { text: 'Enterprise & Partner Portals',        href: getPermalink('/products/enterprise-partner-portals') },
+        { text: 'ERP-Integrated Product Configurator', href: getPermalink('/products/erp-integrated-product-configurator') },
       ],
     },
     {
       title: 'Platform',
       links: [
-        { text: 'Overview',              href: getPermalink('/homes/overview') },
-        { text: 'Why UpBuff',            href: getPermalink('/homes/why-upbuff') },
-        { text: 'Integrations',          href: getPermalink('/homes/integrations') },
-        { text: 'SAP Business One',      href: getPermalink('/homes/sap-business-one') },
-        { text: 'Security & Compliance', href: getPermalink('/homes/security-compliance') },
+        { text: 'Overview',              href: getPermalink('/platform/overview') },
+        { text: 'Why UpBuff',            href: getPermalink('/platform/why-upbuff') },
+        { text: 'Security & Compliance', href: getPermalink('/platform/security-compliance') },
+        { text: 'Integrations',          href: getPermalink('/integrations/integrations') },
+        { text: 'SAP Business One',      href: getPermalink('/integrations/sap-business-one') },
+        { text: 'By Industry',           href: getPermalink('/industry/industry-solutions') },
       ],
     },
     {
       title: 'Company',
       links: [
         { text: 'About',        href: getPermalink('/about') },
-        { text: 'Blog',         href: getBlogPermalink() },
         { text: 'Contact',      href: getPermalink('/contact') },
-        { text: 'Request Demo', href: getPermalink('/homes/request-demo') },
+        { text: 'Request Demo', href: getPermalink('/request-demo') },
       ],
     },
     {
       title: 'Legal',
       links: [
-        { text: 'Privacy Policy',   href: getPermalink('/privacy') },
-        { text: 'Terms of Service', href: getPermalink('/terms') },
+        { text: 'Privacy Policy',   href: getPermalink('/legal/privacy') },
+        { text: 'Terms of Service', href: getPermalink('/legal/terms') },
+        { text: 'Data Protection',  href: getPermalink('/legal/data-protection') },
       ],
     },
   ],
   secondaryLinks: [
-    { text: 'Terms',          href: getPermalink('/terms') },
-    { text: 'Privacy Policy', href: getPermalink('/privacy') },
+    { text: 'Terms',          href: getPermalink('/legal/terms') },
+    { text: 'Privacy Policy', href: getPermalink('/legal/privacy') },
   ],
   socialLinks: [
-    { ariaLabel: 'LinkedIn',  icon: 'tabler:brand-linkedin',  href: 'https://www.linkedin.com/company/upbuff' },
-    { ariaLabel: 'X',         icon: 'tabler:brand-x',         href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'Facebook',  icon: 'tabler:brand-facebook',  href: '#' },
-    { ariaLabel: 'RSS',       icon: 'tabler:rss',             href: getAsset('/rss.xml') },
+    { ariaLabel: 'LinkedIn',  icon: 'tabler:brand-linkedin',  href: 'https://www.linkedin.com/company/upbuff/' },
+    { ariaLabel: 'X',         icon: 'tabler:brand-x',         href: 'https://x.com/upbuff_crm' },
+    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/upbuff.crm/' },
+    { ariaLabel: 'Facebook',  icon: 'tabler:brand-facebook',  href: 'https://www.facebook.com/upbuff.crm/' },
+    { ariaLabel: 'YouTube',   icon: 'tabler:brand-youtube',   href: 'https://www.youtube.com/channel/UCZRjZv8JTKev2fVdFzhPXyw' },
   ],
   footNote: `&copy; ${new Date().getFullYear()} UpBuff Technologies. All rights reserved.`,
 };

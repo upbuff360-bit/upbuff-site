@@ -44,7 +44,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <!-- Structured Data -->
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -87,13 +87,13 @@ const metadata = {
       "description": "UpBuff offers 7 ERP-integrated products that extend SAP, Oracle, and Epicor into frontline enterprise operations without modifying ERP core.",
       "numberOfItems": 7,
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ERP-Integrated CRM",                         "url": "https://www.upbuff.com/homes/erp-integrated-crm",                          "description": "Synchronize sales opportunities, quotations, pricing, credit limits, and customer master data directly with SAP and enterprise ERP systems." },
-        { "@type": "ListItem", "position": 2, "name": "ERP-Integrated Field Service Management",    "url": "https://www.upbuff.com/homes/erp-integrated-fsm",                          "description": "Manage work orders, assets, warranties, and technician workflows with mobile execution connected to ERP financial and service modules." },
-        { "@type": "ListItem", "position": 3, "name": "Warehouse & Inventory Management",           "url": "https://www.upbuff.com/homes/erp-integrated-warehouse-inventory",          "description": "Mobile inventory audits, goods receipt, inter-warehouse transfers, and batch tracking with real-time ERP synchronization." },
-        { "@type": "ListItem", "position": 4, "name": "Sales & Distribution Execution",             "url": "https://www.upbuff.com/homes/erp-integrated-sales-distribution",           "description": "Route-to-market with ERP-integrated order booking, van sales POS, distributor management, and secondary sales visibility." },
-        { "@type": "ListItem", "position": 5, "name": "Manufacturing & Shopfloor",                  "url": "https://www.upbuff.com/homes/erp-integrated-manufacturing-shopfloor",      "description": "Production updates, maintenance records, and operational data at the shopfloor while preserving ERP as the financial backbone." },
-        { "@type": "ListItem", "position": 6, "name": "Enterprise & Partner Portals",               "url": "https://www.upbuff.com/homes/enterprise-partner-portals",                  "description": "Secure digital portals for suppliers, dealers, and partners connected directly to ERP master data and transactional workflows." },
-        { "@type": "ListItem", "position": 7, "name": "ERP-Integrated Product Configurator",        "url": "https://www.upbuff.com/homes/erp-integrated-product-configurator",         "description": "Configure products, pricing, and variants in real time with seamless ERP and SAP integration." }
+        { "@type": "ListItem", "position": 1, "name": "ERP-Integrated CRM",                         "url": "https://www.upbuff.com/products/erp-integrated-crm",                          "description": "Synchronize sales opportunities, quotations, pricing, credit limits, and customer master data directly with SAP and enterprise ERP systems." },
+        { "@type": "ListItem", "position": 2, "name": "ERP-Integrated Field Service Management",    "url": "https://www.upbuff.com/products/erp-integrated-fsm",                          "description": "Manage work orders, assets, warranties, and technician workflows with mobile execution connected to ERP financial and service modules." },
+        { "@type": "ListItem", "position": 3, "name": "Warehouse & Inventory Management",           "url": "https://www.upbuff.com/products/erp-integrated-warehouse-inventory",          "description": "Mobile inventory audits, goods receipt, inter-warehouse transfers, and batch tracking with real-time ERP synchronization." },
+        { "@type": "ListItem", "position": 4, "name": "Sales & Distribution Execution",             "url": "https://www.upbuff.com/products/erp-integrated-sales-distribution",           "description": "Route-to-market with ERP-integrated order booking, van sales POS, distributor management, and secondary sales visibility." },
+        { "@type": "ListItem", "position": 5, "name": "Manufacturing & Shopfloor",                  "url": "https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor",      "description": "Production updates, maintenance records, and operational data at the shopfloor while preserving ERP as the financial backbone." },
+        { "@type": "ListItem", "position": 6, "name": "Enterprise & Partner Portals",               "url": "https://www.upbuff.com/products/enterprise-partner-portals",                  "description": "Secure digital portals for suppliers, dealers, and partners connected directly to ERP master data and transactional workflows." },
+        { "@type": "ListItem", "position": 7, "name": "ERP-Integrated Product Configurator",        "url": "https://www.upbuff.com/products/erp-integrated-product-configurator",         "description": "Configure products, pricing, and variants in real time with seamless ERP and SAP integration." }
       ]
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -110,19 +110,6 @@ const metadata = {
 
   <!-- Hide announcement bar on home page -->
   <Fragment slot="announcement" />
-
-  <!-- White header -->
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      actions={[
-        { variant: 'secondary', text: 'Login',  href: '#' },
-        { variant: 'primary',   text: 'Sign Up', href: '#' },
-      ]}
-      isSticky
-    />
-  </Fragment>
 
   <!-- ══════════════════════════════════════════════════════════
        1. HERO — white, product-led, full-width
@@ -181,7 +168,7 @@ const metadata = {
       {
         wide: true,
         title: 'ERP-Integrated CRM',
-        href: '/homes/erp-integrated-crm',
+        href: '/products/erp-integrated-crm',
         description: 'Synchronize sales opportunities, quotations, pricing, credit limits, and customer master data directly with SAP and enterprise ERP systems. Eliminate duplicate entry, improve sales visibility, and enable field reps to create ERP-governed orders from mobile devices — online or offline.',
         image: '<img src="/uploads/modular-crm-software-for-small-and-mid-sized-businesses.png" class="w-full h-full object-contain p-2" alt="ERP-Integrated CRM for SAP Business One and enterprise ERP" loading="lazy" />',
         // h-full object-cover 
@@ -189,39 +176,39 @@ const metadata = {
       {
         wide: true,
         title: 'ERP-Integrated Field Service Management',
-        href: '/homes/erp-integrated-fsm',
+        href: '/products/erp-integrated-fsm',
         description: 'Manage work orders, assets, warranties, and technician workflows with mobile execution connected to ERP financial and service modules. Real-time work order dispatch, offline job capture, spare parts tracking, and automated SAP updates — without modifying ERP core.',
         image: '<img src="/uploads/ERP-Integrated-Field-Service-Management.png" class="w-full h-full object-contain p-2"  alt="ERP-Integrated Field Service Management for SAP" loading="lazy" />',
       },
       {
         title: 'Warehouse & Inventory',
-        href: '/homes/erp-integrated-warehouse-inventory',
+        href: '/products/erp-integrated-warehouse-inventory',
         description: 'Mobile inventory audits, goods receipt, inter-warehouse transfers, and batch tracking with real-time ERP synchronization.',
         image: '<img src="/uploads/SAP-Integrated-Warehouse-Inventory-Management.png" class = "w-full h-full object-contain p-2" alt="SAP Integrated Warehouse Inventory Management" loading="lazy" />',
       },
       {
         title: 'Sales & Distribution Execution',
-        href: '/homes/erp-integrated-sales-distribution',
+        href: '/products/erp-integrated-sales-distribution',
         description: 'Route-to-market with ERP-integrated order booking, van sales POS, distributor management, and secondary sales visibility.',
         image: '<img src="/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png" class = "w-full h-full object-contain p-2" alt="SAP Businessone Integrated Sales Distribution excecution" loading="lazy" />',
       },
       {
         title: 'Manufacturing & Shopfloor',
-        href: '/homes/erp-integrated-manufacturing-shopfloor',
+        href: '/products/erp-integrated-manufacturing-shopfloor',
         description: 'Production updates, maintenance records, and operational data at the shopfloor while preserving ERP as the financial backbone.',
         image: '<img src="/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png" class = "w-full h-full object-contain p-2" alt="Epicore Integrated Manufacturing Shopfloor" loading="lazy" />',
       },
       {
         wide: true,
         title: 'Enterprise & Partner Portals',
-        href: '/homes/enterprise-partner-portals',
+        href: '/products/enterprise-partner-portals',
         description: 'Secure digital portals for suppliers, dealers, and partners — connected directly to ERP master data and transactional workflows.',
         image: '<img src="/uploads/Oracle-integrated-Enterprise-Partner-Portals.png" class="w-full h-full object-contain p-2"  alt="ERP-Integrated Field Service Management for SAP" loading="lazy" />',
       },
       {
   wide: true,
   title: 'ERP-Integrated Product Configurator',
-  href: '/homes/erp-integrated-product-configurator',
+  href: '/products/erp-integrated-product-configurator',
   description: 'Configure products, pricing, and variants in real time with seamless ERP and SAP integration.',
   image: '<img src="/uploads/ERP-integrated-product-configurator.png" class="w-full h-full object-contain p-2" alt="ERP Integrated Product Configurator for SAP and enterprise ERP systems" loading="lazy" />',
 }

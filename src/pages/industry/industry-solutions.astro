@@ -22,7 +22,7 @@ const metadata = {
   title: 'ERP Execution Solutions by Industry | SAP Clean Core Extension Platform | UpBuff',
   description:
     'Industry-based ERP execution solutions for SAP S/4HANA, ECC, and Business One. Extend manufacturing, warehouse, field service, and sales operations without modifying your SAP core.',
-  canonical: 'https://www.upbuff.com/solutions/',
+  canonical: 'https://www.upbuff.com/industry/industry-solutions/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
@@ -40,7 +40,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <meta name="author" content="UpBuff Technologies" />
 
@@ -115,18 +115,6 @@ const metadata = {
         }
       ]
     })} />
-  </Fragment>
-
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      actions={[
-        { variant: 'secondary', text: 'Login', href: '#' },
-        { variant: 'primary',   text: 'Request Demo', href: '/contact' },
-      ]}
-      isSticky
-    />
   </Fragment>
 
   <!-- ══════════════════════════════════════════════════════════

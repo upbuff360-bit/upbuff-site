@@ -1,0 +1,326 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'Terms of Service | UpBuff Technologies',
+  description:
+    'Read the UpBuff Technologies Terms of Service. Understand your rights and obligations when using the UpBuff ERP Execution Platform and related services.',
+  canonical: 'https://www.upbuff.com/terms/',
+  robots: { index: true, follow: true },
+};
+
+const lastUpdated = '01 April 2026';
+---
+
+<Layout metadata={metadata}>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'secondary', text: 'Login',        href: '#' },
+        { variant: 'primary',   text: 'Get in Touch', href: '/contact' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ── Page hero ─────────────────────────────────────────── -->
+  <section class="bg-gray-50 border-b border-gray-200 not-prose">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-5">
+        <span class="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
+        <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Legal</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4">
+        Terms of Service
+      </h1>
+      <p class="text-gray-500 text-base mb-3">Last updated: <time datetime="2023-08-27">{lastUpdated}</time></p>
+    </div>
+  </section>
+
+  <!-- ── Terms body ────────────────────────────────────────── -->
+  <section class="not-prose bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+
+      <!-- Section 1: Definitions -->
+      <div class="mb-10">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 1</h2>
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Definitions</h3>
+
+        <div class="space-y-4">
+          <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+            <p class="font-semibold text-gray-900 text-sm mb-1">1.1 &ldquo;UpBuff&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;</p>
+            <p class="text-gray-500 text-sm leading-relaxed">Shall mean UpBuff Technologies Pvt. Ltd., 5th Floor, CDAC, Technopark, Thiruvananthapuram, Kerala, India &ndash; 695582.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+            <p class="font-semibold text-gray-900 text-sm mb-1">1.2 &ldquo;You&rdquo;, &ldquo;your&rdquo;, or &ldquo;Customer&rdquo;</p>
+            <p class="text-gray-500 text-sm leading-relaxed">Shall mean an individual or legal entity who is signing up for any kind of Services from us, irrespective of the nature or duration of the Services. Customer details, including the name of the contracting entity and the authorised representative, are as provided in the accompanying Order Form.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+            <p class="font-semibold text-gray-900 text-sm mb-1">1.3 &ldquo;Affiliate&rdquo;</p>
+            <p class="text-gray-500 text-sm leading-relaxed">Means, with respect to any party, any other person who holds or in which such party holds 50% or more of the paid-up share capital, directly or indirectly, or is controlling, controlled by, or under common control with such party. &ldquo;Control&rdquo; means the ownership or possession, directly or indirectly, of more than one half of the voting power of an enterprise, or the power to direct or cause the direction of the management of that person through ownership of voting securities or otherwise.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-gray-100 mb-10" />
+
+      <!-- Section 2: Scope of Services -->
+      <div class="mb-10">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 2</h2>
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Scope of services</h3>
+
+        <h4 class="text-base font-bold text-gray-900 mb-3">2.1 Subscription Services</h4>
+        <div class="space-y-4 mb-8">
+          <div class="flex gap-3">
+            <span class="text-indigo-400 font-mono text-xs font-bold mt-1 shrink-0">2.1.1</span>
+            <p class="text-gray-500 text-base leading-relaxed">During the Subscription Term, we will grant the Customer a non-transferable, non-exclusive, worldwide right to permit authorised Users to access and use the UpBuff Platform for internal business operations in accordance with these Terms of Service, the relevant Order Form, and all applicable laws and regulations. The Customer shall not use the right granted hereunder for purposes of product evaluation, benchmarking, or other comparative analysis intended for publication.</p>
+          </div>
+          <div class="flex gap-3">
+            <span class="text-indigo-400 font-mono text-xs font-bold mt-1 shrink-0">2.1.2</span>
+            <p class="text-gray-500 text-base leading-relaxed">You may, at any time, subscribe to additional features of the Subscription Services — including existing features or new features made available by us from time to time — by executing an additional Order Form.</p>
+          </div>
+          <div class="flex gap-3">
+            <span class="text-indigo-400 font-mono text-xs font-bold mt-1 shrink-0">2.1.3</span>
+            <p class="text-gray-500 text-base leading-relaxed">We may update the Platform from time to time without adversely affecting the Subscription Services. We are under no binding obligation to release new features or updates, and we make no representations as to future features or functionalities, irrespective of any public announcements or comments in this regard.</p>
+          </div>
+          <div class="flex gap-3">
+            <span class="text-indigo-400 font-mono text-xs font-bold mt-1 shrink-0">2.1.4</span>
+            <p class="text-gray-500 text-base leading-relaxed">Subscription Services may not be available during planned downtime or force majeure events. We will make every reasonable effort to maintain uptime, including during planned maintenance windows, and will provide advance notice where possible.</p>
+          </div>
+        </div>
+
+        <h4 class="text-base font-bold text-gray-900 mb-3">2.2 Consulting Services</h4>
+        <p class="text-gray-500 text-base leading-relaxed mb-6">Consulting Services will be provided by us in accordance with the relevant Order Form. Unless otherwise agreed, Consulting Services will be performed remotely and rendered in English.</p>
+
+        <h4 class="text-base font-bold text-gray-900 mb-3">2.3 Third-Party Service Providers</h4>
+        <p class="text-gray-500 text-base leading-relaxed mb-3">We may use third-party service providers — including application service providers such as SAP, Tally, Salesforce, and WhatsApp, and hosting service providers such as DigitalOcean, AWS, and Azure — for rendering any of the Services hereunder without seeking further consent from you. UpBuff will continue to be responsible for such Services.</p>
+        <p class="text-gray-500 text-base leading-relaxed">UpBuff will not, however, be responsible for any third-party service providers engaged by you or any third-party software procured by you, whether with or without our consent, and notwithstanding that the same may be integrated with the Services.</p>
+      </div>
+
+      <hr class="border-gray-100 mb-10" />
+
+      <!-- Section 3: Use of Subscription Services -->
+      <div class="mb-10">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 3</h2>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Use of subscription services</h3>
+
+        <h4 class="text-base font-bold text-gray-900 mb-4">3.1 Acceptable Use</h4>
+        <p class="text-gray-500 text-base leading-relaxed mb-5">You will comply with the Acceptable Use Policy. Specifically, you will <strong class="text-gray-700">not</strong>:</p>
+
+        <div class="rounded-2xl border border-gray-100 overflow-hidden mb-8">
+          {[
+            'Use or launch any automated system — including robots, spiders, or offline readers — that sends more requests to our servers than a human can reasonably produce in the same period using a conventional browser. Violations may result in immediate account suspension or termination.',
+            'Use the Subscription Services in any manner that damages, disables, overburdens, or impairs any of our websites or interferes with any other party\'s use of the Subscription Services.',
+            'Attempt to gain unauthorised access to the Subscription Services.',
+            'Make the Services available to anyone other than authorised Users.',
+            'Sell, resell, rent, or lease the Services unless explicitly permitted in the relevant Order Form.',
+            'Use the Services to store or transmit infringing, libellous, or otherwise unlawful or tortious material, or to store or transmit material in violation of third-party privacy rights.',
+            'Use the Services to store or transmit malicious code.',
+            'Access the Subscription Services other than through the interface provided by us.',
+            'Create derivative works based on the Services or the Software unless explicitly authorised by us.',
+            'Reverse engineer the Services or the Software, or access the Services to build a competitive product or service, or to copy any features, functions, or graphics of the Services.',
+            'Use the Subscription Services for any purpose or in any manner that is unlawful under applicable laws or prohibited under UpBuff Terms.',
+          ].map((item, i) => (
+            <div class="flex gap-4 px-5 py-4 border-b border-gray-100 last:border-b-0">
+              <span class="text-xs font-bold text-indigo-400 font-mono mt-0.5 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+              <p class="text-sm text-gray-500 leading-relaxed">{item}</p>
+            </div>
+          ))}
+        </div>
+
+        <h4 class="text-base font-bold text-gray-900 mb-4">3.2 Service Usage Limitations</h4>
+        <p class="text-gray-500 text-base leading-relaxed">
+          We may share your information with trusted third parties that work with us — including affiliates and subsidiaries — to assist in the operation of the website and services. We do not share Personal Information with unaffiliated third parties for their own purposes. These service providers are authorised to use your information only as necessary to perform services on our behalf or comply with legal requirements, and are required to maintain policies consistent with ours.
+        </p>
+      </div>
+
+      <hr class="border-gray-100 mb-10" />
+
+      <!-- Section 4: User Rights -->
+      <div class="mb-10">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 4</h2>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Your rights over your data</h3>
+        <p class="text-gray-500 text-base leading-relaxed mb-6">
+          You can exercise any of the rights described in this section consistent with applicable law.
+          We may ask you to verify your identity before taking further action on your request.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { title: 'Manage your information', body: 'You can access and update some of your personal information through your account organisation settings. You are responsible for keeping your personal information up to date.' },
+            { title: 'Data access & portability', body: 'In some jurisdictions, applicable law may entitle you to request copies of your personal information in a structured, commonly used, and machine-readable format.' },
+            { title: 'Data deletion', body: 'In certain jurisdictions, you can request that your personal information be deleted. We may retain information for legitimate business interests, legal compliance, or backup system requirements.' },
+          ].map((item) => (
+            <div class="rounded-xl border border-gray-100 bg-gray-50 p-5">
+              <h4 class="font-bold text-gray-900 text-sm mb-2">{item.title}</h4>
+              <p class="text-sm text-gray-500 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <hr class="border-gray-100 mb-10" />
+
+      <!-- Sections 5–13 as clean prose -->
+      <div class="space-y-10">
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 5</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Privacy of children</h3>
+          <p class="text-gray-500 text-base leading-relaxed">
+            We do not knowingly collect any Personal Information from children under the age of 18.
+            If you are under 18, please do not submit any Personal Information through our website or
+            services. We encourage parents and legal guardians to monitor their children&rsquo;s internet
+            usage and help enforce this Policy. If you have reason to believe that a child under 18 has
+            provided Personal Information to us, please contact us immediately.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 6</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Security of personal information</h3>
+          <p class="text-gray-500 text-base leading-relaxed mb-4">
+            We implement industry-standard technical and organisational measures using a variety of
+            security technologies and procedures to protect your data from unauthorised access, use,
+            loss, destruction, or disclosure. When we collect particularly sensitive data — such as
+            geo-location — it is encrypted using industry-standard SSL (Secure Socket Layer).
+          </p>
+          <p class="text-gray-500 text-base leading-relaxed">
+            Your password is your first line of defence once you set up an UpBuff account. We recommend
+            setting a strong, unique password that you never share with anyone and signing out of your
+            account after each session.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 7</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Third-party links</h3>
+          <p class="text-gray-500 text-base leading-relaxed">
+            We may display links to third-party websites or applications on our website for advertising
+            or to provide you with relevant content. We are not responsible for such third-party
+            websites or applications if you choose to access them. If you provide data to such a
+            website or application, please review their own privacy policies — you will no longer be
+            bound by this Policy in doing so.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 8</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Business transfer</h3>
+          <p class="text-gray-500 text-base leading-relaxed">
+            If UpBuff undertakes or is involved in any merger, acquisition, reorganisation, sale of
+            assets, bankruptcy, or insolvency event, we may sell, transfer, or share some or all of our
+            assets — including your information — in connection with such a transaction or in
+            contemplation of such a transaction. In this event, we will notify you before your personal
+            information is transferred and becomes subject to a different privacy policy.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 9</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Disclosure</h3>
+          <p class="text-gray-500 text-base leading-relaxed mb-4">
+            We will disclose any Personal Information we collect, use, or receive if required or
+            permitted by law — such as to comply with a subpoena or similar legal process — and when
+            we believe in good faith that disclosure is necessary to protect our rights, protect your
+            safety or the safety of others, investigate fraud, or respond to a government request.
+          </p>
+          <p class="text-gray-500 text-base leading-relaxed">
+            Where appropriate, we may notify users about legal requests unless prohibited by the legal
+            process itself, by court order, or by applicable law, or if we believe providing notice
+            would be futile or create a risk of harm to an individual or group.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 10</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Data breach</h3>
+          <p class="text-gray-500 text-base leading-relaxed">
+            In the event we become aware that the security of the website has been compromised or
+            users&rsquo; Personal Information has been disclosed to unrelated third parties as a result
+            of external activity — including security attacks or fraud — we reserve the right to take
+            reasonably appropriate measures, including investigation, reporting, and cooperation with
+            law enforcement. We will make reasonable efforts to notify affected individuals if we
+            believe there is a reasonable risk of harm, or if notice is otherwise required by law.
+            Notification may be made by posting a notice on the website, sending you an email, or
+            contacting you by phone.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 11</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Changes to these terms</h3>
+          <p class="text-gray-500 text-base leading-relaxed">
+            We reserve the right to modify these Terms of Service at any time in accordance with
+            applicable law. If we do so, we will post the revised Terms and update the &ldquo;Last
+            Updated&rdquo; date at the top of this page. In case of material changes, we will also
+            provide you with notice by email at least thirty (30) days before the effective date. If
+            you disagree with the revised Terms, you may cancel your account. Your continued access
+            to or use of the UpBuff Platform after the revised Terms become effective constitutes
+            your acceptance of those changes.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <div>
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 12</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Acceptance of these terms</h3>
+          <p class="text-gray-500 text-base leading-relaxed">
+            You acknowledge that you have read these Terms and agree to all their terms and conditions.
+            By using the website or its services you agree to be bound by these Terms. If you do not
+            agree to abide by the terms, you are not authorised to use or access the website and
+            its products.
+          </p>
+        </div>
+
+        <hr class="border-gray-100" />
+
+        <!-- Contact -->
+        <div class="rounded-2xl bg-gray-50 border border-gray-200 p-6 md:p-8">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-indigo-500 mb-2">Section 13</h2>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Contact information</h3>
+          <p class="text-gray-500 text-base leading-relaxed mb-5">
+            For questions or complaints about these Terms of Service or how UpBuff handles your
+            personal information, please reach out to us:
+          </p>
+          <div class="flex flex-col gap-3">
+            <div class="flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <span class="text-gray-700 text-base">
+                UpBuff Technologies Pvt. Ltd., 5th Floor, CDAC, Technopark,
+                Thiruvananthapuram, Kerala, India &ndash; 695582
+              </span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:support@upbuff.com" class="text-indigo-600 hover:underline text-base font-medium">
+                support@upbuff.com
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</Layout>

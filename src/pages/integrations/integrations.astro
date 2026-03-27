@@ -42,7 +42,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <!-- ── Core meta ──────────────────────────────────────── -->
     <meta name="author"   content="UpBuff Technologies" />
@@ -217,18 +217,6 @@ const metadata = {
   </Fragment>
 
   <Fragment slot="announcement" />
-
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      actions={[
-        { variant: 'secondary', text: 'Login',  href: '#' },
-        { variant: 'primary',   text: 'Request Assessment', href: '/contact' },
-      ]}
-      isSticky
-    />
-  </Fragment>
 
   <!-- ══════════════════════════════════════════════════════════
        1. HERO
