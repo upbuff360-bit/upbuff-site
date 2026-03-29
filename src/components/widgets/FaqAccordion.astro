@@ -117,31 +117,43 @@ const widgetId = id ?? `faq-${Math.random().toString(36).slice(2, 7)}`;
 </style>
 
 <script>
-  document.querySelectorAll('.faq-trigger').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      const item   = trigger.closest('.faq-item') as HTMLElement;
-      const answer = item.querySelector('.faq-answer') as HTMLElement;
-      const isOpen = item.hasAttribute('data-open');
+  function initFaqAccordion() {
+    document.querySelectorAll('.faq-trigger').forEach((trigger) => {
+      // Avoid double-binding if already initialized
+      if ((trigger as HTMLElement).dataset.faqBound) return;
+      (trigger as HTMLElement).dataset.faqBound = 'true';
 
-      const list = item.closest('[id$="-list"]');
-      list?.querySelectorAll('.faq-item[data-open]').forEach((openItem) => {
-        if (openItem !== item) {
-          const siblingAnswer = openItem.querySelector('.faq-answer') as HTMLElement;
-          openItem.removeAttribute('data-open');
-          openItem.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
-          siblingAnswer.style.maxHeight = '0';
+      trigger.addEventListener('click', () => {
+        const item   = trigger.closest('.faq-item') as HTMLElement;
+        const answer = item.querySelector('.faq-answer') as HTMLElement;
+        const isOpen = item.hasAttribute('data-open');
+
+        const list = item.closest('[id$="-list"]');
+        list?.querySelectorAll('.faq-item[data-open]').forEach((openItem) => {
+          if (openItem !== item) {
+            const siblingAnswer = openItem.querySelector('.faq-answer') as HTMLElement;
+            openItem.removeAttribute('data-open');
+            openItem.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+            siblingAnswer.style.maxHeight = '0';
+          }
+        });
+
+        if (isOpen) {
+          item.removeAttribute('data-open');
+          trigger.setAttribute('aria-expanded', 'false');
+          answer.style.maxHeight = '0';
+        } else {
+          item.setAttribute('data-open', '');
+          trigger.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
         }
       });
-
-      if (isOpen) {
-        item.removeAttribute('data-open');
-        trigger.setAttribute('aria-expanded', 'false');
-        answer.style.maxHeight = '0';
-      } else {
-        item.setAttribute('data-open', '');
-        trigger.setAttribute('aria-expanded', 'true');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
     });
-  });
+  }
+
+  // Run on initial page load
+  initFaqAccordion();
+
+  // Re-run after every Astro View Transition swap
+  document.addEventListener('astro:after-swap', initFaqAccordion);
 </script>

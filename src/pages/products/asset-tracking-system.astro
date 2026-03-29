@@ -1,0 +1,574 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
+import LogoBar from '~/components/widgets/LogoBar.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
+import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+import { headerData } from '~/navigation';
+
+const metadata = {
+  title: 'Enterprise Asset Tracking System (ATS) | IoT Preventive Maintenance & ERP Integration | UpBuff',
+  description:
+    'UpBuff Asset Tracking System (ATS) delivers real-time asset visibility, IoT-enabled preventive maintenance, barcode/QR/RFID lifecycle management, and audit automation — integrated with SAP Business One, SAP S/4HANA, Oracle, and Epicor. Eliminate ghost assets, reduce downtime, and achieve continuous compliance.',
+  canonical: 'https://www.upbuff.com/products/asset-tracking-system/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/products/asset-tracking-system/',
+    title: 'Enterprise Asset Tracking System | IoT Maintenance & ERP Integration | UpBuff',
+    description: 'Monitor, manage and maximize enterprise assets in real time. IoT preventive maintenance, barcode/QR/RFID tracking, audit automation, and full lifecycle visibility - integrated with SAP, Oracle, and Epicor.',
+    image: 'https://www.upbuff.com/images/asset-tracking-system-og.jpg',
+    locale: 'en_US',
+    site_name: 'UpBuff Technologies',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'Enterprise Asset Tracking System | IoT Maintenance & ERP Integration | UpBuff',
+    description: 'Real-time asset visibility, IoT preventive maintenance, barcode/QR/RFID lifecycle management, and compliance automation — integrated with SAP, Oracle, and Epicor.',
+    image: 'https://www.upbuff.com/images/asset-tracking-system-og.jpg',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+
+    <!-- ══ CORE META ═══════════════════════════════════════════════════════ -->
+    <meta name="author" content="UpBuff Technologies" />
+    <meta name="keywords" content="asset tracking system, enterprise asset management, IoT preventive maintenance, ERP asset tracking, SAP asset management, barcode asset tracking, QR code asset management, RFID asset tracking, asset lifecycle management, fixed asset software, asset audit software, EAM software, asset tracking software India" />
+    <meta name="application-name" content="UpBuff Asset Tracking System" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="article:publisher" content="https://www.linkedin.com/company/upbuff-technologies" />
+
+    <!-- ══ 1. WebPage ════════════════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://www.upbuff.com/products/asset-tracking-system/#webpage",
+      "url": "https://www.upbuff.com/products/asset-tracking-system/",
+      "name": "Enterprise Asset Tracking System | UpBuff ATS",
+      "description": "UpBuff ATS — real-time asset visibility, IoT-enabled preventive maintenance, barcode/QR/RFID lifecycle management, and ERP-integrated compliance automation for enterprise operations.",
+      "inLanguage": "en-US",
+      "datePublished": "2024-01-01",
+      "dateModified": "2026-03-01",
+      "isPartOf": { "@type": "WebSite", "@id": "https://www.upbuff.com/#website", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" },
+      "breadcrumb": { "@id": "https://www.upbuff.com/products/asset-tracking-system/#breadcrumb" },
+      "mainEntity": { "@id": "https://www.upbuff.com/products/asset-tracking-system/#software" },
+      "about": {
+        "@type": "DefinedTerm",
+        "name": "Asset Tracking System",
+        "alternateName": ["ATS", "Enterprise Asset Management", "EAM Software", "Fixed Asset Management Software"],
+        "description": "An Asset Tracking System (ATS) is enterprise software that monitors and manages physical assets throughout their complete lifecycle — from procurement and deployment through maintenance, audit, and disposal — using barcode, QR code, RFID, and IoT sensor technologies to provide real-time visibility, control, and regulatory compliance."
+      },
+      "mentions": [
+        { "@type": "Thing", "name": "SAP Business One", "sameAs": "https://www.sap.com/products/erp/business-one.html" },
+        { "@type": "Thing", "name": "SAP S/4HANA", "sameAs": "https://www.sap.com/products/erp/s4hana.html" },
+        { "@type": "Thing", "name": "Oracle ERP", "sameAs": "https://www.oracle.com/erp/" },
+        { "@type": "Thing", "name": "Epicor ERP", "sameAs": "https://www.epicor.com/" },
+        { "@type": "Thing", "name": "Internet of Things", "sameAs": "https://en.wikipedia.org/wiki/Internet_of_things" },
+        { "@type": "Thing", "name": "RFID", "sameAs": "https://en.wikipedia.org/wiki/Radio-frequency_identification" },
+        { "@type": "Thing", "name": "Preventive Maintenance", "sameAs": "https://en.wikipedia.org/wiki/Preventive_maintenance" },
+        { "@type": "Thing", "name": "Asset Lifecycle Management", "sameAs": "https://en.wikipedia.org/wiki/Asset_management" }
+      ],
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".hero-subtitle", ".faq-answer"] },
+      "potentialAction": { "@type": "ViewAction", "name": "Request a Demo", "target": "https://www.upbuff.com/contact" }
+    })} />
+
+    <!-- ══ 2. SoftwareApplication ══════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "@id": "https://www.upbuff.com/products/asset-tracking-system/#software",
+      "name": "UpBuff Asset Tracking System",
+      "alternateName": ["UpBuff ATS", "UpBuff Enterprise Asset Management"],
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Enterprise Asset Management Software",
+      "operatingSystem": "Web, Android, iOS",
+      "description": "UpBuff Asset Tracking System (ATS) is an enterprise platform for real-time physical asset monitoring, IoT-enabled preventive maintenance, barcode/QR/RFID lifecycle management, audit automation, and ERP-integrated analytics — for manufacturing, logistics, facility, and field operations.",
+      "url": "https://www.upbuff.com/products/asset-tracking-system/",
+      "mainEntityOfPage": "https://www.upbuff.com/products/asset-tracking-system/#webpage",
+      "softwareRequirements": "Compatible with SAP Business One, SAP S/4HANA, SAP ECC, Oracle ERP, Epicor ERP",
+      "featureList": [
+        "Real-time asset location and status tracking",
+        "IoT-enabled predictive and preventive maintenance",
+        "Barcode, QR code, and RFID asset identification",
+        "Configurable multi-step approval workflows for asset transfers",
+        "Dynamic audit checklists with barcode/QR mobile verification",
+        "Geofenced asset inventory within defined site boundaries",
+        "Full asset lifecycle management from procurement to disposal",
+        "Asset depreciation tracking and financial reporting",
+        "10+ customizable analytics and compliance reports",
+        "Cloud-accessible mobile app for Android and iOS",
+        "ERP integration with SAP, Oracle, and Epicor",
+        "Custodian change management and accountability tracking",
+        "Remote asset health monitoring with real-time alerts",
+        "Data-driven procurement and disposal decision support"
+      ],
+      "offers": { "@type": "Offer", "price": "Contact for pricing", "priceCurrency": "INR", "url": "https://www.upbuff.com/contact", "availability": "https://schema.org/InStock" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "reviewCount": "47", "bestRating": "5", "worstRating": "1" },
+      "screenshot": "https://www.upbuff.com/images/asset-tracking-system-og.jpg",
+      "provider": { "@type": "Organization", "@id": "https://www.upbuff.com/#organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" }
+    })} />
+
+    <!-- ══ 3. Organization ═════════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://www.upbuff.com/#organization",
+      "name": "UpBuff Technologies",
+      "alternateName": "UpBuff Technologies Pvt Ltd",
+      "url": "https://www.upbuff.com",
+      "logo": { "@type": "ImageObject", "url": "https://www.upbuff.com/logo.png", "width": 200, "height": 60 },
+      "description": "UpBuff Technologies is an ERP Execution Platform that extends SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor into frontline enterprise operations including asset tracking, field service, warehouse management, and sales execution — without modifying ERP core systems.",
+      "address": [{ "@type": "PostalAddress", "streetAddress": "Swatantra, Ground Floor South Pavilion, Karyavattom", "addressLocality": "Thiruvananthapuram", "addressRegion": "Kerala", "postalCode": "695581", "addressCountry": "IN" }],
+      "contactPoint": { "@type": "ContactPoint", "telephone": "+919819982562", "contactType": "sales", "email": "info@upbuff.com", "availableLanguage": ["English"] },
+      "sameAs": ["https://www.linkedin.com/company/upbuff-technologies"],
+      "knowsAbout": ["Asset Tracking System", "Enterprise Asset Management", "IoT Preventive Maintenance", "ERP Integration", "SAP Business One Integration", "SAP S/4HANA Integration", "Barcode Asset Tracking", "RFID Asset Management", "Fixed Asset Management", "Asset Lifecycle Management"]
+    })} />
+
+    <!-- ══ 4. Service ══════════════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "UpBuff Asset Tracking System Implementation",
+      "serviceType": "Enterprise Software Implementation",
+      "description": "End-to-end Asset Tracking System implementation — IoT sensor integration, barcode infrastructure, ERP connectivity, mobile app deployment, and ongoing support for manufacturing, facilities, fleet, and field operations.",
+      "provider": { "@id": "https://www.upbuff.com/#organization" },
+      "areaServed": [{ "@type": "Country", "name": "India" }, { "@type": "Country", "name": "United Arab Emirates" }, { "@type": "Country", "name": "United States" }],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "UpBuff ATS Modules",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asset Transfer Management with Approval Workflows" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Barcode & QR Code Asset Audit Automation" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "IoT-Enabled Preventive Maintenance" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Asset Lifecycle Management" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Analytics & Compliance Reporting" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cloud-Accessible Mobile App for Android & iOS" } }
+        ]
+      },
+      "url": "https://www.upbuff.com/products/asset-tracking-system/"
+    })} />
+
+    <!-- ══ 5. HowTo ════════════════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Implement an Enterprise Asset Tracking System with UpBuff ATS",
+      "description": "Step-by-step guide to deploying UpBuff ATS — from asset registry setup and IoT sensor integration through ERP connectivity and go-live.",
+      "totalTime": "PT4W",
+      "tool": [
+        { "@type": "HowToTool", "name": "Barcode / QR Code Scanner" },
+        { "@type": "HowToTool", "name": "IoT Health Sensors" },
+        { "@type": "HowToTool", "name": "UpBuff Mobile App (Android / iOS)" }
+      ],
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Asset Registry & Tagging", "text": "Assign unique identifiers to every physical asset using barcode labels, QR codes, or RFID tags. Import your existing asset register into UpBuff ATS and map each asset to its location, custodian, and category." },
+        { "@type": "HowToStep", "position": 2, "name": "IoT Sensor Integration", "text": "Connect IoT health-monitoring sensors to critical assets — machinery, generators, HVAC, and fleet vehicles. Configure threshold alerts for temperature, vibration, runtime hours, and other health parameters." },
+        { "@type": "HowToStep", "position": 3, "name": "ERP Integration", "text": "Connect UpBuff ATS to your ERP — SAP Business One (Service Layer), SAP S/4HANA (OData/RFC), Oracle, or Epicor — for real-time asset valuation, depreciation sync, and maintenance order generation." },
+        { "@type": "HowToStep", "position": 4, "name": "Approval Workflow Configuration", "text": "Define and configure asset transfer approval chains per organizational hierarchy, with custodian accountability rules and audit checkpoint requirements for each asset category." },
+        { "@type": "HowToStep", "position": 5, "name": "Mobile App Deployment & Training", "text": "Deploy the UpBuff ATS mobile app to field teams on Android or iOS. Role-based access ensures each user sees only the assets and actions relevant to their responsibilities." },
+        { "@type": "HowToStep", "position": 6, "name": "Go-Live & Continuous Monitoring", "text": "Activate real-time dashboards, compliance reports, and IoT maintenance alerts. Monitor asset health, audit progress, and transfer workflows — with automated depreciation reports syncing to your ERP finance modules." }
+      ]
+    })} />
+
+    <!-- ══ 6. ItemList ═════════════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "UpBuff Asset Tracking System Core Modules",
+      "description": "The six core modules of the UpBuff Asset Tracking System for enterprise physical asset management.",
+      "numberOfItems": 6,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Asset Transfer Management", "description": "Configurable approval workflows for asset movements between locations and custodians, with a complete compliance audit trail.", "url": "https://www.upbuff.com/products/asset-tracking-system/" },
+        { "@type": "ListItem", "position": 2, "name": "Barcode & QR Code Asset Audit", "description": "Intelligent barcode and QR-enabled audit verification with real-time progress tracking and dynamic checklists per asset type.", "url": "https://www.upbuff.com/products/asset-tracking-system/" },
+        { "@type": "ListItem", "position": 3, "name": "IoT-Enabled Preventive Maintenance", "description": "Sensor-driven asset health monitoring that diagnoses problems and schedules maintenance before failures occur.", "url": "https://www.upbuff.com/products/asset-tracking-system/" },
+        { "@type": "ListItem", "position": 4, "name": "Asset Lifecycle Management", "description": "End-to-end lifecycle tracking from procurement through deployment, operation, maintenance, and disposal.", "url": "https://www.upbuff.com/products/asset-tracking-system/" },
+        { "@type": "ListItem", "position": 5, "name": "Analytics & Customizable Reports", "description": "10+ configurable reports covering utilization, depreciation, maintenance history, and performance with real-time dashboards.", "url": "https://www.upbuff.com/products/asset-tracking-system/" },
+        { "@type": "ListItem", "position": 6, "name": "Cloud-Accessible Mobile App", "description": "Android and iOS app for remote asset monitoring, audit execution, transfer approvals, and real-time maintenance alerts.", "url": "https://www.upbuff.com/products/asset-tracking-system/" }
+      ]
+    })} />
+
+    <!-- ══ 7. BreadcrumbList ═══════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": "https://www.upbuff.com/products/asset-tracking-system/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",     "item": "https://www.upbuff.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://www.upbuff.com/products/" },
+        { "@type": "ListItem", "position": 3, "name": "Asset Tracking System", "item": "https://www.upbuff.com/products/asset-tracking-system/" }
+      ]
+    })} />
+
+    <!-- ══ 8. FAQPage ═════════════════════════════════════════════════════ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is an Enterprise Asset Tracking System?", "acceptedAnswer": { "@type": "Answer", "text": "An Enterprise Asset Tracking System (ATS) is software that monitors and manages the complete lifecycle of physical assets — from acquisition and deployment through maintenance, auditing, and disposal. It uses barcode scanning, QR code technology, RFID tagging, and IoT sensors to provide real-time visibility of asset location, status, condition, and usage across every organizational site and department." } },
+        { "@type": "Question", "name": "What is the difference between an Asset Tracking System and an EAM system?", "acceptedAnswer": { "@type": "Answer", "text": "An Asset Tracking System (ATS) focuses on real-time physical tracking, identification via barcode/QR/RFID, audit automation, and custody management. Enterprise Asset Management (EAM) is broader, covering maintenance management, reliability engineering, and long-term asset strategy. UpBuff ATS bridges both — combining real-time tracking with IoT-driven maintenance and full lifecycle management in one platform." } },
+        { "@type": "Question", "name": "Does UpBuff ATS integrate with SAP?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. UpBuff ATS integrates natively with SAP Business One via Service Layer, SAP S/4HANA via OData and RFC, and SAP ECC via BAPI — enabling real-time asset valuation, depreciation synchronization, and maintenance order generation without any ERP core modification. Oracle ERP and Epicor integrations are also supported via REST and SOAP APIs." } },
+        { "@type": "Question", "name": "What asset identification technologies does UpBuff ATS support?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff ATS supports three asset identification technologies: barcode scanning using handheld scanners or smartphone cameras; QR code scanning for richer data encoding and mobile-friendly verification; and RFID tagging for high-volume, hands-free scanning in warehouses, production floors, and vehicle fleets. All three methods assign a unique persistent identifier to each asset that remains consistent throughout its entire lifecycle." } },
+        { "@type": "Question", "name": "How does IoT-enabled preventive maintenance work in UpBuff ATS?", "acceptedAnswer": { "@type": "Answer", "text": "IoT sensors attached to or embedded in critical assets transmit health data — temperature, vibration, runtime hours, power consumption — to the UpBuff ATS platform. When readings approach predefined risk thresholds, the system automatically diagnoses the potential issue, generates a maintenance work order, and sends alerts to the responsible team — preventing breakdowns before they occur and extending asset lifespan." } },
+        { "@type": "Question", "name": "Can UpBuff ATS handle asset transfers with multi-step approval workflows?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. UpBuff ATS includes fully configurable multi-step approval workflows for asset movements between locations or custodians. Administrators define the authorization hierarchy, escalation rules, and time limits. Every transfer step is recorded in an immutable audit trail, providing documentation required for internal policy compliance and external regulatory audits." } },
+        { "@type": "Question", "name": "How does UpBuff ATS improve asset audit accuracy?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff ATS replaces manual paper-based audits with intelligent barcode and QR code verification using mobile devices. Auditors follow dynamic checklists tailored to each asset type, scan assets to verify presence and condition, and see real-time audit progress on a live dashboard. Geofenced inventory counts ensure assets are verified within defined physical boundaries — delivering dramatically higher accuracy and a complete digital compliance record." } },
+        { "@type": "Question", "name": "What types of physical assets can UpBuff ATS track?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff ATS tracks any category of physical enterprise asset: manufacturing machinery and production equipment; fleet vehicles such as cars, trucks, and vans; office and IT equipment including computers, printers, and scanners; furniture and fixtures; facility infrastructure including HVAC systems, lighting, and security systems; and utility assets such as power generators and transformers. The platform adapts to any industry vertical and asset classification hierarchy." } },
+        { "@type": "Question", "name": "How does asset depreciation tracking work in UpBuff ATS?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff ATS tracks asset value over time using configurable depreciation methods aligned with accounting standards. Depreciation data is synchronized with connected ERP systems — SAP, Oracle, or Epicor — ensuring finance teams have accurate, real-time fixed asset valuations. Automated depreciation reports support financial reporting, tax planning, and capital replacement strategy without manual reconciliation." } },
+        { "@type": "Question", "name": "Is there a mobile app for field and warehouse teams?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The UpBuff ATS mobile app is available on Android and iOS. Teams can scan assets, conduct audits, initiate and approve transfers, raise maintenance requests, view maintenance history, and receive real-time IoT alerts from any location at any time. The app uses role-based access control so each user sees only the assets and actions relevant to their responsibilities." } },
+        { "@type": "Question", "name": "What reports and analytics does UpBuff ATS provide?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff ATS provides 10+ configurable reports and real-time dashboards covering asset utilization and availability rates; depreciation schedules and current valuations; maintenance history and cost per asset; audit completion status and compliance gaps; transfer logs and custodian accountability records; IoT sensor health trends and predictive maintenance insights; and asset procurement and disposal recommendations based on lifecycle data." } },
+        { "@type": "Question", "name": "How long does UpBuff ATS implementation take?", "acceptedAnswer": { "@type": "Answer", "text": "A standard UpBuff ATS implementation typically takes 3 to 6 weeks depending on the size of the asset registry, number of sites, ERP integration complexity, and IoT sensor deployment scope. UpBuff's implementation team manages the full process — from asset tagging and ERP connection through mobile app deployment, team training, and go-live — with dedicated integration engineers for SAP and enterprise ERP connectivity." } }
+      ]
+    })} />
+
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <!-- ══ 1. HERO ════════════════════════════════════════════════════════════ -->
+  <HeroOrbital
+    tagline="Enterprise Asset Tracking System"
+    title="Monitor, Manage and Maximize Every Asset - in Real Time."
+    subtitle="UpBuff ATS gives enterprises complete visibility over physical assets across every location, lifecycle stage, and maintenance cycle. From procurement to disposal - track, audit, maintain, and optimize every asset through one intelligent platform integrated with SAP, Oracle, and Epicor."
+    actions={[
+      { text: 'Request Demo',      href: '/contact', variant: 'primary' },
+      { text: 'Talk to an Expert', href: '/contact', variant: 'secondary' },
+    ]}
+    image={{
+      src: '/uploads/facility-infrastructure-asset-tracking.png',
+      alt: 'UpBuff Asset Tracking System — real-time enterprise asset management with IoT preventive maintenance and barcode/QR/RFID tracking',
+    }}
+  />
+
+  <!-- ══ 2. LOGO BAR ════════════════════════════════════════════════════════ -->
+  <LogoBar
+    label="Trusted by asset-intensive enterprises &amp; ERP partners worldwide"
+    logos={[
+      { src: '/uploads/ideaForge-logo.svg',         alt: 'ideaForge — UpBuff ATS customer' },
+      { src: '/uploads/jnk-chemdist-logo.svg',       alt: 'JNK Chemdist — UpBuff ATS customer' },
+      { src: '/uploads/molygraph-logo.svg',          alt: 'Molygraph — UpBuff ATS customer' },
+      { src: '/uploads/ncc-streetscape-logo.svg',    alt: 'NCC Streetscape — UpBuff ATS customer' },
+      { src: '/uploads/roofsol-logo.svg',            alt: 'Roofsol — UpBuff ATS customer' },
+      { src: '/uploads/the-wine-source-logo.svg',    alt: 'The Wine Source — UpBuff ATS customer' },
+    ]}
+  />
+
+  <!-- ══ 3. PROBLEM ════════════════════════════════════════════════════════ -->
+  <ProblemSplit
+    tagline="The Problem"
+    title="Most enterprises are flying blind on their own assets"
+    subtitle="Spreadsheets, manual registers, and disconnected maintenance logs leave organizations with no reliable picture of where assets are, what condition they're in, or what they're costing the business — until it's too late."
+    items={[
+      {
+        title: 'No real-time asset visibility',
+        description: 'Assets move between departments, sites, and custodians with no live tracking — creating ghost assets, duplicate purchases, and millions in unaccounted equipment value across the organization.',
+      },
+      {
+        title: 'Reactive maintenance drains budgets',
+        description: 'Without predictive signals from IoT sensors, teams respond to breakdowns instead of preventing them — driving unplanned downtime, emergency repair costs, and shortened equipment lifespans.',
+      },
+      {
+        title: 'Manual audits are slow and inaccurate',
+        description: 'Paper-based or spreadsheet audits are time-intensive, error-prone, and impossible to scale — leaving compliance gaps and asset registers full of outdated, inaccurate data that no one trusts.',
+      },
+      {
+        title: 'Lifecycle data is fragmented across teams',
+        description: 'Procurement, finance, maintenance, and operations each maintain separate asset records. Without a unified source of truth, decisions on replacement, retirement, and depreciation are unreliable.',
+      },
+    ]}
+  />
+
+  <!-- ══ 4. FEATURES GRID ══════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="Solution"
+    title="Why Choose UpBuff Asset Tracking System?"
+    subtitle="Every module is purpose-built to give enterprises accurate, real-time control over their asset base — from a single barcode scan to an enterprise-wide IoT maintenance network."
+    items={[
+      {
+        icon: 'tabler:arrows-transfer-up',
+        title: 'Asset Transfer Management',
+        description: 'Track asset movements between locations or custodians in real time. Configurable multi-step approval workflows enforce accountability at every transfer — with an immutable audit trail for internal and regulatory compliance.',
+      },
+      {
+        icon: 'tabler:scan',
+        title: 'Barcode & QR Code Audit',
+        description: 'Replace manual audits with intelligent mobile barcode and QR-enabled verification. Track audit progress in real time, apply dynamic asset-specific checklists, and close compliance gaps faster than any paper-based process.',
+      },
+      {
+        icon: 'tabler:cpu',
+        title: 'IoT-Enabled Preventive Maintenance',
+        description: 'IoT sensors monitor asset health — temperature, vibration, runtime hours — and trigger automated maintenance scheduling before breakdowns occur. Extend asset life and eliminate costly unplanned failures.',
+      },
+      {
+        icon: 'tabler:timeline',
+        title: 'Full Asset Lifecycle Management',
+        description: 'Manage every asset from procurement through deployment, operation, maintenance, and retirement. Unique barcode, QR, or RFID identifiers enable precise tracking and data continuity at every lifecycle stage.',
+      },
+      {
+        icon: 'tabler:chart-bar',
+        title: 'Analytics & Customizable Reports',
+        description: 'Access 10+ configurable reports covering utilization, depreciation, maintenance history, and performance trends. Real-time dashboards surface cost opportunities and compliance status at a glance.',
+      },
+      {
+        icon: 'tabler:device-mobile',
+        title: 'Cloud-Accessible Mobile App',
+        description: 'Manage assets from anywhere with a mobile-first app for Android and iOS. Real-time alerts, remote health monitoring, and instant access to the full asset register — always at your team\'s fingertips.',
+      },
+    ]}
+  />
+
+  <!-- ══ 5. PLATFORM ═══════════════════════════════════════════════════════ -->
+  <FeaturesCarousel
+    tagline="Platform"
+    title="The complete asset intelligence layer<br />for your enterprise"
+    subtitle="UpBuff ATS connects every asset, every location, and every maintenance cycle into a single intelligent platform — eliminating data silos and giving operations the real-time control they need to reduce costs and maintain continuous compliance."
+    items={[
+      {
+        title: 'Real-Time Asset Intelligence',
+        description: 'Every asset has a live digital identity — location, status, custodian, condition, and maintenance history — accessible in real time from any device, across every organizational site and department.',
+        badge: 'Live Tracking',
+        badgeIcon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
+        image: '<style>.at-dash{width:100%;height:100%;background:#f8fafc;display:flex;align-items:center;justify-content:center;padding:14px}.at-card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);width:240px;padding:16px;display:flex;flex-direction:column;gap:10px}.at-header{display:flex;align-items:center;gap:8px}.at-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:atpulse 2s ease-in-out infinite}.at-title{font-size:12px;font-weight:700;color:#0f172a}.at-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:#f8fafc;border-radius:8px;border:0.5px solid #e2e8f0}.at-label{font-size:10px;font-weight:500;color:#475569}.at-badge{font-size:9px;font-weight:600;padding:2px 7px;border-radius:20px}.at-green{background:#dcfce7;color:#15803d}.at-blue{background:#dbeafe;color:#1d4ed8}.at-yellow{background:#fef9c3;color:#a16207}.at-stat{display:flex;justify-content:space-between;margin-top:4px}.at-s{display:flex;flex-direction:column;align-items:center}.at-n{font-size:18px;font-weight:800;color:#0f172a}.at-l{font-size:9px;color:#94a3b8}@keyframes atpulse{0%,100%{opacity:1}50%{opacity:.4}}</style><div class="at-dash"><div class="at-card"><div class="at-header"><div class="at-dot"></div><span class="at-title">Live Asset Registry</span></div><div class="at-row"><span class="at-label">Server Rack A-04</span><span class="at-badge at-green">Active</span></div><div class="at-row"><span class="at-label">Forklift FL-12</span><span class="at-badge at-yellow">Maintenance</span></div><div class="at-row"><span class="at-label">Generator G-02</span><span class="at-badge at-blue">Deployed</span></div><div class="at-stat"><div class="at-s"><span class="at-n">1,284</span><span class="at-l">Total Assets</span></div><div class="at-s"><span class="at-n">98%</span><span class="at-l">Tracked</span></div><div class="at-s"><span class="at-n">3</span><span class="at-l">Alerts</span></div></div></div></div>',
+      },
+      {
+        title: 'IoT-Powered Predictive Maintenance',
+        description: 'Sensor-driven health monitoring detects anomalies before failures occur. Automated maintenance scheduling, remote diagnostics, and real-time threshold alerts keep critical assets running at peak performance and maximum operational lifespan.',
+        badge: 'IoT Enabled',
+        badgeIcon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>',
+        image: '<style>.iot-wrap{width:100%;height:100%;background:#f0fdf4;display:flex;align-items:center;justify-content:center;padding:14px;gap:16px}.iot-device{width:56px;height:88px;border-radius:12px;border:2.5px solid #15803d;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative}.iot-wave{position:absolute;top:-18px;right:-18px;width:36px;height:36px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;animation:iotwave 2s ease-in-out infinite}.iot-inner{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.3)}.iot-bar{width:30px;height:5px;border-radius:3px;background:#dcfce7}.iot-bar2{width:20px;height:5px;border-radius:3px;background:#bbf7d0}.iot-stats{display:flex;flex-direction:column;gap:6px}.iot-row{display:flex;align-items:center;gap:8px;background:#fff;border:0.5px solid #bbf7d0;border-radius:8px;padding:6px 10px}.iot-label{font-size:10px;font-weight:600;color:#15803d;width:60px}.iot-val{font-size:11px;font-weight:700;color:#0f172a}.iot-ok{width:14px;height:14px;border-radius:50%;background:#dcfce7;border:0.5px solid #bbf7d0;display:flex;align-items:center;justify-content:center;animation:iotok 3s ease-in-out infinite}.iot-ok2{animation-delay:.7s}.iot-ok3{animation-delay:1.4s}@keyframes iotwave{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}@keyframes iotok{0%,30%{background:#fef9c3}35%,100%{background:#dcfce7}}</style><div class="iot-wrap"><div class="iot-device"><div class="iot-wave"><div class="iot-inner"></div></div><div class="iot-bar"></div><div class="iot-bar2"></div><div class="iot-bar"></div></div><div class="iot-stats"><div class="iot-row"><span class="iot-label">Vibration</span><span class="iot-val">0.3g</span><div class="iot-ok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="iot-row"><span class="iot-label">Temp</span><span class="iot-val">42&#176;C</span><div class="iot-ok iot-ok2"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="iot-row"><span class="iot-label">Runtime</span><span class="iot-val">4,210h</span><div class="iot-ok iot-ok3"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></div></div>',
+      },
+      {
+        title: 'Audit-Ready Compliance & Reporting',
+        description: 'Dynamic audit checklists, geofenced inventory counts, and real-time progress tracking make regulatory compliance continuous — not a quarterly scramble. Every asset action is logged, time-stamped, and immediately export-ready.',
+        badge: 'Compliance Ready',
+        badgeIcon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 13l2 2 4-4"/></svg>',
+        image: '<style>.aud-wrap{width:100%;height:100%;background:#f8fafc;display:flex;align-items:center;justify-content:center;padding:14px}.aud-card{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,.08);width:220px;padding:16px;display:flex;flex-direction:column;gap:10px}.aud-title{font-size:11px;font-weight:700;color:#0f172a}.aud-prog-wrap{display:flex;flex-direction:column;gap:4px}.aud-prog-label{display:flex;justify-content:space-between}.aud-pl{font-size:9px;color:#64748b}.aud-pv{font-size:9px;font-weight:700;color:#0f172a}.aud-bar{height:6px;border-radius:4px;background:#e2e8f0;overflow:hidden}.aud-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#6366f1,#22c55e);animation:audfill 2s ease-in-out forwards}.aud-check{display:flex;flex-direction:column;gap:5px}.aud-item{display:flex;align-items:center;gap:7px;font-size:10px;color:#334155}.aud-icon{width:14px;height:14px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;flex-shrink:0}@keyframes audfill{from{width:0}to{width:84%}}</style><div class="aud-wrap"><div class="aud-card"><span class="aud-title">Q2 Asset Audit &#8212; In Progress</span><div class="aud-prog-wrap"><div class="aud-prog-label"><span class="aud-pl">Assets verified</span><span class="aud-pv">84%</span></div><div class="aud-bar"><div class="aud-fill"></div></div></div><div class="aud-check"><div class="aud-item"><div class="aud-icon"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Floor A &#8212; 248 assets verified</div><div class="aud-item"><div class="aud-icon"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Warehouse B &#8212; 192 assets verified</div><div class="aud-item"><div class="aud-icon" style="background:#fef9c3"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M4 2v3M4 6.5v.5" stroke="#ca8a04" stroke-width="1.4" stroke-linecap="round"/></svg></div>Site C &#8212; 86 assets pending</div></div></div></div>',
+      },
+      {
+        title: 'Smart Asset Transfer Workflows',
+        description: 'Every asset movement — between sites, departments, or custodians — follows a configurable multi-level approval chain. Requests, approvals, rejections, and timestamps are captured automatically, giving compliance teams a tamper-proof transfer audit trail without any manual paperwork.',
+        badge: 'Configurable Approvals',
+        badgeIcon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
+        image: '<style>.tr-wrap{width:100%;height:100%;background:#f5f3ff;display:flex;align-items:center;justify-content:center;padding:20px}.tr-card{background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(99,102,241,.1);width:230px;padding:16px;display:flex;flex-direction:column;gap:10px}.tr-header{display:flex;align-items:center;justify-content:space-between}.tr-title{font-size:11px;font-weight:700;color:#1e1b4b}.tr-badge{font-size:9px;font-weight:600;padding:2px 8px;border-radius:20px;background:#ede9fe;color:#5b21b6}.tr-step{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;border:0.5px solid #e5e7eb}.tr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.tr-info{display:flex;flex-direction:column}.tr-label{font-size:10px;font-weight:600;color:#374151}.tr-sub{font-size:9px;color:#9ca3af}.tr-line{width:1px;height:14px;background:#e5e7eb;margin-left:3.5px}.tr-ok{width:14px;height:14px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin-left:auto;flex-shrink:0}@keyframes trpulse{0%,100%{opacity:.5}50%{opacity:1}}</style><div class="tr-wrap"><div class="tr-card"><div class="tr-header"><span class="tr-title">Asset Transfer Request</span><span class="tr-badge">Pending</span></div><div class="tr-step"><div class="tr-dot" style="background:#6366f1"></div><div class="tr-info"><span class="tr-label">Initiated by Rahul M.</span><span class="tr-sub">Forklift FL-07 &#8212; Site A to Site C</span></div></div><div class="tr-line"></div><div class="tr-step"><div class="tr-dot" style="background:#22c55e"></div><div class="tr-info"><span class="tr-label">Approved &#8212; Ops Manager</span><span class="tr-sub">10:42 AM, 26 Mar 2026</span></div><div class="tr-ok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="#16a34a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="tr-line"></div><div class="tr-step" style="animation:trpulse 2s ease-in-out infinite"><div class="tr-dot" style="background:#f59e0b"></div><div class="tr-info"><span class="tr-label">Awaiting Finance Sign-off</span><span class="tr-sub">Step 2 of 3</span></div></div></div></div>',
+      },
+      {
+        title: 'Depreciation & Financial Lifecycle Tracking',
+        description: 'Track asset value from acquisition to disposal using configurable depreciation methods synchronized with your ERP. Finance teams access real-time book values, accumulated depreciation, and projected end-of-life figures — supporting IFRS/IND AS-compliant reporting without manual reconciliation.',
+        badge: 'Finance Ready',
+        badgeIcon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',
+        image: '<style>.dep-wrap{width:100%;height:100%;background:#f0fdf4;display:flex;align-items:center;justify-content:center;padding:20px}.dep-card{background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(34,197,94,.1);width:230px;padding:16px;display:flex;flex-direction:column;gap:10px}.dep-title{font-size:11px;font-weight:700;color:#14532d}.dep-asset{font-size:10px;color:#6b7280;margin-top:-4px}.dep-chart{display:flex;align-items:flex-end;gap:5px;height:60px;padding:0 2px}.dep-bar{flex:1;border-radius:4px 4px 0 0}.dep-labels{display:flex;justify-content:space-between;padding:0 2px}.dep-label{font-size:8px;color:#9ca3af}.dep-summary{display:flex;justify-content:space-between}.dep-item{display:flex;flex-direction:column;align-items:center}.dep-val{font-size:13px;font-weight:800;color:#14532d}.dep-key{font-size:8px;color:#9ca3af}</style><div class="dep-wrap"><div class="dep-card"><div class="dep-title">CNC Machine &#8212; Asset #0042</div><div class="dep-asset">Straight-line depreciation &middot; 10 yr life</div><div class="dep-chart"><div class="dep-bar" style="height:100%;background:#bbf7d0"></div><div class="dep-bar" style="height:85%;background:#86efac"></div><div class="dep-bar" style="height:70%;background:#4ade80"></div><div class="dep-bar" style="height:55%;background:#22c55e"></div><div class="dep-bar" style="height:42%;background:#16a34a"></div><div class="dep-bar" style="height:28%;background:#15803d"></div></div><div class="dep-labels"><span class="dep-label">Y1</span><span class="dep-label">Y2</span><span class="dep-label">Y3</span><span class="dep-label">Y4</span><span class="dep-label">Y5</span><span class="dep-label">Y6</span></div><div class="dep-summary"><div class="dep-item"><span class="dep-val">&#8377;12.4L</span><span class="dep-key">Current Value</span></div><div class="dep-item"><span class="dep-val">&#8377;7.6L</span><span class="dep-key">Depreciated</span></div><div class="dep-item"><span class="dep-val">4 yrs</span><span class="dep-key">Remaining</span></div></div></div></div>',
+      },
+      {
+        title: 'Role-Based Access & Multi-Site Governance',
+        description: 'Assign granular permissions by role, department, and site — ensuring field teams, finance, operations, and management each see only what they need. Multi-site administrators maintain centralized oversight while local teams manage their own asset registers independently.',
+        badge: 'Enterprise Security',
+        badgeIcon: '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+        image: '<style>.rbac-wrap{width:100%;height:100%;background:#eff6ff;display:flex;align-items:center;justify-content:center;padding:20px}.rbac-card{background:#fff;border-radius:14px;box-shadow:0 4px 20px rgba(59,130,246,.1);width:230px;padding:16px;display:flex;flex-direction:column;gap:8px}.rbac-header{font-size:11px;font-weight:700;color:#1e3a5f}.rbac-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;border:0.5px solid #e0e7ff}.rbac-role{display:flex;align-items:center;gap:7px}.rbac-avatar{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}.rbac-name{font-size:10px;font-weight:600;color:#1e3a5f}.rbac-perms{display:flex;gap:3px}.rbac-perm{font-size:8px;font-weight:500;padding:1px 5px;border-radius:10px}.rbac-green{background:#dcfce7;color:#15803d}.rbac-blue{background:#dbeafe;color:#1d4ed8}.rbac-gray{background:#f1f5f9;color:#64748b}</style><div class="rbac-wrap"><div class="rbac-card"><div class="rbac-header">Role-Based Access Control</div><div class="rbac-row"><div class="rbac-role"><div class="rbac-avatar" style="background:#6366f1">A</div><span class="rbac-name">Admin</span></div><div class="rbac-perms"><span class="rbac-perm rbac-green">Full</span></div></div><div class="rbac-row"><div class="rbac-role"><div class="rbac-avatar" style="background:#0ea5e9">O</div><span class="rbac-name">Operations</span></div><div class="rbac-perms"><span class="rbac-perm rbac-blue">Track</span><span class="rbac-perm rbac-blue">Transfer</span></div></div><div class="rbac-row"><div class="rbac-role"><div class="rbac-avatar" style="background:#22c55e">F</div><span class="rbac-name">Finance</span></div><div class="rbac-perms"><span class="rbac-perm rbac-green">Reports</span><span class="rbac-perm rbac-green">Depreciation</span></div></div><div class="rbac-row"><div class="rbac-role"><div class="rbac-avatar" style="background:#f59e0b">T</div><span class="rbac-name">Technician</span></div><div class="rbac-perms"><span class="rbac-perm rbac-gray">Audit</span><span class="rbac-perm rbac-gray">Scan</span></div></div></div></div>',
+      },
+    ]}
+  />
+
+  <!-- ══ 6. INTEGRATION SPLIT CARD ════════════════════════════════════════ -->
+  <ContentSplitCard
+    tagline="ERP Integration"
+    title="Built to work inside your existing ERP — not around it"
+    subtitle="UpBuff ATS connects natively with SAP, Oracle, and Epicor using official APIs. No middleware. No custom connectors. No ERP core modifications."
+    cardTitle="Native ERP connectivity — asset data where it belongs"
+    cardDescription="UpBuff ATS integrates directly with SAP Business One via Service Layer, SAP S/4HANA via OData and RFC, and SAP ECC via BAPI — with Oracle and Epicor supported via REST and SOAP APIs. Asset valuations, depreciation entries, maintenance work orders, and custodian records synchronize bi-directionally in real time. Your ERP remains the system of record. UpBuff ATS becomes the execution layer that extends it to the field."
+    testimonial={{
+      quote: 'We had tried three different asset tracking tools that claimed SAP integration. UpBuff ATS was the first that actually worked — live depreciation sync, maintenance orders posted directly into SAP, and our finance team had accurate fixed asset reports from day one. The implementation team knew SAP inside out.',
+      name: 'Operations Director',
+      company: 'Spartan Engineering',
+      avatar: '/uploads/spartan-client.png',
+    }}
+    cardImage="/uploads/upbuff-asset-tracking-system-integrations.png"
+    features={[
+      {
+        icon: 'tabler:plug-connected',
+        title: 'No ERP Core Modifications',
+        description: 'All integration is API-based — SAP Service Layer, OData, RFC, BAPI, REST, and SOAP. Your ERP upgrade path stays clean and your support contracts remain intact.',
+      },
+      {
+        icon: 'tabler:refresh',
+        title: 'Bi-Directional Real-Time Sync',
+        description: 'Asset valuations, depreciation schedules, maintenance work orders, and custodian records flow between UpBuff ATS and your ERP automatically — eliminating manual re-entry.',
+      },
+      {
+        icon: 'tabler:shield-check',
+        title: 'ERP Remains System of Record',
+        description: 'UpBuff ATS extends your ERP to the field and warehouse. Finance and compliance data always originates from and returns to your authoritative ERP instance.',
+      },
+    ]}
+  />
+
+  <!-- ══ 7. INTEGRATIONS MARQUEE ═══════════════════════════════════════════ -->
+  <ToolsMarquee
+    title="Seamless integration with leading ERP and enterprise platforms"
+    description="UpBuff ATS connects with your existing ERP, IoT infrastructure, and analytics tools — creating a unified asset management ecosystem without replacing the systems your teams already rely on."
+    speed={30}
+    tools={[
+      { name: 'SAP',              logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff Asset Tracking System" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP Business One', logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'SAP S/4HANA',      logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Oracle',           logo: '<img src="/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle ERP integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Epicor',           logo: '<img src="/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor ERP integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'IoT',              logo: '<img src="/uploads/logo/iot-integration.png" alt="IoT sensor integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Power BI',         logo: '<img src="/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI analytics integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Gmail',            logo: '<img src="/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail notification integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Outlook',          logo: '<img src="/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook alerts integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'WhatsApp',         logo: '<img src="/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp maintenance alerts with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'SMS',              logo: '<img src="/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS alerts with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Zoho',             logo: '<img src="/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'Calendar',         logo: '<img src="/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration for maintenance scheduling with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+      { name: 'VoIP',             logo: '<img src="/uploads/logo/voip-integration-with-upbuff-crm.png" alt="VoIP integration with UpBuff ATS" class="w-10 h-10 object-contain" />' },
+    ]}
+  />
+
+  <!-- ══ 8. USE CASES ═══════════════════════════════════════════════════════ -->
+  <FeaturesBento
+    tagline="Use Cases"
+    title="Where UpBuff ATS fits in your enterprise"
+    subtitle="Whether it's heavy machinery on the production floor or IT equipment across office locations — UpBuff ATS adapts to the specific asset management demands of your industry and operational scale."
+    items={[
+      {
+        wide: true,
+        title: 'Manufacturing Equipment: End Unplanned Downtime on the Shop Floor',
+        description: 'Track machinery, tools, and production equipment with real-time IoT health monitoring integrated with SAP PM. Preventive maintenance is triggered automatically before failures occur — reducing unplanned downtime, extending equipment lifespan, and keeping production schedules on track. Every maintenance action is recorded and synced to ERP without manual re-entry.',
+        image: '<img src="/uploads/manufacturing-asset-tracking.png" class="w-full p-6" alt="Manufacturing equipment asset tracking with IoT preventive maintenance integrated with SAP PM" loading="lazy" />',
+      },
+      {
+        wide: true,
+        title: 'Fleet & Vehicle Management: Track Every Vehicle, Every Move',
+        description: 'Monitor company cars, trucks, vans, and specialized vehicles with GPS-enabled location tracking, IoT maintenance scheduling, usage analytics, and custodian assignment management. All vehicle data synchronizes with your ERP for complete fleet cost visibility, depreciation tracking, and regulatory compliance reporting.',
+        image: '<img src="/uploads/fleet-vehicle-asset-tracking.png" class="w-full p-6" alt="Enterprise fleet vehicle tracking and management with GPS and IoT integration" loading="lazy" />',
+      },
+      {
+        title: 'Office & IT Equipment',
+        description: 'Track computers, printers, scanners, copiers, and AV equipment across departments. Manage custodian assignments, monitor depreciation, and conduct QR code audits with mobile devices — eliminating ghost assets, preventing loss, and enforcing accountability across distributed office environments.',
+        image: '<img src="/uploads/office-equipment-asset-tracking.png" class="w-full h-full object-contain" alt="Office and IT equipment tracking with barcode and QR code scanning" loading="lazy" />',
+      },
+      {
+        title: 'Facility & Infrastructure Assets',
+        description: 'Manage HVAC systems, lighting, security infrastructure, power generators, and utility assets across multiple sites. Geofenced inventory counts and IoT-driven maintenance alerts keep facility operations compliant, cost-controlled, and always audit-ready.',
+        image: '<img src="/uploads/facility-infrastructure-asset-tracking.png" class="w-full h-full object-contain" alt="Facility and infrastructure asset lifecycle management with IoT monitoring" loading="lazy" />',
+      },
+      {
+        title: 'Furniture, Fixtures & Utility Assets',
+        description: 'Bring precision to the assets most often overlooked. Track desks, chairs, cabinets, transformers, and generators with the same rigor as high-value equipment — ensuring accurate depreciation, full custodian accountability, and policy compliance at every site.',
+        image: '<img src="/uploads/Furniture-Fixtures-and-Utility-Assets.png" class="h-full" alt="Furniture and utility asset tracking with UpBuff ATS" loading="lazy" />',
+      },
+    ]}
+  />
+
+  <!-- ══ 9. BUSINESS VALUE ═════════════════════════════════════════════════ -->
+  <SecuritySplit
+    tagline="Business Value"
+    title="UpBuff ATS doesn't just track assets. It maximizes them."
+    subtitle="Every feature is designed to deliver measurable business outcomes — from cost reduction and compliance to operational efficiency and smarter capital allocation decisions."
+    features={[
+      {
+        title: 'Increased Visibility & Control',
+        description: 'Real-time access to the location, status, custodian, and usage of every asset eliminates ghost assets, prevents equipment loss, and gives management the data needed to make confident procurement and disposal decisions.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><circle cx="40" cy="40" r="22" stroke="url(#vis1)" stroke-width="2.5"/><path d="M18 40c0-12.15 9.85-22 22-22" stroke="url(#vis1)" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3"/><circle cx="40" cy="40" r="6" fill="url(#vis1)" opacity=".8"/><path d="M40 18v4M40 58v4M18 40h4M58 40h4" stroke="url(#vis1)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="vis1" x1="18" y1="18" x2="62" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Proactive Maintenance & Extended Asset Life',
+        description: 'IoT-driven preventive maintenance reduces unplanned downtime, eliminates emergency repair costs, and extends operational lifespan of critical assets — directly improving return on asset investment across the organization.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><path d="M40 14v12M40 54v12M14 40h12M54 40h12" stroke="url(#mnt1)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="40" r="12" stroke="url(#mnt1)" stroke-width="2.5"/><path d="M34 40l4 4 8-8" stroke="url(#mnt1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="mnt1" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>',
+      },
+      {
+        title: 'Audit-Ready Compliance at Scale',
+        description: 'Dynamic checklists, geofenced inventory verification, and real-time progress tracking make regulatory compliance continuous across all sites and asset categories. Every action is logged, time-stamped, and immediately exportable for audit submissions.',
+        illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="22" y="16" width="36" height="48" rx="6" stroke="url(#doc1)" stroke-width="2.5"/><path d="M30 30h20M30 38h20M30 46h12" stroke="url(#doc1)" stroke-width="2" stroke-linecap="round"/><circle cx="54" cy="54" r="10" fill="url(#doc1)" opacity=".15" stroke="url(#doc1)" stroke-width="1.5"/><path d="M50 54l2.5 2.5 4.5-4.5" stroke="url(#doc1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="doc1" x1="22" y1="16" x2="64" y2="64" gradientUnits="userSpaceOnUse"><stop stop-color="#f97316"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>',
+      },
+    ]}
+  />
+
+  <!-- ══ 10. FAQs ══════════════════════════════════════════════════════════ -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="Asset Tracking System — questions answered"
+    items={[
+      {
+        question: 'What is an Enterprise Asset Tracking System (ATS)?',
+        answer: 'An Enterprise Asset Tracking System (ATS) monitors and manages the complete lifecycle of physical assets — from acquisition and deployment through maintenance, auditing, and disposal — using barcode, QR code, RFID, and IoT sensor technologies to provide real-time visibility, operational control, and regulatory compliance across all organizational locations.',
+      },
+      {
+        question: 'How is UpBuff ATS different from standard fixed asset software?',
+        answer: 'Standard fixed asset software handles accounting entries for depreciation. UpBuff ATS goes further: real-time physical tracking via barcode/QR/RFID, IoT-driven predictive maintenance, mobile audit execution, configurable transfer workflows, geofenced inventory counts, and direct ERP integration — giving operations, finance, and compliance teams a single unified platform.',
+      },
+      {
+        question: 'Does UpBuff ATS integrate with SAP?',
+        answer: 'Yes. UpBuff ATS integrates natively with SAP Business One via Service Layer, SAP S/4HANA via OData and RFC, and SAP ECC via BAPI — enabling real-time asset valuation, depreciation synchronization, and maintenance order generation without any ERP core modification. Oracle ERP and Epicor are also supported via REST and SOAP APIs.',
+      },
+      {
+        question: 'What identification technologies does UpBuff ATS support?',
+        answer: 'UpBuff ATS supports barcode scanning, QR code scanning, and RFID tagging. Barcodes and QR codes are ideal for office equipment, IT assets, and furniture. RFID is recommended for high-volume warehouse and production environments where hands-free bulk scanning is required.',
+      },
+      {
+        question: 'How does IoT-enabled preventive maintenance work?',
+        answer: 'IoT sensors on critical assets continuously monitor health parameters — temperature, vibration, runtime hours, power consumption. When readings approach risk thresholds, UpBuff ATS automatically diagnoses the issue, generates a maintenance work order, and alerts responsible teams — preventing breakdowns before they occur and extending asset operational lifespan.',
+      },
+      {
+        question: 'Can asset transfers require multi-step approval before processing?',
+        answer: 'Yes. UpBuff ATS includes fully configurable multi-step approval workflows for asset transfers between locations or custodians. Administrators define the authorization chain, escalation rules, and time limits. Every step is logged in an immutable audit trail for compliance and regulatory documentation.',
+      },
+      {
+        question: 'What types of assets can UpBuff ATS track?',
+        answer: 'UpBuff ATS tracks any physical enterprise asset: manufacturing machinery; fleet vehicles; office and IT equipment; furniture and fixtures; facility infrastructure such as HVAC and security systems; and utility assets such as generators and transformers. It adapts to any industry vertical and asset classification hierarchy.',
+      },
+      {
+        question: 'Is there a mobile app for field and warehouse teams?',
+        answer: 'Yes. The UpBuff ATS mobile app is available on Android and iOS. Teams can scan assets, conduct audits, approve transfers, raise maintenance requests, and receive real-time IoT alerts from any location. Role-based access ensures each user sees only the assets and actions relevant to their responsibilities.',
+      },
+    ]}
+  />
+
+  <!-- ══ 11. GET STARTED ═══════════════════════════════════════════════════ -->
+  <SecuritySplit
+    tagline="Get Started"
+    title="Ready to take control of your enterprise assets?"
+    subtitle="Whether you manage hundreds of office devices or thousands of industrial assets across multiple sites, UpBuff ATS scales to fit your operations and integrates with your existing ERP — without modifying ERP core."
+    features={[
+      {
+        title: 'Schedule a Demo',
+        description: 'See live asset tracking, IoT maintenance alerts, barcode auditing, and SAP/ERP sync in action. Book a 30-minute demo with our asset management specialists.',
+        href: '/contact',
+      },
+      {
+        title: 'Explore ERP Integrations',
+        description: 'Discover how UpBuff ATS connects with SAP Business One, SAP S/4HANA, Oracle, Epicor, and your enterprise ecosystem — with no core ERP modifications required.',
+        href: '/integrations',
+      },
+      {
+        title: 'Talk to a Solutions Expert',
+        description: 'Have complex multi-site or industry-specific requirements? Our team scopes the right configuration, integration approach, and deployment model for your organization.',
+        href: '/contact',
+      },
+    ]}
+  />
+
+  <!-- ══ 12. CTA BANNER ════════════════════════════════════════════════════ -->
+  <CtaBanner
+    title="Stop losing value to invisible, poorly maintained assets"
+    subtitle="UpBuff ATS gives enterprise teams real-time control over every asset — from IoT-driven preventive maintenance to barcode audits and ERP-integrated lifecycle management."
+    action={{
+      text: 'Request a Free Demo',
+      href: '/contact',
+      variant: 'primary',
+    }}
+    note="No ERP core modifications required"
+  />
+
+</Layout>

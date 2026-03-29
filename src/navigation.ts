@@ -74,6 +74,12 @@ export const headerData = {
           icon: 'tabler:adjustments-horizontal',
           description: 'Configure products, pricing, and variants in real time',
         },
+        {
+          text: 'Asset Tracking System',
+          href: getPermalink('/products/asset-tracking-system'),
+          icon: 'tabler:map-pin',
+          description: 'IoT-enabled asset tracking, lifecycle management, and audit automation',
+        },
       ],
     },
     {
@@ -108,7 +114,7 @@ export const headerData = {
 };
 
 export const footerData = {
-  phone: '+91 98765 43210',
+  phone: '+91 83300 06006',
   links: [
     {
       title: 'Products',
@@ -120,6 +126,7 @@ export const footerData = {
         { text: 'Manufacturing & Shopfloor',           href: getPermalink('/products/erp-integrated-manufacturing-shopfloor') },
         { text: 'Enterprise & Partner Portals',        href: getPermalink('/products/enterprise-partner-portals') },
         { text: 'ERP-Integrated Product Configurator', href: getPermalink('/products/erp-integrated-product-configurator') },
+        { text: 'Asset Tracking System',               href: getPermalink('/products/asset-tracking-system') },
       ],
     },
     {

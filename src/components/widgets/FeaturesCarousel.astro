@@ -71,7 +71,7 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
           <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900">
 
             <!-- Image Area -->
-            <div class="relative h-80 flex items-center justify-center p-6 pb-0 text-center">
+            <div class="relative h-80 flex items-center justify-center text-center">
 
               {image && (
                 <div class="flex items-center justify-center w-full h-full">
@@ -99,7 +99,7 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
             </div>
 
             <!-- Content -->
-            <div class="border-gray-200 dark:border-gray-700 p-5 pt-0">
+            <div class="border-gray-200 dark:border-gray-700 p-5">
               {t && <h3 class="text-lg font-bold text-heading dark:text-gray-100 mb-2">{t}</h3>}
               {description && (
                 <p class="text-sm text-muted leading-relaxed dark:text-slate-400" set:html={description} />

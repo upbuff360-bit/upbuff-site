@@ -29,9 +29,8 @@ const metadata = {
 };
 
 const leaders = [
-  { name: 'Shiburaj Krishnapillai', role: 'Chief Executive Officer', img: '/uploads/shiburaj.png', linkedin: 'https://www.linkedin.com/in/shiburaj-krishnapillai' },
-  { name: 'Rajesh',                 role: 'Chief Marketing Officer',  img: '/uploads/rajesh.png',   linkedin: '#' },
-  { name: 'Visakh',                 role: 'Chief Technology Officer', img: '/uploads/visakh.png',   linkedin: '#' },
+  { name: 'Shiburaj Krishnapillai', role: 'Founder & CEO', img: '/uploads/shiburaj.png', linkedin: 'https://www.linkedin.com/in/shiburaj-krishnapillai' },
+  { name: 'Rajesh',                 role: 'Co-Founder & Director',  img: '/uploads/rajesh.png',   linkedin: 'https://www.linkedin.com/in/rajesh131/' },
 ];
 
 ---
@@ -212,7 +211,7 @@ const leaders = [
   </section>
 
   <!-- ══════════════════════════════════════════════════════════
-       4. CEO QUOTE
+       4. LEADERSHIP QUOTES — auto-slider
        ══════════════════════════════════════════════════════════ -->
   <section class="bg-[#0a0a0a] py-20 md:py-28 not-prose relative overflow-hidden">
     <div
@@ -220,32 +219,109 @@ const leaders = [
       aria-hidden="true"
       style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.1) 0%,transparent 70%);"
     />
-    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
+
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 text-center" id="quote-slider">
+
       <div class="text-indigo-500 text-8xl font-serif leading-none mb-2 select-none" aria-hidden="true">&ldquo;</div>
-      <blockquote>
-        <p class="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-snug md:leading-snug mb-10">
-          Our team spans ERP architects, mobile engineers, and integration specialists
-          across India and beyond — but our commitment has never changed:
-          <span class="text-indigo-400">every enterprise deserves execution speed
-          without paying for it with ERP instability.</span>
-        </p>
-        <footer class="flex items-center justify-center gap-4">
-          <div class="w-12 h-12 rounded-xl overflow-hidden ring-2 ring-white/20 shrink-0 bg-gray-800">
-            <img
-              src="/uploads/shiburaj.png"
-              alt="Shiburaj Krishnapillai"
-              class="w-full h-full object-cover"
-              loading="lazy"
-            />
+
+      <!-- Slider viewport -->
+      <div class="quote-viewport overflow-hidden relative">
+        <div class="quote-track flex transition-transform duration-700 ease-in-out">
+
+          <!-- Slide 1 — Shiburaj -->
+          <div class="quote-slide w-full shrink-0">
+            <blockquote>
+              <p class="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-snug md:leading-snug mb-10">
+                Our team spans ERP architects, mobile engineers, and integration specialists
+                across India and beyond — but our commitment has never changed:
+                <span class="text-indigo-400">every enterprise deserves execution speed
+                without paying for it with ERP instability.</span>
+              </p>
+              <footer class="flex items-center justify-center gap-4">
+                <div class="w-12 h-12 rounded-xl overflow-hidden ring-white/20 shrink-0 bg-gray-800">
+                  <img src="/uploads/shiburaj.png" alt="Shiburaj Krishnapillai" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="text-left">
+                  <p class="text-white font-semibold text-sm">Shiburaj Krishnapillai</p>
+                  <p class="text-white/40 text-xs mt-0.5">Founder &amp; CEO, UpBuff</p>
+                </div>
+              </footer>
+            </blockquote>
           </div>
-          <div class="text-left">
-            <p class="text-white font-semibold text-sm">Shiburaj Krishnapillai</p>
-            <p class="text-white/40 text-xs mt-0.5">Founder &amp; CEO, UpBuff</p>
+
+          <!-- Slide 2 — Rajesh -->
+          <div class="quote-slide w-full shrink-0">
+            <blockquote>
+              <p class="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-snug md:leading-snug mb-10">
+                The market does not need another standalone app. It needs a platform that
+                <span class="text-indigo-400">speaks the language of ERP — in real time,
+                without compromise, and without ever asking IT to touch the core.</span>
+              </p>
+              <footer class="flex items-center justify-center gap-4">
+                <div class="w-12 h-12 rounded-xl overflow-hidden ring-white/20 shrink-0 bg-gray-800">
+                  <img src="/uploads/rajesh.png" alt="Rajesh Kattilepurath" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="text-left">
+                  <p class="text-white font-semibold text-sm">Rajesh Kattilepurath</p>
+                  <p class="text-white/40 text-xs mt-0.5">Co-founder &amp; Head of Marketing, UpBuff</p>
+                </div>
+              </footer>
+            </blockquote>
           </div>
-        </footer>
-      </blockquote>
+
+        </div>
+      </div>
+
+      <!-- Dot indicators -->
+      <div class="flex items-center justify-center gap-2 mt-10">
+        <button class="quote-dot w-2.5 h-2.5 rounded-full bg-indigo-400 scale-125 transition-all duration-300" data-target="0" aria-label="Quote 1"></button>
+        <button class="quote-dot w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300" data-target="1" aria-label="Quote 2"></button>
+      </div>
+
     </div>
   </section>
+
+  <script>
+    (function initQuoteSlider() {
+      const track = document.querySelector('.quote-track') as HTMLElement | null;
+      const dots   = Array.from(document.querySelectorAll('.quote-dot')) as HTMLElement[];
+      const total  = dots.length;
+      let current  = 0;
+      let timer: ReturnType<typeof setInterval>;
+
+      function goTo(index: number) {
+        current = index;
+        if (track) track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((dot, i) => {
+          const active = i === current;
+          dot.classList.toggle('bg-indigo-400', active);
+          dot.classList.toggle('scale-125', active);
+          dot.classList.toggle('bg-white/20', !active);
+        });
+      }
+
+      function startTimer() {
+        timer = setInterval(() => goTo((current + 1) % total), 6000);
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          clearInterval(timer);
+          goTo(Number(dot.dataset.target));
+          startTimer();
+        });
+      });
+
+      goTo(0);
+      startTimer();
+
+      document.addEventListener('astro:after-swap', () => {
+        clearInterval(timer);
+        goTo(0);
+        startTimer();
+      });
+    })();
+  </script>
 
   <!-- ══════════════════════════════════════════════════════════
        5. VISION & MISSION CARDS
