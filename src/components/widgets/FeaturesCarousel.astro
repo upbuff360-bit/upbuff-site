@@ -10,6 +10,7 @@ export interface CarouselItem {
   gradient?: string;
   badge?: string;
   badgeIcon?: string;
+  href?: string;
 }
 
 export interface Props extends Widget {
@@ -64,14 +65,14 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
   <!-- Carousel -->
   <div class="fc-viewport overflow-hidden" id={`${widgetId}-viewport`}>
     <div class="fc-track flex gap-5 transition-transform duration-500 ease-in-out" id={`${widgetId}-track`}>
-      {items.map(({ title: t, description, image, badge, badgeIcon }) => (
+      {items.map(({ title: t, description, image, badge, badgeIcon, href }) => (
         <div class="fc-slide shrink-0 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
 
           <!-- Card -->
           <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900">
 
             <!-- Image Area -->
-            <div class="relative h-80 flex items-center justify-center text-center">
+            <div class="relative h-64 flex items-center justify-center p-6 pb-0 text-center">
 
               {image && (
                 <div class="flex items-center justify-center w-full h-full">
@@ -99,10 +100,19 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
             </div>
 
             <!-- Content -->
-            <div class="border-gray-200 dark:border-gray-700 p-5">
+            <div class="border-gray-200 dark:border-gray-700 p-5 pt-0">
               {t && <h3 class="text-lg font-bold text-heading dark:text-gray-100 mb-2">{t}</h3>}
               {description && (
                 <p class="text-sm text-muted leading-relaxed dark:text-slate-400" set:html={description} />
+              )}
+              {href && (
+                <a
+                  href={href}
+                  class="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-primary hover:opacity-75 transition-opacity group"
+                >
+                  Learn more
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
               )}
             </div>
 
