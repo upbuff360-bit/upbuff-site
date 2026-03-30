@@ -8,7 +8,6 @@ import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
 import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
 import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
 import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
-import FeaturesBento from '~/components/widgets/FeaturesBento.astro';
 import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
 import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
 import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
@@ -259,42 +258,58 @@ const metadata = {
        7. PRODUCT BENTO — all 5 operational domains
           Full-width bento showing the breadth of the platform
        ══════════════════════════════════════════════════════════ -->
-  <FeaturesBento
+  <FeaturesCarousel
     tagline="Products"
     title="One platform across every operational domain"
     subtitle="UpBuff delivers a unified execution layer across the full enterprise operational stack — each module purpose-built for its domain, all sharing the same Clean Core ERP integration backbone."
     items={[
       {
-        wide: true,
-        title: 'ERP-Integrated CRM — Field Sales Execution',
-        href: '/homes/erp-integrated-crm',
+        title: 'ERP-Integrated CRM',
+        href: '/products/erp-integrated-crm',
         description: 'Extend SAP into real-time field sales. Mobile order capture, ERP pricing enforcement, credit control, and offline sync — enabling sales teams to operate at ERP speed without ERP complexity. Reduce manual data entry by up to 40% and accelerate order-to-cash cycles without touching SAP core.',
         image: '<img src="/uploads/modular-crm-software-for-small-and-mid-sized-businesses.png" class="w-full h-full object-contain p-2" alt="UpBuff ERP Integrated CRM for SAP sales execution" loading="lazy" />',
       },
       {
-        wide: true,
-        title: 'ERP-Integrated FSM — Field Service Management',
-        href: '/homes/erp-integrated-fsm',
+        title: 'ERP-Integrated Field Service Management',
+        href: '/products/erp-integrated-fsm',
         description: 'Connect SAP work orders, spare parts, and service records to field technicians in real time. Offline-first mobile execution, intelligent dispatch, digital sign-offs, and automated SAP updates — without any ERP core modification or upgrade risk.',
         image: '<img src="/uploads/ERP-Integrated-Field-Service-Management.png" class="w-full h-full object-contain p-2" alt="UpBuff ERP Integrated FSM for SAP field service" loading="lazy" />',
       },
       {
         title: 'Warehouse & Inventory',
-        href: '/homes/erp-integrated-warehouse-inventory',
-        description: 'Barcode-driven warehouse operations synchronized with SAP inventory — goods receipt, bin transfers, pick-pack-ship, and cycle counts in real time.',
-        image: '<img src="/uploads/SAP-Integrated-Warehouse-Inventory-Management.png" class = "w-full h-full object-contain p-2" alt="SAP Integrated Warehouse Inventory Management" loading="lazy" />',
+        href: '/products/erp-integrated-warehouse-inventory',
+        description: 'Barcode-driven warehouse operations synchronized with SAP inventory — goods receipt, bin transfers, pick-pack-ship, and cycle counts in real time. Full audit trail from scan to ERP posting without manual re-entry.',
+        image: '<img src="/uploads/SAP-Integrated-Warehouse-Inventory-Management.png" class="w-full h-full object-contain p-2" alt="SAP Integrated Warehouse Inventory Management" loading="lazy" />',
       },
       {
         title: 'Manufacturing & Shopfloor',
-        href: '/homes/erp-integrated-manufacturing-shopfloor',
-        description: 'Production orders, BOM confirmations, quality checks, and shopfloor reporting directly connected to SAP PM and PP — eliminating paper-based tracking.',
-        image: '<img src="/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png" class = "w-full h-full object-contain p-2" alt="Epicore Integrated Manufacturing Shopfloor" loading="lazy" />',
+        href: '/products/erp-integrated-manufacturing-shopfloor',
+        description: 'Production orders, BOM confirmations, quality checks, and shopfloor reporting directly connected to SAP PM and PP — eliminating paper-based tracking and syncing every operation to ERP in real time.',
+        image: '<img src="/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png" class="w-full h-full object-contain p-2" alt="Epicore Integrated Manufacturing Shopfloor" loading="lazy" />',
       },
       {
-        title: 'Sales & Distribution',
-        href: '/homes/erp-integrated-sales-distribution',
-        description: 'Distributor order management, secondary sales, channel partner portals, and collections — all governed by ERP pricing, credit, and tax rules.',
-        image: '<img src="/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png" class = "w-full h-full object-contain p-2" alt="SAP Businessone Integrated Sales Distribution excecution" loading="lazy" />',
+        title: 'Sales & Distribution Execution',
+        href: '/products/erp-integrated-sales-distribution',
+        description: 'Distributor order management, secondary sales, channel partner portals, and collections — all governed by ERP pricing, credit, and tax rules with real-time synchronization back to SAP.',
+        image: '<img src="/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png" class="w-full h-full object-contain p-2" alt="SAP Businessone Integrated Sales Distribution excecution" loading="lazy" />',
+      },
+      {
+        title: 'Enterprise & Partner Portals',
+        href: '/products/enterprise-partner-portals',
+        description: 'Secure digital portals for suppliers, dealers, and partners — connected directly to ERP master data and transactional workflows. Self-service access with live ERP data behind every interaction.',
+        image: '<img src="/uploads/Oracle-integrated-Enterprise-Partner-Portals.png" class="w-full h-full object-contain p-2" alt="Oracle integrated Enterprise Partner Portals" loading="lazy" />',
+      },
+      {
+        title: 'ERP-Integrated Product Configurator',
+        href: '/products/erp-integrated-product-configurator',
+        description: 'Sales teams build accurate, rule-driven quotes with ERP-validated pricing, BOMs, and availability — eliminating configuration errors before orders ever reach production.',
+        image: '<img src="/uploads/ERP-integrated-product-configurator.png" class="w-full h-full object-contain p-2" alt="ERP Integrated Product Configurator for SAP and enterprise ERP systems" loading="lazy" />',
+      },
+      {
+        title: 'Asset Tracking System',
+        href: '/products/asset-tracking-system',
+        description: 'Real-time asset visibility, IoT-enabled preventive maintenance, barcode/QR/RFID lifecycle management, and audit automation — integrated with SAP, Oracle, and Epicor without modifying ERP core.',
+        image: '<img src="/uploads/asset-tracking-system.png" class="w-full h-full object-contain p-2" alt="UpBuff Asset Tracking System" loading="lazy" />',
       },
     ]}
   />
