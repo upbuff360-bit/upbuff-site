@@ -44,7 +44,7 @@ const { language, textDirection } = I18N;
 
   <body class="antialiased text-default bg-page tracking-tight">
     <slot />
-    <!-- Paste before </body> -->
+    <!-- Paste before </body> in your Layout.astro -->
     <script is:inline>
       window.chatbotConfig = {
         agentId: "agt-101",
@@ -53,7 +53,7 @@ const { language, textDirection } = I18N;
         apiBase: "https://chatbot-backend-336415449858.asia-south1.run.app",
       };
     </script>
-    <script src="https://chatbot-backend-336415449858.asia-south1.run.app/widget.js" async></script>
+    <script src="https://chatbot-backend-336415449858.asia-south1.run.app/widget.js" async is:inline></script>
     <script is:inline>
       document.addEventListener('astro:page-load', () => {
         if (!document.querySelector('#cw-bubble')) {
