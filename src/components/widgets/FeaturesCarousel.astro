@@ -143,11 +143,15 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
 </style>
 
 <script define:vars={{ widgetId, itemCount: items.length }}>
-(function () {
+function initCarousel() {
   const track = document.getElementById(`${widgetId}-track`);
   const prevBtn = document.getElementById(`${widgetId}-prev`);
   const nextBtn = document.getElementById(`${widgetId}-next`);
-  if (!track) return;
+  if (!track || !prevBtn || !nextBtn) return;
+
+  // Avoid duplicate listeners if re-initialized (e.g. View Transitions)
+  if (track.dataset.fcInit === widgetId) return;
+  track.dataset.fcInit = widgetId;
 
   let current = 0;
 
@@ -168,16 +172,18 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
     const slideW = slides[0].offsetWidth;
     const gap = 20;
     track.style.transform = `translateX(-${current * (slideW + gap)}px)`;
-    if (prevBtn) prevBtn.disabled = current === 0;
-    if (nextBtn) nextBtn.disabled = current >= maxIndex();
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= maxIndex();
+    prevBtn.style.opacity = current === 0 ? '0.4' : '1';
+    nextBtn.style.opacity = current >= maxIndex() ? '0.4' : '1';
   }
 
-  prevBtn?.addEventListener('click', () => {
+  prevBtn.addEventListener('click', () => {
     current = Math.max(0, current - 1);
     update();
   });
 
-  nextBtn?.addEventListener('click', () => {
+  nextBtn.addEventListener('click', () => {
     current = Math.min(maxIndex(), current + 1);
     update();
   });
@@ -188,5 +194,9 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
   });
 
   update();
-})();
+}
+
+// Works with both standard load and Astro View Transitions
+document.addEventListener('astro:page-load', initCarousel);
+document.addEventListener('DOMContentLoaded', initCarousel);
 </script>
