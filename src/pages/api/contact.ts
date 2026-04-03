@@ -51,7 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     await transporter.sendMail({
       from:    `"UpBuff Website" <${import.meta.env.SMTP_USER}>`,
-      to:      import.meta.env.SMTP_TO ?? import.meta.env.SMTP_USER,
+      to:      (import.meta.env.SMTP_TO ?? import.meta.env.SMTP_USER).split(',').map((e: string) => e.trim()).join(', '),
       replyTo: email,
       subject: `Contact: ${name}${product ? ` — ${product}` : ''}`,
       html,
