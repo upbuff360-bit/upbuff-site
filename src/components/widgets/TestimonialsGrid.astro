@@ -88,7 +88,7 @@ const {
             {logo
               ? logo.startsWith('<')
                 ? <div class="testimonial-logo h-10 flex items-center text-black"><Fragment set:html={logo} /></div>
-                : <img src={logo} alt={company ?? ''} class="testimonial-logo h-10 w-auto max-w-full object-contain grayscale contrast-200 brightness-75" loading="lazy" />
+                : <img src={logo} alt={company ?? ''} class="testimonial-logo h-7 w-auto max-w-full object-contain grayscale contrast-200 brightness-75" loading="lazy" />
               : company && (
                 <span class="text-sm font-medium text-gray-400 dark:text-gray-500">{company}</span>
               )
@@ -148,7 +148,7 @@ const {
             {logo
               ? logo.startsWith('<')
                 ? <div class="testimonial-logo h-10 flex items-center text-black"><Fragment set:html={logo} /></div>
-                : <img src={logo} alt={company ?? ''} class="testimonial-logo h-10 w-auto max-w-full object-contain grayscale contrast-200 brightness-75" loading="lazy" />
+                : <img src={logo} alt={company ?? ''} class="testimonial-logo h-7 w-auto max-w-full object-contain grayscale contrast-200 brightness-75" loading="lazy" />
               : company && (
                 <span class="text-sm font-medium text-gray-400 dark:text-gray-500">{company}</span>
               )
