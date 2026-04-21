@@ -87,8 +87,8 @@ const {
           <div class="mb-4">
             {logo
               ? logo.startsWith('<')
-                ? <div class="h-8 flex items-center"><Fragment set:html={logo} /></div>
-                : <img src={logo} alt={company ?? ''} class="h-5 object-contain" loading="lazy" />
+                ? <div class="testimonial-logo h-10 flex items-center text-black"><Fragment set:html={logo} /></div>
+                : <img src={logo} alt={company ?? ''} class="testimonial-logo h-10 w-auto max-w-full object-contain grayscale contrast-200 brightness-75" loading="lazy" />
               : company && (
                 <span class="text-sm font-medium text-gray-400 dark:text-gray-500">{company}</span>
               )
@@ -147,8 +147,8 @@ const {
           <div class="mb-4">
             {logo
               ? logo.startsWith('<')
-                ? <div class="h-8 flex items-center"><Fragment set:html={logo} /></div>
-                : <img src={logo} alt={company ?? ''} class="h-5 object-contain grayscale" loading="lazy" />
+                ? <div class="testimonial-logo h-10 flex items-center text-black"><Fragment set:html={logo} /></div>
+                : <img src={logo} alt={company ?? ''} class="testimonial-logo h-10 w-auto max-w-full object-contain grayscale contrast-200 brightness-75" loading="lazy" />
               : company && (
                 <span class="text-sm font-medium text-gray-400 dark:text-gray-500">{company}</span>
               )
@@ -167,3 +167,16 @@ const {
   )}
 
 </WidgetWrapper>
+
+<style>
+  .testimonial-logo :global(svg) {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .testimonial-logo :global(svg *) {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+</style>
