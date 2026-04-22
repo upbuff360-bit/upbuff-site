@@ -142,8 +142,8 @@ const dropdownItemHoverClass =
                     <Icon name="tabler:chevron-down" class="dropdown-chevron w-4 h-4 md:w-3.5 md:h-3.5 ml-auto md:ml-0.5 rtl:ml-0 rtl:mr-auto md:rtl:mr-0.5 transition-transform duration-200" />
                   </button>
                   <div class:list={[
-                    'dropdown-menu md:backdrop-blur-md rounded-2xl md:absolute pl-4 md:pl-0 md:hidden border dropdown-animate',
-                    isBlackTheme ? 'md:bg-[#111] border-white/10' : 'md:bg-white border-gray-300',
+                    'dropdown-menu md:backdrop-blur-md md:rounded-2xl md:absolute pl-4 md:pl-0 md:hidden md:border dropdown-animate',
+                    isBlackTheme ? 'md:bg-[#111] md:border-white/10' : 'md:bg-white md:border-gray-300',
                   ]}
                     style={`min-width: ${links.length > 4 ? '640px' : '400px'}; left: 50%; transform: translateX(-50%);`}
                   >
@@ -165,7 +165,7 @@ const dropdownItemHoverClass =
                           >
                             {icon2 && (
                               <span class:list={[
-                                'w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5',
+                                'w-7 h-7 rounded-lg hidden md:flex items-center justify-center shrink-0 mt-0.5',
                                 isBlackTheme ? 'bg-white/10' : 'bg-gray-100',
                               ]}>
                                 <Icon name={icon2} class="w-3.5 h-3.5" />
@@ -175,7 +175,7 @@ const dropdownItemHoverClass =
                               <span class="text-[0.75rem] font-semibold leading-snug">{text2}</span>
                               {desc2 && (
                                 <span class:list={[
-                                  'text-[0.65rem] font-normal leading-snug',
+                                  'text-[0.65rem] font-normal leading-snug hidden md:block',
                                   isBlackTheme ? 'text-white/50' : 'text-gray-400',
                                 ]}>
                                   {desc2}
@@ -286,29 +286,33 @@ const dropdownItemHoverClass =
 
 <script is:inline>
   (function () {
-    const init = () => {
-      const dropdowns = document.querySelectorAll('#header .dropdown');
-      dropdowns.forEach((dropdown) => {
-        const btn = dropdown.querySelector(':scope > button');
-        if (!btn || btn.dataset.dropdownBound) return;
-        btn.dataset.dropdownBound = '1';
-        btn.addEventListener('click', (e) => {
-          // Desktop uses the existing CSS hover behaviour — only intercept on mobile
-          if (window.innerWidth >= 768) return;
-          // Prevent bubbling to the global '#header nav' click handler in BasicScripts.astro,
-          // which would otherwise close the entire mobile menu on every dropdown tap.
-          e.stopPropagation();
-          const wasOpen = dropdown.classList.contains('is-open');
-          // Accordion: close all dropdowns, then re-open the tapped one if it was closed
-          dropdowns.forEach((d) => d.classList.remove('is-open'));
-          if (!wasOpen) dropdown.classList.add('is-open');
-        });
-      });
-    };
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
+    // Event delegation on document in CAPTURE phase — fires before any bubble-phase
+    // click handlers (notably the '#header nav' closer in BasicScripts.astro that
+    // would otherwise slam the mobile menu shut on every tap).
+    // Using delegation (not per-button binding) means this keeps working across
+    // Astro's client-side page transitions where the header DOM is replaced.
+    document.addEventListener(
+      'click',
+      (e) => {
+        // Desktop uses the existing CSS hover behaviour — only intercept on mobile
+        if (window.innerWidth >= 768) return;
+        // Only handle taps on (or inside) a dropdown's parent toggle button
+        const target = e.target;
+        if (!(target instanceof Element)) return;
+        const btn = target.closest('#header .dropdown > button');
+        if (!btn) return;
+        // Kill propagation so the #header nav closer never sees this click
+        e.stopPropagation();
+        const dropdown = btn.parentElement;
+        if (!dropdown) return;
+        const wasOpen = dropdown.classList.contains('is-open');
+        // Accordion: close all dropdowns, then re-open this one if it was closed
+        document
+          .querySelectorAll('#header .dropdown')
+          .forEach((d) => d.classList.remove('is-open'));
+        if (!wasOpen) dropdown.classList.add('is-open');
+      },
+      true // capture phase
+    );
   })();
 </script>
