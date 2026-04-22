@@ -136,10 +136,10 @@ const dropdownItemHoverClass =
                 <>
                   <button
                     type="button"
-                    class:list={['px-3 py-2 flex items-center whitespace-nowrap', navHoverClass]}
+                    class:list={['px-3 py-2 flex items-center whitespace-nowrap w-full md:w-auto', navHoverClass]}
                   >
                     {text}{' '}
-                    <Icon name="tabler:chevron-down" class="w-3.5 h-3.5 ml-0.5 rtl:ml-0 rtl:mr-0.5 hidden md:inline" />
+                    <Icon name="tabler:chevron-down" class="dropdown-chevron w-4 h-4 md:w-3.5 md:h-3.5 ml-auto md:ml-0.5 rtl:ml-0 rtl:mr-auto md:rtl:mr-0.5 transition-transform duration-200" />
                   </button>
                   <div class:list={[
                     'dropdown-menu md:backdrop-blur-md rounded-2xl md:absolute pl-4 md:pl-0 md:hidden border dropdown-animate',
@@ -149,7 +149,7 @@ const dropdownItemHoverClass =
                   >
                     <ul class:list={[
                       'p-3 grid gap-0.5',
-                      links.length > 4 ? 'grid-cols-2' : 'grid-cols-1',
+                      links.length > 4 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1',
                     ]}>
                       {links.map(({ text: text2, href: href2, icon: icon2, description: desc2 }) => (
                         <li>
@@ -261,13 +261,54 @@ const dropdownItemHoverClass =
   }
 
   /* Mobile: neutralise desktop-only inline positioning (min-width / left 50% / translateX -50%)
-     so the submenu flows naturally inside the mobile menu instead of clipping off-screen. */
+     so the submenu flows naturally inside the mobile menu instead of clipping off-screen.
+     Accordion is driven by an .is-open class toggled from JS below — more reliable than
+     :focus-within on iOS Safari, which doesn't focus <button> elements on tap.
+     The !important flags on display ensure our accordion state beats the global
+     .dropdown:focus-within / :hover rules in tailwind.css — otherwise the button
+     retains focus after a tap and the submenu never closes. */
   @media (max-width: 767px) {
     .dropdown-menu {
       min-width: 0 !important;
       left: auto !important;
       transform: none !important;
       animation: none !important;
+      display: none !important;
+    }
+    .dropdown.is-open > .dropdown-menu {
+      display: block !important;
+    }
+    .dropdown.is-open > button .dropdown-chevron {
+      transform: rotate(180deg);
     }
   }
 </style>
+
+<script is:inline>
+  (function () {
+    const init = () => {
+      const dropdowns = document.querySelectorAll('#header .dropdown');
+      dropdowns.forEach((dropdown) => {
+        const btn = dropdown.querySelector(':scope > button');
+        if (!btn || btn.dataset.dropdownBound) return;
+        btn.dataset.dropdownBound = '1';
+        btn.addEventListener('click', (e) => {
+          // Desktop uses the existing CSS hover behaviour — only intercept on mobile
+          if (window.innerWidth >= 768) return;
+          // Prevent bubbling to the global '#header nav' click handler in BasicScripts.astro,
+          // which would otherwise close the entire mobile menu on every dropdown tap.
+          e.stopPropagation();
+          const wasOpen = dropdown.classList.contains('is-open');
+          // Accordion: close all dropdowns, then re-open the tapped one if it was closed
+          dropdowns.forEach((d) => d.classList.remove('is-open'));
+          if (!wasOpen) dropdown.classList.add('is-open');
+        });
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
