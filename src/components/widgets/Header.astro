@@ -259,4 +259,15 @@ const dropdownItemHoverClass =
     animation: dropdown-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
     transform-origin: top center;
   }
+
+  /* Mobile: neutralise desktop-only inline positioning (min-width / left 50% / translateX -50%)
+     so the submenu flows naturally inside the mobile menu instead of clipping off-screen. */
+  @media (max-width: 767px) {
+    .dropdown-menu {
+      min-width: 0 !important;
+      left: auto !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
 </style>
