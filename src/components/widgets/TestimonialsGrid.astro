@@ -10,6 +10,8 @@ export interface TestimonialItem {
   quote: string;
   name?: string;
   role?: string;
+  /** Profile picture of the person: inline HTML/SVG string or public path used in <img> */
+  avatar?: string;
   /** Set true to make the card span 2 columns (wide card) */
   wide?: boolean;
 }
@@ -74,7 +76,7 @@ const {
   <!-- ── Row 1: up to 2 testimonials + optional stat card ───── -->
   {row1.length > 0 && (
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-      {row1.map(({ company, logo, quote, name, role, wide }, i) => (
+      {row1.map(({ company, logo, quote, name, role, avatar, wide }, i) => (
         <div
           class:list={[
             'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 flex flex-col justify-between shadow-sm',
@@ -99,10 +101,20 @@ const {
           <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed flex-1 mb-5" set:html={`"${quote}"`} />
 
           <!-- Attribution -->
-          {(name || role) && (
-            <div>
-              {name && <p class="text-sm font-bold text-heading dark:text-gray-100">{name}</p>}
-              {role && <p class="text-xs text-muted dark:text-slate-400">{role}</p>}
+          {(name || role || avatar) && (
+            <div class="flex items-center">
+              {avatar && (
+                <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-slate-800">
+                  {avatar.startsWith('<')
+                    ? <Fragment set:html={avatar} />
+                    : <img src={avatar} alt={name ?? ''} class="h-10 w-10 object-cover" loading="lazy" />
+                  }
+                </div>
+              )}
+              <div class={avatar ? 'ml-3 rtl:ml-0 rtl:mr-3' : ''}>
+                {name && <p class="text-sm font-bold text-heading dark:text-gray-100">{name}</p>}
+                {role && <p class="text-xs text-muted dark:text-slate-400">{role}</p>}
+              </div>
             </div>
           )}
         </div>
@@ -136,7 +148,7 @@ const {
   <!-- ── Row 2: full-width 2-col testimonials ─────────────── -->
   {row2.length > 0 && (
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {row2.map(({ company, logo, quote, name, role }, i) => (
+      {row2.map(({ company, logo, quote, name, role, avatar }, i) => (
         <div
           class:list={[
             'rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 flex flex-col justify-between shadow-sm',
@@ -155,10 +167,20 @@ const {
             }
           </div>
           <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed flex-1 mb-5" set:html={`"${quote}"`} />
-          {(name || role) && (
-            <div>
-              {name && <p class="text-sm font-bold text-heading dark:text-gray-100">{name}</p>}
-              {role && <p class="text-xs text-muted dark:text-slate-400">{role}</p>}
+          {(name || role || avatar) && (
+            <div class="flex items-center">
+              {avatar && (
+                <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-slate-800">
+                  {avatar.startsWith('<')
+                    ? <Fragment set:html={avatar} />
+                    : <img src={avatar} alt={name ?? ''} class="h-10 w-10 object-cover" loading="lazy" />
+                  }
+                </div>
+              )}
+              <div class={avatar ? 'ml-3 rtl:ml-0 rtl:mr-3' : ''}>
+                {name && <p class="text-sm font-bold text-heading dark:text-gray-100">{name}</p>}
+                {role && <p class="text-xs text-muted dark:text-slate-400">{role}</p>}
+              </div>
             </div>
           )}
         </div>
