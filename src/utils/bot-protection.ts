@@ -16,7 +16,7 @@ const TURNSTILE_VERIFY_URL =
 
 // Minimum time in ms between form render and submission. Real humans take
 // longer; headless bots submit in <500ms.
-const MIN_FORM_FILL_MS = 2500;
+const MIN_FORM_FILL_MS = 1200;
 
 // Update this list as your allowed front-ends expand (www variants, staging,
 // Vercel previews, local dev).

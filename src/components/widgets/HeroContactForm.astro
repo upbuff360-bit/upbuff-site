@@ -193,8 +193,8 @@ const pairMapped = pairFields.map((f) => ({
             </div>
 
             <!-- ── Timestamp of form render (filled in client-side) ─ -->
-            <input type="hidden" name="ts" id="hcf-ts" value="" />
-
+            
+          <input type="hidden" name="ts" id="hcf-ts" value={String(Date.now())} />
             <!-- Two-column row: first two text / email fields -->
             {hasPair && (
               <div class="grid grid-cols-2 gap-4">

@@ -229,7 +229,9 @@ const products = [
               </div>
 
               <!-- ── Timestamp of form render (filled in client-side) ─ -->
-              <input type="hidden" name="ts" id="cf-ts" value="" />
+              <!-- <input type="hidden" name="ts" id="cf-ts" value="" />
+                -->
+              <input type="hidden" name="ts" id="cf-ts" value={String(Date.now())} />
 
               <!-- Full Name + Email — 2 column -->
               <div class="grid grid-cols-2 gap-4">
