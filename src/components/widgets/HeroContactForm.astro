@@ -184,6 +184,17 @@ const pairMapped = pairFields.map((f) => ({
 
           <form id="hcf-form" class="flex flex-col gap-4">
 
+            <!-- ── Honeypot (invisible to real users) ──────────────── -->
+            <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+              <label>
+                Website
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+
+            <!-- ── Timestamp of form render (filled in client-side) ─ -->
+            <input type="hidden" name="ts" id="hcf-ts" value="" />
+
             <!-- Two-column row: first two text / email fields -->
             {hasPair && (
               <div class="grid grid-cols-2 gap-4">
@@ -249,6 +260,16 @@ const pairMapped = pairFields.map((f) => ({
               </div>
             ))}
 
+            <!-- ── Cloudflare Turnstile widget ──────────────────────── -->
+            <div class="flex justify-center mt-1">
+              <div
+                class="cf-turnstile"
+                data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                data-theme="light"
+                data-size="flexible"
+              />
+            </div>
+
             <!-- Submit button -->
             <button
               id="hcf-submit"
@@ -273,6 +294,21 @@ const pairMapped = pairFields.map((f) => ({
     </div>
   </div>
 
+<!-- Load Cloudflare Turnstile once. Adding it inside the widget means every
+     page that uses HeroContactForm automatically gets bot protection — no
+     per-page head changes needed. The script is idempotent. -->
+<script is:inline>
+  (function () {
+    if (document.querySelector('script[data-turnstile-loader]')) return;
+    const s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    s.async = true;
+    s.defer = true;
+    s.setAttribute('data-turnstile-loader', 'true');
+    document.head.appendChild(s);
+  })();
+</script>
+
 <script>
   (function () {
     function init() {
@@ -282,18 +318,31 @@ const pairMapped = pairFields.map((f) => ({
       const btn     = document.getElementById('hcf-submit');
       const label   = document.getElementById('hcf-btn-label');
       const spinner = document.getElementById('hcf-spinner');
+      const tsField = document.getElementById('hcf-ts');
       if (!form) return;
+
+      // Stamp the form-render time so the server can reject submissions
+      // that come in too fast (classic bot signature).
+      if (tsField) tsField.value = String(Date.now());
+
+      const originalLabel = label ? label.textContent : 'Submit';
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errBox.classList.add('hidden');
 
-        // Loading state
+        const data = Object.fromEntries(new FormData(form));
+
+        // Make sure the Turnstile widget has issued a token.
+        if (!data['cf-turnstile-response']) {
+          errBox.textContent = 'Please complete the verification and try again.';
+          errBox.classList.remove('hidden');
+          return;
+        }
+
         btn.disabled = true;
         spinner.classList.remove('hidden');
         label.textContent = 'Sending…';
-
-        const data = Object.fromEntries(new FormData(form));
 
         try {
           const res  = await fetch('/api/demo-request', {
@@ -310,10 +359,15 @@ const pairMapped = pairFields.map((f) => ({
             throw new Error(json.error ?? 'Unknown error');
           }
         } catch {
+          errBox.textContent = 'Something went wrong. Please try again.';
           errBox.classList.remove('hidden');
           btn.disabled = false;
           spinner.classList.add('hidden');
-          label.textContent = 'Book my demo';
+          label.textContent = originalLabel;
+
+          // Reset Turnstile so the user can re-submit.
+          const ts = (window as any).turnstile;
+          if (ts && typeof ts.reset === "function") ts.reset();
         }
       });
     }

@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import nodemailer from 'nodemailer';
+import { verifyFormSubmission } from '../../utils/bot-protection';
 
 export const prerender = false;
 
@@ -7,6 +8,22 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     const { name, email, erp, focus, message } = body as Record<string, string>;
+
+    // ── Bot protection (honeypot + timing + origin + content + Turnstile) ──
+    const check = await verifyFormSubmission(body as Record<string, string>, request);
+    if (!check.ok) {
+      console.warn(
+        '[demo-request] blocked:',
+        check.reason,
+        'ip:',
+        request.headers.get('x-forwarded-for') ?? 'unknown'
+      );
+      // Fake success — don't tell bots which layer caught them.
+      return new Response(
+        JSON.stringify({ success: true }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
     if (!name?.trim() || !email?.trim()) {
       return new Response(

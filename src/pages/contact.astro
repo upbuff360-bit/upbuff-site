@@ -49,6 +49,8 @@ const products = [
   <Fragment slot="head">
     <meta name="author" content="UpBuff Technologies" />
     <meta property="og:site_name" content="UpBuff Technologies" />
+    <!-- Cloudflare Turnstile — invisible bot protection for the contact form -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -218,6 +220,17 @@ const products = [
 
             <form id="cf-form" class="flex flex-col gap-4" novalidate>
 
+              <!-- ── Honeypot (invisible to real users) ──────────────── -->
+              <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+                <label>
+                  Website
+                  <input type="text" name="website" tabindex="-1" autocomplete="off" />
+                </label>
+              </div>
+
+              <!-- ── Timestamp of form render (filled in client-side) ─ -->
+              <input type="hidden" name="ts" id="cf-ts" value="" />
+
               <!-- Full Name + Email — 2 column -->
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
@@ -298,6 +311,16 @@ const products = [
                 <a href="/legal/privacy" class="text-purple-600 hover:underline font-medium">Privacy Policy</a>
               </p>
 
+              <!-- ── Cloudflare Turnstile widget ──────────────────────── -->
+              <div class="flex justify-center mt-1">
+                <div
+                  class="cf-turnstile"
+                  data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                  data-theme="light"
+                  data-size="flexible"
+                />
+              </div>
+
               <!-- Submit -->
               <button
                 id="cf-submit"
@@ -370,17 +393,29 @@ const products = [
       const btn     = document.getElementById('cf-submit');
       const label   = document.getElementById('cf-btn-label');
       const spinner = document.getElementById('cf-spinner');
+      const tsField = document.getElementById('cf-ts');
       if (!form) return;
+
+      // Stamp the form-render time so the server can reject submissions
+      // that come in too fast (classic bot signature).
+      if (tsField) tsField.value = String(Date.now());
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errBox.classList.add('hidden');
 
+        const data = Object.fromEntries(new FormData(form));
+
+        // Make sure the Turnstile widget has issued a token.
+        if (!data['cf-turnstile-response']) {
+          errBox.textContent = 'Please complete the verification and try again.';
+          errBox.classList.remove('hidden');
+          return;
+        }
+
         btn.disabled = true;
         spinner.classList.remove('hidden');
         label.textContent = 'Sending…';
-
-        const data = Object.fromEntries(new FormData(form));
 
         try {
           const res  = await fetch('/api/contact', {
@@ -397,10 +432,15 @@ const products = [
             throw new Error(json.error ?? 'Unknown error');
           }
         } catch {
+          errBox.textContent = 'Something went wrong. Please try again.';
           errBox.classList.remove('hidden');
           btn.disabled = false;
           spinner.classList.add('hidden');
           label.textContent = 'Send message';
+
+          // Reset Turnstile so the user can re-submit.
+          const ts = (window as any).turnstile;
+          if (ts && typeof ts.reset === "function") ts.reset();
         }
       });
     }
