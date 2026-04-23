@@ -228,9 +228,8 @@ const products = [
                 </label>
               </div>
 
-              <!-- ── Timestamp of form render (filled in client-side) ─ -->
-              <!-- <input type="hidden" name="ts" id="cf-ts" value="" />
-                -->
+              <!-- ── Timestamp seeded at SSR; preserves real form-render time
+                   so humans clear the timing check with room to spare.    ── -->
               <input type="hidden" name="ts" id="cf-ts" value={String(Date.now())} />
 
               <!-- Full Name + Email — 2 column -->
@@ -398,9 +397,18 @@ const products = [
       const tsField = document.getElementById('cf-ts');
       if (!form) return;
 
-      // Stamp the form-render time so the server can reject submissions
-      // that come in too fast (classic bot signature).
-      if (tsField) tsField.value = String(Date.now());
+      // The `ts` input is already seeded server-side at SSR. Only refresh it
+      // if it's missing or genuinely stale (>1h old) — this handles Astro
+      // View Transitions re-using a cached HTML fragment after hours.
+      // CRITICAL: do NOT reset it on every load, or quick human submissions
+      // get blocked as "too_fast".
+      if (tsField) {
+        const existing = Number(tsField.value);
+        const oneHourAgo = Date.now() - (60 * 60 * 1000);
+        if (!existing || Number.isNaN(existing) || existing < oneHourAgo) {
+          tsField.value = String(Date.now());
+        }
+      }
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();

@@ -14,8 +14,9 @@
 const TURNSTILE_VERIFY_URL =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
-// Minimum time in ms between form render and submission. Real humans take
-// longer; headless bots submit in <500ms.
+// Minimum time in ms between form render (SSR) and submission. Real humans
+// and the network round-trip together exceed 1s easily. Headless bots
+// that fetch the HTML and immediately POST submit within 50-400ms.
 const MIN_FORM_FILL_MS = 1200;
 
 // Update this list as your allowed front-ends expand (www variants, staging,
