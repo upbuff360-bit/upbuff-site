@@ -295,18 +295,57 @@ const pairMapped = pairFields.map((f) => ({
     </div>
   </div>
 
-<!-- Load Cloudflare Turnstile once. Adding it inside the widget means every
-     page that uses HeroContactForm automatically gets bot protection — no
-     per-page head changes needed. The script is idempotent. -->
+<!-- Cloudflare Turnstile loader — compatible with Astro View Transitions.
+     The default auto-render only scans the DOM once. When the user navigates
+     between pages via ClientRouter, the widget div is re-mounted but never
+     rendered. We explicitly render any un-rendered widget on every page-load. -->
 <script is:inline>
   (function () {
-    if (document.querySelector('script[data-turnstile-loader]')) return;
-    const s = document.createElement('script');
-    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-    s.async = true;
-    s.defer = true;
-    s.setAttribute('data-turnstile-loader', 'true');
-    document.head.appendChild(s);
+    function ensureTurnstileScript() {
+      if (document.querySelector('script[data-turnstile-loader]')) return;
+      const s = document.createElement('script');
+      // ?render=explicit — tells Turnstile not to auto-scan; we'll render manually.
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.defer = true;
+      s.setAttribute('data-turnstile-loader', 'true');
+      document.head.appendChild(s);
+    }
+
+    function renderAllWidgets() {
+      if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+        // Script hasn't loaded yet — retry in 200ms (max ~3s total).
+        if ((window.__tsRetries || 0) < 15) {
+          window.__tsRetries = (window.__tsRetries || 0) + 1;
+          setTimeout(renderAllWidgets, 200);
+        }
+        return;
+      }
+      window.__tsRetries = 0;
+      document.querySelectorAll('.cf-turnstile').forEach(function (el) {
+        // Skip if already rendered (element gets a data-widget-id attr).
+        if (el.getAttribute('data-rendered') === 'true') return;
+        const sitekey = el.getAttribute('data-sitekey');
+        if (!sitekey) return;
+        try {
+          window.turnstile.render(el, {
+            sitekey: sitekey,
+            theme:   el.getAttribute('data-theme') || 'auto',
+            size:    el.getAttribute('data-size')  || 'normal',
+          });
+          el.setAttribute('data-rendered', 'true');
+        } catch (err) {
+          // Most common reason: widget already rendered by auto-scan on a prior load.
+          console.warn('[turnstile] render skipped:', err);
+        }
+      });
+    }
+
+    ensureTurnstileScript();
+
+    // Fire on first load AND after every View Transition navigation.
+    document.addEventListener('DOMContentLoaded', renderAllWidgets);
+    document.addEventListener('astro:page-load', renderAllWidgets);
   })();
 </script>
 

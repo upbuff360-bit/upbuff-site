@@ -49,8 +49,6 @@ const products = [
   <Fragment slot="head">
     <meta name="author" content="UpBuff Technologies" />
     <meta property="og:site_name" content="UpBuff Technologies" />
-    <!-- Cloudflare Turnstile — invisible bot protection for the contact form -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -384,6 +382,54 @@ const products = [
     ]}
   />
 
+
+<!-- Cloudflare Turnstile loader — compatible with Astro View Transitions.
+     The default auto-render only scans the DOM once. When the user navigates
+     between pages via ClientRouter, the widget div is re-mounted but never
+     rendered. We explicitly render any un-rendered widget on every page-load. -->
+<script is:inline>
+  (function () {
+    function ensureTurnstileScript() {
+      if (document.querySelector('script[data-turnstile-loader]')) return;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.defer = true;
+      s.setAttribute('data-turnstile-loader', 'true');
+      document.head.appendChild(s);
+    }
+
+    function renderAllWidgets() {
+      if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+        if ((window.__tsRetries || 0) < 15) {
+          window.__tsRetries = (window.__tsRetries || 0) + 1;
+          setTimeout(renderAllWidgets, 200);
+        }
+        return;
+      }
+      window.__tsRetries = 0;
+      document.querySelectorAll('.cf-turnstile').forEach(function (el) {
+        if (el.getAttribute('data-rendered') === 'true') return;
+        const sitekey = el.getAttribute('data-sitekey');
+        if (!sitekey) return;
+        try {
+          window.turnstile.render(el, {
+            sitekey: sitekey,
+            theme:   el.getAttribute('data-theme') || 'auto',
+            size:    el.getAttribute('data-size')  || 'normal',
+          });
+          el.setAttribute('data-rendered', 'true');
+        } catch (err) {
+          console.warn('[turnstile] render skipped:', err);
+        }
+      });
+    }
+
+    ensureTurnstileScript();
+    document.addEventListener('DOMContentLoaded', renderAllWidgets);
+    document.addEventListener('astro:page-load', renderAllWidgets);
+  })();
+</script>
 
 <script>
   (function () {
