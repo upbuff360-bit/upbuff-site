@@ -1,18 +1,16 @@
 import type { APIRoute } from 'astro';
-import fs from 'fs';
-import path from 'path';
 
 export const GET: APIRoute = async () => {
   try {
-    const filePath = path.resolve('./dist/client/sitemap-index.xml');
-    const sitemap = fs.readFileSync(filePath, 'utf-8');
+    const response = await fetch('https://www.upbuff.com/sitemap-index.xml');
+    const data = await response.text();
 
-    return new Response(sitemap, {
+    return new Response(data, {
       headers: {
         'Content-Type': 'application/xml',
       },
     });
-  } catch (error) {
+  } catch (e) {
     return new Response('Sitemap not found', { status: 404 });
   }
 };
