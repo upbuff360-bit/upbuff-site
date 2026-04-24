@@ -1,0 +1,334 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, F as Fragment, u as unescapeHTML } from '../../chunks/astro/server_BONdxEiL.mjs';
+import 'piccolore';
+import { $ as $$PageLayout } from '../../chunks/PageLayout_BS2WX63q.mjs';
+import { $ as $$HeroOrbital } from '../../chunks/HeroOrbital_DGRKs8Ra.mjs';
+import { $ as $$LogoBar } from '../../chunks/LogoBar_B0qNkUOO.mjs';
+import { $ as $$ProblemSplit } from '../../chunks/ProblemSplit_DnEMhGvb.mjs';
+import { $ as $$FeaturesGrid } from '../../chunks/FeaturesGrid_CwyGxRwy.mjs';
+import { a as $$FeaturesCarousel, $ as $$ContentSplitCard } from '../../chunks/ContentSplitCard_uJ1VUM9r.mjs';
+import { $ as $$FeaturesBento } from '../../chunks/FeaturesBento_BwQmc_H1.mjs';
+import { $ as $$FeaturesHighlights, a as $$TestimonialsGrid } from '../../chunks/TestimonialsGrid_CHsF45-x.mjs';
+import { $ as $$SecuritySplit } from '../../chunks/SecuritySplit_C3Zm8LcA.mjs';
+import { $ as $$ToolsMarquee } from '../../chunks/ToolsMarquee_TPsf7ym1.mjs';
+import { $ as $$FaqAccordion } from '../../chunks/FaqAccordion_DHd6Sfjj.mjs';
+import { $ as $$CtaBanner } from '../../chunks/CtaBanner_CHQ1omhl.mjs';
+export { renderers } from '../../renderers.mjs';
+
+var __freeze = Object.freeze;
+var __defProp = Object.defineProperty;
+var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
+var _a;
+const $$ErpIntegratedWarehouseInventory = createComponent(($$result, $$props, $$slots) => {
+  const metadata = {
+    title: "ERP-Integrated Warehouse & Inventory Management for SAP | UpBuff",
+    description: "Extend SAP S/4HANA, ECC, and SAP Business One with real-time warehouse and inventory execution. Barcode-enabled, mobile-first, and securely integrated with SAP systems.",
+    canonical: "https://www.upbuff.com/products/erp-integrated-warehouse-inventory/",
+    robots: { index: true, follow: true },
+    openGraph: {
+      type: "website",
+      url: "https://www.upbuff.com/products/erp-integrated-warehouse-inventory",
+      title: "ERP-Integrated Warehouse & Inventory Management | UpBuff",
+      description: "Real-time warehouse execution integrated with SAP S/4HANA, ECC, and SAP Business One. Improve inventory accuracy and operational control.",
+      image: "https://www.upbuff.com/images/erp-warehouse-og.jpg"
+    },
+    twitter: {
+      cardType: "summary_large_image",
+      title: "ERP-Integrated Warehouse & Inventory | UpBuff",
+      description: "Real-time warehouse execution integrated with SAP \u2014 barcode-enabled, mobile-first, no core modifications."
+    }
+  };
+  return renderTemplate`${renderComponent($$result, "Layout", $$PageLayout, { "metadata": metadata }, { "announcement": ($$result2) => renderTemplate`${renderComponent($$result2, "Fragment", Fragment, { "slot": "announcement" })}`, "default": ($$result2) => renderTemplate`    ${renderComponent($$result2, "HeroOrbital", $$HeroOrbital, { "tagline": "ERP-Integrated Warehouse & Inventory", "title": "Real-Time Warehouse Execution Connected to SAP", "subtitle": "UpBuff ERP-Integrated Warehouse & Inventory is a Warehouse Management System (WMS) for SAP that extends SAP S/4HANA, ECC, and SAP Business One into real-time warehouse operations \u2014 without modifying core ERP. It acts as an ERP Execution Layer, transforming SAP inventory data into live execution across warehouses, stores, and distribution centers. ERP remains the system of record, while UpBuff enables real-time warehouse execution across operations.", "actions": [
+    { text: "Request Demo", href: "/contact", variant: "primary" },
+    { text: "Talk to ERP Expert", href: "/contact", variant: "secondary" }
+  ], "image": {
+    src: "/uploads/SAP-Integrated-Warehouse-Inventory-Management.png",
+    alt: "UpBuff ERP-Integrated Warehouse & Inventory \u2014 real-time SAP warehouse execution"
+  } })}  ${renderComponent($$result2, "LogoBar", $$LogoBar, { "label": "Trusted by warehouse enterprises & SAP partners worldwide", "logos": [
+    { src: "/uploads/ideaForge-logo.svg", alt: "ideaForge logo" },
+    { src: "/uploads/jnk-chemdist-logo.svg", alt: "jnk chemdist logo" },
+    { src: "/uploads/molygraph-logo.svg", alt: "molygraph logo" },
+    { src: "/uploads/ncc-streetscape-logo.svg", alt: "ncc streetscape logo" },
+    { src: "/uploads/roofsol-logo.svg", alt: "roofsol logo" },
+    { src: "/uploads/the-wine-source-logo.svg", alt: "the wine source logo" }
+  ] })}  ${renderComponent($$result2, "ProblemSplit", $$ProblemSplit, { "tagline": "The Problem", "title": "SAP inventory data stays locked inside ERP \u2014 while warehouse teams work in the dark", "subtitle": "SAP holds your stock levels, bin locations, goods movements, and purchase orders \u2014 but warehouse operators can't access or update them in real time. The result is inventory variance, delayed shipments, and costly manual reconciliation.", "items": [
+    {
+      title: "Manual paper-based processes",
+      description: "Goods receipt, stock transfers, and cycle counts still done on paper \u2014 creating data entry delays, errors, and reconciliation overhead."
+    },
+    {
+      title: "Inventory discrepancies",
+      description: "SAP stock levels and physical warehouse inventory diverge over time \u2014 causing stockouts, oversupply, and incorrect fulfillment."
+    },
+    {
+      title: "No real-time bin visibility",
+      description: "Operators cannot see live bin locations, batch numbers, or serial numbers from SAP without logging into desktop ERP \u2014 slowing every pick, pack, and dispatch cycle."
+    },
+    {
+      title: "Multi-warehouse blind spots",
+      description: "Managing distributed warehouses without centralized real-time SAP visibility leads to inter-warehouse transfer errors and stock misalignment."
+    }
+  ] })}  ${renderComponent($$result2, "FeaturesGrid", $$FeaturesGrid, { "tagline": "Solution", "title": "Why Choose UpBuff ERP-Integrated Warehouse & Inventory?", "subtitle": "Each capability is purpose-built to enhance SAP warehouse execution while keeping ERP as the system of record.", "items": [
+    {
+      icon: "tabler:database",
+      title: "Native SAP Integration",
+      description: "Bi-directional integration using SAP Service Layer, OData, IDoc, and BAPI. No core SAP customization required \u2014 maintain ERP stability while enabling real-time operations."
+    },
+    {
+      icon: "tabler:eye",
+      title: "Real-Time Stock Visibility",
+      description: "Live inventory synchronization between warehouse floor and SAP. Eliminate manual reconciliation and delayed updates across bins, batches, and serial numbers."
+    },
+    {
+      icon: "tabler:barcode",
+      title: "Barcode & Mobile-Driven Execution",
+      description: "Enable goods receipt, goods issue, stock transfer, picking, cycle count, and inventory adjustments via handheld or mobile devices \u2014 with automatic SAP sync."
+    },
+    {
+      icon: "tabler:building-warehouse",
+      title: "Multi-Warehouse & Multi-Location",
+      description: "Manage distributed warehouses with centralized SAP-driven inventory control and localized execution flexibility across sites and geographies."
+    },
+    {
+      icon: "tabler:refresh",
+      title: "ERP-Synced Inventory Movements",
+      description: "Every transaction \u2014 GRN, transfer, goods issue, adjustment \u2014 automatically updates SAP in real time. No batch uploads, no manual re-entry."
+    },
+    {
+      icon: "tabler:shield-lock",
+      title: "Audit-Ready & Role-Based Operations",
+      description: "Complete traceability of all user actions mapped to SAP roles. Enforced access controls, transaction logs, and audit documentation built in."
+    }
+  ] })}  ${renderComponent($$result2, "FeaturesCarousel", $$FeaturesCarousel, { "tagline": "Use Cases", "title": "How SAP enterprises use UpBuff Warehouse & Inventory", "subtitle": "Discover how ERP-Integrated warehouse execution transforms SAP-based supply chains across distribution, manufacturing, retail, and asset management.", "items": [
+    {
+      gradient: "linear-gradient(135deg, #1d4ed8 0%, #0891b2 100%)",
+      title: "Accelerate Picking, Packing & Dispatch",
+      description: "Enable high-volume warehouse execution directly integrated with SAP inventory. Faster picking accuracy, reduced dispatch errors, real-time stock updates, and improved order fulfillment speed \u2014 all synchronized to SAP automatically.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Distribution-Centers.png" class="w-full object-top" alt="Distribution Centers warehouse execution" loading="lazy" /></div>'
+    },
+    {
+      gradient: "linear-gradient(135deg, #065f46 0%, #0f766e 100%)",
+      title: "Manage Raw Materials & WIP Efficiently",
+      description: "Track raw materials, WIP movement, and finished goods linked directly to SAP production orders. Accurate material consumption, reduced inventory variance, live production inventory visibility, and ERP-aligned stock control.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Manufacturing-Inventory-Control.png" class="w-full object-top" alt="Manufacturing Inventory Control" loading="lazy" /></div>'
+    },
+    {
+      gradient: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
+      title: "Centralized Inventory Across Locations",
+      description: "Synchronize store-level inventory with SAP in real time across multiple retail locations. Live stock availability, simplified store transfers, reduced stock-outs, and centralized reporting \u2014 with SAP as the single source of truth.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Retail-and-Multi-Store-Operations.png" class="w-full object-top" alt="Retail and Multi-Store Operations" loading="lazy" /></div>'
+    },
+    {
+      gradient: "linear-gradient(135deg, #b45309 0%, #d97706 100%)",
+      title: "Maintain Inventory Accuracy for Assets",
+      description: "Track serialized assets and spare parts integrated with SAP maintenance modules. Serial number traceability, maintenance inventory accuracy, audit-ready documentation, and reduced shrinkage \u2014 for field service and asset-intensive industries.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Asset-and-Spare-Parts-Management.png" class="w-full object-top" alt="Asset and Spare Parts Management" loading="lazy" /></div>'
+    }
+  ] })}  ${renderComponent($$result2, "ContentSplitCard", $$ContentSplitCard, { "tagline": "Built for SAP Enterprises", "title": "It enhances ERP \u2014 it does not replace it", "cardTitle": "Native SAP connectivity across every deployment model", "cardDescription": "UpBuff Warehouse & Inventory integrates with SAP S/4HANA via OData, IDoc, and BAPI. SAP ECC via BAPI and IDoc. SAP Business One via Service Layer. Oracle and Epicor via flexible REST/SOAP connectors. No core SAP customization. No direct database writes. Every warehouse transaction flows back into SAP as the system of record.", "cardImage": "/uploads/sap-compatibility.png", "cardGradient": "linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #0891b2 100%)", "testimonial": {
+    quote: "Switching from Oracle e-Business Suite to SAP B1 with UpBuff was a great decision, as they delivered mobile and web solutions connecting our van sales, warehouses, and suppliers in real time. Their expertise in ZRA e-invoicing and SAP integration significantly improved our operational efficiency",
+    name: "CTO",
+    company: "Gourock Zambia Ltd",
+    avatar: "/uploads/gaurock-client.png"
+  }, "features": [
+    {
+      icon: "tabler:check",
+      title: "SAP S/4HANA",
+      description: "Full integration using OData, IDoc, BAPI, and secure APIs for real-time warehouse execution."
+    },
+    {
+      icon: "tabler:check",
+      title: "SAP ECC & Business One",
+      description: "Native Service Layer for B1, BAPI for ECC \u2014 bi-directional real-time sync across all operations."
+    },
+    {
+      icon: "tabler:check",
+      title: "Oracle, Epicor & Hybrid deployments",
+      description: "Flexible API-based connectivity for Oracle, Epicor, and hybrid on-premise/cloud environments."
+    }
+  ] })}  ${renderComponent($$result2, "FeaturesHighlights", $$FeaturesHighlights, { "tagline": "Platform Pillars", "title": "Three pillars of ERP-integrated warehouse execution", "subtitle": "UpBuff Warehouse & Inventory is built on three architectural principles \u2014 real-time SAP data, barcode-driven mobile execution, and enterprise-grade governance.", "items": [
+    {
+      title: "Barcode-Driven Real-Time Execution",
+      description: "Every warehouse operation \u2014 goods receipt, stock transfer, picking, cycle count, goods issue \u2014 is triggered by barcode scan and instantly synchronized to SAP. No manual data entry. No batch uploads. No reconciliation.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-56 p-4 flex flex-col items-center gap-4"><div class="w-full h-24 bg-gray-100 rounded-lg relative overflow-hidden flex items-center justify-center"><div class="flex items-end h-14 px-4"><div class="w-[2px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[3px] h-14 bg-black mr-[2px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[2px] h-14 bg-black mr-[2px]"></div><div class="w-[3px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[2px] h-14 bg-black mr-[2px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[3px] h-14 bg-black mr-[2px]"></div><div class="w-[2px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[3px] h-14 bg-black mr-[2px]"></div><div class="w-[2px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[2px] h-14 bg-black mr-[2px]"></div><div class="w-[3px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[2px] h-14 bg-black mr-[2px]"></div><div class="w-[3px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black mr-[1px]"></div><div class="w-[2px] h-14 bg-black mr-[2px]"></div><div class="w-[3px] h-14 bg-black mr-[1px]"></div><div class="w-[1px] h-14 bg-black"></div></div><div class="absolute left-0 right-0 top-0 h-[2px] bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.9)] animate-[scanY_1.8s_linear_infinite_alternate]"></div></div><div class="w-full flex flex-col gap-2"><div class="h-3 bg-gray-200 rounded w-3/4 overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="h-3 bg-gray-100 rounded w-full overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div></div><div class="text-xs text-green-600 font-medium animate-pulse">Scanned \xB7 Synced to SAP</div></div></div>'
+    },
+    {
+      title: "Live SAP Inventory Visibility",
+      description: "Warehouse operators see live SAP stock levels, bin locations, batch numbers, and serial numbers on mobile devices \u2014 without logging into SAP desktop. Every movement updates SAP immediately across all warehouses and distribution centers.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-56 p-4 flex flex-col gap-3"><div class="text-xs font-semibold text-gray-700 text-center">Warehouse \xB7 Live View</div><div class="grid grid-cols-3 gap-2"><div class="h-10 rounded-lg bg-green-100 flex items-center justify-center text-[10px] text-green-700 font-medium">A1</div><div class="h-10 rounded-lg bg-green-200 flex items-center justify-center text-[10px] text-green-800 font-medium animate-pulse">A2</div><div class="h-10 rounded-lg bg-yellow-100 flex items-center justify-center text-[10px] text-yellow-700 font-medium">A3</div><div class="h-10 rounded-lg bg-green-100 flex items-center justify-center text-[10px] text-green-700 font-medium">B1</div><div class="h-10 rounded-lg bg-red-100 flex items-center justify-center text-[10px] text-red-700 font-medium">B2</div><div class="h-10 rounded-lg bg-green-100 flex items-center justify-center text-[10px] text-green-700 font-medium">B3</div></div><div class="flex justify-between text-[10px] text-gray-500 mt-1"><span>Green: In Stock</span><span>Red: Empty</span></div><div class="h-2 bg-gray-200 rounded overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="text-[10px] text-green-600 text-center font-medium animate-pulse">Real-time SAP sync across bins</div></div></div>'
+    },
+    {
+      title: "Multi-Warehouse Governance",
+      description: "Centralized SAP-driven inventory control across multiple warehouses, stores, and distribution centers \u2014 with role-based access, full transaction audit trails, and configurable approval workflows mapped directly to SAP governance.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-56 p-4 flex flex-col gap-3"><div class="text-xs font-semibold text-gray-700">Warehouse A \xB7 Bin A-102</div><div class="flex flex-col gap-2"><div class="bg-gray-100 rounded-lg px-3 py-2 flex justify-between items-center text-xs"><span class="text-gray-700">Item #54223</span><span class="text-green-600 font-medium">In Stock</span></div><div class="bg-gray-50 rounded-lg px-3 py-2 text-[10px] text-gray-500 flex justify-between"><span>Batch: B-204</span><span>Serial: SN-8892</span></div><div class="h-2 bg-gray-200 rounded overflow-hidden"><div class="h-full w-3/4 bg-green-500 rounded animate-[progressGrow_3s_linear_infinite]"></div></div></div><div class="h-3 bg-gray-200 rounded w-4/5 overflow-hidden relative"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-[shimmer_1.5s_infinite]"></div></div><div class="text-[10px] text-green-600 text-center font-medium animate-pulse">Live SAP Sync \xB7 Updated now</div></div></div>'
+    }
+  ] })}  ${renderComponent($$result2, "FeaturesBento", $$FeaturesBento, { "tagline": "Warehouse Operations", "title": "Every warehouse operation connected to SAP", "subtitle": "UpBuff covers the complete warehouse execution cycle \u2014 from goods receipt to dispatch \u2014 all synchronized to SAP in real time.", "items": [
+    {
+      wide: true,
+      title: "Goods Receipt & Inbound Processing",
+      description: "Receive goods against SAP purchase orders using barcode scanning. Validate quantities, inspect quality, assign bin locations, and post GRN directly to SAP \u2014 all from a mobile device. Automatic SAP inventory update on completion.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6"><div class="bg-white rounded-2xl shadow-md w-96 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-gray-700 text-center">Inbound Processing \xB7 GRN</div><div class="flex items-center justify-between text-[10px] text-gray-500"><span>Scan</span><span>Validate</span><span>Assign</span><span>SAP</span></div><div class="relative h-2 bg-gray-200 rounded overflow-hidden"><div class="absolute left-0 top-0 h-full bg-blue-500 rounded animate-[progressGrow_10s_linear_infinite]" style="width: 60%"></div></div><div class="flex justify-between text-[10px]"><span class="text-green-600 font-medium">\u2713 PO Scanned</span><span class="text-green-600 font-medium">\u2713 Qty OK</span><span class="text-blue-600 font-medium animate-pulse">Assigning Bin</span><span class="text-gray-400">Pending</span></div><div class="bg-gray-50 rounded-lg px-3 py-2 text-[10px] text-gray-600 flex justify-between"><span>PO: 45002341</span><span>Items: 24</span></div><div class="text-[10px] text-blue-600 text-center font-medium animate-pulse">Posting GRN to SAP...</div></div></div>'
+    },
+    {
+      wide: true,
+      title: "Picking, Packing & Dispatch",
+      description: "Wave-based or order-by-order picking with barcode-guided bin navigation. Pack confirmation, weight capture, and dispatch documentation \u2014 all automatically posted to SAP sales orders and delivery notes without manual re-entry.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 p-6"><div class="bg-white rounded-2xl shadow-md w-96 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-gray-700 text-center">Order Fulfilment \xB7 Dispatch</div><div class="flex items-center justify-between text-[10px] text-gray-500"><span>Pick</span><span>Pack</span><span>Ship</span><span>SAP</span></div><div class="relative h-2 bg-gray-200 rounded overflow-hidden"><div class="absolute left-0 top-0 h-full bg-green-500 rounded animate-[progressGrow_3s_linear_infinite]" style="width: 75%"></div></div><div class="flex justify-between text-[10px]"><span class="text-green-600 font-medium">\u2713 Picked</span><span class="text-green-600 font-medium">\u2713 Packed</span><span class="text-blue-600 font-medium animate-pulse">Dispatching</span><span class="text-gray-400">Pending</span></div><div class="bg-gray-50 rounded-lg px-3 py-2 text-[10px] text-gray-600 grid grid-cols-2 gap-1"><span>Order: SO-10452</span><span class="text-right">Items: 12</span><span>Weight: 18.4 kg</span><span class="text-right">Boxes: 3</span></div><div class="text-[10px] text-green-600 text-center font-medium animate-pulse">Posting delivery to SAP...</div></div></div>'
+    },
+    {
+      title: "Stock Transfers",
+      description: "Inter-bin and inter-warehouse transfers initiated from mobile. SAP inventory updated in real time \u2014 no manual transfer orders.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-purple-50 to-purple-100 p-6"><div class="bg-white rounded-2xl shadow-md w-64 p-4 flex flex-col items-center gap-4"><div class="text-xs font-semibold text-gray-700">Stock Transfer</div><div class="flex items-center justify-between w-full"><div class="flex flex-col items-center gap-1"><div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-[10px] text-purple-700 font-semibold">A1</div><span class="text-[10px] text-gray-500">Source</span></div><div class="relative flex-1 mx-2 h-[2px] bg-gray-200 overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-[shimmer_1.2s_infinite]"></div><div class="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-purple-500 rounded-full animate-[moveX_2s_linear_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="w-12 h-12 bg-purple-200 rounded-lg flex items-center justify-center text-[10px] text-purple-800 font-semibold">B4</div><span class="text-[10px] text-gray-500">Destination</span></div></div><div class="text-[10px] text-purple-600 font-medium animate-pulse">Updating SAP Inventory...</div></div></div>'
+    },
+    {
+      title: "Cycle Count & Physical Inventory",
+      description: "Mobile-guided cycle counts with automatic SAP inventory reconciliation. Variance reporting and adjustment posting without desktop ERP access.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100 p-6"><div class="bg-white rounded-2xl shadow-md w-56 p-4 flex flex-col items-center gap-4"><div class="text-xs font-semibold text-gray-700">Cycle Count \xB7 Live Scan</div><div class="flex flex-col gap-2 w-full"><div class="bg-gray-100 rounded-lg px-3 py-2 flex items-center justify-between text-[10px] text-gray-600 animate-pulse"><span>Item scanned</span><span class="text-green-600 font-medium">\u2713</span></div><div class="bg-gray-50 rounded-lg px-3 py-2 flex items-center justify-between text-[10px] text-gray-500"><span>Item scanned</span><span class="text-green-600">\u2713</span></div></div><div class="text-[10px] text-orange-600 text-center font-medium animate-pulse">Reconciling with SAP...</div></div></div>'
+    },
+    {
+      title: "Batch & Serial Tracking",
+      description: "Full traceability for batch-managed and serial-tracked inventory. Expiry dates, FIFO enforcement, and SAP batch classification enforced at scan.",
+      image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-50 to-blue-100 p-6"><div class="bg-white rounded-2xl shadow-md w-60 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-gray-700 text-center">Batch Traceability</div><div class="relative flex flex-col gap-4 pl-4"><div class="absolute left-1 top-0 bottom-0 w-[2px] bg-gray-200 overflow-hidden"><div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-[flowY_1.5s_infinite]"></div></div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-cyan-500 rounded-full"></div><span class="text-[10px] text-gray-600">Batch Created \xB7 B-204</span></div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></div><span class="text-[10px] text-gray-600">Moved to Bin A1</span></div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-yellow-500 rounded-full"></div><span class="text-[10px] text-gray-600">Expiry: 12 Oct 2026</span></div></div><div class="text-[10px] text-cyan-600 text-center font-medium animate-pulse">Live SAP batch tracking</div></div></div>'
+    }
+  ] })}  ${renderComponent($$result2, "SecuritySplit", $$SecuritySplit, { "tagline": "Enterprise Security", "title": "Secure by design \u2014<br />SAP integrity preserved at every operation", "subtitle": "Every warehouse transaction is API-governed, role-controlled, and audit-logged. SAP remains the authoritative system of record \u2014 no direct database writes, no core modifications.", "features": [
+    {
+      title: "API-only SAP integration",
+      description: "All inventory movements flow through official SAP APIs \u2014 Service Layer, OData, BAPI. No direct database writes, no undocumented hooks, no upgrade risk.",
+      illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" class="w-20 h-16" fill="none"><ellipse cx="40" cy="16" rx="28" ry="10" stroke="url(#wdb)" stroke-width="2.5"/><path d="M12 16v20c0 5.523 12.536 10 28 10s28-4.477 28-10V16" stroke="url(#wdb)" stroke-width="2.5"/><path d="M12 36v16c0 5.523 12.536 10 28 10s28-4.477 28-10V36" stroke="url(#wdb)" stroke-width="2.5"/><circle cx="40" cy="38" r="3" fill="#1d4ed8"/><defs><linearGradient id="wdb" x1="12" y1="0" x2="68" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#1d4ed8"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs></svg>'
+    },
+    {
+      title: "Role-based access & user mapping",
+      description: "Warehouse user permissions mapped directly to SAP roles. Operators can only perform transactions their SAP profile authorizes \u2014 no permission escalation possible.",
+      illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="20" y="36" width="40" height="30" rx="6" stroke="url(#wlk)" stroke-width="2.5"/><path d="M28 36V26a12 12 0 0124 0v10" stroke="url(#wlk)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#22c55e"/><defs><linearGradient id="wlk" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs></svg>'
+    },
+    {
+      title: "Full transaction audit trail",
+      description: "Every scan, every inventory movement, every SAP posting \u2014 logged immutably with user ID, timestamp, device, quantity, and SAP document reference. Exportable for compliance and audit teams.",
+      illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="14" y="14" width="52" height="52" rx="8" stroke="url(#wbx)" stroke-width="2.5"/><path d="M26 40h28M26 52h18M26 28h28" stroke="url(#wbx)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="wbx" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>'
+    }
+  ] })}  ${renderComponent($$result2, "ToolsMarquee", $$ToolsMarquee, { "title": "Connects your warehouse to your entire enterprise ecosystem", "description": "UpBuff Warehouse & Inventory integrates with SAP and connects to the supply chain, communication, and analytics platforms your operations teams rely on.", "speed": 30, "tools": [
+    { name: "Calendar", logo: '<img src="/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "Epicor", logo: '<img src="/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "SAP", logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "Gmail", logo: '<img src="/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "IoT", logo: '<img src="/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "SAP S/4HANA", logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "Oracle", logo: '<img src="/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "Outlook", logo: '<img src="/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "Power BI", logo: '<img src="/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "SAP Business One", logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "SMS", logo: '<img src="/uploads/logo/sms-integration-with-upbuff-crm.png" alt="SMS integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "VoIP", logo: '<img src="/uploads/logo/voip-integration-with-upbuff-crm.png" alt="VoIP integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "WhatsApp", logo: '<img src="/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
+    { name: "Zoho", logo: '<img src="/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff CRM" class="w-10 h-10 object-contain" />' }
+  ] })}  ${renderComponent($$result2, "TestimonialsGrid", $$TestimonialsGrid, { "title": "What warehouse teams say", "subtitle": "Trusted by enterprises running SAP S/4HANA, SAP Business One, and Oracle ERP for warehouse and inventory operations", "row1": [
+    {
+      company: "Fareast Mercantile Co. Ltd",
+      logo: "/uploads/FareastMercantile.png",
+      avatar: "/uploads/Raja Mohammed-GM-Fareast-Mercantile.png",
+      quote: "We struggled with limited visibility into sub-distributor sales, customers, and pricing, but the solution transformed our operations with real-time insights and centralized control. It brought transparency, pricing consistency, and a scalable platform tailored to our business.",
+      name: "Raja Mohammed",
+      role: "GM, Fareast Mercantile Co. Ltd "
+    },
+    {
+      company: "Spartan Engineering Pvt Ltd",
+      logo: "/uploads/Spartan-New-Logo-1.png",
+      avatar: "/uploads/Ganesh-Sahani-CTO.png",
+      quote: "We discovered UpBuff Technologies by chance when our CFO noticed a mobile service app during a routine ERP visit, which led us to start with service tracking and engineer monitoring. What followed was a complete solution\u2014including IoT integration, preventive alerts, remote shutdowns, and a customer app\u2014that transformed our operations.",
+      name: "Ganesh Sahani",
+      role: "CTO, Spartan Engineering Pvt Ltd"
+    }
+  ], "statCard": {
+    stat: "99%+",
+    label: "inventory accuracy achieved by UpBuff warehouse customers",
+    gradient: "linear-gradient(135deg, #1d4ed8 0%, #0891b2 50%, #22c55e 100%)"
+  }, "row2": [
+    {
+      company: "Ideaforge",
+      logo: "/uploads/ideaForge-logo.svg",
+      avatar: "/uploads/Vivek-Patel-CTO-ideaForge.png",
+      quote: "We partnered with a team that built a fully integrated SAP Business One ecosystem, expanding from service management into product configuration, portals, mobile apps, and workflows. Their integration expertise and professionalism significantly improved our operational visibility and coordination. It has enabled us to scale our operations with greater efficiency and confidence.",
+      name: "Mr. Vivek Patel",
+      role: "CTO, ideaForge Technology Ltd"
+    },
+    {
+      company: "Index System Pvt Ltd",
+      logo: "/uploads/IndexSystem.jpg",
+      avatar: "/uploads/Praful-Prabhu-CFO-Index-systems.png",
+      quote: "The CRM solution, integrated with SAP Business One and IVR, has significantly improved how we manage customer data, interactions, and call handling. It has given us better visibility, faster response times, and a more streamlined, consistent customer experience.",
+      name: "Mr. Praful Prabhu",
+      role: "CFO, Index System Pvt Ltd"
+    }
+  ] })}  ${renderComponent($$result2, "FaqAccordion", $$FaqAccordion, { "tagline": "FAQs", "title": "ERP-Integrated Warehouse & Inventory \u2014 questions answered", "items": [
+    {
+      question: "What is ERP-Integrated Warehouse Management?",
+      answer: "It is a warehouse execution layer that extends SAP inventory modules into mobile and barcode-driven operations while keeping SAP as the system of record. Every warehouse transaction \u2014 GRN, transfer, pick, cycle count \u2014 is posted directly to SAP in real time."
+    },
+    {
+      question: "Does it replace SAP WM or EWM?",
+      answer: "No. UpBuff Warehouse & Inventory complements SAP by providing a mobile-first execution layer for warehouse operators. SAP WM or EWM remain the inventory management backbone \u2014 UpBuff extends them to the warehouse floor without replacing them."
+    },
+    {
+      question: "Is real-time synchronization supported?",
+      answer: "Yes. Bi-directional synchronization using SAP Service Layer, OData, BAPI, and secure APIs ensures every scan and movement updates SAP immediately \u2014 no batch uploads, no end-of-day reconciliation."
+    },
+    {
+      question: "Does it support barcode scanning?",
+      answer: "Yes. Mobile devices and dedicated handheld barcode scanners are fully supported for goods receipt, picking, stock transfers, cycle counts, and goods issue \u2014 all with automatic SAP posting."
+    },
+    {
+      question: "Which SAP versions are supported?",
+      answer: "UpBuff integrates with SAP S/4HANA (OData, IDoc, BAPI), SAP ECC (BAPI, IDoc), and SAP Business One (Service Layer). Oracle and Epicor ERP integrations are also available via REST/SOAP APIs."
+    },
+    {
+      question: "Is it suitable for multi-location enterprises?",
+      answer: "Yes. The solution supports multi-warehouse, multi-store, and multi-country operations with centralized SAP-driven inventory governance and local execution flexibility. All sites share real-time stock visibility through SAP."
+    }
+  ] })} ${renderComponent($$result2, "SecuritySplit", $$SecuritySplit, { "tagline": "Get Started", "title": "Get started with ERP-Integrated Warehouse & Inventory", "subtitle": "Whether you're a growing SAP Business One customer or a large enterprise on S/4HANA, UpBuff adapts to your ERP landscape.", "features": [
+    {
+      title: "Platform Overview",
+      description: "See how UpBuff's ERP execution platform unifies mobile order capture, real-time pricing, credit controls, collections, and approval workflows into a single layer that extends SAP Business One, S/4HANA, Oracle, and Epicor \u2014 without modifying ERP core.",
+      href: "/platform/overview"
+    },
+    {
+      title: "Integration Overview",
+      description: "Explore UpBuff's API-first connectivity \u2014 SAP Service Layer, OData, RFC/BAPI, Oracle OIC, and Epicor Service Connect \u2014 delivering bi-directional, Clean Core-compliant ERP sync with zero data duplication and full audit traceability.",
+      href: "/integrations/integrations"
+    }
+  ] })}  ${renderComponent($$result2, "CtaBanner", $$CtaBanner, { "title": "Connect your SAP inventory to the warehouse floor \u2014 in real time", "subtitle": "Use UpBuff to extend SAP S/4HANA, ECC, Business One, and other ERP environments into live warehouse execution without risky core modifications or expensive implementation projects.", "action": {
+    text: "Request a Free Demo",
+    href: "/request-demo",
+    variant: "primary"
+  }, "note": "No SAP core modifications required" })} `, "head": ($$result2) => renderTemplate`${renderComponent($$result2, "Fragment", Fragment, { "slot": "head" }, { "default": ($$result3) => renderTemplate(_a || (_a = __template([' <meta name="author" content="UpBuff Technologies"> <script type="application/ld+json">', '<\/script> <script type="application/ld+json">', "<\/script> "])), unescapeHTML(JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "UpBuff ERP-Integrated Warehouse & Inventory",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "description": "ERP-integrated warehouse and inventory execution platform extending SAP systems with barcode-driven real-time operations.",
+    "url": "https://www.upbuff.com/products/erp-integrated-warehouse-inventory",
+    "provider": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" }
+  })), unescapeHTML(JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is ERP-Integrated Warehouse Management?", "acceptedAnswer": { "@type": "Answer", "text": "It extends SAP ERP inventory modules into real-time warehouse execution through mobile and barcode-driven operations while keeping SAP as the system of record." } },
+      { "@type": "Question", "name": "Does it integrate with SAP S/4HANA?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It integrates with SAP S/4HANA, ECC, and SAP Business One using secure APIs such as OData, BAPI, and Service Layer." } },
+      { "@type": "Question", "name": "Does it support barcode scanning?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Handheld scanners and mobile devices are supported for goods receipt, picking, transfers, and cycle counts." } },
+      { "@type": "Question", "name": "Does it replace SAP WM or EWM?", "acceptedAnswer": { "@type": "Answer", "text": "No. It complements SAP by providing execution-level capabilities while synchronizing data back to SAP securely." } },
+      { "@type": "Question", "name": "Is it suitable for multi-location enterprises?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The solution supports multi-warehouse and multi-store operations globally." } }
+    ]
+  }))) })}` })}`;
+}, "C:/Users/sreeg/Documents/Projects/astrowind-main-latest/src/pages/products/erp-integrated-warehouse-inventory.astro", void 0);
+
+const $$file = "C:/Users/sreeg/Documents/Projects/astrowind-main-latest/src/pages/products/erp-integrated-warehouse-inventory.astro";
+const $$url = "/products/erp-integrated-warehouse-inventory";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$ErpIntegratedWarehouseInventory,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

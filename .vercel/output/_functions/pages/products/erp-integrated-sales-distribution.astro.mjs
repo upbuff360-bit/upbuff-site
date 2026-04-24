@@ -1,0 +1,318 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, F as Fragment, u as unescapeHTML } from '../../chunks/astro/server_BONdxEiL.mjs';
+import 'piccolore';
+import { $ as $$PageLayout } from '../../chunks/PageLayout_BS2WX63q.mjs';
+import { $ as $$HeroOrbital } from '../../chunks/HeroOrbital_DGRKs8Ra.mjs';
+import { $ as $$LogoBar } from '../../chunks/LogoBar_B0qNkUOO.mjs';
+import { $ as $$ProblemSplit } from '../../chunks/ProblemSplit_DnEMhGvb.mjs';
+import { a as $$FeaturesCarousel, $ as $$ContentSplitCard } from '../../chunks/ContentSplitCard_uJ1VUM9r.mjs';
+import { $ as $$FeaturesGrid } from '../../chunks/FeaturesGrid_CwyGxRwy.mjs';
+import { $ as $$FeaturesHighlights, a as $$TestimonialsGrid } from '../../chunks/TestimonialsGrid_CHsF45-x.mjs';
+import { $ as $$SecuritySplit } from '../../chunks/SecuritySplit_C3Zm8LcA.mjs';
+import { $ as $$ToolsMarquee } from '../../chunks/ToolsMarquee_TPsf7ym1.mjs';
+import { $ as $$FaqAccordion } from '../../chunks/FaqAccordion_DHd6Sfjj.mjs';
+import { $ as $$CtaBanner } from '../../chunks/CtaBanner_CHQ1omhl.mjs';
+export { renderers } from '../../renderers.mjs';
+
+var __freeze = Object.freeze;
+var __defProp = Object.defineProperty;
+var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
+var _a;
+const $$ErpIntegratedSalesDistribution = createComponent(($$result, $$props, $$slots) => {
+  const metadata = {
+    title: "ERP-Integrated Sales & Distribution Execution for SAP | UpBuff",
+    description: "Extend SAP S/4HANA, ECC, and SAP Business One Sales & Distribution with real-time order execution. Mobile sales, distributor management, and secure SAP SD integration.",
+    canonical: "https://www.upbuff.com/products/erp-integrated-sales-distribution/",
+    robots: { index: true, follow: true },
+    openGraph: {
+      type: "website",
+      url: "https://www.upbuff.com/products/erp-integrated-sales-distribution-execution",
+      title: "ERP-Integrated Sales & Distribution Execution | UpBuff",
+      description: "Enable real-time sales order capture, distributor management, and SAP SD integration with UpBuff ERP Execution Platform.",
+      image: "https://www.upbuff.com/images/erp-sales-og.jpg"
+    },
+    twitter: {
+      cardType: "summary_large_image",
+      title: "ERP-Integrated Sales & Distribution Execution | UpBuff",
+      description: "Connect SAP SD with field sales teams and distributors for real-time order execution \u2014 without modifying core ERP."
+    }
+  };
+  return renderTemplate`${renderComponent($$result, "Layout", $$PageLayout, { "metadata": metadata }, { "announcement": ($$result2) => renderTemplate`${renderComponent($$result2, "Fragment", Fragment, { "slot": "announcement" })}`, "default": ($$result2) => renderTemplate`    ${renderComponent($$result2, "HeroOrbital", $$HeroOrbital, { "tagline": "ERP-Integrated Sales & Distribution Execution", "title": "Extend SAP SD into Real-Time Sales Operations", "subtitle": "UpBuff ERP-Integrated Sales & Distribution Execution connects SAP S/4HANA, ECC, and SAP Business One directly to field sales teams, distributors, and order execution workflows \u2014 without modifying core ERP. Transform SAP Sales & Distribution (SD) into a real-time execution engine across territories, partners, and channels.", "actions": [
+    { text: "Request Demo", href: "/contact", variant: "primary" },
+    { text: "Talk to ERP Expert", href: "/contact", variant: "secondary" }
+  ], "image": {
+    src: "/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png",
+    alt: "UpBuff ERP-Integrated Sales & Distribution Execution"
+  } })}  ${renderComponent($$result2, "LogoBar", $$LogoBar, { "label": "Trusted by leading enterprises & SAP partners worldwide", "logos": [
+    { src: "/uploads/ideaForge-logo.svg", alt: "ideaForge logo" },
+    { src: "/uploads/jnk-chemdist-logo.svg", alt: "jnk chemdist logo" },
+    { src: "/uploads/molygraph-logo.svg", alt: "molygraph logo" },
+    { src: "/uploads/ncc-streetscape-logo.svg", alt: "ncc streetscape logo" },
+    { src: "/uploads/roofsol-logo.svg", alt: "roofsol logo" },
+    { src: "/uploads/the-wine-source-logo.svg", alt: "the wine source logo" }
+  ] })}  ${renderComponent($$result2, "ProblemSplit", $$ProblemSplit, { "tagline": "The Problem", "title": "SAP SD data doesn't reach your sales frontline in time", "subtitle": "Field sales teams, distributors, and channel partners need live SAP pricing, inventory, and credit data at every order touchpoint. Without a real-time execution layer, errors compound, margins leak, and SAP becomes a bottleneck rather than an asset.", "items": [
+    {
+      title: "Manual order entry & duplication",
+      description: "Field reps re-key orders across devices and SAP, burning time and introducing costly mistakes at every sales cycle."
+    },
+    {
+      title: "Stale pricing & inventory data",
+      description: "Distributors and reps quoting from cached ERP data risk order rejections, incorrect discounts, and customer dissatisfaction."
+    },
+    {
+      title: "No distributor visibility into SAP",
+      description: "Channel partners operate blind \u2014 without access to live stock levels, credit limits, or order status from SAP."
+    },
+    {
+      title: "ERP customization risk",
+      description: "Extending SAP SD for field use through core modifications jeopardises upgrade paths, compliance, and long-term ERP stability."
+    }
+  ] })}  ${renderComponent($$result2, "FeaturesCarousel", $$FeaturesCarousel, { "tagline": "Use Cases", "title": "How ERP-driven organizations use UpBuff Sales & Distribution", "subtitle": "Discover how SAP customers and enterprise distribution companies drive execution excellence without touching ERP core.", "items": [
+    {
+      gradient: "#ffffff",
+      title: "FMCG & Distribution Networks: Control Secondary Sales in Real Time",
+      description: "Enable distributors and sales reps to execute secondary sales with SAP-aligned pricing and inventory visibility. Reduce order errors, validate real-time stock, improve distributor transparency, and accelerate order processing \u2014 all synchronized directly with SAP SD.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/FMCG-and-Distribution-Networks.png" class="w-full object-top" alt="FMCG & Distribution Networks" loading="lazy" /></div>'
+    },
+    {
+      gradient: "linear-gradient(135deg, #0f766e 0%, #065f46 100%)",
+      title: "B2B Sales Operations: Streamline Order-to-Cash Execution",
+      description: "Align field sales operations with SAP SD workflows. Achieve immediate order posting to SAP, enforce credit control automatically, apply accurate SAP pricing at point of capture, and reduce manual reconciliation \u2014 compressing your entire order-to-cash cycle.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/B2B-Sales-Operations.png" class="w-full object-top" alt="B2B Sales Operations" loading="lazy" /></div>'
+    },
+    {
+      gradient: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
+      title: "Multi-Region Enterprises: Standardized Sales Governance",
+      description: "Maintain global pricing policies while enabling localized sales execution. Centralized pricing control, territory performance tracking, real-time sales KPI dashboards, and compliance-ready reporting \u2014 spanning every region, channel, and business unit.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Multi-Region-Enterprises.png" class="w-full object-top" alt="Multi-Region Enterprises" loading="lazy" /></div>'
+    },
+    {
+      gradient: "linear-gradient(135deg, #003f7c 0%, #0070c0 100%)",
+      title: "Manufacturing Sales Channels: Improve Dealer & Partner Collaboration",
+      description: "Connect manufacturing order pipelines with dealer networks in real time. Give partners full order status visibility, delivery tracking, and partner performance analytics \u2014 eliminating miscommunication and reducing order fulfillment delays.",
+      image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Manufacturing-Sales-Channels.png" class="w-full object-top" alt="Manufacturing Sales Channels" loading="lazy" /></div>'
+    }
+  ] })}  ${renderComponent($$result2, "ContentSplitCard", $$ContentSplitCard, { "tagline": "SAP SD Integration", "title": "The deepest SAP Sales & Distribution integration available", "cardTitle": "Native OData, IDoc & Service Layer integration \u2014 bi-directional and real-time", "cardDescription": "UpBuff integrates with SAP S/4HANA, ECC, and SAP Business One through official SAP APIs \u2014 OData, IDoc, BAPI, and Service Layer \u2014 providing real-time access to customer master data, pricing conditions, inventory availability, credit limits, and order history. No core modifications. Clean Core compliant and upgrade-safe across all SAP deployment models.", "cardImage": "/uploads/sap-compatibility-sales-distribution.png", "cardGradient": "linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)", "testimonial": {
+    quote: "After struggling with CRMs that lacked visibility and required heavy manual effort, the new system brought a simple, structured approach aligned with our workflow. It has improved tracking, coordination, and consistency, making our sales operations far more efficient.",
+    name: "Joint Managing Director",
+    company: "K. Patel Phyto Extractions",
+    avatar: "/uploads/Viraj-Patel-joint-MD.png "
+  }, "features": [
+    {
+      icon: "tabler:database",
+      title: "SAP OData & Service Layer API",
+      description: "Direct integration via official SAP APIs \u2014 no database writes, no core modifications required."
+    },
+    {
+      icon: "tabler:shield-check",
+      title: "Clean Core compliant",
+      description: "Upgrade-safe by design \u2014 works with SAP S/4HANA, ECC, and SAP Business One on-premise and cloud."
+    },
+    {
+      icon: "tabler:receipt",
+      title: "Real-time pricing & credit validation",
+      description: "Live SAP pricing rules, tax logic, discount structures, and credit limits applied at every order."
+    }
+  ] })}  ${renderComponent($$result2, "ToolsMarquee", $$ToolsMarquee, { "title": "Integrates with your sales ecosystem", "description": "UpBuff connects your SAP SD environment with the tools your sales and distribution teams already use \u2014 creating unified workflows without silos.", "speed": 30, "tools": [
+    { name: "Calendar", logo: '<img src="/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "Epicor", logo: '<img src="/uploads/logo/epicore-integration-with-upbuff-crm.png" alt="Epicor integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "SAP", logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "Gmail", logo: '<img src="/uploads/logo/gmail-integration-with-upbuff-crm.png" alt="Gmail integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "IoT", logo: '<img src="/uploads/logo/iot-integration.png" alt="IoT integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "SAP S/4HANA", logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP S/4HANA integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "Oracle", logo: '<img src="/uploads/logo/oracle-integration-with-upbuff-crm.png" alt="Oracle integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "Outlook", logo: '<img src="/uploads/logo/outlook-integration-with-upbuff-crm.png" alt="Outlook integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "Power BI", logo: '<img src="/uploads/logo/power-bi-integration-with-upbuff-crm.png" alt="Power BI integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "SAP Business One", logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP Business One integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "WhatsApp", logo: '<img src="/uploads/logo/whatsapp-integration-with-upbuff-crm.png" alt="WhatsApp integration with UpBuff" class="w-10 h-10 object-contain" />' },
+    { name: "Zoho", logo: '<img src="/uploads/logo/zoho-integration-with-upbuff-crm.png" alt="Zoho integration with UpBuff" class="w-10 h-10 object-contain" />' }
+  ] })}  ${renderComponent($$result2, "FeaturesGrid", $$FeaturesGrid, { "tagline": "Solution", "title": "Why Choose UpBuff ERP-Integrated Sales & Distribution Execution?", "subtitle": "Each capability enhances SAP SD while preserving ERP integrity \u2014 designed for enterprises that cannot afford core customization risk.", "items": [
+    {
+      icon: "tabler:database",
+      title: "Native SAP SD Integration (S/4HANA, ECC, SAP B1)",
+      description: "Secure bi-directional integration using SAP OData, IDoc, BAPI, and Service Layer APIs. No SAP core modification required."
+    },
+    {
+      icon: "tabler:clipboard-check",
+      title: "Real-Time Order Capture & Sync",
+      description: "Sales representatives create quotations, sales orders, and customer updates from mobile devices \u2014 instantly synchronized with SAP."
+    },
+    {
+      icon: "tabler:users-group",
+      title: "Distributor & Channel Partner Enablement",
+      description: "Empower distributors with structured order management, stock visibility, and pricing validation connected directly to SAP."
+    },
+    {
+      icon: "tabler:receipt",
+      title: "Dynamic Pricing & Credit Validation",
+      description: "Ensure all orders follow SAP-configured pricing, discounts, tax rules, and credit limits automatically."
+    },
+    {
+      icon: "tabler:map-pin",
+      title: "Route-Based Sales & Territory Management",
+      description: "Plan and execute territory-based sales operations with geo-mapped routes and structured visit planning."
+    },
+    {
+      icon: "tabler:truck-delivery",
+      title: "ERP-Synced Invoice & Delivery Tracking",
+      description: "Sales teams and customers track deliveries, invoicing, and order status in real time via SAP-integrated dashboards."
+    }
+  ] })}  ${renderComponent($$result2, "FeaturesHighlights", $$FeaturesHighlights, { "tagline": "Platform", "title": "Three pillars of ERP-integrated sales execution", "subtitle": "UpBuff Sales & Distribution is built on three architectural principles that make it fundamentally different from standalone sales tools.", "items": [
+    {
+      title: "Real-Time SAP SD Data Access",
+      description: "Live pricing conditions, credit limits, inventory availability, customer master data, and order history from SAP S/4HANA, ECC, or SAP Business One \u2014 at the moment of every sales interaction. No sync delays. No manual lookups.",
+      image: '<div class="flex flex-col items-center justify-center gap-4"><img src="/uploads/erp-first-architecture-upbuff.png" alt="SAP SD real-time integration architecture" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">S/4HANA \xB7 ECC \xB7 SAP Business One</p><p class="text-xs text-blue-600 text-center">No core modification \xB7 API-native</p></div>'
+    },
+    {
+      title: "Mobile-First, Distributor-Ready",
+      description: "Purpose-built mobile apps for field sales reps and distributor portals for channel partners. Capture orders, record visits, validate pricing, and manage collections \u2014 online or offline with automatic ERP synchronization when connectivity returns.",
+      image: '<div class="flex flex-col items-center justify-center gap-4"><img src="/uploads/real-time-update.png" alt="Mobile-first sales and distributor execution" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">Field Sales \xB7 Distributors \xB7 Partners</p><p class="text-xs text-green-600 text-center">Offline-capable \xB7 Real-time sync</p></div>'
+    },
+    {
+      title: "SAP-Governed Compliance",
+      description: "Every order, quotation, discount, and credit check flows through SAP business rules \u2014 pricing logic, tax calculation, credit control, and approval hierarchies enforced at point of capture. SAP SD remains the system of record with no compliance gaps.",
+      image: '<div class="flex flex-col items-center justify-center gap-4"><img src="/uploads/upbuff-data-integrity-security.png" alt="SAP SD governance and compliance" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">RBAC \xB7 Audit logs \xB7 Credit control</p><p class="text-xs text-gray-500 text-center">SOC 2 \xB7 GDPR \xB7 Compliance-ready</p></div>'
+    }
+  ] })}  ${renderComponent($$result2, "SecuritySplit", $$SecuritySplit, { "tagline": "Built for SAP Enterprises", "title": "It Enhances SAP SD \u2014 It Does Not Replace It.", "subtitle": "UpBuff Sales & Distribution is purpose-built to complement your SAP investment \u2014 every field order, distributor transaction, and pricing validation flows back into SAP as the authoritative system of record.", "features": [
+    {
+      title: "Extends SAP S/4HANA SD",
+      description: "Full integration with SAP S/4HANA Sales & Distribution using OData, IDoc, BAPI, and secure APIs \u2014 preserving your Clean Core architecture.",
+      illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 72" class="w-20 h-16" fill="none"><ellipse cx="40" cy="16" rx="28" ry="10" stroke="url(#db1)" stroke-width="2.5"/><path d="M12 16v20c0 5.523 12.536 10 28 10s28-4.477 28-10V16" stroke="url(#db1)" stroke-width="2.5"/><path d="M12 36v16c0 5.523 12.536 10 28 10s28-4.477 28-10V36" stroke="url(#db1)" stroke-width="2.5"/><circle cx="40" cy="38" r="3" fill="#06b6d4"/><defs><linearGradient id="db1" x1="12" y1="0" x2="68" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs></svg>'
+    },
+    {
+      title: "Extends SAP ECC / Business One SD",
+      description: "Native integration using SAP Service Layer for real-time synchronization across all sales and distribution operations.",
+      illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="20" y="36" width="40" height="30" rx="6" stroke="url(#lk1)" stroke-width="2.5"/><path d="M28 36V26a12 12 0 0 1 24 0v10" stroke="url(#lk1)" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#22c55e"/><defs><linearGradient id="lk1" x1="20" y1="10" x2="60" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>'
+    },
+    {
+      title: "Supports Hybrid / On-Prem / Cloud",
+      description: "Deploy across hybrid, on-premise, or cloud environments with enterprise-grade scalability and full audit trails.",
+      illustration: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" class="w-20 h-16" fill="none"><rect x="14" y="14" width="52" height="52" rx="8" stroke="url(#bx1)" stroke-width="2.5"/><path d="M26 40h28M26 52h18M26 28h28" stroke="url(#bx1)" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="bx1" x1="14" y1="14" x2="66" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#f97316"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>'
+    }
+  ] })}  ${renderComponent($$result2, "TestimonialsGrid", $$TestimonialsGrid, { "title": "What our customers say", "subtitle": "Trusted by <strong>10,000+</strong> businesses \u2014 from SAP Business One partners to enterprise distribution companies", "row1": [
+    {
+      company: "Fareast Mercantile Co. Ltd",
+      logo: "/uploads/FareastMercantile.png",
+      avatar: "/uploads/Raja Mohammed-GM-Fareast-Mercantile.png",
+      quote: "We struggled with limited visibility into sub-distributor sales, customers, and pricing, but the solution transformed our operations with real-time insights and centralized control. It brought transparency, pricing consistency, and a scalable platform tailored to our business.",
+      name: "Raja Mohammed",
+      role: "GM, Fareast Mercantile Co. Ltd "
+    },
+    {
+      company: "Spartan Engineering Pvt Ltd",
+      logo: "/uploads/Spartan-New-Logo-1.png",
+      avatar: "/uploads/Ganesh-Sahani-CTO.png",
+      quote: "We discovered UpBuff Technologies by chance when our CFO noticed a mobile service app during a routine ERP visit, which led us to start with service tracking and engineer monitoring. What followed was a complete solution\u2014including IoT integration, preventive alerts, remote shutdowns, and a customer app\u2014that transformed our operations.",
+      name: "Ganesh Sahani",
+      role: "CTO, Spartan Engineering Pvt Ltd"
+    }
+  ], "statCard": {
+    stat: "40%",
+    label: "reduction in order errors with UpBuff Sales & Distribution",
+    gradient: "linear-gradient(135deg, #f97316 0%, #fbbf24 50%, #ec4899 100%)"
+  }, "row2": [
+    {
+      company: "Gourock Zambia Ltd",
+      logo: "/uploads/GZL_Logo1.png",
+      avatar: "/uploads/gaurock-client.png",
+      quote: "Switching from Oracle e-Business Suite to SAP B1 with UpBuff was a great decision, as they delivered mobile and web solutions connecting our van sales, warehouses, and suppliers in real time. Their expertise in ZRA e-invoicing and SAP integration significantly improved our operational efficiency.",
+      name: "Kamlesh Mistry",
+      role: "CTO, Gourock Zambia Ltd"
+    },
+    {
+      company: "Ideaforge",
+      logo: "/uploads/ideaForge-logo.svg",
+      avatar: "/uploads/Vivek-Patel-CTO-ideaForge.png",
+      quote: "We partnered with a team that built a fully integrated SAP Business One ecosystem, expanding from service management into product configuration, portals, mobile apps, and workflows. Their integration expertise and professionalism significantly improved our operational visibility and coordination. It has enabled us to scale our operations with greater efficiency and confidence.",
+      name: "Mr. Vivek Patel",
+      role: "CTO, ideaForge Technology Ltd"
+    }
+  ] })}  ${renderComponent($$result2, "FaqAccordion", $$FaqAccordion, { "tagline": "FAQs", "title": "ERP-Integrated Sales & Distribution \u2014 questions answered", "items": [
+    {
+      question: "What is ERP-Integrated Sales & Distribution Execution?",
+      answer: "It is an execution layer that connects SAP SD modules with mobile sales teams and distributors for real-time order capture and synchronization \u2014 without replacing SAP or modifying its core."
+    },
+    {
+      question: "Does it replace SAP SD?",
+      answer: "No. UpBuff extends SAP SD into operational environments \u2014 providing mobile order capture, ERP pricing enforcement, and distributor visibility \u2014 while keeping SAP as the system of record."
+    },
+    {
+      question: "How does pricing validation work?",
+      answer: "All pricing, tax, discount, and credit validation rules follow SAP master data and configuration. There is no separate pricing engine \u2014 UpBuff enforces your existing SAP pricing conditions at point of order capture."
+    },
+    {
+      question: "Is distributor management supported?",
+      answer: "Yes. The platform supports distributor order management, real-time stock visibility, pricing validation, and credit limit enforcement \u2014 all aligned with SAP Business One or S/4HANA data."
+    },
+    {
+      question: "Does it support mobile sales teams?",
+      answer: "Yes. Mobile-first design enables real-time sales execution from any location \u2014 online or offline, with automatic synchronization back to SAP once connectivity is restored."
+    },
+    {
+      question: "Which SAP versions are supported?",
+      answer: "UpBuff Sales & Distribution integrates with SAP S/4HANA (OData/BAPI), SAP ECC (BAPI/IDoc), and SAP Business One (Service Layer). Oracle and Epicor environments are also supported via flexible API connectors."
+    }
+  ] })}  ${renderComponent($$result2, "SecuritySplit", $$SecuritySplit, { "tagline": "Get Started", "title": "Get started with ERP-Integrated Sales & Distribution", "subtitle": "Whether you're a growing SAP Business One customer or a large enterprise on S/4HANA, UpBuff adapts to your SAP SD landscape.", "features": [
+    {
+      title: "Platform Overview",
+      description: "See how UpBuff's ERP execution platform unifies mobile order capture, real-time pricing, credit controls, collections, and approval workflows into a single layer that extends SAP Business One, S/4HANA, Oracle, and Epicor \u2014 without modifying ERP core.",
+      href: "/platform/overview"
+    },
+    {
+      title: "Integration Overview",
+      description: "Explore UpBuff's API-first connectivity \u2014 SAP Service Layer, OData, RFC/BAPI, Oracle OIC, and Epicor Service Connect \u2014 delivering bi-directional, Clean Core-compliant ERP sync with zero data duplication and full audit traceability.",
+      href: "/integrations/integrations"
+    }
+  ] })}  ${renderComponent($$result2, "CtaBanner", $$CtaBanner, { "title": "Make SAP SD work for your field sales teams", "subtitle": "Use UpBuff to extend SAP S/4HANA, ECC, and Business One into real-time sales and distribution execution \u2014 without risky core customizations.", "action": {
+    text: "Request a Free Demo",
+    href: "/request-demo",
+    variant: "primary"
+  }, "note": "No SAP core modifications required" })} `, "head": ($$result2) => renderTemplate`${renderComponent($$result2, "Fragment", Fragment, { "slot": "head" }, { "default": ($$result3) => renderTemplate(_a || (_a = __template([' <meta name="author" content="UpBuff Technologies"> <meta property="og:site_name" content="UpBuff Technologies"> <meta property="og:image" content="https://www.upbuff.com/images/erp-sales-og.jpg"> <script type="application/ld+json">', '<\/script> <script type="application/ld+json">', '<\/script> <script type="application/ld+json">', '<\/script> <script type="application/ld+json">', "<\/script> "])), unescapeHTML(JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "UpBuff Technologies",
+    "url": "https://www.upbuff.com",
+    "logo": "https://www.upbuff.com/logo.png",
+    "description": "UpBuff is an ERP Execution Platform extending SAP systems into real-time sales, warehouse, CRM, FSM, and shopfloor operations."
+  })), unescapeHTML(JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.upbuff.com",
+    "name": "UpBuff Technologies",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.upbuff.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  })), unescapeHTML(JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "UpBuff ERP-Integrated Sales & Distribution Execution",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "description": "ERP-integrated sales and distribution execution platform extending SAP SD modules with real-time mobile and distributor operations.",
+    "url": "https://www.upbuff.com/products/erp-integrated-sales-distribution-execution",
+    "provider": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" }
+  })), unescapeHTML(JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is ERP-Integrated Sales & Distribution Execution?", "acceptedAnswer": { "@type": "Answer", "text": "It extends SAP SD modules into mobile sales and distributor operations, enabling real-time order capture and synchronization without modifying SAP core." } },
+      { "@type": "Question", "name": "Does it integrate with SAP S/4HANA SD?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It integrates with SAP S/4HANA, ECC, and SAP Business One using secure APIs such as OData, IDoc, and BAPI." } },
+      { "@type": "Question", "name": "Is pricing validated from SAP?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All pricing, tax, and credit validation rules are derived from SAP configuration and master data." } }
+    ]
+  }))) })}` })}`;
+}, "C:/Users/sreeg/Documents/Projects/astrowind-main-latest/src/pages/products/erp-integrated-sales-distribution.astro", void 0);
+
+const $$file = "C:/Users/sreeg/Documents/Projects/astrowind-main-latest/src/pages/products/erp-integrated-sales-distribution.astro";
+const $$url = "/products/erp-integrated-sales-distribution";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$ErpIntegratedSalesDistribution,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
