@@ -26,7 +26,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'server',
   adapter: vercel(),  
-  site: 'https://upbuff-site.vercel.app',
+  site: 'https://www.upbuff.com',
   devToolbar: {
     enabled: false,
   },

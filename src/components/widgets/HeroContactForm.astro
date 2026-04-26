@@ -184,6 +184,18 @@ const pairMapped = pairFields.map((f) => ({
 
           <form id="hcf-form" class="flex flex-col gap-4">
 
+            <!-- ── Honeypot (invisible to real users) ──────────────── -->
+            <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+              <label>
+                Website
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+
+            <!-- ── Timestamp seeded at SSR; preserves real form-render time
+                 so humans clear the timing check with room to spare.    ── -->
+            <input type="hidden" name="ts" id="hcf-ts" value={String(Date.now())} />
+
             <!-- Two-column row: first two text / email fields -->
             {hasPair && (
               <div class="grid grid-cols-2 gap-4">
@@ -249,6 +261,16 @@ const pairMapped = pairFields.map((f) => ({
               </div>
             ))}
 
+            <!-- ── Cloudflare Turnstile widget ──────────────────────── -->
+            <div class="flex justify-center mt-1">
+              <div
+                class="cf-turnstile"
+                data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                data-theme="light"
+                data-size="flexible"
+              />
+            </div>
+
             <!-- Submit button -->
             <button
               id="hcf-submit"
@@ -273,6 +295,60 @@ const pairMapped = pairFields.map((f) => ({
     </div>
   </div>
 
+<!-- Cloudflare Turnstile loader — compatible with Astro View Transitions.
+     The default auto-render only scans the DOM once. When the user navigates
+     between pages via ClientRouter, the widget div is re-mounted but never
+     rendered. We explicitly render any un-rendered widget on every page-load. -->
+<script is:inline>
+  (function () {
+    function ensureTurnstileScript() {
+      if (document.querySelector('script[data-turnstile-loader]')) return;
+      const s = document.createElement('script');
+      // ?render=explicit — tells Turnstile not to auto-scan; we'll render manually.
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.defer = true;
+      s.setAttribute('data-turnstile-loader', 'true');
+      document.head.appendChild(s);
+    }
+
+    function renderAllWidgets() {
+      if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+        // Script hasn't loaded yet — retry in 200ms (max ~3s total).
+        if ((window.__tsRetries || 0) < 15) {
+          window.__tsRetries = (window.__tsRetries || 0) + 1;
+          setTimeout(renderAllWidgets, 200);
+        }
+        return;
+      }
+      window.__tsRetries = 0;
+      document.querySelectorAll('.cf-turnstile').forEach(function (el) {
+        // Skip if already rendered (element gets a data-widget-id attr).
+        if (el.getAttribute('data-rendered') === 'true') return;
+        const sitekey = el.getAttribute('data-sitekey');
+        if (!sitekey) return;
+        try {
+          window.turnstile.render(el, {
+            sitekey: sitekey,
+            theme:   el.getAttribute('data-theme') || 'auto',
+            size:    el.getAttribute('data-size')  || 'normal',
+          });
+          el.setAttribute('data-rendered', 'true');
+        } catch (err) {
+          // Most common reason: widget already rendered by auto-scan on a prior load.
+          console.warn('[turnstile] render skipped:', err);
+        }
+      });
+    }
+
+    ensureTurnstileScript();
+
+    // Fire on first load AND after every View Transition navigation.
+    document.addEventListener('DOMContentLoaded', renderAllWidgets);
+    document.addEventListener('astro:page-load', renderAllWidgets);
+  })();
+</script>
+
 <script>
   (function () {
     function init() {
@@ -282,18 +358,40 @@ const pairMapped = pairFields.map((f) => ({
       const btn     = document.getElementById('hcf-submit');
       const label   = document.getElementById('hcf-btn-label');
       const spinner = document.getElementById('hcf-spinner');
+      const tsField = document.getElementById('hcf-ts');
       if (!form) return;
+
+      // The `ts` input is already seeded server-side at SSR. Only refresh it
+      // if it's missing or genuinely stale (>1h old) — this handles Astro
+      // View Transitions re-using a cached HTML fragment after hours.
+      // CRITICAL: do NOT reset it on every load, or quick human submissions
+      // get blocked as "too_fast".
+      if (tsField) {
+        const existing = Number(tsField.value);
+        const oneHourAgo = Date.now() - (60 * 60 * 1000);
+        if (!existing || Number.isNaN(existing) || existing < oneHourAgo) {
+          tsField.value = String(Date.now());
+        }
+      }
+
+      const originalLabel = label ? label.textContent : 'Submit';
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errBox.classList.add('hidden');
 
-        // Loading state
+        const data = Object.fromEntries(new FormData(form));
+
+        // Make sure the Turnstile widget has issued a token.
+        if (!data['cf-turnstile-response']) {
+          errBox.textContent = 'Please complete the verification and try again.';
+          errBox.classList.remove('hidden');
+          return;
+        }
+
         btn.disabled = true;
         spinner.classList.remove('hidden');
         label.textContent = 'Sending…';
-
-        const data = Object.fromEntries(new FormData(form));
 
         try {
           const res  = await fetch('/api/demo-request', {
@@ -310,10 +408,15 @@ const pairMapped = pairFields.map((f) => ({
             throw new Error(json.error ?? 'Unknown error');
           }
         } catch {
+          errBox.textContent = 'Something went wrong. Please try again.';
           errBox.classList.remove('hidden');
           btn.disabled = false;
           spinner.classList.add('hidden');
-          label.textContent = 'Book my demo';
+          label.textContent = originalLabel;
+
+          // Reset Turnstile so the user can re-submit.
+          const ts = (window as any).turnstile;
+          if (ts && typeof ts.reset === "function") ts.reset();
         }
       });
     }

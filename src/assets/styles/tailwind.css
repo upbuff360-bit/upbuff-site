@@ -1,13 +1,11 @@
-/* html {
-  font-size: 14.5px !important;
-} */
-
+html {
+  font-size: 17px;
+}
 @media (max-width: 768px) {
   html {
-    font-size: 14px !important;
+    font-size: 18px;
   }
 }
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

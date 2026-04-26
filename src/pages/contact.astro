@@ -218,6 +218,18 @@ const products = [
 
             <form id="cf-form" class="flex flex-col gap-4" novalidate>
 
+              <!-- ── Honeypot (invisible to real users) ──────────────── -->
+              <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+                <label>
+                  Website
+                  <input type="text" name="website" tabindex="-1" autocomplete="off" />
+                </label>
+              </div>
+
+              <!-- ── Timestamp seeded at SSR; preserves real form-render time
+                   so humans clear the timing check with room to spare.    ── -->
+              <input type="hidden" name="ts" id="cf-ts" value={String(Date.now())} />
+
               <!-- Full Name + Email — 2 column -->
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
@@ -298,6 +310,16 @@ const products = [
                 <a href="/legal/privacy" class="text-purple-600 hover:underline font-medium">Privacy Policy</a>
               </p>
 
+              <!-- ── Cloudflare Turnstile widget ──────────────────────── -->
+              <div class="flex justify-center mt-1">
+                <div
+                  class="cf-turnstile"
+                  data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                  data-theme="light"
+                  data-size="flexible"
+                />
+              </div>
+
               <!-- Submit -->
               <button
                 id="cf-submit"
@@ -361,6 +383,54 @@ const products = [
   />
 
 
+<!-- Cloudflare Turnstile loader — compatible with Astro View Transitions.
+     The default auto-render only scans the DOM once. When the user navigates
+     between pages via ClientRouter, the widget div is re-mounted but never
+     rendered. We explicitly render any un-rendered widget on every page-load. -->
+<script is:inline>
+  (function () {
+    function ensureTurnstileScript() {
+      if (document.querySelector('script[data-turnstile-loader]')) return;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.defer = true;
+      s.setAttribute('data-turnstile-loader', 'true');
+      document.head.appendChild(s);
+    }
+
+    function renderAllWidgets() {
+      if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+        if ((window.__tsRetries || 0) < 15) {
+          window.__tsRetries = (window.__tsRetries || 0) + 1;
+          setTimeout(renderAllWidgets, 200);
+        }
+        return;
+      }
+      window.__tsRetries = 0;
+      document.querySelectorAll('.cf-turnstile').forEach(function (el) {
+        if (el.getAttribute('data-rendered') === 'true') return;
+        const sitekey = el.getAttribute('data-sitekey');
+        if (!sitekey) return;
+        try {
+          window.turnstile.render(el, {
+            sitekey: sitekey,
+            theme:   el.getAttribute('data-theme') || 'auto',
+            size:    el.getAttribute('data-size')  || 'normal',
+          });
+          el.setAttribute('data-rendered', 'true');
+        } catch (err) {
+          console.warn('[turnstile] render skipped:', err);
+        }
+      });
+    }
+
+    ensureTurnstileScript();
+    document.addEventListener('DOMContentLoaded', renderAllWidgets);
+    document.addEventListener('astro:page-load', renderAllWidgets);
+  })();
+</script>
+
 <script>
   (function () {
     function init() {
@@ -370,17 +440,38 @@ const products = [
       const btn     = document.getElementById('cf-submit');
       const label   = document.getElementById('cf-btn-label');
       const spinner = document.getElementById('cf-spinner');
+      const tsField = document.getElementById('cf-ts');
       if (!form) return;
+
+      // The `ts` input is already seeded server-side at SSR. Only refresh it
+      // if it's missing or genuinely stale (>1h old) — this handles Astro
+      // View Transitions re-using a cached HTML fragment after hours.
+      // CRITICAL: do NOT reset it on every load, or quick human submissions
+      // get blocked as "too_fast".
+      if (tsField) {
+        const existing = Number(tsField.value);
+        const oneHourAgo = Date.now() - (60 * 60 * 1000);
+        if (!existing || Number.isNaN(existing) || existing < oneHourAgo) {
+          tsField.value = String(Date.now());
+        }
+      }
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errBox.classList.add('hidden');
 
+        const data = Object.fromEntries(new FormData(form));
+
+        // Make sure the Turnstile widget has issued a token.
+        if (!data['cf-turnstile-response']) {
+          errBox.textContent = 'Please complete the verification and try again.';
+          errBox.classList.remove('hidden');
+          return;
+        }
+
         btn.disabled = true;
         spinner.classList.remove('hidden');
         label.textContent = 'Sending…';
-
-        const data = Object.fromEntries(new FormData(form));
 
         try {
           const res  = await fetch('/api/contact', {
@@ -397,10 +488,15 @@ const products = [
             throw new Error(json.error ?? 'Unknown error');
           }
         } catch {
+          errBox.textContent = 'Something went wrong. Please try again.';
           errBox.classList.remove('hidden');
           btn.disabled = false;
           spinner.classList.add('hidden');
           label.textContent = 'Send message';
+
+          // Reset Turnstile so the user can re-submit.
+          const ts = (window as any).turnstile;
+          if (ts && typeof ts.reset === "function") ts.reset();
         }
       });
     }
