@@ -47,18 +47,18 @@ const { language, textDirection } = I18N;
     <!-- Paste before </body> in your Layout.astro -->
     <script is:inline>
       window.chatbotConfig = {
-        agentId: "agt-101",
+        agentId: "agt-103",
         primaryColor: "#0f172a",
         appearance: "light",
-        apiBase: "https://chatbot-backend-336415449858.asia-south1.run.app",
+        apiBase: "https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api",
       };
     </script>
-    <script src="https://chatbot-backend-336415449858.asia-south1.run.app/widget.js" async is:inline></script>
+    <script src="https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api/widget.js" async is:inline></script>
     <script is:inline>
       document.addEventListener('astro:page-load', () => {
         if (!document.querySelector('#cw-bubble')) {
           const s = document.createElement('script');
-          s.src = "https://chatbot-backend-336415449858.asia-south1.run.app/widget.js";
+          s.src = "https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api/widget.js";
           s.async = true;
           document.body.appendChild(s);
         }
