@@ -44,14 +44,13 @@ const { language, textDirection } = I18N;
 
   <body class="antialiased text-default bg-page tracking-tight">
     <slot />
-    <!-- Paste before </body> in your Layout.astro  -->
+    <!-- Paste before </body> in your Layout.astro -->
     <script is:inline>
       window.chatbotConfig = {
         agentId: "agt-103",
         primaryColor: "#0f172a",
         appearance: "light",
         apiBase: "https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api",
-        
       };
     </script>
     <script src="https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api/widget.js" async is:inline></script>
@@ -64,7 +63,6 @@ const { language, textDirection } = I18N;
           document.body.appendChild(s);
         }
       });
-    
     </script>
     <BasicScripts />
   </body>
