@@ -64,6 +64,27 @@ const { language, textDirection } = I18N;
     }
   });
 </script>
+
+<!-- Paste before </body> in your Layout.astro -->
+<!-- <script is:inline>
+  window.chatbotConfig = {
+    agentId: "agt-101",
+    primaryColor: "#16a34a",
+    appearance: "light",
+    apiBase: "http://127.0.0.1:8001/api",
+  };
+</script>
+<script src="http://127.0.0.1:8001/api/widget.js" async is:inline></script>
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    if (!document.querySelector('#cw-bubble')) {
+      const s = document.createElement('script');
+      s.src = "http://127.0.0.1:8001/api/widget.js";
+      s.async = true;
+      document.body.appendChild(s);
+    }
+  });
+</script> -->
     <BasicScripts />
   </body>
 </html>
