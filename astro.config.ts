@@ -10,7 +10,7 @@ import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
 import type { AstroIntegration } from 'astro';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 
 import astrowind from './vendor/integration';
 
@@ -24,7 +24,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 
 export default defineConfig({
-  output: 'server',
+  output: 'static',
   adapter: vercel(),  
   site: 'https://www.upbuff.com',
   devToolbar: {
