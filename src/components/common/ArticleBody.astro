@@ -1,0 +1,375 @@
+---
+/**
+ * Shared article body wrapper used by both blog posts and case studies.
+ * Renders children inside a `.blog-article` container that picks up the
+ * editorial typography defined in the global style block below.
+ */
+---
+
+<div class="blog-article">
+  <slot />
+</div>
+
+<style is:global>
+  /* ─────────────────────────────────────────────────────────────
+     Article typography — scoped to .blog-article
+     Applies to elements rendered from markdown via <Content />
+     Used by both blog posts and case studies.
+     ───────────────────────────────────────────────────────────── */
+
+  .blog-article {
+    --ba-text:    rgb(31  41  55);   /* gray-800 — body */
+    --ba-heading: rgb(17  24  39);   /* gray-900 — headings & strong */
+    --ba-muted:   rgb(107 114 128);  /* gray-500 */
+    --ba-accent:  rgb(39  174 97);   /* UpBuff green */
+    --ba-accent-soft: rgb(39 174 97 / 8%);
+    --ba-border:  rgb(229 231 235);  /* gray-200 */
+    --ba-border-soft: rgb(243 244 246); /* gray-100 */
+    --ba-soft-bg: rgb(249 250 251);  /* gray-50 */
+
+    color: var(--ba-text);
+    font-size: 0.875rem;        /* 14px — body */
+    line-height: 1.65;
+    letter-spacing: -0.003em;
+    font-feature-settings: "ss01", "cv11";  /* better Inter rendering */
+  }
+
+  /* ── Paragraphs ── */
+  .blog-article p {
+    margin: 0 0 1.5em;
+  }
+
+  /* Lead paragraph: slightly larger, darker, more present */
+  .blog-article > p:first-child {
+    font-size: 0.9375rem;       /* 15px — sits just above body */
+    line-height: 1.6;
+    color: var(--ba-heading);
+    font-weight: 400;
+    margin-bottom: 1.5em;
+  }
+
+  @media (min-width: 768px) {
+    .blog-article > p:first-child {
+      font-size: 1rem;          /* 16px on desktop */
+    }
+  }
+
+  /* ── Headings ── */
+  .blog-article h2,
+  .blog-article h3,
+  .blog-article h4 {
+    color: var(--ba-heading);
+    font-family: inherit;
+    line-height: 1.2;
+    scroll-margin-top: 96px;
+    text-wrap: balance;
+  }
+
+  .blog-article h2 {
+    font-size: 1.5rem;          /* 24px mobile (text-2xl) */
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    margin: 3rem 0 0.875rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--ba-border-soft);
+  }
+
+  @media (min-width: 768px) {
+    .blog-article h2 {
+      font-size: 1.75rem;       /* 28px desktop */
+    }
+  }
+
+  .blog-article > h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .blog-article h3 {
+    font-size: 1.125rem;        /* 18px mobile (text-lg) */
+    font-weight: 700;
+    letter-spacing: -0.018em;
+    margin: 2.25rem 0 0.625rem;
+  }
+
+  @media (min-width: 768px) {
+    .blog-article h3 {
+      font-size: 1.25rem;       /* 20px desktop (text-xl) */
+    }
+  }
+
+  .blog-article h4 {
+    font-size: 1rem;            /* 16px (text-base) */
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  /* ── Inline emphasis ── */
+  .blog-article strong {
+    color: var(--ba-heading);
+    font-weight: 600;
+  }
+
+  .blog-article em {
+    color: var(--ba-text);
+    font-style: italic;
+  }
+
+  /* ── Links ── */
+  .blog-article a {
+    color: var(--ba-accent);
+    text-decoration: underline;
+    text-decoration-color: rgb(39 174 97 / 35%);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.15s ease;
+    font-weight: 500;
+  }
+
+  .blog-article a:hover {
+    text-decoration-color: var(--ba-accent);
+  }
+
+  /* ── Lists ── */
+  .blog-article ul,
+  .blog-article ol {
+    margin: 1.5em 0 1.75em;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .blog-article ul > li {
+    position: relative;
+    padding-left: 1.75em;
+    margin-bottom: 0.65em;
+  }
+
+  .blog-article ul > li::before {
+    content: "";
+    position: absolute;
+    left: 0.4em;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ba-accent);
+  }
+
+  .blog-article ol {
+    counter-reset: ba-counter;
+  }
+
+  .blog-article ol > li {
+    counter-increment: ba-counter;
+    position: relative;
+    padding-left: 3em;
+    margin-bottom: 1.5em;
+  }
+
+  .blog-article ol > li::before {
+    content: counter(ba-counter, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    color: var(--ba-accent);
+    font-weight: 700;
+    font-size: 0.95em;
+    letter-spacing: 0.04em;
+  }
+
+  .blog-article ol > li > strong:first-child {
+    color: var(--ba-heading);
+  }
+
+  .blog-article li > ul,
+  .blog-article li > ol {
+    margin: 0.5em 0;
+  }
+
+  /* ── Blockquotes — used as callout cards ── */
+  .blog-article blockquote {
+    background: var(--ba-soft-bg);
+    border-left: 4px solid var(--ba-accent);
+    border-radius: 0 0.875rem 0.875rem 0;
+    padding: 1.125rem 1.25rem;
+    margin: 2rem 0;
+    color: var(--ba-text);
+    font-style: normal;
+    quotes: none;
+  }
+
+  @media (min-width: 768px) {
+    .blog-article blockquote {
+      padding: 1.25rem 1.5rem;
+    }
+  }
+
+  .blog-article blockquote > p {
+    margin-bottom: 0.85em;
+  }
+
+  .blog-article blockquote > p:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-article blockquote > p:first-child > strong:first-child {
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--ba-heading);
+    letter-spacing: 0.005em;
+  }
+
+  /* ── Tables ── */
+  .blog-article table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0;
+    font-size: 0.8125rem;       /* 13px */
+    border-radius: 0.875rem;
+    overflow: hidden;
+    border: 1px solid var(--ba-border);
+    background: white;
+  }
+
+  .blog-article thead {
+    background: linear-gradient(180deg, rgb(249 250 251) 0%, rgb(243 244 246) 100%);
+  }
+
+  .blog-article thead th {
+    padding: 0.75rem 0.875rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--ba-heading);
+    border-bottom: 1px solid var(--ba-border);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  .blog-article tbody td {
+    padding: 0.75rem 0.875rem;
+    border-bottom: 1px solid var(--ba-border-soft);
+    color: var(--ba-text);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .blog-article tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .blog-article tbody tr:nth-child(even) {
+    background: rgba(249, 250, 251, 0.4);
+  }
+
+  .blog-article tbody td:first-child {
+    font-weight: 600;
+    color: var(--ba-heading);
+  }
+
+  /* Mobile: allow tables to scroll horizontally if content overflows */
+  @media (max-width: 768px) {
+    .blog-article table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: normal;
+      font-size: 0.75rem;       /* 12px on mobile tables */
+    }
+    .blog-article thead th,
+    .blog-article tbody td {
+      padding: 0.625rem 0.75rem;
+    }
+  }
+
+  /* ── Code ── */
+  .blog-article code {
+    background: var(--ba-soft-bg);
+    color: var(--ba-accent);
+    padding: 0.15em 0.42em;
+    border-radius: 0.3em;
+    font-size: 0.9em;
+    font-weight: 500;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  }
+
+  .blog-article pre {
+    background: rgb(17 24 39);
+    color: rgb(243 244 246);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0.875rem;
+    overflow-x: auto;
+    margin: 2rem 0;
+    font-size: 0.9em;
+    line-height: 1.65;
+  }
+
+  .blog-article pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+    font-weight: 400;
+  }
+
+  /* ── Images ── */
+  .blog-article img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.875rem;
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 7%),
+      0 2px 4px -2px rgb(0 0 0 / 6%);
+    margin: 2rem auto;
+  }
+
+  .blog-article figure {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  /* Images inside figures: centered, no double margin */
+  .blog-article figure > img {
+    margin: 0 auto;
+  }
+
+  /* Portrait/narrow phone screenshots — cap their displayed width so they
+     don't stretch awkwardly inside a wide reading column */
+  .blog-article figure > img[width][height] {
+    max-width: min(100%, var(--img-max, 100%));
+  }
+
+  /* If width attribute is small (portrait phone screen), constrain via CSS attr */
+  .blog-article img[width="231"] {
+    max-width: 280px;
+  }
+
+  .blog-article figure > figcaption {
+    font-size: 0.875em;
+    color: var(--ba-muted);
+    text-align: center;
+    margin-top: 0.75em;
+    font-style: italic;
+  }
+
+  /* ── Horizontal rule ── */
+  .blog-article hr {
+    border: none;
+    border-top: 1px solid var(--ba-border);
+    margin: 3rem 0;
+  }
+
+  /* ── Final polish: last child has no extra bottom margin ── */
+  .blog-article > *:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Selection color: subtle green tint */
+  .blog-article ::selection {
+    background: var(--ba-accent-soft);
+    color: var(--ba-heading);
+  }
+</style>

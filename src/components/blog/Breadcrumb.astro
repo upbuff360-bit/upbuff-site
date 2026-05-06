@@ -1,0 +1,52 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class={`text-sm ${className}`}>
+  <ol class="flex flex-wrap items-center gap-1.5 text-gray-500">
+    {
+      items.map((item, idx) => (
+        <li class="flex items-center gap-1.5">
+          {idx > 0 && (
+            <Icon name="tabler:chevron-right" class="w-3.5 h-3.5 text-gray-400 shrink-0" />
+          )}
+          {item.href && idx !== items.length - 1 ? (
+            <a
+              href={item.href}
+              class="hover:text-primary transition-colors"
+            >
+              {idx === 0 ? (
+                <span class="inline-flex items-center gap-1.5">
+                  <Icon name="tabler:home" class="w-3.5 h-3.5" />
+                  {item.label}
+                </span>
+              ) : (
+                item.label
+              )}
+            </a>
+          ) : (
+            <span
+              class="text-gray-900 font-medium max-w-[60vw] sm:max-w-md truncate"
+              aria-current={idx === items.length - 1 ? 'page' : undefined}
+              title={item.label}
+            >
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

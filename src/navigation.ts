@@ -104,8 +104,8 @@ export const headerData = {
       ],
     },
     {
-      text: 'About',
-      href: getPermalink('/about'),
+      text: 'Case Studies',
+      href: getPermalink('/case-studies'),
     },
   ],
   actions: [
@@ -146,6 +146,13 @@ export const footerData = {
         { text: 'About',        href: getPermalink('/about') },
         { text: 'Contact',      href: getPermalink('/contact') },
         { text: 'Request Demo', href: getPermalink('/request-demo') },
+      ],
+    },
+    {
+      title: 'Resources',
+      links: [
+        { text: 'Blog',         href: getPermalink('/blog') },
+        { text: 'Case Studies', href: getPermalink('/case-studies') },
       ],
     },
     {

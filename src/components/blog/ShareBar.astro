@@ -1,0 +1,157 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  text: string;
+  url: string | URL;
+  class?: string;
+}
+
+const { text, url, class: className = '' } = Astro.props;
+const shareUrl = String(url);
+---
+
+<aside
+  class={`not-prose rounded-2xl border border-gray-200 bg-gray-50 px-5 py-6 sm:px-8 sm:py-8 ${className}`}
+  data-aw-share-bar
+  data-aw-share-url={shareUrl}
+  data-aw-share-text={text}
+>
+  <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">
+        Enjoyed this article?
+      </p>
+      <h3 class="text-lg sm:text-xl font-bold text-gray-900 leading-tight">
+        Share with your network
+      </h3>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        title="Share on X (Twitter)"
+        aria-label="Share on X"
+        data-aw-social-share="twitter"
+        data-aw-url={shareUrl}
+        data-aw-text={text}
+        class="group inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white hover:border-gray-900 hover:bg-gray-900 transition-colors"
+      >
+        <Icon name="tabler:brand-x" class="w-4 h-4 text-gray-700 group-hover:text-white" />
+      </button>
+
+      <button
+        type="button"
+        title="Share on LinkedIn"
+        aria-label="Share on LinkedIn"
+        data-aw-social-share="linkedin"
+        data-aw-url={shareUrl}
+        data-aw-text={text}
+        class="group inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white hover:border-[#0A66C2] hover:bg-[#0A66C2] transition-colors"
+      >
+        <Icon name="tabler:brand-linkedin" class="w-4 h-4 text-gray-700 group-hover:text-white" />
+      </button>
+
+      <button
+        type="button"
+        title="Share on Facebook"
+        aria-label="Share on Facebook"
+        data-aw-social-share="facebook"
+        data-aw-url={shareUrl}
+        data-aw-text={text}
+        class="group inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white hover:border-[#1877F2] hover:bg-[#1877F2] transition-colors"
+      >
+        <Icon name="tabler:brand-facebook" class="w-4 h-4 text-gray-700 group-hover:text-white" />
+      </button>
+
+      <button
+        type="button"
+        title="Share on WhatsApp"
+        aria-label="Share on WhatsApp"
+        data-aw-social-share="whatsapp"
+        data-aw-url={shareUrl}
+        data-aw-text={text}
+        class="group inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white hover:border-[#25D366] hover:bg-[#25D366] transition-colors"
+      >
+        <Icon name="tabler:brand-whatsapp" class="w-4 h-4 text-gray-700 group-hover:text-white" />
+      </button>
+
+      <button
+        type="button"
+        title="Share via Email"
+        aria-label="Share via email"
+        data-aw-social-share="mail"
+        data-aw-url={shareUrl}
+        data-aw-text={text}
+        class="group inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white hover:border-gray-900 hover:bg-gray-900 transition-colors"
+      >
+        <Icon name="tabler:mail" class="w-4 h-4 text-gray-700 group-hover:text-white" />
+      </button>
+
+      <button
+        type="button"
+        title="Copy link"
+        aria-label="Copy link"
+        data-aw-copy-link
+        class="group inline-flex items-center gap-2 h-10 px-4 rounded-full border border-gray-200 bg-white hover:border-primary hover:bg-primary hover:text-white transition-colors text-sm font-medium text-gray-700"
+      >
+        <Icon name="tabler:link" class="w-4 h-4" data-aw-copy-icon-default />
+        <Icon name="tabler:check" class="w-4 h-4 hidden" data-aw-copy-icon-success />
+        <span data-aw-copy-label>Copy link</span>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  // Copy-link interaction. Uses event delegation so it survives Astro's
+  // ClientRouter view transitions (no re-binding needed on astro:after-swap).
+  if (!(window as unknown as { __awCopyLinkBound?: boolean }).__awCopyLinkBound) {
+    (window as unknown as { __awCopyLinkBound?: boolean }).__awCopyLinkBound = true;
+
+    document.addEventListener('click', async (event) => {
+      const target = event.target as HTMLElement | null;
+      const button = target?.closest('[data-aw-copy-link]') as HTMLButtonElement | null;
+      if (!button) return;
+
+      const bar = button.closest('[data-aw-share-bar]') as HTMLElement | null;
+      const url = bar?.getAttribute('data-aw-share-url') || window.location.href;
+
+      const label = button.querySelector('[data-aw-copy-label]') as HTMLElement | null;
+      const iconDefault = button.querySelector('[data-aw-copy-icon-default]') as HTMLElement | null;
+      const iconSuccess = button.querySelector('[data-aw-copy-icon-success]') as HTMLElement | null;
+
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          // Fallback for older browsers / non-secure contexts.
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'absolute';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+
+        if (label) label.textContent = 'Copied!';
+        iconDefault?.classList.add('hidden');
+        iconSuccess?.classList.remove('hidden');
+
+        window.setTimeout(() => {
+          if (label) label.textContent = 'Copy link';
+          iconDefault?.classList.remove('hidden');
+          iconSuccess?.classList.add('hidden');
+        }, 1800);
+      } catch {
+        if (label) label.textContent = 'Press Ctrl+C to copy';
+        window.setTimeout(() => {
+          if (label) label.textContent = 'Copy link';
+        }, 2200);
+      }
+    });
+  }
+</script>

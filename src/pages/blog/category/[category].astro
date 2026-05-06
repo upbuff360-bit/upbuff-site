@@ -1,0 +1,154 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Icon } from 'astro-icon/components';
+
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Breadcrumb from '~/components/blog/Breadcrumb.astro';
+import PostCard from '~/components/blog/PostCard.astro';
+
+import { fetchPosts } from '~/utils/blog';
+import { getPermalink } from '~/utils/permalinks';
+import { findImage } from '~/utils/images';
+
+import { headerData } from '~/navigation';
+import type { Post, Taxonomy } from '~/types';
+
+export const getStaticPaths = (async () => {
+  const posts = await fetchPosts();
+  const catMap = new Map<string, { category: Taxonomy; posts: Post[] }>();
+
+  for (const post of posts) {
+    if (!post.category?.slug) continue;
+    const entry = catMap.get(post.category.slug);
+    if (entry) {
+      entry.posts.push(post);
+    } else {
+      catMap.set(post.category.slug, { category: post.category, posts: [post] });
+    }
+  }
+
+  return Array.from(catMap.entries()).map(([slug, data]) => ({
+    params: { category: slug },
+    props: { category: data.category, posts: data.posts },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  category: Taxonomy;
+  posts: Post[];
+}
+
+const { category, posts } = Astro.props;
+
+// Pre-resolve images so the JSX map stays synchronous.
+const postsWithImages = await Promise.all(
+  posts.map(async (post) => ({
+    post,
+    image: await findImage(post.image),
+  }))
+);
+
+const metadata = {
+  title: `${category.title} articles | UpBuff Blog`,
+  description: `Articles, tutorials, and product updates in the ${category.title} category from UpBuff Technologies.`,
+  canonical: `https://www.upbuff.com${getPermalink(category.slug, 'category')}/`,
+  robots: { index: true, follow: true },
+};
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: category.title },
+];
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': metadata.canonical + '#collection',
+        name: `${category.title} articles`,
+        description: metadata.description,
+        url: metadata.canonical,
+        isPartOf: { '@id': 'https://www.upbuff.com/blog/#blog' },
+        inLanguage: 'en',
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: posts.length,
+          itemListElement: posts.slice(0, 10).map((post, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            url: 'https://www.upbuff.com' + getPermalink(post.permalink, 'post'),
+            name: post.title,
+          })),
+        },
+      })}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': metadata.canonical + '#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.upbuff.com/blog/' },
+          { '@type': 'ListItem', position: 3, name: category.title, item: metadata.canonical },
+        ],
+      })}
+    />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[{ variant: 'primary', text: 'Request Demo', href: '/request-demo' }]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="bg-gray-50 border-b border-gray-200 not-prose">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <Breadcrumb items={breadcrumbItems} class="mb-5" />
+
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-4">
+        <Icon name="tabler:folder" class="w-3.5 h-3.5 text-[rgb(39,174,97)]" />
+        <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Category</span>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-3">
+        {category.title}
+      </h1>
+      <p class="text-gray-600 text-base md:text-lg">
+        {posts.length} {posts.length === 1 ? 'article' : 'articles'} in this category
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Posts grid ────────────────────────────────────────── -->
+  <section class="not-prose bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {postsWithImages.map(({ post, image }) => <PostCard post={post} image={image} showCategory={false} />)}
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-colors"
+        >
+          <Icon name="tabler:arrow-left" class="w-4 h-4" />
+          View all articles
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,334 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Icon } from 'astro-icon/components';
+
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Image from '~/components/common/Image.astro';
+import Breadcrumb from '~/components/blog/Breadcrumb.astro';
+import ShareBar from '~/components/blog/ShareBar.astro';
+import Card from '~/components/case-study/Card.astro';
+import ArticleBody from '~/components/common/ArticleBody.astro';
+
+import { fetchCaseStudies, findRelatedCaseStudies } from '~/utils/case-studies';
+import { getCanonical } from '~/utils/permalinks';
+import { findImage } from '~/utils/images';
+import { getFormattedDate } from '~/utils/utils';
+
+import { headerData } from '~/navigation';
+import type { Post } from '~/types';
+
+export const getStaticPaths = (async () => {
+  const caseStudies = await fetchCaseStudies();
+  return caseStudies.map((cs) => ({
+    params: { slug: cs.slug },
+    props: { caseStudy: cs },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  caseStudy: Post;
+}
+
+const { caseStudy } = Astro.props;
+const { Content } = caseStudy;
+
+// Resolve hero image once.
+const heroImage = await findImage(caseStudy.image);
+
+// Build canonical URL — prefer explicit metadata override, otherwise derive from path.
+const path = '/' + caseStudy.permalink;
+const canonicalUrl = caseStudy.metadata?.canonical || String(getCanonical(path));
+const shareUrl = canonicalUrl;
+
+// Open Graph image — use post image if it's a public/external URL string.
+const ogImage =
+  typeof caseStudy.image === 'string' &&
+  (caseStudy.image.startsWith('http') || caseStudy.image.startsWith('/'))
+    ? caseStudy.image
+    : 'https://www.upbuff.com/assets/og-image.jpg';
+
+// Pre-resolve related case studies (and their images).
+const relatedRaw = await findRelatedCaseStudies(caseStudy, 3);
+const related = await Promise.all(
+  relatedRaw.map(async (cs) => ({
+    caseStudy: cs,
+    image: await findImage(cs.image),
+  }))
+);
+
+const metadata = {
+  title: caseStudy.metadata?.title || caseStudy.title,
+  description: caseStudy.metadata?.description || caseStudy.excerpt,
+  canonical: canonicalUrl,
+  robots: caseStudy.metadata?.robots ?? { index: !caseStudy.draft, follow: true },
+  openGraph: {
+    type: 'article',
+    url: canonicalUrl,
+    title: caseStudy.title,
+    description: caseStudy.excerpt,
+    images: [{ url: ogImage }],
+    ...(caseStudy.metadata?.openGraph ?? {}),
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: caseStudy.title,
+    description: caseStudy.excerpt,
+    ...(caseStudy.metadata?.twitter ?? {}),
+  },
+};
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: caseStudy.title },
+];
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta name="author" content={caseStudy.author || 'UpBuff Technologies'} />
+    {caseStudy.publishDate && <meta property="article:published_time" content={caseStudy.publishDate.toISOString()} />}
+    {caseStudy.updateDate && <meta property="article:modified_time" content={caseStudy.updateDate.toISOString()} />}
+    {caseStudy.author && <meta property="article:author" content={caseStudy.author} />}
+    {caseStudy.category && <meta property="article:section" content={caseStudy.category.title} />}
+    {caseStudy.tags?.map((tag) => <meta property="article:tag" content={tag.title} />)}
+
+    <!-- Article structured data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        '@id': canonicalUrl + '#article',
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+        headline: caseStudy.title,
+        description: caseStudy.excerpt,
+        image: ogImage,
+        datePublished: caseStudy.publishDate?.toISOString(),
+        dateModified: (caseStudy.updateDate ?? caseStudy.publishDate)?.toISOString(),
+        author: {
+          '@type': 'Organization',
+          name: caseStudy.author || 'UpBuff Technologies',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'UpBuff Technologies',
+          url: 'https://www.upbuff.com',
+          logo: { '@type': 'ImageObject', url: 'https://www.upbuff.com/logo.png' },
+        },
+        keywords: caseStudy.tags?.map((t) => t.title).join(', '),
+        articleSection: caseStudy.category?.title,
+      })}
+    />
+
+    <!-- BreadcrumbList structured data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': canonicalUrl + '#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://www.upbuff.com/case-studies/' },
+          { '@type': 'ListItem', position: 3, name: caseStudy.title, item: canonicalUrl },
+        ],
+      })}
+    />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'primary', text: 'Request Demo', href: '/request-demo' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <article class="not-prose">
+    <!-- ── Hero: breadcrumb → title → meta ──────────────────── -->
+    <header class="bg-gray-50 border-b border-gray-200">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+        <Breadcrumb items={breadcrumbItems} class="mb-6" />
+
+        {
+          caseStudy.category && (
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-[rgb(39,174,97)] uppercase tracking-widest mb-4">
+              {caseStudy.category.title}
+            </span>
+          )
+        }
+
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-[1.2] tracking-tight mb-4 max-w-[28ch]">
+          {caseStudy.title}
+        </h1>
+
+        {
+          caseStudy.excerpt && (
+            <p class="text-base md:text-lg text-gray-600 leading-relaxed mb-7 max-w-[62ch] font-normal">
+              {caseStudy.excerpt}
+            </p>
+          )
+        }
+
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-3 text-sm text-gray-600 pt-5 border-t border-gray-200">
+          {
+            caseStudy.author && (
+              <div class="flex items-center gap-2.5">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[rgb(39,174,97)] to-[rgb(24,139,74)] text-white text-xs font-bold shadow-sm">
+                  {caseStudy.author
+                    .split(' ')
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join('')
+                    .toUpperCase()}
+                </span>
+                <div class="leading-tight">
+                  <span class="block text-[11px] uppercase tracking-widest text-gray-400 font-semibold">
+                    Customer
+                  </span>
+                  <span class="block font-semibold text-gray-900 text-[15px]">{caseStudy.author}</span>
+                </div>
+              </div>
+            )
+          }
+
+          {caseStudy.author && <span class="hidden sm:block w-1 h-1 rounded-full bg-gray-300" />}
+
+          <div class="flex items-center gap-1.5">
+            <Icon name="tabler:calendar" class="w-4 h-4 text-gray-400" />
+            <time datetime={caseStudy.publishDate.toISOString()} class="text-gray-700">
+              {getFormattedDate(caseStudy.publishDate)}
+            </time>
+          </div>
+
+          {
+            caseStudy.readingTime && (
+              <>
+                <span class="w-1 h-1 rounded-full bg-gray-300" />
+                <div class="flex items-center gap-1.5">
+                  <Icon name="tabler:clock" class="w-4 h-4 text-gray-400" />
+                  <span class="text-gray-700">{caseStudy.readingTime} min read</span>
+                </div>
+              </>
+            )
+          }
+
+          {
+            caseStudy.updateDate && (
+              <>
+                <span class="w-1 h-1 rounded-full bg-gray-300" />
+                <span class="text-xs text-gray-500 italic">
+                  Updated {getFormattedDate(caseStudy.updateDate)}
+                </span>
+              </>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured image -->
+    {
+      heroImage && (
+        <div class="bg-white">
+          <div class="max-w-5xl mx-auto px-4 sm:px-6 -mt-1 md:-mt-6 pt-6 md:pt-10">
+            <Image
+              src={heroImage}
+              class="w-full rounded-2xl shadow-md bg-gray-100 aspect-[16/9] object-cover"
+              widths={[400, 900, 1400]}
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              alt={caseStudy.title}
+              width={1400}
+              height={788}
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Body — same .blog-article typography as the blog -->
+    <div class="bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-10 md:pt-14 pb-8 md:pb-12">
+        <ArticleBody>
+          {Content && <Content />}
+        </ArticleBody>
+      </div>
+    </div>
+
+    <!-- Tags (non-link labels — case studies don't have tag archives) -->
+    {
+      caseStudy.tags && caseStudy.tags.length > 0 && (
+        <div class="bg-white">
+          <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-6">
+            <div class="flex flex-wrap items-center gap-2">
+              <Icon name="tabler:tag" class="w-4 h-4 text-gray-400" />
+              <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest mr-1">
+                Tagged:
+              </span>
+              {caseStudy.tags.map((tag) => (
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-700">
+                  #{tag.title}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Share -->
+    <div class="bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <ShareBar text={caseStudy.title} url={shareUrl} />
+      </div>
+    </div>
+
+    <!-- Back to all -->
+    <div class="bg-white border-t border-gray-100">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+        <a
+          href="/case-studies"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-colors"
+        >
+          <Icon name="tabler:arrow-left" class="w-4 h-4" />
+          Back to all case studies
+        </a>
+      </div>
+    </div>
+
+    <!-- Related case studies -->
+    {
+      related.length > 0 && (
+        <div class="bg-gray-50 border-t border-gray-100">
+          <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+            <div class="flex items-baseline justify-between mb-8">
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+                Related case studies
+              </h2>
+              <a
+                href="/case-studies"
+                class="text-sm font-semibold text-gray-700 hover:text-[rgb(39,174,97)] transition-colors"
+              >
+                View all →
+              </a>
+            </div>
+            <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map(({ caseStudy: cs, image }) => (
+                <Card caseStudy={cs} image={image} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </article>
+</Layout>

@@ -46,25 +46,34 @@ const metadataDefinition = () =>
     })
     .optional();
 
-// const postCollection = defineCollection({
-//   loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
-//   schema: z.object({
-//     publishDate: z.date().optional(),
-//     updateDate: z.date().optional(),
-//     draft: z.boolean().optional(),
+// Shared schema used by both blog posts and case studies.
+const contentSchema = z.object({
+  publishDate: z.date().optional(),
+  updateDate: z.date().optional(),
+  draft: z.boolean().optional(),
 
-//     title: z.string(),
-//     excerpt: z.string().optional(),
-//     image: z.string().optional(),
+  title: z.string(),
+  excerpt: z.string().optional(),
+  image: z.string().optional(),
 
-//     category: z.string().optional(),
-//     tags: z.array(z.string()).optional(),
-//     author: z.string().optional(),
+  category: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  author: z.string().optional(),
 
-//     metadata: metadataDefinition(),
-//   }),
-// });
+  metadata: metadataDefinition(),
+});
+
+const postCollection = defineCollection({
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
+  schema: contentSchema,
+});
+
+const caseStudyCollection = defineCollection({
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/case-study' }),
+  schema: contentSchema,
+});
 
 export const collections = {
-  // post: postCollection,
+  post: postCollection,
+  caseStudy: caseStudyCollection,
 };

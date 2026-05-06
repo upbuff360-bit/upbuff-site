@@ -1,0 +1,237 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Image from '~/components/common/Image.astro';
+import PostCard from '~/components/blog/PostCard.astro';
+import { Icon } from 'astro-icon/components';
+
+import { fetchPosts } from '~/utils/blog';
+import { getPermalink } from '~/utils/permalinks';
+import { findImage } from '~/utils/images';
+import { getFormattedDate } from '~/utils/utils';
+
+import { headerData } from '~/navigation';
+
+const posts = await fetchPosts();
+
+// Featured = newest post; rest = remaining posts.
+const [featured, ...rest] = posts;
+
+// Build category list with counts for the filter pills.
+const categoryMap = new Map<string, { slug: string; title: string; count: number }>();
+for (const post of posts) {
+  const c = post.category;
+  if (!c?.slug) continue;
+  const existing = categoryMap.get(c.slug);
+  if (existing) {
+    existing.count += 1;
+  } else {
+    categoryMap.set(c.slug, { slug: c.slug, title: c.title, count: 1 });
+  }
+}
+const categories = Array.from(categoryMap.values()).sort((a, b) => b.count - a.count);
+
+// Resolve featured image once (the helper is async).
+const featuredImage = featured ? await findImage(featured.image) : null;
+
+// Pre-resolve images for the rest of the grid so the JSX map stays synchronous.
+const restWithImages = await Promise.all(
+  rest.map(async (post) => ({
+    post,
+    image: await findImage(post.image),
+  }))
+);
+
+const metadata = {
+  title: 'Blog | UpBuff Technologies',
+  description:
+    'ERP execution insights, integration playbooks, and product updates from the UpBuff team — built on the Clean Core principle.',
+  canonical: 'https://www.upbuff.com/blog/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/blog/',
+    title: 'UpBuff Blog | ERP Execution Insights & Integration Playbooks',
+    description:
+      'Articles, tutorials, and product updates from the UpBuff team — covering SAP Business One integration, Clean Core architecture, and ERP execution.',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'UpBuff Blog | ERP Execution Insights',
+    description: 'Articles, tutorials, and product updates from the UpBuff team.',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Blog',
+        '@id': 'https://www.upbuff.com/blog/#blog',
+        name: 'UpBuff Blog',
+        url: 'https://www.upbuff.com/blog/',
+        description:
+          'ERP execution insights, integration playbooks, and product updates from the UpBuff team.',
+        publisher: {
+          '@type': 'Organization',
+          name: 'UpBuff Technologies',
+          url: 'https://www.upbuff.com',
+        },
+        blogPost: posts.slice(0, 10).map((post) => ({
+          '@type': 'BlogPosting',
+          headline: post.title,
+          url: 'https://www.upbuff.com' + getPermalink(post.permalink, 'post'),
+          datePublished: post.publishDate.toISOString(),
+          author: post.author ? { '@type': 'Person', name: post.author } : undefined,
+        })),
+      })}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': 'https://www.upbuff.com/blog/#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.upbuff.com/blog/' },
+        ],
+      })}
+    />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[{ variant: 'primary', text: 'Request Demo', href: '/request-demo' }]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="bg-gray-50 border-b border-gray-200 not-prose">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-5">
+        <span class="w-2 h-2 rounded-full bg-[rgb(39,174,97)] shrink-0"></span>
+        <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Resources</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4 max-w-3xl">
+        UpBuff Blog
+      </h1>
+      <p class="text-gray-600 text-lg leading-relaxed max-w-2xl">
+        ERP execution insights, integration playbooks, and product updates — written by the engineers
+        and architects building the UpBuff platform.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── Featured post ─────────────────────────────────────── -->
+  {
+    featured && (
+      <section class="not-prose bg-white border-b border-gray-100">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+          <a
+            href={getPermalink(featured.permalink, 'post')}
+            class="group grid md:grid-cols-2 gap-8 md:gap-10 items-center"
+          >
+            <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-gray-100 shadow-sm">
+              {featuredImage && (
+                <Image
+                  src={featuredImage}
+                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  widths={[400, 768, 1024]}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt={featured.title}
+                  width={1024}
+                  height={640}
+                  loading="eager"
+                  decoding="async"
+                />
+              )}
+              <span class="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-semibold text-gray-900 shadow-sm">
+                <Icon name="tabler:sparkles" class="w-3.5 h-3.5 text-[rgb(39,174,97)]" />
+                Featured
+              </span>
+            </div>
+
+            <div>
+              {featured.category && (
+                <span class="inline-flex text-xs font-semibold text-[rgb(39,174,97)] uppercase tracking-widest mb-3">
+                  {featured.category.title}
+                </span>
+              )}
+              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight tracking-tight mb-3 group-hover:text-primary transition-colors">
+                {featured.title}
+              </h2>
+              {featured.excerpt && (
+                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
+                  {featured.excerpt}
+                </p>
+              )}
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
+                {featured.author && (
+                  <span class="font-medium text-gray-900">{featured.author}</span>
+                )}
+                {featured.author && <span class="text-gray-300">·</span>}
+                <time datetime={featured.publishDate.toISOString()}>
+                  {getFormattedDate(featured.publishDate)}
+                </time>
+                {featured.readingTime && (
+                  <>
+                    <span class="text-gray-300">·</span>
+                    <span>{featured.readingTime} min read</span>
+                  </>
+                )}
+              </div>
+              <span class="inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                Read article
+                <Icon
+                  name="tabler:arrow-right"
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                />
+              </span>
+            </div>
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── Posts grid ────────────────────────────────────────── -->
+  <section class="not-prose bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      {
+        rest.length > 0 ? (
+          <>
+            <div class="flex items-baseline justify-between mb-8 md:mb-10">
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+                Latest articles
+              </h2>
+              <span class="text-sm text-gray-500">
+                {posts.length} {posts.length === 1 ? 'post' : 'posts'}
+              </span>
+            </div>
+
+            <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {restWithImages.map(({ post, image }) => <PostCard post={post} image={image} />)}
+            </div>
+          </>
+        ) : !featured ? (
+          <div class="text-center py-16">
+            <Icon name="tabler:article-off" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">No articles yet</h2>
+            <p class="text-gray-500">Check back soon — we're working on great content.</p>
+          </div>
+        ) : null
+      }
+    </div>
+  </section>
+</Layout>

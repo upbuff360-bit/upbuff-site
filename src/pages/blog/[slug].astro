@@ -1,0 +1,316 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Icon } from 'astro-icon/components';
+
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Image from '~/components/common/Image.astro';
+import Breadcrumb from '~/components/blog/Breadcrumb.astro';
+import ShareBar from '~/components/blog/ShareBar.astro';
+import RelatedPosts from '~/components/blog/RelatedPosts.astro';
+import ArticleBody from '~/components/common/ArticleBody.astro';
+
+import { fetchPosts } from '~/utils/blog';
+import { getPermalink, getCanonical } from '~/utils/permalinks';
+import { findImage } from '~/utils/images';
+import { getFormattedDate } from '~/utils/utils';
+
+import { headerData } from '~/navigation';
+import type { Post } from '~/types';
+
+export const getStaticPaths = (async () => {
+  const posts = await fetchPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { Content } = post;
+
+// Resolve the post image to its optimized form once.
+const heroImage = await findImage(post.image);
+
+// Build canonical URL — prefer explicit metadata override, otherwise derive from path.
+const path = getPermalink(post.permalink, 'post');
+const canonicalUrl = post.metadata?.canonical || String(getCanonical(path));
+const shareUrl = canonicalUrl;
+
+// Open Graph image — use post image if it's a public/external URL string.
+const ogImage =
+  typeof post.image === 'string' && (post.image.startsWith('http') || post.image.startsWith('/'))
+    ? post.image
+    : 'https://www.upbuff.com/assets/og-image.jpg';
+
+const metadata = {
+  title: post.metadata?.title || post.title,
+  description: post.metadata?.description || post.excerpt,
+  canonical: canonicalUrl,
+  robots: post.metadata?.robots ?? { index: !post.draft, follow: true },
+  openGraph: {
+    type: 'article',
+    url: canonicalUrl,
+    title: post.title,
+    description: post.excerpt,
+    images: [{ url: ogImage }],
+    ...(post.metadata?.openGraph ?? {}),
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: post.title,
+    description: post.excerpt,
+    ...(post.metadata?.twitter ?? {}),
+  },
+};
+
+const breadcrumbItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: post.title },
+];
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta name="author" content={post.author || 'UpBuff Technologies'} />
+    {post.publishDate && <meta property="article:published_time" content={post.publishDate.toISOString()} />}
+    {post.updateDate && <meta property="article:modified_time" content={post.updateDate.toISOString()} />}
+    {post.author && <meta property="article:author" content={post.author} />}
+    {post.category && <meta property="article:section" content={post.category.title} />}
+    {post.tags?.map((tag) => <meta property="article:tag" content={tag.title} />)}
+
+    <!-- BlogPosting structured data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': canonicalUrl + '#article',
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+        headline: post.title,
+        description: post.excerpt,
+        image: ogImage,
+        datePublished: post.publishDate?.toISOString(),
+        dateModified: (post.updateDate ?? post.publishDate)?.toISOString(),
+        author: {
+          '@type': 'Person',
+          name: post.author || 'UpBuff Technologies',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'UpBuff Technologies',
+          url: 'https://www.upbuff.com',
+          logo: { '@type': 'ImageObject', url: 'https://www.upbuff.com/logo.png' },
+        },
+        keywords: post.tags?.map((t) => t.title).join(', '),
+        articleSection: post.category?.title,
+      })}
+    />
+
+    <!-- BreadcrumbList structured data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': canonicalUrl + '#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.upbuff.com/blog/' },
+          { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
+        ],
+      })}
+    />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[
+        { variant: 'primary', text: 'Request Demo', href: '/request-demo' },
+      ]}
+      isSticky
+    />
+  </Fragment>
+
+  <article class="not-prose">
+    <!-- ── Hero: breadcrumb → title → meta ──────────────────── -->
+    <header class="bg-gray-50 border-b border-gray-200">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+        <!-- 1. Breadcrumb FIRST -->
+        <Breadcrumb items={breadcrumbItems} class="mb-6" />
+
+        <!-- Optional category pill -->
+        {
+          post.category && (
+            <a
+              href={getPermalink(post.category.slug, 'category')}
+              class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-gray-200 text-xs font-semibold text-[rgb(39,174,97)] uppercase tracking-widest mb-4 hover:border-[rgb(39,174,97)] transition-colors"
+            >
+              {post.category.title}
+            </a>
+          )
+        }
+
+        <!-- 2. Title -->
+        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-[1.2] tracking-tight mb-4 max-w-[28ch]">
+          {post.title}
+        </h1>
+
+        {
+          post.excerpt && (
+            <p class="text-base md:text-lg text-gray-600 leading-relaxed mb-7 max-w-[62ch] font-normal">
+              {post.excerpt}
+            </p>
+          )
+        }
+
+        <!-- 3. Created by, date, read time -->
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-3 text-sm text-gray-600 pt-5 border-t border-gray-200">
+          {
+            post.author && (
+              <div class="flex items-center gap-2.5">
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[rgb(39,174,97)] to-[rgb(24,139,74)] text-white text-xs font-bold shadow-sm">
+                  {post.author
+                    .split(' ')
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join('')
+                    .toUpperCase()}
+                </span>
+                <div class="leading-tight">
+                  <span class="block text-[11px] uppercase tracking-widest text-gray-400 font-semibold">
+                    Written by
+                  </span>
+                  <span class="block font-semibold text-gray-900 text-[15px]">{post.author}</span>
+                </div>
+              </div>
+            )
+          }
+
+          {post.author && <span class="hidden sm:block w-1 h-1 rounded-full bg-gray-300" />}
+
+          <div class="flex items-center gap-1.5">
+            <Icon name="tabler:calendar" class="w-4 h-4 text-gray-400" />
+            <time datetime={post.publishDate.toISOString()} class="text-gray-700">
+              {getFormattedDate(post.publishDate)}
+            </time>
+          </div>
+
+          {
+            post.readingTime && (
+              <>
+                <span class="w-1 h-1 rounded-full bg-gray-300" />
+                <div class="flex items-center gap-1.5">
+                  <Icon name="tabler:clock" class="w-4 h-4 text-gray-400" />
+                  <span class="text-gray-700">{post.readingTime} min read</span>
+                </div>
+              </>
+            )
+          }
+
+          {
+            post.updateDate && (
+              <>
+                <span class="w-1 h-1 rounded-full bg-gray-300" />
+                <span class="text-xs text-gray-500 italic">
+                  Updated {getFormattedDate(post.updateDate)}
+                </span>
+              </>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- 4. Featured image -->
+    {
+      heroImage && (
+        <div class="bg-white">
+          <div class="max-w-5xl mx-auto px-4 sm:px-6 -mt-1 md:-mt-6 pt-6 md:pt-10">
+            <Image
+              src={heroImage}
+              class="w-full rounded-2xl shadow-md bg-gray-100 aspect-[16/9] object-cover"
+              widths={[400, 900, 1400]}
+              sizes="(max-width: 1024px) 100vw, 1024px"
+              alt={post.title}
+              width={1400}
+              height={788}
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    <!-- 5. Content (markdown body) -->
+    <div class="bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-10 md:pt-14 pb-8 md:pb-12">
+        <ArticleBody>
+          {Content && <Content />}
+        </ArticleBody>
+      </div>
+    </div>
+
+    <!-- 6. Tags -->
+    {
+      post.tags && post.tags.length > 0 && (
+        <div class="bg-white">
+          <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-6">
+            <div class="flex flex-wrap items-center gap-2">
+              <Icon name="tabler:tag" class="w-4 h-4 text-gray-400" />
+              <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest mr-1">
+                Tagged:
+              </span>
+              {post.tags.map((tag) => (
+                <a
+                  href={getPermalink(tag.slug, 'tag')}
+                  class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-medium text-gray-700 transition-colors"
+                >
+                  #{tag.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- 7. Share — closing stage -->
+    <div class="bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-12 md:pb-16">
+        <ShareBar text={post.title} url={shareUrl} />
+      </div>
+    </div>
+
+    <!-- ── Back to blog -->
+    <div class="bg-white border-t border-gray-100">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary transition-colors"
+        >
+          <Icon name="tabler:arrow-left" class="w-4 h-4" />
+          Back to all articles
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Related posts -->
+    <div class="bg-gray-50 border-t border-gray-100">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <RelatedPosts post={post} />
+      </div>
+    </div>
+  </article>
+</Layout>
+

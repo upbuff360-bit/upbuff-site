@@ -29,7 +29,7 @@ const { socialLinks = [], links = [], footNote = '', phone } = Astro.props;
 <footer class="relative bg-white border-t border-gray-100 not-prose overflow-hidden pb-0">
 
   <!-- Main footer content -->
-  <div class="relative max-w-5xl mx-auto px-4 sm:px-6 pt-14 pb-10">
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-10">
     <div class="flex flex-col lg:flex-row lg:justify-between gap-12">
 
       <!-- Left column: logo, copyright, social icons -->
@@ -83,7 +83,7 @@ const { socialLinks = [], links = [], footNote = '', phone } = Astro.props;
       </div>
 
       <!-- Right: nav columns -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 flex-1">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 flex-1">
         {links.map(({ title, links: colLinks }) => (
           <div>
             <p class="text-[0.65rem] font-bold uppercase tracking-widest text-gray-900 mb-4">
@@ -113,7 +113,7 @@ const { socialLinks = [], links = [], footNote = '', phone } = Astro.props;
 
   <!-- Half-cut watermark logo — overflows the footer bottom -->
   <div
-    class="relative max-w-5xl ml-auto px-4 sm:px-6 select-none pointer-events-none mt-8"
+    class="relative max-w-6xl ml-auto px-4 sm:px-6 select-none pointer-events-none mt-8"
     aria-hidden="true"
     style="height: clamp(5rem, 14vw, 9rem); overflow: hidden;"
   >
