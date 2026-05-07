@@ -104,9 +104,26 @@ export const headerData = {
       ],
     },
     {
-      text: 'Case Studies',
-      href: getPermalink('/case-studies'),
+      text: 'Resources',
+      links: [
+        {
+          text: 'Case Studies',
+          href: getPermalink('/case-studies'),
+          icon: 'tabler:plug-connected',
+          description: 'Explore real-world customer success stories and implementation experiences.',
+        },
+        {
+          text: 'Blog',
+          href: getPermalink('/blog'),
+          icon: 'tabler:circle-letter-s',
+          description: 'Read the latest insights, updates, trends, and product-related articles.',
+        },
+      ],
     },
+    // {
+    //   text: 'Case Studies',
+    //   href: getPermalink('/case-studies'),
+    // },
   ],
   actions: [
     { text: 'Request Demo', href: getPermalink('/request-demo'), variant: 'primary' },
