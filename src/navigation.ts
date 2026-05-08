@@ -109,7 +109,7 @@ export const headerData = {
         {
           text: 'Case Studies',
           href: getPermalink('/case-studies'),
-          icon: 'tabler:plug-connected',
+          icon: 'tabler:file-text',
           description: 'Explore real-world customer success stories and implementation experiences.',
         },
         {

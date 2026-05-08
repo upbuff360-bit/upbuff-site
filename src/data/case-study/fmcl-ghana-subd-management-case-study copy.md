@@ -137,14 +137,6 @@ If your distribution business is running paper-based sub-distributor operations 
 
 → [Book a Demo](/request-demo)      → [Contact Us](/contact)
 
-<aside style="margin: 2.25rem 0 1rem; padding: 1.25rem 1.375rem; background: linear-gradient(135deg, rgb(249 250 251) 0%, rgb(240 250 244) 100%); border: 1px solid rgb(39 174 97 / 22%); border-radius: 0.875rem; display: flex; gap: 1rem; align-items: flex-start;">
-  <div aria-hidden="true" style="flex-shrink: 0; width: 2.25rem; height: 2.25rem; border-radius: 0.5rem; background: rgb(39 174 97); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.125rem; line-height: 1; box-shadow: 0 4px 10px -2px rgb(39 174 97 / 35%);">📄</div>
-  <div style="flex: 1; min-width: 0;">
-    <div style="font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgb(39 174 97); margin-bottom: 0.375rem;">Further Reading</div>
-    <p style="margin: 0; color: rgb(31 41 55); font-size: 0.9375rem; line-height: 1.55;">For more on why ERP execution breaks down at the last mile, read our deep-dive: <a href="/blog/sap-business-one-mobile-field-teams" style="font-weight: 600;">Why SAP B1 Teams Work Around the System</a>.</p>
-  </div>
-</aside>
-
 ---
 
 *FMCG Distribution • Sub-Distributor Management • Route-to-Market Automation • Multi-Tenant SaaS*
