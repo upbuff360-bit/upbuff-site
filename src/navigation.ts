@@ -115,7 +115,7 @@ export const headerData = {
         {
           text: 'Blog',
           href: getPermalink('/blog'),
-          icon: 'tabler:circle-letter-s',
+          icon: 'tabler:writing',
           description: 'Read the latest insights, updates, trends, and product-related articles.',
         },
       ],

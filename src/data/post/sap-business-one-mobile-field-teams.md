@@ -21,7 +21,7 @@ metadata:
 
 Picture this.
 
-You spent four to eight months implementing SAP Business One. The finance team loves it. Reports finally make sense. The CFO is happy.
+You spent four to eight months implementing [SAP Business One](/integrations/sap-business-one) . The finance team loves it. Reports finally make sense. The CFO is happy.
 
 But walk to the other side of the building — to the warehouse, the sales floor, or the service team — and here is what you actually find:
 
@@ -48,7 +48,7 @@ Go through these one by one. Be honest. If three or more apply, you have a solva
 
 Ask your top sales rep where their pipeline lives. If the answer is "my phone" or "a spreadsheet" or "CRM" (a separate one, not SAP), your CRM data in SAP is unreliable.
 
-SAP Business One has CRM functionality, and SAP also offers the SAP Sales Mobile App where users can place orders, generate quotations, and access customer data on the go — powerful capabilities that go beyond the default SAP mobile app.
+SAP Business One has [CRM functionality](products/erp-integrated-crm), and SAP also offers the SAP Sales Mobile App where users can place orders, generate quotations, and access customer data on the go — powerful capabilities that go beyond the default SAP mobile app.
 
 However, the SAP Sales Mobile App is a standard product — its screens, workflows, and business logic cannot be modified or extended to fit a specific enterprise's processes. For many enterprises, the standard mobile experience does not extend deep enough into the operational reality — a rep needs distributor-specific pricing, live stock visibility across multiple warehouses, customer credit-limit validation, and geo-tagged visit notes, all in a single offline-capable workflow tailored to that business's process.
 
@@ -68,13 +68,13 @@ Goods were received at 9am. The SAP inventory reflects it at 5pm. In between, yo
 
 The standard SAP Business One goods receipt workflow requires a desktop, multiple confirmation steps, and a trained user. In a real warehouse with forklifts, cold storage, and a shift-based team, that is not how work gets done.
 
-So warehouse teams do it the practical way: paper, printed lists, or a mobile spreadsheet. Real-time inventory accuracy goes out the window. And it costs you in overselling, stock disputes, and audit issues.
+So warehouse teams do it the practical way: paper, printed lists, or a mobile spreadsheet. [Real-time inventory accuracy](/products/erp-integrated-warehouse-inventory) goes out the window. And it costs you in overselling, stock disputes, and audit issues.
 
 ### Sign 3 — Field service technicians are not closing jobs in SAP
 
 <img src="/images/blog/sap-b1-last-mile-gap/04-sign3-service-jobs-not-closed.jpg" alt="Service work order card marked &quot;in progress&quot; with offline connectivity indicator — field service job not closed in SAP" width="1600" height="700" loading="lazy" />
 
-Your service business runs on SAP. Work orders are created, assigned, and tracked there. But ask a field technician how they report job completion, and you will hear: "I call my supervisor" or "I send a message" or "I fill in the form when I get back to the office."
+Your service business runs on SAP. Work orders are created, assigned, and tracked there. But ask a [field technician](/products/erp-integrated-fsm) how they report job completion, and you will hear: "I call my supervisor" or "I send a message" or "I fill in the form when I get back to the office."
 
 The SAP service module is not designed for a technician standing at a customer site with a tablet or mobile phone in a basement, plant area, or remote location where network connectivity is poor or unavailable. And to be clear: SAP does have mobile apps — the issue is that lastmile service execution still breaks down when technicians need a fast, offline-capable workflow that they will actually use in the field. So, they don't use it. Which means your work orders sit open in SAP long after the job is done. Invoicing gets delayed. SLA tracking is inaccurate. Customer history is incomplete.
 
@@ -86,7 +86,7 @@ The SAP service module is not designed for a technician standing at a customer s
 
 <img src="/images/blog/sap-b1-last-mile-gap/05-sign4-shop-floor-time-lag.jpg" alt="Production output card showing 1,247 units per shift and last entry 23 hours ago, alongside a factory illustration — shop floor data lagging MRP" width="1600" height="700" loading="lazy" />
 
-Manufacturing companies spend months configuring production orders, BOMs, and MRP in SAP. Then go-live happens — and the shop floor supervisor updates SAP once a day, at the end of the shift, from a desktop terminal.
+Manufacturing companies spend months configuring production orders, BOMs, and MRP in SAP. Then go-live happens — and the [shop floor](/products/erp-integrated-manufacturing-shopfloor) supervisor updates SAP once a day, at the end of the shift, from a desktop terminal.
 
 Every decision made on the back of production data in SAP during the day — material procurement, sales commitments, delivery planning — is based on yesterday's picture. Your ERP is a system of record, not a system of reality.
 
@@ -120,7 +120,7 @@ That is not a criticism of SAP. It is simply the boundary of what any back-offic
 
 The answer is not to re-implement SAP. It is not to buy a separate CRM. It is not to customize SAP with add-ons that have to be reworked every time SAP releases an update.
 
-The answer is an ERP execution layer — a mobile-first platform that sits between SAP and your frontline teams, gives them the tools they actually need in the field, and sends every action back to SAP in real time.
+The answer is an [ERP execution layer](/platform/overview) — a mobile-first platform that sits between SAP and your frontline teams, gives them the tools they actually need in the field, and sends every action back to SAP in real time.
 
 <img src="/images/blog/sap-b1-last-mile-gap/06-fix-execution-layer.jpg" alt="Architecture diagram showing frontline mobile apps connecting via real-time link to UpBuff's execution layer, which integrates with SAP B1 via standard API while keeping Clean Core intact" width="1600" height="700" loading="lazy" />
 
@@ -134,9 +134,9 @@ The answer is an ERP execution layer — a mobile-first platform that sits betwe
 
 ## How UpBuff Closes the Gap
 
-UpBuff is an ERP Execution Platform built specifically for SAP Business One, SAP S/4HANA, Oracle, and Epicor. Every product in the UpBuff suite — CRM, Field Service Management, Warehouse & Inventory, Sales & Distribution, Manufacturing Shopfloor, Asset Tracking — is built to operate at the last mile.
+UpBuff is an ERP Execution Platform built specifically for SAP Business One, SAP S/4HANA, Oracle, and Epicor. Every product in the UpBuff suite — CRM, Field Service Management, Warehouse & Inventory, Sales & Distribution, Manufacturing Shopfloor, [Asset Tracking](/products/asset-tracking-system) — is built to operate at the last mile.
 
-Critically, UpBuff integrates with SAP via standard APIs — the SAP Service Layer, DI API — with no modification to the ERP core. Your SAP system stays clean and upgrade-ready.
+Critically, UpBuff integrates with SAP via standard APIs — the [SAP Service Layer](/integrations/sap-business-one), DI API — with no modification to the ERP core. Your SAP system stays clean and upgrade-ready.
 
 1. **Connect to your SAP in days, not months.** UpBuff connects to SAP Business One via standard integration. There is no custom code written inside SAP. The ERP core stays clean. Setup and data mapping typically takes one to two weeks.
 
@@ -144,7 +144,7 @@ Critically, UpBuff integrates with SAP via standard APIs — the SAP Service Lay
 
 3. **Watch SAP data become accurate and real-time.** Every action in UpBuff flows back to SAP automatically. Stock levels, open orders, work order status, production completions — all current, all the time. Your SAP reports finally reflect today, not yesterday.
 
-4. **Stay upgrade-ready forever.** Because UpBuff never modifies SAP core, your ERP remains compliant with SAP's Clean Core standard. When SAP version 11 arrives in 2027, your operations keep running — no rework, no expensive project.
+4. **Stay upgrade-ready forever.** Because UpBuff never modifies SAP core, your ERP remains compliant with [SAP's Clean Core standard](/platform/why-upbuff). When SAP Business One 11 releases (expected 2027 per SAP's published roadmap), your operations keep running — no rework, no expensive project.
 
 ## What Teams Typically See in the First 90 Days
 
@@ -198,4 +198,10 @@ Yes. Because UpBuff never modifies the SAP core and integrates only through stan
 
 ---
 
+
 **About UpBuff:** UpBuff is an ERP Execution Platform that extends SAP Business One, SAP S/4HANA, Oracle, and Epicor into real-time field sales, warehouse, field service, and manufacturing operations — without modifying your ERP core.
+
+> **📖 Real-world example**
+>
+> See the same pattern in action: read how [FMCL](https://www.upbuff.com/case-studies/fmcl-ghana-subd-management-case-study) extended Oracle ERP into 30,000+ retail outlets across Ghana in 2 months — paper-based sub-distributor billing replaced with a geo-tagged mobile sales platform. Different ERP, same execution layer principle.
+
