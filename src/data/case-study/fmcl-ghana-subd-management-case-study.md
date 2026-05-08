@@ -22,7 +22,7 @@ metadata:
 | Client | Fareast Mercantile Co. Ltd. (FMCL) |
 | --- | --- |
 | Region | Ghana, West Africa |
-| Industry | FMCG Distribution, Logistics & Warehousing, Appliances |
+| Industry | [FMCG Distribution](/industry/industry-solutions), Logistics & Warehousing, Appliances |
 | Network Reach | 30,000+ neighborhood stores |
 | Business Verticals | FMCG, FOOD1, FOOD2, CADBURY |
 | Brand Partners | Unilever, Colgate-Palmolive, Red Bull, Emborg, Kerrygold, ORO, Scanfrost, Ignis, Frigidaire |
@@ -33,7 +33,7 @@ metadata:
 
 ## Client Overview
 
-**Fareast Mercantile Co. Ltd. (FMCL)** in Ghana is a premier distributor of fast-moving consumer goods (FMCG), specializing in supply chain management, warehousing, and distribution of branded food, beverages, and appliances. Operating as part of a 150-year-old West African network, they manage route-to-market operations for multinational companies such as Unilever, Colgate-Palmolive, and Red Bull.
+**Fareast Mercantile Co. Ltd. (FMCL)** in Ghana is a premier distributor of fast-moving consumer goods (FMCG), specializing in supply chain management, [Warehousing](/products/erp-integrated-warehouse-inventory), and distribution of branded food, beverages, and appliances. Operating as part of a 150-year-old West African network, they manage route-to-market operations for multinational companies such as Unilever, Colgate-Palmolive, and Red Bull.
 
 ### Core Business Areas in Ghana
 
