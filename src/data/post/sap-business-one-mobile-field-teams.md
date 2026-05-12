@@ -164,6 +164,11 @@ Work orders are updated in SAP before the technician leaves the customer site. I
 
 Production completions, scrap, and downtime feed SAP as they happen. Operations decisions are made on current data. MRP planning becomes more accurate.
 
+> **📖 Real-world example**
+>
+> See the same pattern in action: read how [FMCL](https://www.upbuff.com/case-studies/fmcl-ghana-subd-management-case-study) extended Oracle ERP into 30,000+ retail outlets across Ghana in 2 months — paper-based sub-distributor billing replaced with a geo-tagged mobile sales platform. Different ERP, same execution layer principle.
+
+
 ## The Bottom Line
 
 If your frontline teams are working around SAP instead of through it, the problem is not your ERP. The ERP is doing exactly what it was built for.
@@ -200,8 +205,3 @@ Yes. Because UpBuff never modifies the SAP core and integrates only through stan
 
 
 **About UpBuff:** UpBuff is an ERP Execution Platform that extends SAP Business One, SAP S/4HANA, Oracle, and Epicor into real-time field sales, warehouse, field service, and manufacturing operations — without modifying your ERP core.
-
-> **📖 Real-world example**
->
-> See the same pattern in action: read how [FMCL](https://www.upbuff.com/case-studies/fmcl-ghana-subd-management-case-study) extended Oracle ERP into 30,000+ retail outlets across Ghana in 2 months — paper-based sub-distributor billing replaced with a geo-tagged mobile sales platform. Different ERP, same execution layer principle.
-
