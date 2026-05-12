@@ -167,7 +167,7 @@ Production completions, scrap, and downtime feed SAP as they happen. Operations 
 
 > **📖 Real-world example**
 >
-> See the same pattern in action: read how [FMCL](https://www.upbuff.com/case-studies/fmcl-ghana-subd-management-case-study) extended Oracle ERP into 30,000+ retail outlets across Ghana in 2 months — paper-based sub-distributor billing replaced with a geo-tagged mobile sales platform. Different ERP, same execution layer principle.
+> See the same pattern in action: read how [FMCL extended Oracle ERP into 30,000+ retail outlets across Ghana in 2 months](https://www.upbuff.com/case-studies/fmcl-ghana-subd-management-case-study) — paper-based sub-distributor billing replaced with a geo-tagged mobile sales platform. Different ERP, same execution layer principle.
 
 
 ## The Bottom Line
