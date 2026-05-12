@@ -134,7 +134,7 @@ Additionally, if a SubD discontinues operations, FMCL can quickly onboard a new 
 
 ## Interested in Solving a Similar Challenge?
 
-If your distribution business is running paper-based sub-distributor operations and needs real-time visibility, the [Aryasree](https: //www.linkedin.com/in/aryasreek22/) would be glad to show you how this platform could work for your network.
+If your distribution business is running paper-based sub-distributor operations and needs real-time visibility, the [Aryasree K](https: //www.linkedin.com/in/aryasreek22/) would be glad to show you how this platform could work for your network.
 
 → [Book a Demo](/request-demo)      → [Contact Us](/contact)
 
