@@ -86,7 +86,13 @@ const metadata = {
           headline: post.title,
           url: 'https://www.upbuff.com' + getPermalink(post.permalink, 'post'),
           datePublished: post.publishDate.toISOString(),
-          author: post.author ? { '@type': 'Person', name: post.author } : undefined,
+          author: post.author
+            ? {
+                '@type': 'Person',
+                name: post.author,
+                ...(post.authorLinkedIn ? { url: post.authorLinkedIn, sameAs: [post.authorLinkedIn] } : {}),
+              }
+            : undefined,
         })),
       })}
     />
@@ -138,24 +144,23 @@ const metadata = {
     featured && (
       <section class="not-prose bg-white border-b border-gray-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-          <a
-            href={getPermalink(featured.permalink, 'post')}
-            class="group grid md:grid-cols-2 gap-8 md:gap-10 items-center"
-          >
+          <article class="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
             <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-gray-100 shadow-sm">
-              {featuredImage && (
-                <Image
-                  src={featuredImage}
-                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                  widths={[400, 768, 1024]}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  alt={featured.title}
-                  width={1024}
-                  height={640}
-                  loading="eager"
-                  decoding="async"
-                />
-              )}
+              <a href={getPermalink(featured.permalink, 'post')} class="group block w-full h-full">
+                {featuredImage && (
+                  <Image
+                    src={featuredImage}
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    widths={[400, 768, 1024]}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    alt={featured.title}
+                    width={1024}
+                    height={640}
+                    loading="eager"
+                    decoding="async"
+                  />
+                )}
+              </a>
               <span class="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-semibold text-gray-900 shadow-sm">
                 <Icon name="tabler:sparkles" class="w-3.5 h-3.5 text-[rgb(39,174,97)]" />
                 Featured
@@ -168,8 +173,13 @@ const metadata = {
                   {featured.category.title}
                 </span>
               )}
-              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight tracking-tight mb-3 group-hover:text-primary transition-colors">
-                {featured.title}
+              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight tracking-tight mb-3">
+                <a
+                  href={getPermalink(featured.permalink, 'post')}
+                  class="hover:text-primary transition-colors"
+                >
+                  {featured.title}
+                </a>
               </h2>
               {featured.excerpt && (
                 <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
@@ -177,9 +187,19 @@ const metadata = {
                 </p>
               )}
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
-                {featured.author && (
-                  <span class="font-medium text-gray-900">{featured.author}</span>
-                )}
+                {featured.author &&
+                  (featured.authorLinkedIn ? (
+                    <a
+                      href={featured.authorLinkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-medium text-gray-900 hover:text-primary transition-colors"
+                    >
+                      {featured.author}
+                    </a>
+                  ) : (
+                    <span class="font-medium text-gray-900">{featured.author}</span>
+                  ))}
                 {featured.author && <span class="text-gray-300">·</span>}
                 <time datetime={featured.publishDate.toISOString()}>
                   {getFormattedDate(featured.publishDate)}
@@ -191,15 +211,18 @@ const metadata = {
                   </>
                 )}
               </div>
-              <span class="inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-gray-900 group-hover:text-primary transition-colors">
+              <a
+                href={getPermalink(featured.permalink, 'post')}
+                class="group inline-flex items-center gap-1.5 mt-6 text-sm font-semibold text-gray-900 hover:text-primary transition-colors"
+              >
                 Read article
                 <Icon
                   name="tabler:arrow-right"
                   class="w-4 h-4 group-hover:translate-x-1 transition-transform"
                 />
-              </span>
+              </a>
             </div>
-          </a>
+          </article>
         </div>
       </section>
     )

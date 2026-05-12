@@ -4,6 +4,7 @@ title: "5 Signs Your SAP Business One Teams Are Working Around the System — No
 excerpt: "Your SAP is live. Your data is in. But if your field team still sends orders on WhatsApp — something went wrong. Here's how to diagnose it, and exactly how to fix it."
 image: /images/blog/sap-b1-last-mile-gap/01-hero-sap-b1-mobile-execution.jpg
 author: Aryasree
+authorLinkedIn: https://www.linkedin.com/in/aryasreek22/
 category: ERP Operations
 tags:
   - sap-business-one

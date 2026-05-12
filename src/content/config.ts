@@ -59,6 +59,7 @@ const contentSchema = z.object({
   category: z.string().optional(),
   tags: z.array(z.string()).optional(),
   author: z.string().optional(),
+  authorLinkedIn: z.string().url().optional(),
 
   metadata: metadataDefinition(),
 });

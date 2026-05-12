@@ -18,6 +18,7 @@ const getNormalizedCaseStudy = async (entry: CollectionEntry<'caseStudy'>): Prom
     tags: rawTags = [],
     category: rawCategory,
     author,
+    authorLinkedIn,
     draft = false,
     metadata = {},
   } = data;
@@ -50,6 +51,7 @@ const getNormalizedCaseStudy = async (entry: CollectionEntry<'caseStudy'>): Prom
     category,
     tags,
     author,
+    authorLinkedIn,
 
     draft,
     metadata,

@@ -81,6 +81,7 @@ const breadcrumbItems = [
     {post.publishDate && <meta property="article:published_time" content={post.publishDate.toISOString()} />}
     {post.updateDate && <meta property="article:modified_time" content={post.updateDate.toISOString()} />}
     {post.author && <meta property="article:author" content={post.author} />}
+    {post.authorLinkedIn && <link rel="author" href={post.authorLinkedIn} />}
     {post.category && <meta property="article:section" content={post.category.title} />}
     {post.tags?.map((tag) => <meta property="article:tag" content={tag.title} />)}
 
@@ -100,6 +101,7 @@ const breadcrumbItems = [
         author: {
           '@type': 'Person',
           name: post.author || 'UpBuff Technologies',
+          ...(post.authorLinkedIn ? { url: post.authorLinkedIn, sameAs: [post.authorLinkedIn] } : {}),
         },
         publisher: {
           '@type': 'Organization',
@@ -190,7 +192,18 @@ const breadcrumbItems = [
                   <span class="block text-[11px] uppercase tracking-widest text-gray-400 font-semibold">
                     Written by
                   </span>
-                  <span class="block font-semibold text-gray-900 text-[15px]">{post.author}</span>
+                  {post.authorLinkedIn ? (
+                    <a
+                      href={post.authorLinkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block font-semibold text-gray-900 text-[15px] hover:text-primary transition-colors"
+                    >
+                      {post.author}
+                    </a>
+                  ) : (
+                    <span class="block font-semibold text-gray-900 text-[15px]">{post.author}</span>
+                  )}
                 </div>
               </div>
             )
@@ -313,4 +326,3 @@ const breadcrumbItems = [
     </div>
   </article>
 </Layout>
-
