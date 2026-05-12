@@ -2,7 +2,7 @@
 publishDate: 2026-05-01T00:00:00Z
 title: "Building a Multi-Tenant Sub-Distributor Management Solution for 30,000+ Retail Outlets"
 excerpt: "How FMCL gained complete visibility across its FMCG, FOOD1, FOOD2, and CADBURY business verticals — replacing paper-based sub-distributor billing with a geo-tagged, offline-capable mobile sales platform serving over 30,000 neighborhood stores in Ghana."
-image: /images/case-studies/fmcl-ghana/fmcl-ghana-case-study-hero.jpeg
+image: /images/case-studies/fmcl-ghana/fmcl-ghana-case-study-hero.png
 author: "Fareast Mercantile Co. Ltd."
 category: "FMCG Distribution"
 tags:
