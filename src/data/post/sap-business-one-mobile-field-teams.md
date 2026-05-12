@@ -48,7 +48,7 @@ Go through these one by one. Be honest. If three or more apply, you have a solva
 
 Ask your top sales rep where their pipeline lives. If the answer is "my phone" or "a spreadsheet" or "CRM" (a separate one, not SAP), your CRM data in SAP is unreliable.
 
-SAP Business One has [CRM functionality](products/erp-integrated-crm), and SAP also offers the SAP Sales Mobile App where users can place orders, generate quotations, and access customer data on the go — powerful capabilities that go beyond the default SAP mobile app.
+SAP Business One has [CRM functionality](/products/erp-integrated-crm), and SAP also offers the SAP Sales Mobile App where users can place orders, generate quotations, and access customer data on the go — powerful capabilities that go beyond the default SAP mobile app.
 
 However, the SAP Sales Mobile App is a standard product — its screens, workflows, and business logic cannot be modified or extended to fit a specific enterprise's processes. For many enterprises, the standard mobile experience does not extend deep enough into the operational reality — a rep needs distributor-specific pricing, live stock visibility across multiple warehouses, customer credit-limit validation, and geo-tagged visit notes, all in a single offline-capable workflow tailored to that business's process.
 
