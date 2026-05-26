@@ -42,10 +42,11 @@ const canonicalUrl = post.metadata?.canonical || String(getCanonical(path));
 const shareUrl = canonicalUrl;
 
 // Open Graph image — use post image if it's a public/external URL string.
-const ogImage =
+const rawOgImage =
   typeof post.image === 'string' && (post.image.startsWith('http') || post.image.startsWith('/'))
     ? post.image
     : 'https://www.upbuff.com/assets/og-image.jpg';
+const ogImage = rawOgImage.startsWith('/') ? `https://www.upbuff.com${rawOgImage}` : rawOgImage;
 
 const metadata = {
   title: post.metadata?.title || post.title,
