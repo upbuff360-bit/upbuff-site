@@ -54,6 +54,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     category: rawCategory,
     author,
     authorLinkedIn,
+    readingTime,
     draft = false,
     metadata = {},
   } = data;
@@ -98,7 +99,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
     Content: Content,
     // or 'content' in case you consume from API
 
-    readingTime: remarkPluginFrontmatter?.readingTime,
+    readingTime: readingTime ?? remarkPluginFrontmatter?.readingTime,
   };
 };
 

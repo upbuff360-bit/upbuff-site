@@ -6,10 +6,12 @@ import type { RehypePlugin, RemarkPlugin } from '@astrojs/markdown-remark';
 export const readingTimeRemarkPlugin: RemarkPlugin = () => {
   return function (tree, file) {
     const textOnPage = toString(tree);
-    const readingTime = Math.ceil(getReadingTime(textOnPage).minutes);
+    const frontmatter = file?.data?.astro?.frontmatter;
+    const readingTime =
+      typeof frontmatter?.readingTime === 'number' ? frontmatter.readingTime : Math.ceil(getReadingTime(textOnPage).minutes);
 
-    if (typeof file?.data?.astro?.frontmatter !== 'undefined') {
-      file.data.astro.frontmatter.readingTime = readingTime;
+    if (typeof frontmatter !== 'undefined') {
+      frontmatter.readingTime = readingTime;
     }
   };
 };

@@ -19,6 +19,7 @@ const getNormalizedCaseStudy = async (entry: CollectionEntry<'caseStudy'>): Prom
     category: rawCategory,
     author,
     authorLinkedIn,
+    readingTime,
     draft = false,
     metadata = {},
   } = data;
@@ -58,7 +59,7 @@ const getNormalizedCaseStudy = async (entry: CollectionEntry<'caseStudy'>): Prom
 
     Content,
 
-    readingTime: remarkPluginFrontmatter?.readingTime,
+    readingTime: readingTime ?? remarkPluginFrontmatter?.readingTime,
   };
 };
 

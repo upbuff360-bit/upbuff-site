@@ -60,6 +60,7 @@ const contentSchema = z.object({
   tags: z.array(z.string()).optional(),
   author: z.string().optional(),
   authorLinkedIn: z.string().url().optional(),
+  readingTime: z.number().optional(),
 
   metadata: metadataDefinition(),
 });
