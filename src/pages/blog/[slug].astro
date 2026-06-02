@@ -47,24 +47,25 @@ const rawOgImage =
     ? post.image
     : 'https://www.upbuff.com/assets/og-image.jpg';
 const ogImage = rawOgImage.startsWith('/') ? `https://www.upbuff.com${rawOgImage}` : rawOgImage;
+const pageDescription = post.metadata?.description || post.excerpt;
 
 const metadata = {
   title: post.metadata?.title || post.title,
-  description: post.metadata?.description || post.excerpt,
+  description: pageDescription,
   canonical: canonicalUrl,
   robots: post.metadata?.robots ?? { index: !post.draft, follow: true },
   openGraph: {
     type: 'article',
     url: canonicalUrl,
     title: post.title,
-    description: post.excerpt,
+    description: pageDescription,
     images: [{ url: ogImage }],
     ...(post.metadata?.openGraph ?? {}),
   },
   twitter: {
     cardType: 'summary_large_image',
     title: post.title,
-    description: post.excerpt,
+    description: pageDescription,
     ...(post.metadata?.twitter ?? {}),
   },
 };
@@ -95,7 +96,7 @@ const breadcrumbItems = [
         '@id': canonicalUrl + '#article',
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
         headline: post.title,
-        description: post.excerpt,
+        description: pageDescription,
         image: ogImage,
         datePublished: post.publishDate?.toISOString(),
         dateModified: (post.updateDate ?? post.publishDate)?.toISOString(),
