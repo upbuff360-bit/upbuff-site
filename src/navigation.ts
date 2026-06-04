@@ -80,6 +80,12 @@ export const headerData = {
           icon: 'tabler:map-pin',
           description: 'IoT-enabled asset tracking, lifecycle management, and audit automation',
         },
+        {
+          text: 'Intelligent PO-to-SO and Invoice Automation',
+          href: getPermalink('/products/intelligent-po-to-so-invoice-automation'),
+          icon: 'tabler:robot',
+          description: 'AI PO-to-SO conversion, invoice automation, and Chat with ERP for SAP',
+        },
       ],
     },
     {
@@ -144,6 +150,7 @@ export const footerData = {
         { text: 'Enterprise & Partner Portals',        href: getPermalink('/products/enterprise-partner-portals') },
         { text: 'ERP-Integrated Product Configurator', href: getPermalink('/products/erp-integrated-product-configurator') },
         { text: 'Asset Tracking System',               href: getPermalink('/products/asset-tracking-system') },
+        { text: 'Intelligent PO-to-SO & Invoice Automation', href: getPermalink('/products/intelligent-po-to-so-invoice-automation') },
       ],
     },
     {
