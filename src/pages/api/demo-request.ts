@@ -7,7 +7,7 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { name, email, erp, focus, message } = body as Record<string, string>;
+    const { name, email, phone, erp, focus, message } = body as Record<string, string>;
 
     // ── Bot protection (honeypot + timing + origin + content + Turnstile) ──
     const check = await verifyFormSubmission(body as Record<string, string>, request);
@@ -56,6 +56,7 @@ export const POST: APIRoute = async ({ request }) => {
             <td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Work Email</td>
             <td style="padding:10px 0;border-bottom:1px solid #f3f4f6;"><a href="mailto:${escHtml(email)}" style="color:#6366f1;">${escHtml(email)}</a></td>
           </tr>
+          ${phone ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Phone Number</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;"><a href="tel:${escHtml(phone)}" style="color:#6366f1;">${escHtml(phone)}</a></td></tr>` : ''}
           ${erp ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">ERP System</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(erp)}</td></tr>` : ''}
           ${focus ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Area of Interest</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(focus)}</td></tr>` : ''}
           ${message?.trim() ? `<tr><td style="padding:10px 0;font-weight:600;vertical-align:top;color:#6b7280;">Message</td><td style="padding:10px 0;white-space:pre-wrap;">${escHtml(message)}</td></tr>` : ''}

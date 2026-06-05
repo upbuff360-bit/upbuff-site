@@ -1,7 +1,7 @@
 ---
 // ─── Types ───────────────────────────────────────────────────────────────────
 // `type` is a plain string so it never conflicts with HTMLInputTypeAttribute.
-// Valid values: 'text' | 'email' | 'select' | 'textarea'  (default: 'text')
+// Valid values: 'text' | 'email' | 'tel' | 'select' | 'textarea'  (default: 'text')
 export interface FormField {
   name:         string;
   label:        string;
@@ -59,9 +59,9 @@ const stackFields  = hasPair ? fields.slice(2)    : fields;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 // Returns a safe HTMLInputTypeAttribute-compatible literal.
-// Only 'email' needs special treatment; everything else is 'text'.
-const htmlType = (t: string | undefined): 'text' | 'email' =>
-  t === 'email' ? 'email' : 'text';
+// Only known input types are passed through; everything else is 'text'.
+const htmlType = (t: string | undefined): 'text' | 'email' | 'tel' =>
+  t === 'email' || t === 'tel' ? t : 'text';
 
 // Select arrow as a pre-built CSS value (avoids escaped quotes in template)
 const svgArrow    = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E";
@@ -208,6 +208,8 @@ const pairMapped = pairFields.map((f) => ({
                       id={`hcf-${f.name}`}
                       name={f.name}
                       type={f.itype}
+                      inputmode={f.itype === 'tel' ? 'tel' : undefined}
+                      autocomplete={f.itype === 'tel' ? 'tel' : undefined}
                       placeholder={f.placeholder}
                       class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
                     />
@@ -254,6 +256,8 @@ const pairMapped = pairFields.map((f) => ({
                     id={`hcf-${f.name}`}
                     name={f.name}
                     type={htmlType(f.type)}
+                    inputmode={f.type === 'tel' ? 'tel' : undefined}
+                    autocomplete={f.type === 'tel' ? 'tel' : undefined}
                     placeholder={f.placeholder}
                     class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
                   />
@@ -352,14 +356,14 @@ const pairMapped = pairFields.map((f) => ({
 <script>
   (function () {
     function init() {
-      const form    = document.getElementById('hcf-form');
-      const success = document.getElementById('hcf-success');
-      const errBox  = document.getElementById('hcf-error');
-      const btn     = document.getElementById('hcf-submit');
-      const label   = document.getElementById('hcf-btn-label');
-      const spinner = document.getElementById('hcf-spinner');
-      const tsField = document.getElementById('hcf-ts');
-      if (!form) return;
+      const form    = document.getElementById('hcf-form') as HTMLFormElement | null;
+      const success = document.getElementById('hcf-success') as HTMLElement | null;
+      const errBox  = document.getElementById('hcf-error') as HTMLElement | null;
+      const btn     = document.getElementById('hcf-submit') as HTMLButtonElement | null;
+      const label   = document.getElementById('hcf-btn-label') as HTMLElement | null;
+      const spinner = document.getElementById('hcf-spinner') as HTMLElement | null;
+      const tsField = document.getElementById('hcf-ts') as HTMLInputElement | null;
+      if (!form || !success || !errBox || !btn || !label || !spinner) return;
 
       // The `ts` input is already seeded server-side at SSR. Only refresh it
       // if it's missing or genuinely stale (>1h old) — this handles Astro
