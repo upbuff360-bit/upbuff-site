@@ -407,6 +407,8 @@ const pairMapped = pairFields.map((f) => ({
       const spinner = document.getElementById('hcf-spinner') as HTMLElement | null;
       const tsField = document.getElementById('hcf-ts') as HTMLInputElement | null;
       if (!form || !success || !errBox || !btn || !label || !spinner) return;
+      if (form.dataset.submitBound === 'true') return;
+      form.dataset.submitBound = 'true';
 
       // The `ts` input is already seeded server-side at SSR. Only refresh it
       // if it's missing or genuinely stale (>1h old) — this handles Astro
@@ -426,6 +428,8 @@ const pairMapped = pairFields.map((f) => ({
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         errBox.classList.add('hidden');
+        success.classList.add('hidden');
+        form.classList.remove('invisible');
 
         const data = Object.fromEntries(new FormData(form));
 

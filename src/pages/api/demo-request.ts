@@ -13,6 +13,20 @@ export const POST: APIRoute = async ({ request }) => {
     const countryName = getCountryName(country);
     const phoneCheck = validateOptionalPhone(countryCode, phone, country);
 
+    if (!name?.trim() || !email?.trim()) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Name and email are required.' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!phoneCheck.ok) {
+      return new Response(
+        JSON.stringify({ success: false, error: phoneCheck.error }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // ── Bot protection (honeypot + timing + origin + content + Turnstile) ──
     const check = await verifyFormSubmission(body as Record<string, string>, request);
     if (!check.ok) {
@@ -26,20 +40,6 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(
         JSON.stringify({ success: true }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!name?.trim() || !email?.trim()) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Name and email are required.' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!phoneCheck.ok) {
-      return new Response(
-        JSON.stringify({ success: false, error: phoneCheck.error }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
