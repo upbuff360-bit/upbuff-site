@@ -14,9 +14,9 @@ export const POST: APIRoute = async ({ request }) => {
       'smtp_host:', import.meta.env.SMTP_HOST,
     );
     const body = await request.json();
-    const { name, email, countryCode, phone, product, country, message } = body as Record<string, string>;
-    const countryName = getCountryName(country);
-    const phoneCheck = validateOptionalPhone(countryCode, phone, country);
+    const { name, email, countryCode, phone, product, message } = body as Record<string, string>;
+    const countryName = getCountryName(countryCode);
+    const phoneCheck = validateOptionalPhone(countryCode, phone);
 
     if (!name?.trim() || !email?.trim()) {
       return new Response(

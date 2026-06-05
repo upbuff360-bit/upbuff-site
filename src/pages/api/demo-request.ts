@@ -9,9 +9,9 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { name, email, country, countryCode, phone, erp, focus, message } = body as Record<string, string>;
-    const countryName = getCountryName(country);
-    const phoneCheck = validateOptionalPhone(countryCode, phone, country);
+    const { name, email, countryCode, phone, erp, focus, message } = body as Record<string, string>;
+    const countryName = getCountryName(countryCode);
+    const phoneCheck = validateOptionalPhone(countryCode, phone);
 
     if (!name?.trim() || !email?.trim()) {
       return new Response(

@@ -9,8 +9,7 @@ export interface PhoneValidationResult {
 
 export function validateOptionalPhone(
   countryCode: string | undefined,
-  phone: string | undefined,
-  country: string | undefined
+  phone: string | undefined
 ): PhoneValidationResult {
   const trimmedPhone = phone?.trim() ?? '';
   if (!trimmedPhone) {
@@ -18,20 +17,8 @@ export function validateOptionalPhone(
   }
 
   const selected = parseCountrySelection(countryCode);
-  const expectedCountry = parseCountryValue(country);
 
-  if (selected.country && expectedCountry && selected.country !== expectedCountry) {
-    return {
-      ok: false,
-      fullPhone: '',
-      telHref: '',
-      error: 'Country and phone country code do not match.',
-    };
-  }
-
-  const parseCountry = selected.country ?? expectedCountry;
-
-  if (!parseCountry && !trimmedPhone.startsWith('+')) {
+  if (!selected.country && !trimmedPhone.startsWith('+')) {
     return {
       ok: false,
       fullPhone: '',
@@ -42,7 +29,7 @@ export function validateOptionalPhone(
 
   const phoneNumber = trimmedPhone.startsWith('+')
     ? parsePhoneNumberFromString(trimmedPhone)
-    : parsePhoneNumberFromString(trimmedPhone, parseCountry);
+    : parsePhoneNumberFromString(trimmedPhone, selected.country);
 
   if (!phoneNumber?.isValid()) {
     return {
@@ -71,15 +58,6 @@ export function validateOptionalPhone(
     };
   }
 
-  if (expectedCountry && phoneNumber.country && phoneNumber.country !== expectedCountry) {
-    return {
-      ok: false,
-      fullPhone: '',
-      telHref: '',
-      error: 'The phone number does not match the selected country.',
-    };
-  }
-
   return {
     ok: true,
     fullPhone: phoneNumber.formatInternational(),
@@ -98,15 +76,4 @@ function parseCountrySelection(value: string | undefined): { country?: CountryCo
     country: /^[A-Z]{2}$/.test(country) ? (country as CountryCode) : undefined,
     dialCode: normalizedDialCode,
   };
-}
-
-function parseCountryValue(value: string | undefined): CountryCode | undefined {
-  const trimmed = value?.trim();
-  if (!trimmed || trimmed === 'Other') return undefined;
-
-  if (/^[A-Z]{2}$/.test(trimmed)) {
-    return trimmed as CountryCode;
-  }
-
-  return undefined;
 }
