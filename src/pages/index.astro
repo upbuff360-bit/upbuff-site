@@ -9,30 +9,31 @@ import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
 import SecuritySplit from '~/components/widgets/SecuritySplit.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
-import HeroDashboard from '~/components/widgets/HeroDashboard.astro';
+import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
+import HeroChatConsole from '~/components/widgets/HeroChatConsole.astro';
 import Steps from '~/components/widgets/Steps.astro';
 
 import { headerData } from '~/navigation';
 
 const metadata = {
-  title: 'UpBuff Technologies | ERP Execution Platform for SAP & Enterprise ERP',
+  title: 'UpBuff Technologies | AI-Powered ERP Execution Platform for SAP & Enterprise ERP',
   ignoreTitleTemplate: true,
   description:
-    'UpBuff Technologies is an ERP-integrated execution platform extending SAP Business One, Oracle, and Epicor into sales, field service, warehouse, and manufacturing operations without modifying your ERP core.',
+    'UpBuff Technologies is an AI-powered, ERP-integrated execution platform. AI agents extend SAP Business One, Oracle, and Epicor into sales, field service, warehouse, and manufacturing operations — automating repetitive work and surfacing intelligence, without modifying your ERP core.',
   canonical: 'https://www.upbuff.com/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/',
-    title: 'UpBuff Technologies | ERP Execution Platform for SAP & Enterprise ERP',
+    title: 'UpBuff Technologies | AI-Powered ERP Execution Platform for SAP & Enterprise ERP',
     description:
-      'Extend SAP Business One, Oracle, and Epicor into real-time execution across sales, field service, warehouse, and manufacturing operations—without modifying your ERP core.',
+      'AI agents extend SAP Business One, Oracle, and Epicor into real-time execution across sales, field service, warehouse, and manufacturing operations—without modifying your ERP core.',
     image: 'https://www.upbuff.com/assets/og-image.jpg',
   },
   twitter: {
     cardType: 'summary_large_image',
-    title: 'UpBuff Technologies | ERP Execution Platform for SAP & Enterprise ERP',
-    description: 'ERP-integrated execution platform for SAP Business One and enterprise ERP systems.',
+    title: 'UpBuff Technologies | AI-Powered ERP Execution Platform for SAP & Enterprise ERP',
+    description: 'AI-powered, ERP-integrated execution platform for SAP Business One and enterprise ERP systems.',
     image: 'https://www.upbuff.com/assets/og-image.jpg',
   },
 };
@@ -78,7 +79,7 @@ const metadata = {
       "@context": "https://schema.org",
       "@type": "ItemList",
       "name": "UpBuff Products",
-      "description": "UpBuff offers 7 ERP-integrated products that extend SAP, Oracle, and Epicor into frontline enterprise operations without modifying ERP core.",
+      "description": "UpBuff offers 9 AI-powered, ERP-integrated products that extend SAP, Oracle, and Epicor into frontline enterprise operations without modifying ERP core.",
       "numberOfItems": 7,
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "ERP-Integrated CRM",                         "url": "https://www.upbuff.com/products/erp-integrated-crm",                          "description": "Synchronize sales opportunities, quotations, pricing, credit limits, and customer master data directly with SAP and enterprise ERP systems." },
@@ -94,7 +95,7 @@ const metadata = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "What products does UpBuff offer?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff offers 7 ERP-integrated products: ERP-Integrated CRM, ERP-Integrated Field Service Management, Warehouse and Inventory Management, Sales and Distribution Execution, Manufacturing and Shopfloor, Enterprise and Partner Portals, Asset Tracking System, and ERP-Integrated Product Configurator. All connect to SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor via official APIs without ERP core modification." } },
+        { "@type": "Question", "name": "What products does UpBuff offer?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff offers 9 AI-powered, ERP-integrated products: Intelligent PO-to-SO and Invoice Automation, ERP-Integrated CRM, ERP-Integrated Field Service Management, Warehouse and Inventory Management, Sales and Distribution Execution, Manufacturing and Shopfloor, Enterprise and Partner Portals, Asset Tracking System, and ERP-Integrated Product Configurator. All connect to SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor via official APIs without ERP core modification." } },
         { "@type": "Question", "name": "What is an ERP Execution Platform?", "acceptedAnswer": { "@type": "Answer", "text": "An ERP Execution Platform extends systems like SAP Business One or Oracle ERP into frontline operations such as sales, field service, warehouse, and manufacturing while preserving ERP as the system of record." } },
         { "@type": "Question", "name": "Does UpBuff replace SAP or Oracle ERP?", "acceptedAnswer": { "@type": "Answer", "text": "No. UpBuff integrates with SAP Business One, Oracle ERP, and Epicor ERP and acts as the execution layer, ensuring real-time synchronization without modifying ERP core systems." } },
         { "@type": "Question", "name": "Which ERP systems does UpBuff integrate with?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff integrates with SAP Business One, Oracle ERP, Epicor ERP, and custom ERP systems using secure API-based and ERP-native integration methods." } }
@@ -106,77 +107,58 @@ const metadata = {
   <Fragment slot="announcement" />
 
   <!-- ══════════════════════════════════════════════════════════
-       1. HERO — black, product-led, full-width
+       1. HERO — HeroOrbital with chat console visual
        ══════════════════════════════════════════════════════════ -->
-  <section class="relative not-prose md:-mt-[76px] bg-[#0a0a0a] text-white overflow-hidden">
-    <div
-      class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] pointer-events-none"
-      aria-hidden="true"
-      style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.15) 0%,transparent 70%);"
-    />
-    <div class="absolute inset-0 pointer-events-none noise-overlay opacity-20" aria-hidden="true" />
+  <HeroOrbital
+    tagline="AI-Powered ERP Execution Platform"
+    title="Let's Talk to Your SAP & ERPs"
+    subtitle="AI agents extend SAP, Oracle, and Epicor into real-time execution across sales, field service, warehouse, manufacturing, and partner operations — automating repetitive work and surfacing intelligence, without modifying your ERP core."
+    actions={[
+      { text: 'Schedule a Demo', href: '/request-demo', variant: 'primary' },
+      { text: 'Watch Video',     href: '#hero-video',    variant: 'secondary' },
+    ]}
+  >
+    <Fragment slot="background">
+      <div
+        class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px]"
+        style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.15) 0%,transparent 70%);"
+      />
+      <div
+        class="absolute inset-0"
+        style="background-image:url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E&quot;);background-size:180px 180px;opacity:0.2;mix-blend-mode:overlay;"
+      />
+    </Fragment>
+    <Fragment slot="visual">
+      <div class="w-full max-w-xl">
+        <HeroChatConsole />
+      </div>
+    </Fragment>
+  </HeroOrbital>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="pt-0 md:pt-[76px] pointer-events-none" />
-
-      <div class="py-16 md:py-24 lg:py-28 flex flex-col items-center text-center">
-
-        <!-- Headline -->
-        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold leading-tight tracking-tight font-heading mb-6 max-w-4xl">
-          The ERP Execution Platform Built for SAP & Enterprise ERPs
-        </h1>
-
-        <!-- Subtitle -->
-        <p class="text-lg md:text-xl text-white/65 leading-relaxed max-w-2xl mb-2">
-          Extend SAP, Oracle, and Epicor into real time execution across sales, field service, warehouse, manufacturing, and partner
-          operations — without modifying your ERP core.
-        </p>
-        <p class="text-sm text-white/35 mb-7">
-          ERP remains the system of record. UpBuff acts as the execution layer — enabling real-time execution across your operations.
-        </p>
-
-        <!-- CTAs -->
-        <div class="flex flex-wrap items-center justify-center gap-3 mb-14">
-          <a href="request-demo" class="btn-primary inline-flex items-center gap-2">
-            Schedule a Demo
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <button id="hero-video-btn" class="btn-secondary inline-flex items-center gap-2 cursor-pointer">
-            Watch Video
-          </button>
-        </div>
-
-        <!-- Dashboard image -->
-        <div class="w-full max-w-5xl">
-          <HeroDashboard />
-        </div>
-
-        <!-- Logo strip -->
-        <div class="w-full max-w-6xl pt-10">
-          <p class="text-sm font-regular text-white/40 mb-8">
-            Powering execution across leading enterprise
-          </p>
-          <div class="flex flex-wrap items-center justify-center gap-6 md:gap-9">
-            {[
-              { src: '/uploads/ideaForge-logo.svg',       alt: 'ideaForge logo' },
-              { src: '/uploads/jnk-chemdist-logo.svg',    alt: 'jnk chemdist logo' },
-              { src: '/uploads/molygraph-logo.svg',        alt: 'molygraph logo' },
-              { src: '/uploads/ncc-streetscape-logo.svg',  alt: 'ncc streetscape logo' },
-              { src: '/uploads/roofsol-logo.svg',          alt: 'roofsol logo' },
-              { src: '/uploads/the-wine-source-logo.svg',  alt: 'the wine source logo' },
-            ].map((logo) => (
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                class="h-4 w-auto object-contain opacity-40 grayscale brightness-200 hover:opacity-70 transition-opacity duration-200"
-                loading="lazy"
-              />
-            ))}
-          </div>
-        </div>
-
-        </div>
-
+  <!-- ══════════════════════════════════════════════════════════
+       2. TRUST LOGO STRIP — on black, continues the hero
+       ══════════════════════════════════════════════════════════ -->
+  <section class="relative not-prose bg-black text-white overflow-hidden">
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 pb-16 md:pb-24">
+      <p class="text-sm font-regular text-white/40 mb-8 text-center">
+        AI-powered execution across leading enterprises
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-6 md:gap-9">
+        {[
+          { src: '/uploads/ideaForge-logo.svg',       alt: 'ideaForge logo' },
+          { src: '/uploads/jnk-chemdist-logo.svg',    alt: 'jnk chemdist logo' },
+          { src: '/uploads/molygraph-logo.svg',        alt: 'molygraph logo' },
+          { src: '/uploads/ncc-streetscape-logo.svg',  alt: 'ncc streetscape logo' },
+          { src: '/uploads/roofsol-logo.svg',          alt: 'roofsol logo' },
+          { src: '/uploads/the-wine-source-logo.svg',  alt: 'the wine source logo' },
+        ].map((logo) => (
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            class="h-4 w-auto object-contain opacity-40 grayscale brightness-200 hover:opacity-70 transition-opacity duration-200"
+            loading="lazy"
+          />
+        ))}
       </div>
     </div>
   </section>
@@ -187,9 +169,15 @@ const metadata = {
   <FeaturesCarousel
     id="products"
     tagline="Our Products"
-    title="ERP-integrated products for enterprise operations"
-    subtitle="Each product acts as part of the UpBuff ERP Execution Layer — extending ERP workflows into real-time execution environments without modifying ERP core."
+    title="AI-driven, ERP-integrated products for enterprise operations"
+    subtitle="Each product acts as part of the UpBuff ERP Execution Layer — using AI agents to extend ERP workflows into real-time execution environments, without modifying ERP core."
     items={[
+      {
+        title: 'Intelligent PO-to-SO & Invoice Automation',
+        href: '/products/intelligent-po-to-so-invoice-automation',
+        description: 'AI agents read customer Purchase Orders and vendor invoices, validate them against SAP master data, pricing, and inventory in real time, and post Sales Orders into SAP S/4HANA or SAP Business One — hands-free. Exception intelligence routes anything unusual for human review, and Chat with ERP turns SAP into a system you can simply talk to. The flagship of the UpBuff AI Automation layer, with full human-in-the-loop control and audit transparency.',
+        image: '<img src="/uploads/ERP-Integrated-Field-Service-Management.png" class="w-full h-full object-contain" alt="Intelligent PO-to-SO and Invoice Automation for SAP — AI-powered ERP automation" loading="lazy" />',
+      },
       {
         title: 'ERP-Integrated CRM',
         href: '/products/erp-integrated-crm',
@@ -242,6 +230,47 @@ const metadata = {
   />
 
   <!-- ══════════════════════════════════════════════════════════
+       4. AI CAPABILITIES — FeaturesGrid (NEW)
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="AI at the Core"
+    title="A digital AI workforce for your ERP"
+    subtitle="UpBuff embeds Generative AI across every product — automating repetitive ERP work, validating data in real time, and surfacing intelligence, while keeping your team in control of every decision."
+    items={[
+      {
+        icon: 'tabler:robot',
+        title: 'AI Agents for ERP',
+        description: 'Autonomous AI agents read documents, understand business context, and act on SAP, Oracle, and Epicor — turning unstructured POs and invoices into clean ERP transactions, hands-free.',
+      },
+      {
+        icon: 'tabler:database-search',
+        title: 'Real-Time AI Validation',
+        description: 'Every transaction is cross-checked against master data, pricing, tax, and inventory in real time — catching mismatches and duplicates before they ever reach the ERP.',
+      },
+      {
+        icon: 'tabler:message-chatbot',
+        title: 'Chat with ERP',
+        description: 'Ask questions in plain language and get instant analytical reports, inventory insights, and operational KPIs — turning your ERP into a system you can simply talk to.',
+      },
+      {
+        icon: 'tabler:alert-triangle',
+        title: 'Exception Intelligence',
+        description: 'AI identifies anomalies, missing information, and pricing issues automatically, then routes them to the right person — so humans focus on decisions, not data entry.',
+      },
+      {
+        icon: 'tabler:user-check',
+        title: 'Human-in-the-Loop Control',
+        description: 'Start with manual approvals and move to fully automated posting at your own pace. AI accelerates execution while your team stays firmly in control.',
+      },
+      {
+        icon: 'tabler:shield-lock',
+        title: 'Audit-Ready by Design',
+        description: 'Every AI action, validation, approval, and ERP posting is encrypted, traceable, and securely logged — full transparency and compliance across every workflow.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
        5. ERP CONNECTIVITY — ContentSplitCard
        ══════════════════════════════════════════════════════════ -->
   <ContentSplitCard
@@ -280,8 +309,8 @@ const metadata = {
        9. INTEGRATION ECOSYSTEM — ToolsMarquee
        ══════════════════════════════════════════════════════════ -->
   <ToolsMarquee
-    title="Connects your ERP to your entire business ecosystem"
-    description="UpBuff bridges SAP, Oracle, and Epicor with the communication platforms, marketplaces, and enterprise applications your teams already rely on — creating a connected digital enterprise without silos."
+    title="AI that connects your ERP to your entire business ecosystem"
+    description="UpBuff's AI layer bridges SAP, Oracle, and Epicor with the communication platforms, marketplaces, and enterprise applications your teams already rely on — creating a connected, intelligent digital enterprise without silos."
     speed={30}
     tools={[
       { name: 'Calendar', logo: '<img src="/uploads/logo/calendar-integration-with-upbuff-crm.png" alt="Calendar integration with UpBuff CRM" class="w-10 h-10 object-contain" />' },
@@ -319,8 +348,8 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FeaturesCarousel
     tagline="Value Proposition"
-    title="Why UpBuff for SAP & enterprise ERP customers"
-    subtitle="Designed to extend ERP into execution — without disruption to your core system, upgrade roadmap, or compliance posture."
+    title="Why AI-powered UpBuff for SAP & enterprise ERP customers"
+    subtitle="Designed to bring AI-driven automation and intelligence to ERP execution — without disruption to your core system, upgrade roadmap, or compliance posture."
     items={[
       {
         gradient: 'linear-gradient(135deg, #1d4ed8 0%, #6366f1 100%)',
@@ -407,7 +436,7 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <Steps
     tagline="How It Works"
-    title="How UpBuff Extends Your ERP"
+    title="How UpBuff Brings AI to Your ERP"
     items={[
       {
         title: 'Step 1: <span class="font-medium">ERP Assessment</span>',
@@ -416,9 +445,9 @@ const metadata = {
         icon: 'tabler:search',
       },
       {
-        title: 'Step 2: <span class="font-medium">Execution Layer Deployment</span>',
+        title: 'Step 2: <span class="font-medium">AI Execution Layer Deployment</span>',
         description:
-          'UpBuff connects using secure APIs and service layers without altering ERP core logic — ensuring zero disruption to your existing systems.',
+          'UpBuff deploys AI agents and connects using secure APIs and service layers without altering ERP core logic — ensuring zero disruption to your existing systems.',
         icon: 'tabler:plug-connected',
       },
       {
@@ -520,8 +549,8 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FeaturesHighlights
     tagline="Why UpBuff"
-    title="Why enterprises choose UpBuff"
-    subtitle="Enterprise ERP systems are powerful — but they were not designed for real-time frontline execution.UpBuff bridges the gap between ERP systems and real-time execution as an execution layer — without modifying ERP core."
+    title="Why enterprises choose AI-powered UpBuff"
+    subtitle="Enterprise ERP systems are powerful — but they were not designed for real-time, AI-driven frontline execution. UpBuff bridges that gap with an intelligent execution layer that automates repetitive work and surfaces insight — without modifying ERP core."
     items={[
     {
       title: 'ERP-First Architecture',
@@ -550,7 +579,7 @@ const metadata = {
     items={[
       {
         question: 'What products does UpBuff offer?',
-        answer: 'UpBuff offers 7 ERP-integrated products: (1) ERP-Integrated CRM, (2) ERP-Integrated Field Service Management, (3) Warehouse & Inventory Management, (4) Sales & Distribution Execution, (5) Manufacturing & Shopfloor, (6) Enterprise & Partner Portals, and (7) ERP-Integrated Product Configurator (8) Asset Tracking System. All products connect to SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor via official APIs without modifying ERP core.',
+        answer: 'UpBuff offers 9 AI-powered, ERP-integrated products: (1) Intelligent PO-to-SO & Invoice Automation, (2) ERP-Integrated CRM, (3) ERP-Integrated Field Service Management, (4) Warehouse & Inventory Management, (5) Sales & Distribution Execution, (6) Manufacturing & Shopfloor, (7) Enterprise & Partner Portals, (8) ERP-Integrated Product Configurator, and (9) Asset Tracking System. All products connect to SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor via official APIs without modifying ERP core.',
       },
       {
         question: 'What is an ERP Execution Platform?',
@@ -583,8 +612,8 @@ const metadata = {
        13. CTA BANNER
        ══════════════════════════════════════════════════════════ -->
   <CtaBanner
-    title="Ready to modernize ERP execution?"
-    subtitle="Extend your SAP, Oracle, or Epicor ERP into real-time execution — without modifying ERP core. "
+    title="Ready to bring AI to your ERP execution?"
+    subtitle="Extend your SAP, Oracle, or Epicor ERP with AI-driven automation and real-time execution — without modifying ERP core. "
     action={{
       text: 'Schedule a Consultation',
       href: '/contact',
@@ -615,7 +644,7 @@ const metadata = {
   </div>
 
   <script>
-    const btn      = document.getElementById('hero-video-btn');
+    const btn      = document.querySelectorAll('[href="#hero-video"]');
     const overlay  = document.getElementById('hero-video-overlay');
     const backdrop = document.getElementById('hero-video-backdrop');
     const closeBtn = document.getElementById('hero-video-close');
@@ -636,7 +665,7 @@ const metadata = {
       document.body.style.overflow = '';
     }
 
-    btn?.addEventListener('click', openModal);
+    btn?.forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); openModal(); }));
     closeBtn?.addEventListener('click', closeModal);
     backdrop?.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });

@@ -54,7 +54,7 @@ const widgetId = id ?? `fc-${Math.random().toString(36).slice(2, 7)}`;
         </div>
       )}
       {title && (
-        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-heading dark:text-gray-100" set:html={title} />
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-heading dark:text-gray-100 max-w-2xl mx-auto leading-relaxed" set:html={title} />
       )}
       {subtitle && (
         <p class="mt-4 text-muted text-lg max-w-2xl mx-auto dark:text-slate-400" set:html={subtitle} />

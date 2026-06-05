@@ -1,0 +1,418 @@
+---
+/**
+ * HeroChatConsole.astro
+ * Animated "Chat with ERP" interface for the home hero (white theme).
+ * Auto-cycles through 3 scenarios, each answered with a switchable
+ * Table / Graph view. Charts (bar, line, donut) are inline SVG built
+ * with the Web Animations API — no external dependencies.
+ * Degrades to a static first answer when reduced-motion is requested.
+ */
+---
+
+<div class="hero-chat" aria-hidden="true">
+  <div class="hc-card">
+    <div class="hc-head">
+      <div class="hc-title"><span class="hc-ai">AI</span>Chat with ERP</div>
+      <span class="hc-live"><span class="hc-dot"></span>Live</span>
+    </div>
+
+    <div class="hc-body">
+      <!-- User prompt -->
+      <div class="hc-rowpos hc-right">
+        <div class="hc-bubble hc-user" id="hc-user"><span id="hc-type"></span></div>
+      </div>
+      <!-- Thinking -->
+      <div class="hc-rowpos hc-left">
+        <div class="hc-typing" id="hc-typing"><span></span><span></span><span></span></div>
+      </div>
+      <!-- Answer -->
+      <div class="hc-rowpos hc-left">
+        <div class="hc-answer" id="hc-answer">
+          <div class="hc-answer-head">
+            <div class="hc-ans-h" id="hc-ans-title">Top customers · this month</div>
+            <div class="hc-toggle" id="hc-toggle">
+              <button class="hc-tg-btn is-active" data-view="table" type="button">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Table
+              </button>
+              <button class="hc-tg-btn" data-view="graph" type="button">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg>Graph
+              </button>
+            </div>
+          </div>
+          <div class="hc-view" id="hc-view-table"></div>
+          <div class="hc-view" id="hc-view-graph" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hc-foot">
+      <div class="hc-input">Ask your ERP anything…</div>
+      <div class="hc-send" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-chat { position: relative; width: 100%; max-width: 520px; margin: 0 auto; text-align: left; }
+  .hc-card { background: #ffffff; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 20px; padding: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); }
+  .hc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .hc-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1f2937; }
+  .hc-ai { width: 24px; height: 24px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
+  .hc-live { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: #16a34a; }
+  .hc-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: hcLive 2s ease-in-out infinite; }
+
+  .hc-body { position: relative; height: 252px; }
+  .hc-rowpos { position: absolute; left: 0; right: 0; top: 0; display: flex; }
+  .hc-right { justify-content: flex-end; }
+  .hc-left { justify-content: flex-start; }
+
+  .hc-bubble { max-width: 82%; font-size: 13px; line-height: 1.4; padding: 10px 14px; border-radius: 16px; }
+  .hc-user { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: #fff; border-bottom-right-radius: 5px; opacity: 0; transition: opacity .3s ease, transform .3s ease; transform: translateY(8px); }
+  .hc-user.is-show { opacity: 1; transform: none; }
+  #hc-type { display: inline-block; white-space: nowrap; overflow: hidden; }
+  #hc-type::after { content: ''; display: inline-block; width: 1px; height: 1em; background: #fff; margin-left: 1px; vertical-align: text-bottom; opacity: .8; }
+  #hc-type.done::after { display: none; }
+
+  .hc-typing { display: flex; gap: 5px; background: #f1f5f9; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 5px; opacity: 0; transition: opacity .3s ease; }
+  .hc-typing.is-show { opacity: 1; }
+  .hc-typing span { width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; animation: hcDotB 1.2s ease-in-out infinite; }
+  .hc-typing span:nth-child(2) { animation-delay: .15s; }
+  .hc-typing span:nth-child(3) { animation-delay: .3s; }
+
+  .hc-answer { width: 100%; background: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-radius: 16px; border-bottom-left-radius: 5px; padding: 12px 14px; opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; }
+  .hc-answer.is-show { opacity: 1; transform: none; }
+  .hc-answer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
+  .hc-ans-h { font-size: 11px; font-weight: 600; color: #94a3b8; }
+
+  .hc-toggle { display: inline-flex; background: #eef2f7; border-radius: 8px; padding: 2px; }
+  .hc-tg-btn { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; color: #64748b; background: transparent; border: 0; border-radius: 6px; padding: 3px 7px; cursor: pointer; transition: all .2s ease; }
+  .hc-tg-btn.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+
+  .hc-view { animation: hcFade .3s ease; }
+
+  /* Table — :global because rows are created in client JS (no scope attr) */
+  :global(.hc-table) { width: 100%; border-collapse: collapse; font-size: 12px; }
+  :global(.hc-table thead th) { text-align: left; font-size: 10px; font-weight: 600; color: #94a3b8 !important; text-transform: uppercase; letter-spacing: .03em; padding: 0 8px 7px 8px; border-bottom: 1px solid #e2e8f0; }
+  :global(.hc-table th.hc-th-val) { text-align: right; }
+  :global(.hc-table th.hc-th-bar) { width: 32%; }
+  :global(.hc-row) { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
+  :global(.hc-row.is-show) { opacity: 1; transform: none; }
+  :global(.hc-table td) { padding: 8px; border-bottom: 1px solid #eef2f7; vertical-align: middle; background: transparent !important; }
+  :global(.hc-table tbody tr:last-child td) { border-bottom: 0; }
+  :global(.hc-td-rank) { color: #94a3b8 !important; font-weight: 600; width: 22px; }
+  :global(.hc-td-name) { color: #334155 !important; }
+  :global(.hc-td-val) { color: #0f172a !important; font-weight: 700; text-align: right; white-space: nowrap; }
+  :global(.hc-td-bar) { width: 32%; }
+  :global(.hc-rowtrack) { display: block; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
+  :global(.hc-rowbar) { display: block; height: 6px; width: 0; border-radius: 99px; transition: width .7s cubic-bezier(.22,1,.36,1); }
+
+  /* Graph */
+  :global(.hc-chart) { width: 100%; }
+  :global(.hc-chart svg) { width: 100%; height: auto; display: block; overflow: visible; }
+  :global(.hc-chart text) { fill: inherit; }
+
+  /* Progress chart */
+  :global(.hc-prog) { display: flex; flex-direction: column; gap: 11px; padding: 2px 0; }
+  :global(.hc-prog-row) { width: 100%; }
+  :global(.hc-prog-top) { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+  :global(.hc-prog-name) { font-size: 12px; color: #475569 !important; }
+  :global(.hc-prog-meta) { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; }
+  :global(.hc-prog-meta b) { color: #0f172a !important; font-weight: 600; min-width: 30px; text-align: right; }
+  :global(.hc-prog-tag) { font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
+  :global(.hc-prog-track) { height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
+  :global(.hc-prog-fill) { height: 100%; width: 0; border-radius: 99px; transition: width .8s cubic-bezier(.22,1,.36,1); }
+
+  .hc-foot { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
+  .hc-input { flex: 1; font-size: 12px; color: #94a3b8; background: #f1f5f9; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 12px; padding: 10px 14px; }
+  .hc-send { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+
+  @keyframes hcLive { 0%, 100% { opacity: .4; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.1); } }
+  @keyframes hcDotB { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  @keyframes hcFade { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hc-dot, .hc-typing span { animation: none; }
+  }
+</style>
+
+<script>
+  type Row = { label: string; value: number };
+  type Scenario = { q: string; title: string; chart: 'bar' | 'line' | 'donut' | 'progress'; unit: string; suffix: string; rows: Row[] };
+
+  const SCENARIOS: Scenario[] = [
+    {
+      q: 'Top 5 customers by sales this month', title: 'Top customers · this month', chart: 'bar', unit: '₹', suffix: 'M',
+      rows: [
+        { label: 'Acme Corp', value: 4.2 }, { label: 'Nimbus Pvt Ltd', value: 3.6 }, { label: 'Vertex Industries', value: 2.9 },
+        { label: 'Orion Trading', value: 2.1 }, { label: 'Halcyon Foods', value: 1.7 },
+      ],
+    },
+    {
+      q: 'Show monthly revenue trend', title: 'Revenue trend · last 6 months', chart: 'line', unit: '₹', suffix: 'M',
+      rows: [
+        { label: 'Jan', value: 8.1 }, { label: 'Feb', value: 9.4 }, { label: 'Mar', value: 8.8 },
+        { label: 'Apr', value: 11.2 }, { label: 'May', value: 12.6 }, { label: 'Jun', value: 14.3 },
+      ],
+    },
+    {
+      q: 'Sales by region this quarter', title: 'Sales by region · Q2', chart: 'donut', unit: '', suffix: '%',
+      rows: [
+        { label: 'North', value: 38 }, { label: 'West', value: 27 }, { label: 'South', value: 21 }, { label: 'East', value: 14 },
+      ],
+    },
+    {
+      q: 'Inventory stock levels by warehouse', title: 'Stock level · by warehouse', chart: 'progress', unit: '', suffix: '%',
+      rows: [
+        { label: 'Mumbai DC', value: 82 }, { label: 'Delhi DC', value: 64 }, { label: 'Chennai DC', value: 47 },
+        { label: 'Kolkata DC', value: 28 }, { label: 'Pune DC', value: 91 },
+      ],
+    },
+  ];
+  const COLORS = ['#6366f1', '#3b82f6', '#06b6d4', '#22c55e', '#84cc16'];
+  const SVGNS = 'http://www.w3.org/2000/svg';
+
+  function init() {
+    const root = document.querySelector('.hero-chat');
+    if (!root || (root as HTMLElement).dataset.init === '1') return;
+    (root as HTMLElement).dataset.init = '1';
+
+    const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fmt = (s: Scenario, v: number) => `${s.unit}${v}${s.suffix}`;
+    const el = (tag: string, attrs: Record<string, string | number>) => {
+      const e = document.createElementNS(SVGNS, tag);
+      for (const k in attrs) e.setAttribute(k, String(attrs[k]));
+      return e as SVGElement;
+    };
+
+    function buildTable(host: HTMLElement, s: Scenario) {
+      host.innerHTML = '';
+      const max = Math.max(...s.rows.map((r) => r.value));
+      const valHead = s.chart === 'progress' ? 'Stock' : s.chart === 'donut' ? 'Share' : 'Value';
+      const table = document.createElement('table');
+      table.className = 'hc-table';
+      const thead = document.createElement('thead');
+      thead.innerHTML = `<tr><th class="hc-th-rank">#</th><th class="hc-th-name">Name</th><th class="hc-th-val">${valHead}</th><th class="hc-th-bar"></th></tr>`;
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      s.rows.forEach((r, i) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hc-row';
+        tr.dataset.w = (r.value / max) * 100 + '%';
+        const c = COLORS[i % COLORS.length];
+        tr.innerHTML =
+          `<td class="hc-td-rank">${i + 1}</td>` +
+          `<td class="hc-td-name">${r.label}</td>` +
+          `<td class="hc-td-val">${fmt(s, r.value)}</td>` +
+          `<td class="hc-td-bar"><span class="hc-rowtrack"><span class="hc-rowbar" style="background:${c}"></span></span></td>`;
+        tbody.appendChild(tr);
+        if (RM) { tr.classList.add('is-show'); (tr.querySelector('.hc-rowbar') as HTMLElement).style.width = tr.dataset.w!; }
+      });
+      table.appendChild(tbody);
+      host.appendChild(table);
+    }
+
+    function revealTable(host: HTMLElement) {
+      if (RM) return;
+      const rows = Array.from(host.querySelectorAll('.hc-row')) as HTMLElement[];
+      rows.forEach((row, i) => {
+        const bar = row.querySelector('.hc-rowbar') as HTMLElement;
+        setTimeout(() => { row.classList.add('is-show'); if (bar) bar.style.width = row.dataset.w!; }, i * 80);
+      });
+    }
+
+    function buildGraph(host: HTMLElement, s: Scenario) {
+      host.innerHTML = '';
+      const wrap = document.createElement('div');
+      wrap.className = 'hc-chart';
+      wrap.appendChild(s.chart === 'bar' ? barChart(s) : s.chart === 'line' ? lineChart(s) : s.chart === 'progress' ? progressChart(s) : donutChart(s));
+      host.appendChild(wrap);
+    }
+
+    function barChart(s: Scenario) {
+      const W = 460, H = 150, padB = 22, padT = 10, padL = 6, padR = 6;
+      const max = Math.max(...s.rows.map((r) => r.value)), n = s.rows.length, gap = 14;
+      const bw = (W - padL - padR - gap * (n - 1)) / n;
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}` });
+      s.rows.forEach((r, i) => {
+        const x = padL + i * (bw + gap), fh = (r.value / max) * (H - padB - padT), y = H - padB - fh;
+        const rect = el('rect', { x, width: bw, rx: 4, y, height: fh, fill: COLORS[i % COLORS.length] }) as SVGRectElement;
+        rect.style.transformBox = 'fill-box'; rect.style.transformOrigin = 'bottom';
+        svg.appendChild(rect);
+        if (!RM) rect.animate([{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], { duration: 600, delay: i * 80, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' });
+        const val = el('text', { x: x + bw / 2, y: y - 4, 'text-anchor': 'middle', 'font-size': 10, fill: '#0f172a', 'font-weight': 600 });
+        val.textContent = fmt(s, r.value); svg.appendChild(val);
+        const lab = el('text', { x: x + bw / 2, y: H - 6, 'text-anchor': 'middle', 'font-size': 9, fill: '#94a3b8' });
+        lab.textContent = r.label.length > 9 ? r.label.slice(0, 8) + '…' : r.label; svg.appendChild(lab);
+      });
+      return svg;
+    }
+
+    function lineChart(s: Scenario) {
+      const W = 460, H = 150, padB = 22, padT = 16, padL = 14, padR = 14;
+      const vals = s.rows.map((r) => r.value), max = Math.max(...vals), min = Math.min(...vals), n = s.rows.length;
+      const xStep = (W - padL - padR) / (n - 1);
+      const yOf = (v: number) => H - padB - ((v - min) / (max - min || 1)) * (H - padB - padT);
+      const pts = s.rows.map((r, i) => [padL + i * xStep, yOf(r.value)]);
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}` });
+      const grad = el('linearGradient', { id: 'hcLineGrad', x1: 0, y1: 0, x2: 0, y2: 1 });
+      grad.innerHTML = '<stop offset="0" stop-color="#3b82f6" stop-opacity="0.25"/><stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>';
+      svg.appendChild(grad);
+      const areaD = `M ${pts[0][0]} ${H - padB} ` + pts.map((p) => `L ${p[0]} ${p[1]}`).join(' ') + ` L ${pts[n - 1][0]} ${H - padB} Z`;
+      const area = el('path', { d: areaD, fill: 'url(#hcLineGrad)' }) as SVGPathElement;
+      area.style.opacity = RM ? '1' : '0'; svg.appendChild(area);
+      if (!RM) area.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: 150, fill: 'forwards' });
+      const lineD = pts.map((p, i) => `${i ? 'L' : 'M'} ${p[0]} ${p[1]}`).join(' ');
+      const path = el('path', { d: lineD, fill: 'none', stroke: '#3b82f6', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) as SVGPathElement;
+      svg.appendChild(path);
+      if (!RM) { const L = path.getTotalLength(); path.animate([{ strokeDasharray: L, strokeDashoffset: L }, { strokeDasharray: L, strokeDashoffset: 0 }], { duration: 1100, easing: 'ease', fill: 'forwards' }); }
+      pts.forEach((p, i) => {
+        const c = el('circle', { cx: p[0], cy: p[1], r: 3.5, fill: '#fff', stroke: '#3b82f6', 'stroke-width': 2 }) as SVGCircleElement;
+        c.style.opacity = RM ? '1' : '0'; svg.appendChild(c);
+        if (!RM) c.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: i * 130, fill: 'forwards' });
+        const lab = el('text', { x: p[0], y: H - 6, 'text-anchor': 'middle', 'font-size': 9, fill: '#94a3b8' });
+        lab.textContent = s.rows[i].label; svg.appendChild(lab);
+      });
+      return svg;
+    }
+
+    function donutChart(s: Scenario) {
+      const W = 460, H = 150, cx = 92, cy = 75, r = 52, sw = 22;
+      const total = s.rows.reduce((a, b) => a + b.value, 0), C = 2 * Math.PI * r;
+      const svg = el('svg', { viewBox: `0 0 ${W} ${H}` });
+      let acc = 0;
+      s.rows.forEach((row, i) => {
+        const frac = row.value / total;
+        const circle = el('circle', { cx, cy, r, fill: 'none', stroke: COLORS[i % COLORS.length], 'stroke-width': sw, 'stroke-dasharray': `${frac * C} ${C}`, 'stroke-dashoffset': -acc * C, transform: `rotate(-90 ${cx} ${cy})` }) as SVGCircleElement;
+        svg.appendChild(circle);
+        if (!RM) circle.animate([{ strokeDasharray: `0 ${C}` }, { strokeDasharray: `${frac * C} ${C}` }], { duration: 700, delay: i * 140, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' });
+        acc += frac;
+      });
+      const t1 = el('text', { x: cx, y: cy - 2, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 700, fill: '#0f172a' }); t1.textContent = '100%'; svg.appendChild(t1);
+      const t2 = el('text', { x: cx, y: cy + 12, 'text-anchor': 'middle', 'font-size': 8, fill: '#94a3b8' }); t2.textContent = 'total'; svg.appendChild(t2);
+      s.rows.forEach((row, i) => {
+        const ly = 30 + i * 24;
+        svg.appendChild(el('rect', { x: 188, y: ly - 8, width: 9, height: 9, rx: 2, fill: COLORS[i % COLORS.length] }));
+        const lt = el('text', { x: 203, y: ly, 'font-size': 11, fill: '#475569' }); lt.textContent = row.label; svg.appendChild(lt);
+        const lv = el('text', { x: 270, y: ly, 'font-size': 11, 'font-weight': 600, fill: '#0f172a' }); lv.textContent = fmt(s, row.value); svg.appendChild(lv);
+      });
+      return svg;
+    }
+
+    function progressChart(s: Scenario) {
+      const box = document.createElement('div');
+      box.className = 'hc-prog';
+      s.rows.forEach((row, i) => {
+        const pct = Math.max(0, Math.min(100, row.value));
+        const color = pct < 35 ? '#ef4444' : pct < 65 ? '#f59e0b' : '#22c55e';
+        const tag = pct < 35 ? 'Low' : pct < 65 ? 'Medium' : 'Healthy';
+        const r = document.createElement('div');
+        r.className = 'hc-prog-row';
+        r.innerHTML =
+          `<div class="hc-prog-top"><span class="hc-prog-name">${row.label}</span>` +
+          `<span class="hc-prog-meta"><span class="hc-prog-tag" style="color:${color};background:${color}1a">${tag}</span>` +
+          `<b>${pct}%</b></span></div>` +
+          `<div class="hc-prog-track"><div class="hc-prog-fill" style="background:${color}"></div></div>`;
+        box.appendChild(r);
+        const fill = r.querySelector('.hc-prog-fill') as HTMLElement;
+        if (RM) { fill.style.width = pct + '%'; }
+        else requestAnimationFrame(() => requestAnimationFrame(() => {
+          setTimeout(() => { fill.style.width = pct + '%'; }, i * 90);
+        }));
+      });
+      return box;
+    }
+
+    const user = root.querySelector('#hc-user') as HTMLElement;
+    const typeEl = root.querySelector('#hc-type') as HTMLElement;
+    const typing = root.querySelector('#hc-typing') as HTMLElement;
+    const answer = root.querySelector('#hc-answer') as HTMLElement;
+    const ansTitle = root.querySelector('#hc-ans-title') as HTMLElement;
+    const tableHost = root.querySelector('#hc-view-table') as HTMLElement;
+    const graphHost = root.querySelector('#hc-view-graph') as HTMLElement;
+    const btns = Array.from(root.querySelectorAll('.hc-tg-btn')) as HTMLElement[];
+
+    let currentScenario: Scenario | null = null;
+    function setView(v: 'table' | 'graph') {
+      btns.forEach((b) => b.classList.toggle('is-active', b.dataset.view === v));
+      tableHost.hidden = v !== 'table';
+      graphHost.hidden = v === 'table';
+      // Build the chart at the moment graph view becomes visible so its
+      // entrance animation actually plays (WAAPI on a hidden element finishes
+      // before it's ever seen).
+      if (v === 'graph' && currentScenario) buildGraph(graphHost, currentScenario);
+    }
+    btns.forEach((b) => b.addEventListener('click', () => setView(b.dataset.view as 'table' | 'graph')));
+
+    let si = 0;
+    const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+    // Natural typing: jittered per-key speed, longer pauses after spaces and
+    // punctuation, plus a brief "gathering thoughts" pause before the first key.
+    function keyDelay(ch: string, prev: string): number {
+      if (prev === ' ') return 80 + Math.random() * 90;          // word boundary
+      if ('.,?!:;'.includes(prev)) return 180 + Math.random() * 140; // after punctuation
+      const base = 45;
+      const jitter = Math.random() * 55;                          // 45–100ms
+      const occasionalHitch = Math.random() < 0.08 ? 90 : 0;      // rare brief catch
+      return base + jitter + occasionalHitch;
+    }
+
+    async function typeText(t: string) {
+      typeEl.classList.remove('done'); typeEl.textContent = '';
+      await wait(220); // small pause before typing starts
+      for (let i = 0; i < t.length; i++) {
+        typeEl.textContent = t.slice(0, i + 1);
+        await wait(keyDelay(t[i], i > 0 ? t[i - 1] : ''));
+      }
+      await wait(150); // settle before sending
+      typeEl.classList.add('done');
+    }
+
+    async function runScenario(s: Scenario) {
+      answer.classList.remove('is-show'); typing.classList.remove('is-show'); user.classList.remove('is-show');
+      await wait(300);
+      user.classList.add('is-show');
+      await typeText(s.q);
+      await wait(500);
+      user.classList.remove('is-show');
+      await wait(250);
+      typing.classList.add('is-show');
+      await wait(1000);
+      typing.classList.remove('is-show');
+      await wait(200);
+      ansTitle.textContent = s.title;
+      currentScenario = s;
+      buildTable(tableHost, s);
+      setView('table');
+      answer.classList.add('is-show');
+      // reveal rows in sync with the answer fade-in (no blank gap)
+      requestAnimationFrame(() => revealTable(tableHost));
+      await wait(2600);
+      setView('graph');
+      await wait(3200);
+    }
+
+    async function loop() {
+      if (RM) {
+        const s = SCENARIOS[0];
+        ansTitle.textContent = s.title; currentScenario = s; buildTable(tableHost, s);
+        setView('table'); answer.classList.add('is-show');
+        return;
+      }
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        await runScenario(SCENARIOS[si]);
+        answer.classList.remove('is-show');
+        await wait(350);
+        si = (si + 1) % SCENARIOS.length;
+      }
+    }
+    loop();
+  }
+
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('astro:page-load', () => init());
+</script>

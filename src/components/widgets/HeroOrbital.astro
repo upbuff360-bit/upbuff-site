@@ -73,6 +73,11 @@ const badgePositions: Record<string, { top: string; left: string; transform: str
   aria-label={title}
   {...id ? { id } : {}}
 >
+  {Astro.slots.has('background') && (
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <slot name="background" />
+    </div>
+  )}
   <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
     <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
 
@@ -90,7 +95,7 @@ const badgePositions: Record<string, { top: string; left: string; transform: str
 
         {title && (
           <h1
-            class="heroOrbitalTitle text-5xl md:text-6xl lg:text-6xl font-bold leading-none tracking-tight text-white mb-5 font-heading"
+            class="text-5xl md:text-6xl lg:text-6xl font-bold leading-none tracking-tight text-white mb-5 font-heading"
             itemprop="name"
             set:html={title}
           />
@@ -110,7 +115,7 @@ const badgePositions: Record<string, { top: string; left: string; transform: str
               action.variant === 'primary' ? (
                 <a
                   href={action.href}
-                  class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors duration-150"
+                  class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full btn-primary hover:bg-blue-700 text-white font-semibold text-sm transition-colors duration-150"
                   role="button"
                   aria-label={action.text}
                 >
