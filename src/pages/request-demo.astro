@@ -8,6 +8,7 @@ import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
 import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 
+import { countryDialCodes, defaultCountryDialCode } from '~/data/countryDialCodes';
 import { headerData } from '~/navigation';
 
 const metadata = {
@@ -106,7 +107,9 @@ const metadata = {
     fields={[
       { name: 'name',       label: 'Full name',   placeholder: 'Jane Smith',           type: 'text'  },
       { name: 'email',      label: 'Work email',  placeholder: 'you@company.com',      type: 'email' },
-      { name: 'phone',      label: 'Phone number', placeholder: '+91 98765 43210',     type: 'tel' },
+      { name: 'countryCode', label: 'Country code', type: 'select',
+        options: countryDialCodes.map((country) => ({ label: country.label, value: country.value, selected: country.value === defaultCountryDialCode })) },
+      { name: 'phone',      label: 'Phone number', placeholder: '98765 43210',         type: 'tel' },
       { name: 'erp',        label: 'ERP system',  placeholder: 'Select your ERP',      type: 'select',
         options: ['SAP S/4HANA', 'SAP Business One', 'SAP ECC', 'Oracle ERP Cloud', 'Oracle NetSuite', 'Epicor Kinetic', 'Microsoft Dynamics 365', 'Other'] },
       { name: 'focus',      label: 'Area of interest', placeholder: 'Select a module', type: 'select',
