@@ -2,7 +2,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 import LogoBar from '~/components/widgets/LogoBar.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
-import { countryDialCodes, defaultCountryDialCode } from '~/data/countryDialCodes';
+import { countryDialCodes, countryOptions, defaultCountry, defaultCountryDialCode } from '~/data/countryDialCodes';
 
 const metadata = {
   title: 'Contact UpBuff | Get in Touch with Our ERP Integration Team',
@@ -26,12 +26,6 @@ const metadata = {
 
 const svgArrow    = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E";
 const selectStyle = `background-image:url("${svgArrow}");background-repeat:no-repeat;background-position:right 14px center;`;
-
-const countries = [
-  'India', 'United States', 'United Kingdom', 'United Arab Emirates',
-  'Saudi Arabia', 'Singapore', 'Australia', 'Canada', 'Germany',
-  'France', 'Netherlands', 'South Africa', 'Zambia', 'Other',
-];
 
 const products = [
   'ERP-Integrated CRM',
@@ -318,8 +312,11 @@ const products = [
                   class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow appearance-none"
                   style={selectStyle}
                 >
-                  <option value="" disabled selected>Select your country</option>
-                  {countries.map((c) => <option value={c}>{c}</option>)}
+                  {countryOptions.map((country) => (
+                    <option value={country.value} selected={country.value === defaultCountry}>
+                      {country.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 

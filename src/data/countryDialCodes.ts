@@ -26,3 +26,20 @@ export const countryDialCodes: CountryDialCode[] = getCountries()
   .sort((a, b) => a.name.localeCompare(b.name));
 
 export const defaultCountryDialCode = 'IN|+91';
+export const defaultCountry = 'IN';
+
+export const countryOptions = countryDialCodes.map((country) => ({
+  label: country.name,
+  value: country.country,
+}));
+
+export function getCountryName(value: string | undefined): string {
+  const trimmed = value?.trim();
+  if (!trimmed) return '';
+
+  const country = countryDialCodes.find(
+    (item) => item.country === trimmed || item.name.toLowerCase() === trimmed.toLowerCase()
+  );
+
+  return country?.name ?? trimmed;
+}
