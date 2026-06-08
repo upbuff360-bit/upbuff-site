@@ -9,7 +9,19 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { name, email, countryCode, phone, erp, focus, message } = body as Record<string, string>;
+    const {
+      name,
+      company,
+      email,
+      countryCode,
+      phone,
+      erp,
+      focus,
+      automation,
+      monthlyDocuments,
+      heardFrom,
+      message,
+    } = body as Record<string, string>;
     const countryName = getCountryName(countryCode);
     const phoneCheck = validateOptionalPhone(countryCode, phone);
 
@@ -63,6 +75,7 @@ export const POST: APIRoute = async ({ request }) => {
             <td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;width:40%;color:#6b7280;">Full Name</td>
             <td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(name)}</td>
           </tr>
+          ${company ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Company</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(company)}</td></tr>` : ''}
           <tr>
             <td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Work Email</td>
             <td style="padding:10px 0;border-bottom:1px solid #f3f4f6;"><a href="mailto:${escHtml(email)}" style="color:#6366f1;">${escHtml(email)}</a></td>
@@ -71,6 +84,9 @@ export const POST: APIRoute = async ({ request }) => {
           ${countryName ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Country</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(countryName)}</td></tr>` : ''}
           ${erp ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">ERP System</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(erp)}</td></tr>` : ''}
           ${focus ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Area of Interest</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(focus)}</td></tr>` : ''}
+          ${automation ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Automation Scope</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(automation)}</td></tr>` : ''}
+          ${monthlyDocuments ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Monthly Documents</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(monthlyDocuments)}</td></tr>` : ''}
+          ${heardFrom ? `<tr><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;font-weight:600;color:#6b7280;">Heard From</td><td style="padding:10px 0;border-bottom:1px solid #f3f4f6;">${escHtml(heardFrom)}</td></tr>` : ''}
           ${message?.trim() ? `<tr><td style="padding:10px 0;font-weight:600;vertical-align:top;color:#6b7280;">Message</td><td style="padding:10px 0;white-space:pre-wrap;">${escHtml(message)}</td></tr>` : ''}
         </table>
         <p style="margin-top:28px;font-size:12px;color:#9ca3af;text-align:center;">
@@ -83,7 +99,7 @@ export const POST: APIRoute = async ({ request }) => {
       from:    `"UpBuff Website" <${import.meta.env.SMTP_USER}>`,
       to:      (import.meta.env.SMTP_TO ?? import.meta.env.SMTP_USER).split(',').map((e: string) => e.trim()).join(', '),
       replyTo: email,
-      subject: `Demo Request — ${name} (${erp ?? 'ERP not specified'})`,
+      subject: `Demo Request — ${name}${company ? `, ${company}` : ''} (${erp ?? 'ERP not specified'})`,
       html,
     });
 

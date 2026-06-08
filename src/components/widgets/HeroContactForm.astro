@@ -9,10 +9,12 @@ export interface FormField {
   type?:        string;
   options?:     (string | { label: string; value: string; selected?: boolean })[];  // used when type === 'select'
   rows?:        number;    // used when type === 'textarea'
+  required?:    boolean;
+  step?:        number;
 }
 
 export interface HCFTestimonial {
-  quote:   string;
+  quote:   string | string[];
   name?:   string;
   role?:   string;
   avatar?: string;
@@ -84,6 +86,15 @@ const pairMapped = pairFields.map((f) => ({
   placeholder: f.placeholder,
   itype:       htmlType(f.type),   // 'text' | 'email' — safe for <input type>
 }));
+
+const testimonialParagraphs = testimonial
+  ? Array.isArray(testimonial.quote)
+    ? testimonial.quote
+    : testimonial.quote
+        .split(/\n{2,}/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean)
+  : [];
 ---
 
 <section
@@ -131,9 +142,15 @@ const pairMapped = pairFields.map((f) => ({
 
         {testimonial && (
           <blockquote class="mt-auto pt-8 border-t border-white/10">
-            <p class="text-base text-white/70 leading-relaxed italic mb-5">
-              &ldquo;{testimonial.quote}&rdquo;
-            </p>
+            <div class="text-base text-white/70 leading-relaxed italic mb-5 space-y-4">
+              {testimonialParagraphs.map((paragraph, index) => (
+                <p>
+                  {index === 0 && <span>&ldquo;</span>}
+                  {paragraph}
+                  {index === testimonialParagraphs.length - 1 && <span>&rdquo;</span>}
+                </p>
+              ))}
+            </div>
             <footer class="flex items-center gap-3">
               {testimonial.avatar && (
                 <img

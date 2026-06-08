@@ -1,0 +1,575 @@
+---
+export interface FormField {
+  name: string;
+  label: string;
+  placeholder?: string;
+  type?: string;
+  options?: (string | { label: string; value: string; selected?: boolean })[];
+  rows?: number;
+  required?: boolean;
+  step: number;
+}
+
+export interface HCFTestimonial {
+  quote: string | string[];
+  name?: string;
+  role?: string;
+  avatar?: string;
+}
+
+export interface Props {
+  tagline?: string;
+  title?: string;
+  subtitle?: string;
+  testimonial?: HCFTestimonial;
+  formTitle?: string;
+  fields?: FormField[];
+  submitLabel?: string;
+  formNote?: string;
+  id?: string;
+}
+
+const {
+  tagline,
+  title,
+  subtitle,
+  testimonial,
+  formTitle = 'Book your demo',
+  fields = [],
+  submitLabel = 'Book My Demo',
+  formNote,
+  id,
+} = Astro.props;
+
+const htmlType = (t: string | undefined): 'text' | 'email' | 'tel' =>
+  t === 'email' || t === 'tel' ? t : 'text';
+
+const optionLabel = (opt: string | { label: string; value: string; selected?: boolean }) =>
+  typeof opt === 'string' ? opt : opt.label;
+
+const optionValue = (opt: string | { label: string; value: string; selected?: boolean }) =>
+  typeof opt === 'string' ? opt : opt.value;
+
+const optionSelected = (opt: string | { label: string; value: string; selected?: boolean }) =>
+  typeof opt === 'string' ? false : opt.selected === true;
+
+const svgArrow =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E";
+const selectStyle = `background-image:url("${svgArrow}");background-repeat:no-repeat;background-position:right 14px center;`;
+
+const stepNumbers = Array.from(new Set(fields.map((field) => field.step))).sort((a, b) => a - b);
+const stepGroups = stepNumbers.map((step) => ({
+  step,
+  fields: fields.filter((field) => field.step === step),
+}));
+
+const testimonialParagraphs = testimonial
+  ? Array.isArray(testimonial.quote)
+    ? testimonial.quote
+    : testimonial.quote
+        .split(/\n{2,}/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean)
+  : [];
+---
+
+<section
+  class="relative not-prose md:-mt-[76px] bg-[#0a0a0a] text-white overflow-hidden"
+  {...id ? { id } : {}}
+>
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+    aria-hidden="true"
+    style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.13) 0%,transparent 70%);"
+  />
+  <div class="absolute inset-0 pointer-events-none noise-overlay opacity-30" aria-hidden="true" />
+
+  <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="pt-0 md:pt-[76px] pointer-events-none" />
+
+    <div class="py-16 md:py-24 flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-10">
+      <div class="lg:w-1/2 flex flex-col gap-6 lg:pt-4">
+        {tagline && (
+          <div class="inline-flex w-fit items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm">
+            <span class="w-2 h-2 rounded-full bg-purple-400 shrink-0" aria-hidden="true" />
+            <span class="text-sm font-medium text-white/80">{tagline}</span>
+          </div>
+        )}
+
+        {title && (
+          <h1
+            class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white"
+            set:html={title}
+          />
+        )}
+
+        {subtitle && (
+          <p class="text-base md:text-lg text-white/60 leading-relaxed max-w-md" set:html={subtitle} />
+        )}
+
+        {testimonial && (
+          <blockquote class="mt-auto pt-8 border-t border-white/10">
+            <div class="text-base text-white/70 leading-relaxed italic mb-5 space-y-4">
+              {testimonialParagraphs.map((paragraph, index) => (
+                <p>
+                  {index === 0 && <span>&ldquo;</span>}
+                  {paragraph}
+                  {index === testimonialParagraphs.length - 1 && <span>&rdquo;</span>}
+                </p>
+              ))}
+            </div>
+            <footer class="flex items-center gap-3">
+              {testimonial.avatar && (
+                <img
+                  src={testimonial.avatar}
+                  alt={testimonial.name ?? ''}
+                  class="w-9 h-9 rounded-full object-cover ring-2 ring-white/20 shrink-0"
+                  loading="lazy"
+                />
+              )}
+              <div class="text-sm">
+                {testimonial.name && <span class="font-semibold text-white">{testimonial.name}</span>}
+                {testimonial.role && <span class="text-white/50 ml-1">{testimonial.role}</span>}
+              </div>
+            </footer>
+          </blockquote>
+        )}
+      </div>
+
+      <div class="lg:w-1/2 shrink-0">
+        <div class="relative bg-white rounded-2xl shadow-2xl p-7 md:p-8">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-5">{formTitle}</p>
+
+          <div
+            id="hcf-success"
+            class="hidden absolute inset-0 z-10 flex flex-col items-center justify-center rounded-2xl bg-white px-8 text-center"
+          >
+            <div class="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-5">
+              <svg class="w-8 h-8 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">We'll be in touch soon!</h3>
+            <p class="text-sm text-gray-500 leading-relaxed max-w-xs">
+              Your demo request has been received. One of our solutions specialists will reach out within
+              <strong class="text-gray-700">one business day</strong> to confirm your session.
+            </p>
+            <p class="text-xs text-gray-400 mt-4">A confirmation has been sent to your email.</p>
+          </div>
+
+          <div
+            id="hcf-error"
+            class="hidden rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 mb-4"
+          >
+            Something went wrong. Please try again or email us at
+            <a href="mailto:sales@upbuff.com" class="underline font-medium">sales@upbuff.com</a>.
+          </div>
+
+          <form id="hcf-form" class="flex flex-col gap-4">
+            <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+              <label>
+                Website
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+
+            <input type="hidden" name="ts" id="hcf-ts" value={String(Date.now())} />
+
+            <div class="flex items-center gap-2 mb-1" aria-label="Demo request progress">
+              {stepGroups.map(({ step }, index) => (
+                <div class="flex flex-1 items-center gap-2">
+                  <span
+                    data-hcf-step-dot={String(index)}
+                    class:list={[
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs font-semibold transition-colors',
+                      index === 0 ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 bg-white text-gray-400',
+                    ]}
+                  >
+                    {step}
+                  </span>
+                  {index < stepGroups.length - 1 && (
+                    <span data-hcf-step-line={String(index)} class="h-px flex-1 bg-gray-200" aria-hidden="true" />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {stepGroups.map(({ step, fields: stepFields }, stepIndex) => (
+              <div data-hcf-step={String(stepIndex)} class:list={['flex flex-col gap-4', stepIndex !== 0 && 'hidden']}>
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Step {step}</p>
+
+                {stepFields.map((f) => (
+                  f.type === 'checkbox-group' ? (
+                    <fieldset
+                      class="flex flex-col gap-2"
+                      data-required-group={f.required ? 'true' : undefined}
+                      data-group-label={f.label}
+                    >
+                      <legend class="text-xs font-semibold text-gray-600 mb-1">{f.label}</legend>
+                      <div class="grid gap-2">
+                        {(f.options ?? []).map((opt, optionIndex) => (
+                          <label
+                            for={`hcf-${f.name}-${stepIndex}-${optionIndex}`}
+                            class="flex items-center gap-3 rounded-lg border border-gray-200 px-3.5 py-3 text-sm text-gray-800 cursor-pointer hover:border-gray-300 hover:bg-gray-50"
+                          >
+                            <input
+                              id={`hcf-${f.name}-${stepIndex}-${optionIndex}`}
+                              name={f.name}
+                              value={optionValue(opt)}
+                              type="checkbox"
+                              class="h-4 w-4 rounded border-gray-300 text-gray-900 focus:ring-gray-900"
+                            />
+                            <span>{optionLabel(opt)}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  ) : f.type === 'radio-group' ? (
+                    <fieldset class="flex flex-col gap-2">
+                      <legend class="text-xs font-semibold text-gray-600 mb-1">{f.label}</legend>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {(f.options ?? []).map((opt, optionIndex) => (
+                          <label
+                            for={`hcf-${f.name}-${stepIndex}-${optionIndex}`}
+                            class="flex items-center gap-3 rounded-lg border border-gray-200 px-3.5 py-3 text-sm text-gray-800 cursor-pointer hover:border-gray-300 hover:bg-gray-50"
+                          >
+                            <input
+                              id={`hcf-${f.name}-${stepIndex}-${optionIndex}`}
+                              name={f.name}
+                              value={optionValue(opt)}
+                              type="radio"
+                              class="h-4 w-4 border-gray-300 text-gray-900 focus:ring-gray-900"
+                            />
+                            <span>{optionLabel(opt)}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  ) : (
+                    <div class="flex flex-col gap-1.5">
+                      <label for={`hcf-${f.name}`} class="text-xs font-semibold text-gray-600">
+                        {f.label}
+                      </label>
+
+                      {f.type === 'select' && (
+                        <select
+                          id={`hcf-${f.name}`}
+                          name={f.name}
+                          data-required={f.required ? 'true' : undefined}
+                          class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow appearance-none"
+                          style={selectStyle}
+                        >
+                          {f.placeholder && <option value="" disabled selected={true}>{f.placeholder}</option>}
+                          {(f.options ?? []).map((opt) => (
+                            <option value={optionValue(opt)} selected={optionSelected(opt)}>{optionLabel(opt)}</option>
+                          ))}
+                        </select>
+                      )}
+
+                      {f.type === 'textarea' && (
+                        <textarea
+                          id={`hcf-${f.name}`}
+                          name={f.name}
+                          rows={f.rows ?? 4}
+                          data-required={f.required ? 'true' : undefined}
+                          placeholder={f.placeholder}
+                          class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow resize-none"
+                        />
+                      )}
+
+                      {f.type !== 'select' && f.type !== 'textarea' && (
+                        <input
+                          id={`hcf-${f.name}`}
+                          name={f.name}
+                          type={htmlType(f.type)}
+                          data-required={f.required ? 'true' : undefined}
+                          inputmode={f.type === 'tel' ? 'tel' : undefined}
+                          autocomplete={f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : undefined}
+                          placeholder={f.placeholder}
+                          class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow"
+                        />
+                      )}
+                    </div>
+                  )
+                ))}
+              </div>
+            ))}
+
+            <div id="hcf-verification" class="hidden justify-center mt-1">
+              <div
+                class="cf-turnstile"
+                data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                data-theme="light"
+                data-size="flexible"
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <button
+                id="hcf-back"
+                type="button"
+                class="hidden px-5 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 text-sm font-semibold hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors"
+              >
+                Back
+              </button>
+              <button
+                id="hcf-next"
+                type="button"
+                class="col-span-2 px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors"
+              >
+                Next
+              </button>
+              <button
+                id="hcf-submit"
+                type="submit"
+                class="hidden px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors disabled:opacity-60 disabled:cursor-not-allowed items-center justify-center gap-2"
+              >
+                <span id="hcf-btn-label">{submitLabel}</span>
+                <svg id="hcf-spinner" class="hidden animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                </svg>
+              </button>
+            </div>
+
+            {formNote && <p class="text-xs text-center text-gray-400 mt-1" set:html={formNote} />}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      function ensureTurnstileScript() {
+        if (document.querySelector('script[data-turnstile-loader]')) return;
+        const s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        s.async = true;
+        s.defer = true;
+        s.setAttribute('data-turnstile-loader', 'true');
+        document.head.appendChild(s);
+      }
+
+      function renderAllWidgets() {
+        if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+          if ((window.__tsRetries || 0) < 15) {
+            window.__tsRetries = (window.__tsRetries || 0) + 1;
+            setTimeout(renderAllWidgets, 200);
+          }
+          return;
+        }
+        window.__tsRetries = 0;
+        document.querySelectorAll('.cf-turnstile').forEach(function (el) {
+          if (el.getAttribute('data-rendered') === 'true') return;
+          const sitekey = el.getAttribute('data-sitekey');
+          if (!sitekey) return;
+          try {
+            window.turnstile.render(el, {
+              sitekey: sitekey,
+              theme: el.getAttribute('data-theme') || 'auto',
+              size: el.getAttribute('data-size') || 'normal',
+            });
+            el.setAttribute('data-rendered', 'true');
+          } catch (err) {
+            console.warn('[turnstile] render skipped:', err);
+          }
+        });
+      }
+
+      ensureTurnstileScript();
+      document.addEventListener('DOMContentLoaded', renderAllWidgets);
+      document.addEventListener('astro:page-load', renderAllWidgets);
+    })();
+  </script>
+
+  <script>
+    (function () {
+      function serializeForm(form: HTMLFormElement): Record<string, string> {
+        const data: Record<string, string> = {};
+        new FormData(form).forEach((value, key) => {
+          if (typeof value !== 'string') return;
+          data[key] = data[key] ? `${data[key]}, ${value}` : value;
+        });
+        return data;
+      }
+
+      function init() {
+        const form = document.getElementById('hcf-form') as HTMLFormElement | null;
+        const success = document.getElementById('hcf-success') as HTMLElement | null;
+        const errBox = document.getElementById('hcf-error') as HTMLElement | null;
+        const btn = document.getElementById('hcf-submit') as HTMLButtonElement | null;
+        const nextBtn = document.getElementById('hcf-next') as HTMLButtonElement | null;
+        const backBtn = document.getElementById('hcf-back') as HTMLButtonElement | null;
+        const label = document.getElementById('hcf-btn-label') as HTMLElement | null;
+        const spinner = document.getElementById('hcf-spinner') as HTMLElement | null;
+        const tsField = document.getElementById('hcf-ts') as HTMLInputElement | null;
+        const verification = document.getElementById('hcf-verification') as HTMLElement | null;
+
+        if (!form || !success || !errBox || !btn || !nextBtn || !backBtn || !label || !spinner) return;
+        if (form.dataset.submitBound === 'true') return;
+        form.dataset.submitBound = 'true';
+
+        const formEl = form;
+        const errEl = errBox;
+        const submitBtn = btn;
+        const nextButton = nextBtn;
+        const backButton = backBtn;
+
+        const steps = Array.from(formEl.querySelectorAll<HTMLElement>('[data-hcf-step]'));
+        const dots = Array.from(formEl.querySelectorAll<HTMLElement>('[data-hcf-step-dot]'));
+        const lines = Array.from(formEl.querySelectorAll<HTMLElement>('[data-hcf-step-line]'));
+        let currentStep = 0;
+
+        if (tsField) {
+          const existing = Number(tsField.value);
+          const oneHourAgo = Date.now() - 60 * 60 * 1000;
+          if (!existing || Number.isNaN(existing) || existing < oneHourAgo) {
+            tsField.value = String(Date.now());
+          }
+        }
+
+        function showStep(index: number) {
+          currentStep = Math.max(0, Math.min(index, steps.length - 1));
+          const isFirst = currentStep === 0;
+          const isLast = currentStep === steps.length - 1;
+
+          errEl.classList.add('hidden');
+
+          steps.forEach((step, stepIndex) => {
+            step.classList.toggle('hidden', stepIndex !== currentStep);
+          });
+
+          dots.forEach((dot, dotIndex) => {
+            const isActive = dotIndex <= currentStep;
+            dot.classList.toggle('border-gray-900', isActive);
+            dot.classList.toggle('bg-gray-900', isActive);
+            dot.classList.toggle('text-white', isActive);
+            dot.classList.toggle('border-gray-200', !isActive);
+            dot.classList.toggle('bg-white', !isActive);
+            dot.classList.toggle('text-gray-400', !isActive);
+          });
+
+          lines.forEach((line, lineIndex) => {
+            line.classList.toggle('bg-gray-900', lineIndex < currentStep);
+            line.classList.toggle('bg-gray-200', lineIndex >= currentStep);
+          });
+
+          backButton.classList.toggle('hidden', isFirst);
+          nextButton.classList.toggle('hidden', isLast);
+          nextButton.classList.toggle('col-span-2', isFirst);
+          submitBtn.classList.toggle('hidden', !isLast);
+          submitBtn.classList.toggle('flex', isLast);
+          verification?.classList.toggle('hidden', !isLast);
+          verification?.classList.toggle('flex', isLast);
+        }
+
+        function validateStep(): boolean {
+          const step = steps[currentStep];
+          if (!step) return true;
+
+          const controls = Array.from(
+            step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
+          );
+
+          for (const control of controls) {
+            const isRequired = control.dataset.required === 'true';
+            control.setCustomValidity('');
+
+            if (isRequired && !control.value.trim()) {
+              control.setCustomValidity('Please fill out this field.');
+              control.reportValidity();
+              control.setCustomValidity('');
+              return false;
+            }
+
+            if ((isRequired || control.value.trim()) && !control.checkValidity()) {
+              control.reportValidity();
+              return false;
+            }
+          }
+
+          const groups = Array.from(step.querySelectorAll<HTMLElement>('[data-required-group="true"]'));
+          for (const group of groups) {
+            const checked = group.querySelector<HTMLInputElement>('input[type="checkbox"]:checked');
+            if (!checked) {
+              errEl.textContent = `Please select at least one option for ${group.dataset.groupLabel ?? 'this question'}.`;
+              errEl.classList.remove('hidden');
+              return false;
+            }
+          }
+
+          return true;
+        }
+
+        const originalLabel = label.textContent ?? 'Submit';
+
+        nextButton.addEventListener('click', () => {
+          if (!validateStep()) return;
+          showStep(currentStep + 1);
+        });
+
+        backButton.addEventListener('click', () => {
+          showStep(currentStep - 1);
+        });
+
+        formEl.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          if (currentStep < steps.length - 1) {
+            if (validateStep()) showStep(currentStep + 1);
+            return;
+          }
+
+          errEl.classList.add('hidden');
+          success.classList.add('hidden');
+          formEl.classList.remove('invisible');
+
+          if (!validateStep()) return;
+
+          const data = serializeForm(formEl);
+
+          if (!data['cf-turnstile-response']) {
+            errEl.textContent = 'Please complete the verification and try again.';
+            errEl.classList.remove('hidden');
+            return;
+          }
+
+          submitBtn.disabled = true;
+          spinner.classList.remove('hidden');
+          label.textContent = 'Sending...';
+
+          try {
+            const res = await fetch('/api/demo-request', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+            });
+            const json = await res.json();
+
+            if (json.success) {
+              success.classList.remove('hidden');
+              formEl.classList.add('invisible');
+            } else {
+              throw new Error(json.error ?? 'Unknown error');
+            }
+          } catch (error) {
+            errEl.textContent = error instanceof Error ? error.message : 'Something went wrong. Please try again.';
+            errEl.classList.remove('hidden');
+            submitBtn.disabled = false;
+            spinner.classList.add('hidden');
+            label.textContent = originalLabel;
+
+            const ts = (window as any).turnstile;
+            if (ts && typeof ts.reset === 'function') ts.reset();
+          }
+        });
+
+        showStep(0);
+      }
+
+      document.addEventListener('astro:page-load', init);
+      document.addEventListener('DOMContentLoaded', init);
+    })();
+  </script>
+</section>
