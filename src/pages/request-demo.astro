@@ -6,6 +6,7 @@ import LogoBar from '~/components/widgets/LogoBar.astro';
 import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
 import FeaturesEnterprise from '~/components/widgets/FeaturesEnterprise.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import { countryDialCodes, defaultCountryDialCode } from '~/data/countryDialCodes';
 
 const metadata = {
   title: 'Request a Demo | UpBuff ERP Execution Platform',
@@ -108,6 +109,18 @@ const metadata = {
       { name: 'name', label: 'Name', placeholder: 'Jane Smith', type: 'text', required: true, step: 1 },
       { name: 'company', label: 'Company', placeholder: 'Company name', type: 'text', required: true, step: 1 },
       { name: 'email', label: 'Email', placeholder: 'you@company.com', type: 'email', required: true, step: 1 },
+      {
+        name: 'countryCode',
+        label: 'Country code',
+        type: 'select',
+        step: 1,
+        options: countryDialCodes.map((country) => ({
+          label: country.label,
+          value: country.value,
+          selected: country.value === defaultCountryDialCode,
+        })),
+      },
+      { name: 'phone', label: 'Phone number', placeholder: '98765 43210', type: 'tel', step: 1 },
       {
         name: 'erp',
         label: 'ERP',
