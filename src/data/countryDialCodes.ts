@@ -19,7 +19,7 @@ export const countryDialCodes: CountryDialCode[] = getCountries()
       country,
       name,
       dialCode,
-      label: `${name} (${dialCode})`,
+      label: `${dialCode} (${name})`,
       value: `${country}|${dialCode}`,
     };
   })
