@@ -32,9 +32,13 @@ metadata:
 
 > Your ERP has a service module. Your technicians have phones. Yet somehow, every job still closes via a phone call to the office — costing you days on invoicing and accuracy you'll never get back.
 
-It is 2:47pm. A field technician has just finished replacing a pressure valve at a customer facility. The job is done. The engineer is satisfied. The spare parts are logged — on a piece of paper in the technician's pocket.
+##### It is 2:47pm.
 
-Now what? He picks up his phone. Not to log the job into SAP. To send a WhatsApp message to his supervisor:
+A field technician has just finished replacing a pressure valve at a customer facility. The job is done. The engineer is satisfied. The spare parts are logged — on a piece of paper in the technician's pocket.
+
+##### Now what?
+
+He picks up his phone. Not to log the job into SAP. To send a WhatsApp message to his supervisor:
 
 > "Job done at site 4. Valve replaced. Used 2 gaskets from stock."
 
@@ -73,7 +77,7 @@ Service managers who live with this situation often underestimate the real cost.
 
 ### Cost 1 — Invoicing Delay
 
-Every hour between job completion and SAP work order closure is an hour of invoicing delay. For service companies billing on time and materials, a 24–48 hour close lag translates directly to cash flow impact. A company with 300 service jobs per month, averaging ₹15,000 (~$180) per invoice, carries ₹45 lakhs (~$54,000) in perpetual unbilled work at any given moment simply because work orders are not closed on site.
+Every hour between job completion and SAP work order closure is an hour of invoicing delay. For service companies billing on time and materials, a 24–48 hour close lag translates directly to cash flow impact. A company with 300 service jobs per month, averaging ₹15,000 ($180) per invoice, carries ₹45 lakhs ($54,000) in perpetual unbilled work at any given moment simply because work orders are not closed on site.
 
 ### Cost 2 — Wrong Spare Parts Data
 
