@@ -178,15 +178,17 @@ const testimonialParagraphs = testimonial
             <div class="flex items-center gap-2 mb-1" aria-label="Demo request progress">
               {stepGroups.map(({ step }, index) => (
                 <div class="flex flex-1 items-center gap-2">
-                  <span
+                  <button
+                    type="button"
                     data-hcf-step-dot={String(index)}
                     class:list={[
-                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs font-semibold transition-colors',
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60',
                       index === 0 ? 'border-gray-900 bg-gray-900 text-white' : 'border-gray-200 bg-white text-gray-400',
                     ]}
+                    aria-label={`Go to step ${step}`}
                   >
                     {step}
-                  </span>
+                  </button>
                   {index < stepGroups.length - 1 && (
                     <span data-hcf-step-line={String(index)} class="h-px flex-1 bg-gray-200" aria-hidden="true" />
                   )}
@@ -384,6 +386,8 @@ const testimonialParagraphs = testimonial
   </script>
 
   <script>
+    import { validateOptionalPhone } from '~/utils/phone-validation';
+
     (function () {
       function serializeForm(form: HTMLFormElement): Record<string, string> {
         const data: Record<string, string> = {};
@@ -417,7 +421,7 @@ const testimonialParagraphs = testimonial
         const backButton = backBtn;
 
         const steps = Array.from(formEl.querySelectorAll<HTMLElement>('[data-hcf-step]'));
-        const dots = Array.from(formEl.querySelectorAll<HTMLElement>('[data-hcf-step-dot]'));
+        const dots = Array.from(formEl.querySelectorAll<HTMLButtonElement>('[data-hcf-step-dot]'));
         const lines = Array.from(formEl.querySelectorAll<HTMLElement>('[data-hcf-step-line]'));
         let currentStep = 0;
 
@@ -442,12 +446,16 @@ const testimonialParagraphs = testimonial
 
           dots.forEach((dot, dotIndex) => {
             const isActive = dotIndex <= currentStep;
+            const canGoBack = dotIndex < currentStep;
             dot.classList.toggle('border-gray-900', isActive);
             dot.classList.toggle('bg-gray-900', isActive);
             dot.classList.toggle('text-white', isActive);
             dot.classList.toggle('border-gray-200', !isActive);
             dot.classList.toggle('bg-white', !isActive);
             dot.classList.toggle('text-gray-400', !isActive);
+            dot.classList.toggle('cursor-pointer', canGoBack);
+            dot.disabled = dotIndex > currentStep;
+            dot.setAttribute('aria-current', dotIndex === currentStep ? 'step' : 'false');
           });
 
           lines.forEach((line, lineIndex) => {
@@ -464,37 +472,80 @@ const testimonialParagraphs = testimonial
           verification?.classList.toggle('flex', isLast);
         }
 
-        function validateStep(): boolean {
-          const step = steps[currentStep];
-          if (!step) return true;
+        function setFieldState(
+          control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+          error: string
+        ) {
+          control.setCustomValidity(error);
+          control.classList.toggle('border-red-300', Boolean(error));
+          control.classList.toggle('focus:ring-red-500', Boolean(error));
+          control.classList.toggle('focus:ring-purple-500', !error);
+        }
 
-          const controls = Array.from(
-            step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
-          );
+        function validatePhonePair(showError: boolean): boolean {
+          const countryCode = formEl.querySelector<HTMLSelectElement>('[name="countryCode"]');
+          const phone = formEl.querySelector<HTMLInputElement>('[name="phone"]');
+          if (!countryCode || !phone) return true;
 
-          for (const control of controls) {
-            const isRequired = control.dataset.required === 'true';
-            control.setCustomValidity('');
+          phone.setCustomValidity('');
+          const result = validateOptionalPhone(countryCode.value, phone.value);
+          const error = result.ok ? '' : (result.error ?? 'Please enter a valid phone number.');
+          setFieldState(phone, error);
 
-            if (isRequired && !control.value.trim()) {
-              control.setCustomValidity('Please fill out this field.');
-              control.reportValidity();
-              control.setCustomValidity('');
-              return false;
-            }
-
-            if ((isRequired || control.value.trim()) && !control.checkValidity()) {
-              control.reportValidity();
-              return false;
-            }
+          if (showError && error) {
+            errEl.textContent = error;
+            errEl.classList.remove('hidden');
           }
 
+          return result.ok;
+        }
+
+        function validateControl(
+          control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+          showError: boolean
+        ): boolean {
+          if (control.type === 'hidden') return true;
+
+          control.setCustomValidity('');
+          const isRequired = control.dataset.required === 'true';
+          let error = '';
+
+          if (isRequired && !control.value.trim()) {
+            error = 'Please fill out this field.';
+          } else if ((isRequired || control.value.trim()) && !control.validity.valid) {
+            error = control.validationMessage || 'Please enter a valid value.';
+          }
+
+          setFieldState(control, error);
+
+          if (showError && error) {
+            errEl.textContent = error;
+            errEl.classList.remove('hidden');
+          }
+
+          if ((control.name === 'phone' || control.name === 'countryCode') && !error) {
+            return validatePhonePair(showError);
+          }
+
+          return !error;
+        }
+
+        function validateGroups(step: HTMLElement, showError: boolean): boolean {
           const groups = Array.from(step.querySelectorAll<HTMLElement>('[data-required-group="true"]'));
+
           for (const group of groups) {
             const checked = group.querySelector<HTMLInputElement>('input[type="checkbox"]:checked');
+            const labels = Array.from(group.querySelectorAll<HTMLLabelElement>('label'));
+            labels.forEach((labelEl) => {
+              labelEl.classList.toggle('border-red-300', !checked);
+              labelEl.classList.toggle('bg-red-50', !checked);
+            });
+
             if (!checked) {
-              errEl.textContent = `Please select at least one option for ${group.dataset.groupLabel ?? 'this question'}.`;
-              errEl.classList.remove('hidden');
+              if (showError) {
+                errEl.textContent = `Please select at least one option for ${group.dataset.groupLabel ?? 'this question'}.`;
+                errEl.classList.remove('hidden');
+              }
               return false;
             }
           }
@@ -502,7 +553,59 @@ const testimonialParagraphs = testimonial
           return true;
         }
 
+        function validateStep(showError = true): boolean {
+          const step = steps[currentStep];
+          if (!step) return true;
+
+          errEl.classList.add('hidden');
+
+          const controls = Array.from(
+            step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
+          );
+
+          for (const control of controls) {
+            if (!validateControl(control, showError)) {
+              if (showError) control.reportValidity();
+              return false;
+            }
+          }
+
+          return validateGroups(step, showError);
+        }
+
         const originalLabel = label.textContent ?? 'Submit';
+
+        formEl
+          .querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea')
+          .forEach((control) => {
+            if (control.type === 'hidden') return;
+
+            const validateNow = () => {
+              const stepIsValid = validateStep(false);
+              const controlIsValid = validateControl(control, true);
+              if (controlIsValid && stepIsValid) errEl.classList.add('hidden');
+            };
+
+            control.addEventListener('input', validateNow);
+            control.addEventListener('change', validateNow);
+            control.addEventListener('blur', validateNow);
+          });
+
+        formEl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((checkbox) => {
+          checkbox.addEventListener('change', () => {
+            const step = steps[currentStep];
+            if (!step) return;
+            const stepIsValid = validateStep(false);
+            const groupIsValid = validateGroups(step, true);
+            if (groupIsValid && stepIsValid) errEl.classList.add('hidden');
+          });
+        });
+
+        dots.forEach((dot, dotIndex) => {
+          dot.addEventListener('click', () => {
+            if (dotIndex < currentStep) showStep(dotIndex);
+          });
+        });
 
         nextButton.addEventListener('click', () => {
           if (!validateStep()) return;
