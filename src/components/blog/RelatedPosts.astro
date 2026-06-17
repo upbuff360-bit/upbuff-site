@@ -2,9 +2,10 @@
 import { APP_BLOG } from 'astrowind:config';
 
 import { getRelatedPosts } from '~/utils/blog';
-import BlogHighlightedPosts from '../widgets/BlogHighlightedPosts.astro';
-import type { Post } from '~/types';
+import { findImage } from '~/utils/images';
 import { getBlogPermalink } from '~/utils/permalinks';
+import PostCard from '~/components/blog/PostCard.astro';
+import type { Post } from '~/types';
 
 export interface Props {
   post: Post;
@@ -12,20 +13,32 @@ export interface Props {
 
 const { post } = Astro.props;
 
-const relatedPosts = post.tags ? await getRelatedPosts(post, 4) : [];
+const relatedPosts = post.tags ? await getRelatedPosts(post, 3) : [];
+
+// Pre-resolve images so the JSX map stays synchronous (same pattern as the blog listing).
+const relatedWithImages = await Promise.all(
+  relatedPosts.map(async (p) => ({ post: p, image: await findImage(p.image) }))
+);
 ---
 
 {
-  APP_BLOG.isRelatedPostsEnabled ? (
-    <BlogHighlightedPosts
-      classes={{
-        container:
-          'pt-0 lg:pt-0 md:pt-0 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
-      }}
-      title="Related Posts"
-      linkText="View All Posts"
-      linkUrl={getBlogPermalink()}
-      postIds={relatedPosts.map((post) => post.id)}
-    />
+  APP_BLOG.isRelatedPostsEnabled && relatedWithImages.length > 0 ? (
+    <div class="not-prose intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+      <div class="flex items-baseline justify-between mb-8 md:mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Related posts</h2>
+        <a
+          href={getBlogPermalink()}
+          class="text-sm text-gray-500 hover:text-primary transition-colors"
+        >
+          View all posts »
+        </a>
+      </div>
+
+      <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {relatedWithImages.map(({ post, image }) => (
+          <PostCard post={post} image={image} />
+        ))}
+      </div>
+    </div>
   ) : null
 }

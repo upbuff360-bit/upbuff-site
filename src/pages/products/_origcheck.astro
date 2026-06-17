@@ -13,43 +13,28 @@ import ToolsMarquee from '~/components/widgets/ToolsMarquee.astro';
 import TestimonialsGrid from '~/components/widgets/TestimonialsGrid.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
-import PostCard from '~/components/blog/PostCard.astro';
-import { findPostsByIds } from '~/utils/blog';
-import { findImage } from '~/utils/images';
 
 import { headerData } from '~/navigation';
 
-// PO-to-SO content cluster — same posts surfaced as the blog "Latest articles" cards.
-const clusterPostIds = [
-  'how-to-automate-sales-order-creation-sap-business-one',
-  'touchless-order-processing-sap-distributors',
-  'ai-po-to-so-automation-vs-manual-vs-edi',
-  'po-to-so-automation-sap-s4hana',
-];
-const clusterPosts = await findPostsByIds(clusterPostIds);
-const clusterWithImages = await Promise.all(
-  clusterPosts.map(async (post) => ({ post, image: await findImage(post.image) }))
-);
-
 const metadata = {
-  title: 'SAP Sales Order Automation: AI PO-to-SO & Invoices | UpBuff',
+  title: 'Intelligent PO-to-SO & Invoice Automation for SAP | UpBuff',
   description:
-    'Automate purchase order to sales order conversion in SAP S/4HANA & Business One. UpBuff AI reads email POs, validates master data & posts Sales Orders with human review. Book a demo.',
-  canonical: 'https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation',
+    'Automate SAP S/4HANA and SAP Business One with UpBuff AI Automation. Intelligent PO-to-SO conversion, AI vendor invoice processing, real-time master data validation, exception intelligence, and Chat with ERP — with full human-in-the-loop control and audit transparency.',
+  canonical: 'https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation',
-    title: 'AI PO-to-SO & Invoice Automation for SAP S/4HANA & Business One',
+    title: 'Intelligent PO-to-SO & Invoice Automation for SAP | UpBuff',
     description:
-      'Turn customer POs into SAP Sales Orders automatically. AI PO-to-SO conversion, vendor invoice processing, real-time validation, and Chat with ERP — with human-in-the-loop control.',
+      'Intelligent PO-to-SO & invoice automation for SAP S/4HANA and SAP Business One. Eliminate manual ERP data entry with Generative AI, intelligent validation, and Chat with ERP.',
     image: 'https://www.upbuff.com/images/intelligent-po-to-so-invoice-automation-og.jpg',
   },
   twitter: {
     cardType: 'summary_large_image',
-    title: 'SAP Sales Order Automation — AI PO-to-SO & Invoices | UpBuff',
+    title: 'Intelligent PO-to-SO & Invoice Automation | UpBuff',
     description:
-      'AI agents that read POs, post SAP sales orders, process vendor invoices, and answer ERP questions — natively integrated with SAP S/4HANA and SAP Business One.',
+      'AI agents that read POs, post sales orders, process vendor invoices, and answer ERP questions — natively integrated with SAP S/4HANA and SAP Business One.',
   },
 };
 ---
@@ -59,7 +44,7 @@ const metadata = {
     <meta name="author" content="UpBuff Technologies" />
     <meta
       name="keywords"
-      content="SAP Sales Order Automation, Purchase Order to Sales Order Conversion, PO to SO Automation, automated purchase order processing, email to Sales Order automation, AI purchase order data extraction, automate sales order creation in SAP, SAP Business One Sales Order Automation, Automated Sales Order Entry, Touchless Order Processing, intelligent document processing, master data validation, AI Invoice Processing SAP, Generative AI for SAP, Chat with ERP"
+      content="AI Automation for SAP, SAP S/4HANA Automation, SAP Business One Automation, AI PO to SO Automation, AI Invoice Processing, ERP Workflow Automation, Generative AI for SAP, AI ERP Integration, Warehouse Automation SAP, AI Analytics Dashboard, Chat with ERP"
     />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -89,28 +74,7 @@ const metadata = {
         { "@type": "Question", "name": "Does it work with SAP S/4HANA and SAP Business One?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The AI automation platform integrates with both SAP S/4HANA and SAP Business One using secure ERP APIs, keeping SAP as the authoritative system of record." } },
         { "@type": "Question", "name": "Is human control maintained?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. A human-in-the-loop confidence model lets teams start with manual approvals and gradually move to fully automated posting as confidence in the AI workflows grows. Exceptions are always routed for manual review." } },
         { "@type": "Question", "name": "What is Chat with ERP?", "acceptedAnswer": { "@type": "Answer", "text": "Chat with ERP lets business users interact with SAP using natural language to generate analytical reports, inventory insights, sales analysis, and operational KPIs instantly." } },
-        { "@type": "Question", "name": "Can AI read PDF or email purchase orders and post them to SAP automatically?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. UpBuff AI agents capture customer Purchase Orders from email attachments, PDFs, and portals using document understanding — no fixed templates — then validate and post them as Sales Orders in SAP S/4HANA or SAP Business One automatically." } },
-        { "@type": "Question", "name": "What is touchless order processing?", "acceptedAnswer": { "@type": "Answer", "text": "Touchless order processing means a customer Purchase Order flows from intake to a posted SAP Sales Order with no manual keying. AI extracts, validates, and posts the order, routing only exceptions to a human — cutting order entry time from hours to minutes." } },
-        { "@type": "Question", "name": "Is it secure and auditable?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every AI action, validation, approval, and ERP posting is encrypted, traceable, and securely logged for operational compliance and full audit transparency." } },
-        { "@type": "Question", "name": "How does AI extract data from a purchase order email?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff monitors a designated corporate email inbox. When a customer sends a purchase order — in the email body or as an attached document — an AI extraction agent intercepts it and reads the critical transaction data, including customer and vendor information, item codes, quantities, and pricing. It then pre-populates a Sales Order form automatically, converting unstructured customer details into structured ERP data." } },
-        { "@type": "Question", "name": "Can it read purchase orders from both the email body and attachments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The AI extraction agent reads purchase orders sent either as plain text in the email body or as attached documents such as PDFs and scanned files, using intelligent document processing with no fixed templates required." } },
-        { "@type": "Question", "name": "How do I verify the data the AI extracted from a PO?", "acceptedAnswer": { "@type": "Answer", "text": "Review happens in a split-screen workspace. The left panel shows the editable Sales Order form; the right panel shows the original purchase order in an interactive document viewer. Selecting or hovering over a form field instantly highlights the exact region on the source document where that value was extracted, so users can verify every field without searching or scrolling." } },
-        { "@type": "Question", "name": "How does the system validate a PO against master data?", "acceptedAnswer": { "@type": "Answer", "text": "Extracted values are automatically validated against your ERP master data. Conflicts such as mismatched customer names, conflicting item codes, or unit-price variances are flagged immediately. Users resolve them on the fly with searchable auto-suggestions and item-lookup dropdowns, with the original AI extraction retained as ghost text for reference." } },
-        { "@type": "Question", "name": "How are approved sales orders posted and sent to the customer?", "acceptedAnswer": { "@type": "Answer", "text": "Once validated, a user can approve the order or route it to an approver through the business workflow. The approved order is posted with a single click to generate the Sales Order, the generated order number is stored in the application, the finalized order can be sent directly to the customer, and every transaction log is preserved for audit." } }
-      ]
-    })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": "How to automate purchase order to sales order conversion with UpBuff AI",
-      "description": "Convert customer purchase orders received by email into posted SAP Sales Orders using AI extraction, source-linked verification, master-data validation, and one-click posting.",
-      "totalTime": "PT2M",
-      "step": [
-        { "@type": "HowToStep", "position": 1, "name": "Capture the PO from email", "text": "UpBuff monitors a designated corporate email inbox and an AI extraction agent intercepts every incoming customer purchase order, whether it arrives in the email body or as an attachment.", "url": "https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation#capture" },
-        { "@type": "HowToStep", "position": 2, "name": "Extract data and pre-fill the Sales Order", "text": "The agent extracts customer and vendor information, item codes, quantities, and pricing, then automatically pre-populates a web-based Sales Order form with the structured data.", "url": "https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation#extract" },
-        { "@type": "HowToStep", "position": 3, "name": "Verify with split-screen source highlighting", "text": "Reviewers compare the editable Sales Order form against the original purchase order in a side-by-side viewer. Hovering a field highlights the exact region it was extracted from, enabling fast, accurate verification.", "url": "https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation#verify" },
-        { "@type": "HowToStep", "position": 4, "name": "Validate against master data", "text": "The system validates extracted values against ERP master data and flags mismatched customer names, item codes, or unit-price variances. Users resolve them with auto-suggestions and item lookups while the original extraction stays as ghost text.", "url": "https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation#validate" },
-        { "@type": "HowToStep", "position": 5, "name": "Approve, post, and send", "text": "Approve the order or route it to an approver, then post it with a single click to generate the Sales Order. The order number is stored, the order can be sent to the customer, and all logs are kept for audit.", "url": "https://www.upbuff.com/products/intelligent-po-to-so-invoice-automation#post" }
+        { "@type": "Question", "name": "Is it secure and auditable?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every AI action, validation, approval, and ERP posting is encrypted, traceable, and securely logged for operational compliance and full audit transparency." } }
       ]
     })} />
   </Fragment>
@@ -120,7 +84,7 @@ const metadata = {
   <!-- ── 1. HERO ───────────────────────────────────────────────── -->
   <HeroOrbital
     tagline="Intelligent PO-to-SO and Invoice Automation"
-    title="Automate SAP Sales Orders & Invoices with AI"
+    title="Automate Your SAP Operations with AI"
     subtitle="UpBuff AI Automation delivers intelligent PO-to-SO and invoice automation for SAP S/4HANA and SAP Business One. AI agents eliminate manual data entry, accelerate order processing, reduce errors, and improve decision-making using Generative AI — while keeping complete human control and audit transparency."
     actions={[
       { text: 'Request Demo',       href: '/contact', variant: 'primary' },
@@ -245,19 +209,19 @@ const metadata = {
   <!-- ── 6. HOW IT WORKS (Bento) ───────────────────────────────── -->
   <FeaturesBento
     tagline="How It Works"
-    title="How SAP Business One sales order automation works"
-    subtitle="From email capture to audited ERP posting, see how AI-driven SAP Business One sales order automation works — with the same flow extending to SAP S/4HANA. AI handles the repetitive steps while your team controls every exception and approval."
+    title="How the AI Automation works"
+    subtitle="From document capture to audited ERP posting — AI handles the repetitive flow while your team stays in control of every exception and approval."
     items={[
       {
         wide: true,
-        title: '1. Capture from email & understand',
-        description: 'UpBuff monitors a designated corporate email inbox and customer portals, intercepting every incoming purchase order — whether it arrives in the email body or as an attached PDF. Using intelligent document processing with no fixed templates, the AI extraction agent reads customer and vendor details, item codes, quantities, and pricing to automate purchase order to sales order conversion the moment a PO lands.',
+        title: '1. Capture & Understand',
+        description: 'AI agents monitor emails, portals, and uploaded documents to extract business data intelligently — reading customer Purchase Orders and vendor invoices with document understanding, no templates or manual keying required.',
         image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6"><div class="flex items-center gap-4"><div class="flex flex-col gap-2"><div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-gray-100"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><span class="text-[10px] text-gray-500 text-center">Email</span></div><div class="flex flex-col gap-2"><div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-gray-100"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg></div><span class="text-[10px] text-gray-500 text-center">PO / Invoice</span></div><div class="w-10 h-1 bg-gray-200 rounded overflow-hidden relative self-center mb-4"><div class="absolute inset-0 bg-blue-400 animate-[flowX_1.6s_linear_infinite]"></div></div><div class="flex flex-col gap-2"><div class="w-16 h-16 rounded-2xl bg-gray-900 flex items-center justify-center shadow-lg animate-pulse"><span class="text-xs font-bold text-white">AI</span></div><span class="text-[10px] text-gray-500 text-center">Understands</span></div></div></div>',
       },
       {
         wide: true,
-        title: '2. Verify side-by-side & validate',
-        description: 'Extracted data pre-populates an editable Sales Order form shown side by side with the original PO in a split-screen workspace. Hovering any field highlights the exact spot it was extracted from on the source document, while real-time master data validation flags mismatched customer names, item codes, and unit-price variances — resolved instantly with searchable auto-suggestions and item lookups, with the original AI extraction kept as ghost text for reference.',
+        title: '2. Validate & Verify',
+        description: 'Extracted data is cross-checked against SAP master data, pricing rules, tax structures, and inventory availability in real time — catching mismatches, missing fields, and duplicates before anything reaches the ERP.',
         image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-50 to-blue-100 p-6"><div class="bg-white rounded-2xl shadow-lg border border-gray-100 w-60 p-4 flex flex-col gap-2.5"><div class="flex items-center justify-between text-xs"><span class="text-gray-600">Master data</span><span class="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center animate-[fadeIn_0.5s_ease-out]"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="flex items-center justify-between text-xs"><span class="text-gray-600">Pricing &amp; tax</span><span class="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center animate-[fadeIn_0.7s_ease-out]"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="flex items-center justify-between text-xs"><span class="text-gray-600">Inventory</span><span class="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center animate-[fadeIn_0.9s_ease-out]"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></div><div class="flex items-center justify-between text-xs"><span class="text-gray-600">Duplicate check</span><span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-[10px] font-medium animate-pulse">Review</span></div></div></div>',
       },
       {
@@ -350,7 +314,7 @@ const metadata = {
       {
         icon: 'tabler:keyboard-off',
         title: 'Reduce Manual ERP Data Entry',
-        description: 'Replace manual keying with automated sales order entry — AI agents capture POs and invoices so your team is freed for higher-value work.',
+        description: 'Let AI agents handle repetitive keying of POs and invoices, freeing your team for higher-value work.',
       },
       {
         icon: 'tabler:rocket',
@@ -487,32 +451,8 @@ const metadata = {
         answer: 'Chat with ERP lets business users interact with SAP using natural language. You can generate analytical reports, inventory insights, sales analysis, and operational KPIs instantly — without building queries or reports manually.',
       },
       {
-        question: 'Can AI read PDF or email purchase orders and post them to SAP automatically?',
-        answer: 'Yes. UpBuff AI agents capture customer Purchase Orders from email attachments, PDFs, and portals using document understanding — no fixed templates — then validate and post them as Sales Orders in SAP S/4HANA or SAP Business One automatically.',
-      },
-      {
-        question: 'What is touchless order processing?',
-        answer: 'Touchless order processing means a customer Purchase Order flows from intake to a posted SAP Sales Order with no manual keying. AI extracts, validates, and posts the order, routing only exceptions to a human — cutting order entry time from hours to minutes.',
-      },
-      {
         question: 'Is it secure and auditable?',
         answer: 'Yes. Every AI action, validation, approval, and ERP posting is encrypted, traceable, and securely logged for operational compliance and full audit transparency.',
-      },
-      {
-        question: 'How does AI extract data from a purchase order email?',
-        answer: 'UpBuff monitors a designated corporate email inbox. When a customer sends a purchase order — in the email body or as an attached document — an AI extraction agent intercepts it and reads the critical transaction data: customer and vendor information, item codes, quantities, and pricing. It then pre-populates a Sales Order form automatically, turning unstructured customer details into structured ERP data.',
-      },
-      {
-        question: 'How do I verify the data the AI extracted from a PO?',
-        answer: 'Review happens in a split-screen workspace. The left panel shows the editable Sales Order form; the right panel shows the original purchase order in an interactive document viewer. Selecting or hovering over a form field instantly highlights the exact region on the source document where that value was extracted — so you can verify every field without searching or scrolling.',
-      },
-      {
-        question: 'What happens when extracted data does not match master data?',
-        answer: 'Extracted values are validated against your ERP master data, and conflicts such as mismatched customer names, conflicting item codes, or unit-price variances are flagged immediately. You resolve them on the fly with searchable auto-suggestions and item-lookup dropdowns, with the original AI extraction retained as ghost text for reference.',
-      },
-      {
-        question: 'How are approved sales orders posted and sent to the customer?',
-        answer: 'Once validated, a user approves the order or routes it to an approver through the business workflow. The approved order is posted with a single click to generate the Sales Order, the order number is stored in the application, the finalized order can be sent directly to the customer, and every transaction log is preserved for audit.',
       },
     ]}
   />
@@ -536,30 +476,6 @@ const metadata = {
       },
     ]}
   />
-
-  <!-- ── 11b. LEARN MORE / RESOURCES (same cards as blog "Latest articles") ── -->
-  {
-    clusterWithImages.length > 0 && (
-      <section class="not-prose bg-white">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-          <div class="flex items-baseline justify-between mb-8 md:mb-10">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
-              Resources on SAP sales order automation
-            </h2>
-            <a href="/blog" class="text-sm text-gray-500 hover:text-primary transition-colors">
-              View all posts »
-            </a>
-          </div>
-
-          <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {clusterWithImages.map(({ post, image }) => (
-              <PostCard post={post} image={image} showCategory={false} showMeta={false} />
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
 
   <!-- ── 12. CTA BANNER ───────────────────────────────────────── -->
   <CtaBanner

@@ -11,9 +11,11 @@ export interface Props {
   image: ImageMetadata | string | null | undefined;
   /** Whether to show the category pill above the title. Default: true. */
   showCategory?: boolean;
+  /** Whether to show the author / date / reading-time meta row. Default: true. */
+  showMeta?: boolean;
 }
 
-const { post, image, showCategory = true } = Astro.props;
+const { post, image, showCategory = true, showMeta = true } = Astro.props;
 const link = getPermalink(post.permalink, 'post');
 const hasCategory = showCategory && !!post.category;
 ---
@@ -65,33 +67,31 @@ const hasCategory = showCategory && !!post.category;
     )
   }
 
-  <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-gray-500 mt-auto">
-    {
-      post.author &&
-        (post.authorLinkedIn ? (
-          <a
-            href={post.authorLinkedIn}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-gray-700 hover:text-primary transition-colors"
-          >
-            {post.author}
-          </a>
-        ) : (
-          <span class="font-medium text-gray-700">{post.author}</span>
-        ))
-    }
-    {post.author && <span class="text-gray-300">·</span>}
-    <time datetime={post.publishDate.toISOString()}>
-      {getFormattedDate(post.publishDate)}
-    </time>
-    {
-      post.readingTime && (
-        <>
-          <span class="text-gray-300">·</span>
-          <span>{post.readingTime} min read</span>
-        </>
-      )
-    }
-  </div>
+  {
+    showMeta && (
+      <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-gray-500 mt-auto">
+        {post.author &&
+          (post.authorLinkedIn ? (
+            <a
+              href={post.authorLinkedIn}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-gray-700 hover:text-primary transition-colors"
+            >
+              {post.author}
+            </a>
+          ) : (
+            <span class="font-medium text-gray-700">{post.author}</span>
+          ))}
+        {post.author && <span class="text-gray-300">·</span>}
+        <time datetime={post.publishDate.toISOString()}>{getFormattedDate(post.publishDate)}</time>
+        {post.readingTime && (
+          <>
+            <span class="text-gray-300">·</span>
+            <span>{post.readingTime} min read</span>
+          </>
+        )}
+      </div>
+    )
+  }
 </article>
