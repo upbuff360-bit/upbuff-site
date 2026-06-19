@@ -97,7 +97,7 @@ export const headerData = {
       links: [
         {
           text: 'Overview',
-          href: getPermalink('/integrations/integrations'),
+          href: getPermalink('/integrations/overview'),
           icon: 'tabler:plug-connected',
           description: 'All ERP and platform integrations at a glance',
         },
