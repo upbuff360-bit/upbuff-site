@@ -1,0 +1,272 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Header from '~/components/widgets/Header.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
+
+import { headerData } from '~/navigation';
+
+const products = [
+  {
+    title: 'Intelligent PO-to-SO & Invoice Automation',
+    href: '/products/intelligent-po-to-so-invoice-automation',
+    description:
+      'AI reads customer POs and vendor invoices, validates them against SAP in real time, and posts Sales Orders hands-free — with human-in-the-loop control.',
+    image: '/uploads/ERP-Integrated-Field-Service-Management.png',
+    alt: 'Intelligent PO-to-SO and Invoice Automation for SAP — AI-powered ERP automation',
+  },
+  {
+    title: 'ERP-Integrated CRM',
+    href: '/products/erp-integrated-crm',
+    description:
+      'Sync opportunities, quotations, pricing, and customer master data with SAP. Field reps create ERP-governed orders on mobile, online or offline.',
+    image: '/uploads/modular-crm-software-for-small-and-mid-sized-businesses.png',
+    alt: 'ERP-Integrated CRM for SAP Business One and enterprise ERP',
+  },
+  {
+    title: 'ERP-Integrated Field Service Management',
+    href: '/products/erp-integrated-fsm',
+    description:
+      'Work orders, assets, warranties, and technician workflows with mobile execution connected to SAP service and financial modules.',
+    image: '/uploads/ERP-Integrated-Field-Service-Management.png',
+    alt: 'ERP-Integrated Field Service Management for SAP',
+  },
+  {
+    title: 'Warehouse & Inventory',
+    href: '/products/erp-integrated-warehouse-inventory',
+    description:
+      'Mobile inventory audits, goods receipt, transfers, and batch tracking with barcode/QR scanning and real-time SAP synchronization.',
+    image: '/uploads/SAP-Integrated-Warehouse-Inventory-Management.png',
+    alt: 'SAP Integrated Warehouse Inventory Management',
+  },
+  {
+    title: 'Sales & Distribution Execution',
+    href: '/products/erp-integrated-sales-distribution',
+    description:
+      'Order booking, van sales POS, distributor management, and secondary sales visibility — captured on mobile and synced instantly to ERP.',
+    image: '/uploads/SAP-Businessone-Integrated-Sales-Distribution-excecution.png',
+    alt: 'SAP Business One Integrated Sales Distribution execution',
+  },
+  {
+    title: 'Manufacturing & Shopfloor',
+    href: '/products/erp-integrated-manufacturing-shopfloor',
+    description:
+      'Capture production completions, downtime, quality checks, and material consumption in real time — feeding directly into ERP.',
+    image: '/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png',
+    alt: 'Epicor Integrated Manufacturing Shopfloor',
+  },
+  {
+    title: 'Enterprise & Partner Portals',
+    href: '/products/enterprise-partner-portals',
+    description:
+      'Branded self-service portals for suppliers, dealers, and partners — connected to live ERP master data and transactional workflows.',
+    image: '/uploads/Oracle-integrated-Enterprise-Partner-Portals.png',
+    alt: 'Oracle integrated Enterprise Partner Portals',
+  },
+  {
+    title: 'ERP-Integrated Product Configurator',
+    href: '/products/erp-integrated-product-configurator',
+    description:
+      'Configure products, pricing, and variants in real time with ERP-validated pricing, BOMs, and availability — eliminating quote errors.',
+    image: '/uploads/ERP-integrated-product-configurator.png',
+    alt: 'ERP Integrated Product Configurator for SAP and enterprise ERP systems',
+  },
+  {
+    title: 'Asset Tracking System',
+    href: '/products/asset-tracking-system',
+    description:
+      'Real-time asset visibility, IoT-enabled preventive maintenance, and barcode/QR/RFID lifecycle management integrated with SAP, Oracle, and Epicor.',
+    image: '/uploads/manufacturing-asset-tracking.png',
+    alt: 'UpBuff Asset Tracking System — IoT preventive maintenance and barcode QR RFID lifecycle management',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What is the UpBuff ERP Execution Layer?',
+    answer:
+      'The UpBuff ERP Execution Layer is an AI-powered platform of nine ERP-integrated products that extend SAP Business One, SAP S/4HANA, Oracle, and Epicor into real-time sales, field service, warehouse, and manufacturing execution — without modifying the ERP core. ERP remains the system of record at every step.',
+  },
+  {
+    question: 'What products does UpBuff offer?',
+    answer:
+      'UpBuff offers nine AI-powered, ERP-integrated products: Intelligent PO-to-SO & Invoice Automation, ERP-Integrated CRM, ERP-Integrated Field Service Management, Warehouse & Inventory, Sales & Distribution Execution, Manufacturing & Shopfloor, Enterprise & Partner Portals, ERP-Integrated Product Configurator, and an Asset Tracking System.',
+  },
+  {
+    question: 'Which ERP systems does UpBuff integrate with?',
+    answer:
+      'UpBuff integrates with SAP Business One, SAP S/4HANA, SAP ECC, Oracle ERP, Epicor, and custom ERP systems using official, API-first methods — SAP Service Layer, OData, BAPI/RFC, and REST — with no direct database writes.',
+  },
+  {
+    question: 'Does UpBuff modify the SAP or ERP core?',
+    answer:
+      'No. Every product connects through official ERP APIs and runs as an execution layer outside the digital core, keeping deployments Clean Core compliant and protecting your upgrade path. SAP or your ERP remains the authoritative system of record.',
+  },
+  {
+    question: 'How is UpBuff different from standalone CRM or field service apps?',
+    answer:
+      'Unlike standalone tools that run separately and need manual ERP sync, every UpBuff product is built ERP-first — ensuring real-time synchronization, data integrity, and compliance across SAP, Oracle, and Epicor workflows at every transaction.',
+  },
+  {
+    question: 'Which industries does UpBuff serve?',
+    answer:
+      'UpBuff supports SAP-driven industries including manufacturing, FMCG and distribution, retail and e-commerce, pharmaceuticals, logistics and warehousing, and multi-country enterprises with regional e-invoicing compliance.',
+  },
+];
+
+const metadata = {
+  title: 'AI-Powered ERP Products for SAP, Oracle & Epicor | UpBuff',
+  description:
+    "Explore UpBuff's 9 AI-powered, ERP-integrated products — PO-to-SO automation, CRM, field service, warehouse, and more — extending SAP Business One, S/4HANA, Oracle & Epicor without modifying ERP core.",
+  canonical: 'https://www.upbuff.com/products',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/products',
+    title: 'AI-Powered ERP Products for SAP, Oracle & Epicor | UpBuff',
+    description:
+      'The UpBuff ERP Execution Layer — 9 AI-powered products that extend SAP, Oracle, and Epicor into real-time frontline execution without modifying ERP core.',
+  },
+};
+---
+
+<Layout metadata={metadata}>
+  <Fragment slot="head">
+    <meta
+      name="keywords"
+      content="ERP execution platform, ERP execution layer, AI ERP products, ERP-integrated products, SAP Business One add-ons, SAP S/4HANA, Oracle ERP, Epicor, AI ERP automation, mobile ERP, Clean Core, ERP integration"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Products', item: 'https://www.upbuff.com/products' },
+      ],
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'UpBuff Products — AI-Powered ERP Execution Layer',
+      url: 'https://www.upbuff.com/products',
+      description:
+        'AI-powered, ERP-integrated products that extend SAP Business One, SAP S/4HANA, Oracle, and Epicor into frontline enterprise operations without modifying ERP core.',
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: products.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: p.title,
+          url: `https://www.upbuff.com${p.href}`,
+          description: p.description,
+        })),
+      },
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    })} />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <Fragment slot="header">
+    <Header
+      {...headerData}
+      theme="white"
+      actions={[{ variant: 'primary', text: 'Request Demo', href: '/request-demo' }]}
+      isSticky
+    />
+  </Fragment>
+
+  <!-- ── 1. HERO (H1 + definitional intro for SEO & LLMs) ──────── -->
+  <HeroText
+    tagline="Our Products"
+    title="AI-Powered, ERP-Integrated Products for SAP, Oracle &amp; Epicor"
+    subtitle="UpBuff is an AI-powered ERP execution platform: nine ERP-integrated products that extend SAP Business One, SAP S/4HANA, Oracle, and Epicor into real-time sales, field service, warehouse, and manufacturing execution — without modifying ERP core. ERP stays the system of record; AI agents handle the repetitive work."
+    callToAction={{ text: 'Request a Demo', href: '/request-demo', variant: 'primary' }}
+    callToAction2={{ text: 'Talk to Our Experts', href: '/contact', variant: 'secondary' }}
+  />
+
+  <!-- ── 2. PRODUCT GRID (linked cards, existing component) ────── -->
+  <FeaturesCarousel
+    id="products"
+    tagline="ERP Execution Layer"
+    title="Nine AI-powered, ERP-integrated products"
+    subtitle="Each product extends SAP, Oracle, and Epicor into a specific frontline operation — using AI agents and mobile-first execution to automate repetitive ERP work without modifying the core."
+    items={products.map((p) => ({
+      title: p.title,
+      href: p.href,
+      description: p.description,
+      image: `<img src="${p.image}" class="w-full h-full object-contain" alt="${p.alt}" loading="lazy" />`,
+    }))}
+  />
+
+  <!-- ── 3. WHY / PLATFORM PILLARS (keyword-rich, crawlable) ───── -->
+  <FeaturesGrid
+    tagline="Why UpBuff"
+    title="One ERP execution layer across SAP, Oracle &amp; Epicor"
+    subtitle="Every UpBuff product is built ERP-first — extending your system of record with AI, mobility, and real-time validation, while preserving governance and your upgrade path."
+    items={[
+      {
+        icon: 'tabler:database',
+        title: 'ERP-first architecture',
+        description:
+          'Built natively around SAP Business One, SAP S/4HANA, Oracle ERP, and Epicor, with real-time sync via Service Layer, OData, and BAPI/RFC.',
+      },
+      {
+        icon: 'tabler:robot',
+        title: 'AI agents & automation',
+        description:
+          'Generative AI reads documents, validates data, and acts on the ERP — turning unstructured POs and invoices into clean ERP transactions.',
+      },
+      {
+        icon: 'tabler:device-mobile',
+        title: 'Mobile-first execution',
+        description:
+          'Offline-capable mobile apps for sales, field service, warehouse, and shopfloor teams — connected directly to ERP master data.',
+      },
+      {
+        icon: 'tabler:shield-check',
+        title: 'Clean Core, no core modification',
+        description:
+          'API-first integration that keeps the ERP core standard, Clean Core compliant, and upgrade-safe — ERP stays the system of record.',
+      },
+      {
+        icon: 'tabler:checkup-list',
+        title: 'Real-time master-data validation',
+        description:
+          'Every transaction is cross-checked against master data, pricing, tax, and inventory in real time — catching errors before they reach the ERP.',
+      },
+      {
+        icon: 'tabler:lock',
+        title: 'Audit-ready & secure',
+        description:
+          'Role-based access control, approval workflows, and full audit logs across every execution layer, with regional e-invoicing compliance.',
+      },
+    ]}
+  />
+
+  <!-- ── 4. FAQ (answer-engine / LLM optimized) ───────────────── -->
+  <FaqAccordion
+    tagline="FAQs"
+    title="ERP execution platform — questions answered"
+    items={faqs}
+  />
+
+  <!-- ── 5. CTA ───────────────────────────────────────────────── -->
+  <CtaBanner
+    title="Not sure which product fits your ERP landscape?"
+    subtitle="Talk to our team about extending SAP, Oracle, or Epicor with AI-driven execution — without modifying ERP core."
+    action={{ text: 'Schedule a Consultation', href: '/contact', variant: 'primary' }}
+    note="No ERP core modifications required"
+  />
+</Layout>

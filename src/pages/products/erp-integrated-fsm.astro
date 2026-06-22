@@ -15,23 +15,36 @@ import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
 
 import { headerData } from '~/navigation';
+import PostCard from '~/components/blog/PostCard.astro';
+import { findPostsByIds } from '~/utils/blog';
+import { findImage } from '~/utils/images';
+
+const clusterPostIds = [
+  'field-service-management-sap-business-one',
+  'sap-field-service-management-close-service-tickets-on-site',
+  'sap-business-one-mobile-field-teams',
+];
+const clusterPosts = await findPostsByIds(clusterPostIds);
+const clusterWithImages = await Promise.all(
+  clusterPosts.map(async (post) => ({ post, image: await findImage(post.image) }))
+);
 
 const metadata = {
-  title: 'ERP-Integrated Field Service Management for SAP | UpBuff FSM Platform',
+  title: 'SAP Business One Field Service Management App | UpBuff',
   description:
-    'Extend SAP S/4HANA, ECC, and SAP Business One to field technicians with UpBuff ERP-Integrated FSM. Real-time work orders, mobile execution, offline support, and secure SAP integration without core customization.',
+    'Field service management for SAP Business One & S/4HANA — a mobile field service app with real-time work orders, offline execution, and secure SAP sync.',
   canonical: 'https://www.upbuff.com/products/erp-integrated-fsm/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/products/erp-integrated-field-service-management',
-    title: 'ERP-Integrated Field Service Management for SAP | UpBuff',
+    title: 'SAP Business One Field Service Management App | UpBuff',
     description: 'Enable real-time field service execution integrated with SAP S/4HANA, ECC, and SAP Business One. Mobile-first, offline-capable, and enterprise-ready.',
     image: 'https://www.upbuff.com/images/erp-fsm-og.jpg',
   },
   twitter: {
     cardType: 'summary_large_image',
-    title: 'ERP-Integrated Field Service Management | UpBuff FSM',
+    title: 'SAP Business One Field Service App | UpBuff',
     description: 'Connect SAP with field technicians for real-time work order execution — without modifying ERP core.',
   },
 };
@@ -68,8 +81,8 @@ const metadata = {
   <!-- ── 1. HERO ───────────────────────────────────────────────── -->
   <HeroOrbital
     tagline="ERP-Integrated Field Service Management"
-    title="Extend SAP to the Field. Execute in Real Time."
-    subtitle="UpBuff ERP-Integrated Field Service Management connects SAP with field technicians, service teams, and on-site operations — enabling real-time service execution without modifying core ERP. Transform SAP from a system of record into a system of action at the edge."
+    title="Field Service Management for SAP Business One"
+    subtitle="UpBuff is a field service management app for SAP Business One, SAP S/4HANA, and ECC — connecting technicians and service teams with real-time work orders, mobile execution, and offline support, without modifying ERP core."
     actions={[
       { text: 'Request Demo',       href: '/contact', variant: 'primary' },
       { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
@@ -121,7 +134,7 @@ const metadata = {
   <!-- ── 4. FEATURES GRID ─────────────────────────────────────── -->
   <FeaturesGrid
     tagline="Solution"
-    title="Why Choose UpBuff ERP-Integrated FSM?"
+    title="Why choose UpBuff field service management for SAP Business One?"
     subtitle="Each capability is purpose-built to extend SAP S/4HANA, ECC, and SAP Business One to field operations — without modifying ERP core."
     items={[
       {
@@ -184,7 +197,7 @@ const metadata = {
   <!-- ── 6. USE CASES (Bento) ──────────────────────────────────── -->
   <FeaturesBento
     tagline="Use Cases"
-    title="How SAP enterprises use UpBuff FSM"
+    title="How SAP teams use field service management for SAP Business One"
     subtitle="Discover how ERP-Integrated FSM transforms field execution across industries — from industrial maintenance to medical device servicing."
     items={[
       {
@@ -378,6 +391,29 @@ const metadata = {
   />
 
   <!-- ── 12. CTA BANNER ───────────────────────────────────────── -->
+  <!-- ── RESOURCES (related posts) ─────────────────────────────── -->
+  {
+    clusterWithImages.length > 0 && (
+      <section class="not-prose bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+          <div class="flex items-baseline justify-between mb-8 md:mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+              Resources on field service management for SAP
+            </h2>
+            <a href="/blog" class="text-sm text-gray-500 hover:text-primary transition-colors">
+              View all posts »
+            </a>
+          </div>
+          <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {clusterWithImages.map(({ post, image }) => (
+              <PostCard post={post} image={image} showCategory={false} showMeta={false} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <CtaBanner
     title="Connect your SAP to the field — in real time"
     subtitle="Use UpBuff FSM to extend SAP S/4HANA, ECC, and Business One to field technicians without risky core modifications or expensive consulting projects."

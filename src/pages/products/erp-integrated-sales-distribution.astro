@@ -16,24 +16,37 @@ import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
 
 import { headerData } from '~/navigation';
+import PostCard from '~/components/blog/PostCard.astro';
+import { findPostsByIds } from '~/utils/blog';
+import { findImage } from '~/utils/images';
+
+const clusterPostIds = [
+  'van-sales-distributor-management-sap-business-one',
+  'touchless-order-processing-sap-distributors',
+  'how-to-automate-sales-order-creation-sap-business-one',
+];
+const clusterPosts = await findPostsByIds(clusterPostIds);
+const clusterWithImages = await Promise.all(
+  clusterPosts.map(async (post) => ({ post, image: await findImage(post.image) }))
+);
 
 const metadata = {
-  title: 'ERP-Integrated Sales & Distribution Execution for SAP | UpBuff',
+  title: 'Van Sales App & Distributor Management for SAP | UpBuff',
   description:
-    'Extend SAP S/4HANA, ECC, and SAP Business One Sales & Distribution with real-time order execution. Mobile sales, distributor management, and secure SAP SD integration.',
+    'Van sales app & distributor management system (DMS) for SAP Business One — mobile order booking, secondary sales, and route-to-market, synced to SAP.',
   canonical: 'https://www.upbuff.com/products/erp-integrated-sales-distribution/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/products/erp-integrated-sales-distribution-execution',
-    title: 'ERP-Integrated Sales & Distribution Execution | UpBuff',
+    title: 'Van Sales App & Distributor Management for SAP | UpBuff',
     description:
       'Enable real-time sales order capture, distributor management, and SAP SD integration with UpBuff ERP Execution Platform.',
     image: 'https://www.upbuff.com/images/erp-sales-og.jpg',
   },
   twitter: {
     cardType: 'summary_large_image',
-    title: 'ERP-Integrated Sales & Distribution Execution | UpBuff',
+    title: 'Van Sales App & Distributor Management for SAP | UpBuff',
     description: 'Connect SAP SD with field sales teams and distributors for real-time order execution — without modifying core ERP.',
   },
 };
@@ -89,8 +102,8 @@ const metadata = {
   <!-- ── 1. HERO ───────────────────────────────────────────────── -->
   <HeroOrbital
     tagline="ERP-Integrated Sales & Distribution Execution"
-    title="Extend SAP SD into Real-Time Sales Operations"
-    subtitle="UpBuff ERP-Integrated Sales & Distribution Execution connects SAP S/4HANA, ECC, and SAP Business One directly to field sales teams, distributors, and order execution workflows — without modifying core ERP. Transform SAP Sales & Distribution (SD) into a real-time execution engine across territories, partners, and channels."
+    title="Van Sales & Distributor Management for SAP Business One"
+    subtitle="UpBuff is a van sales app and distributor management system (DMS) for SAP Business One, SAP S/4HANA, and ECC — mobile order booking, secondary sales, and route-to-market execution synced to SAP in real time, without modifying ERP core."
     actions={[
       { text: 'Request Demo',       href: '/contact', variant: 'primary' },
       { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
@@ -142,7 +155,7 @@ const metadata = {
   <!-- ── 4. USE CASES (Carousel) ──────────────────────────────── -->
   <FeaturesCarousel
     tagline="Use Cases"
-    title="How ERP-driven organizations use UpBuff Sales & Distribution"
+    title="How teams run van sales & distributor management on SAP"
     subtitle="Discover how SAP customers and enterprise distribution companies drive execution excellence without touching ERP core."
     items={[
       {
@@ -229,7 +242,7 @@ const metadata = {
   <!-- ── 6. FEATURES GRID (Solution) ──────────────────────────── -->
   <FeaturesGrid
     tagline="Solution"
-    title="Why Choose UpBuff ERP-Integrated Sales & Distribution Execution?"
+    title="Why choose UpBuff van sales & distributor management for SAP?"
     subtitle="Each capability enhances SAP SD while preserving ERP integrity — designed for enterprises that cannot afford core customization risk."
     items={[
       {
@@ -414,6 +427,29 @@ const metadata = {
   />
 
   <!-- ── 13. CTA BANNER ───────────────────────────────────────── -->
+  <!-- ── RESOURCES (related posts) ─────────────────────────────── -->
+  {
+    clusterWithImages.length > 0 && (
+      <section class="not-prose bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+          <div class="flex items-baseline justify-between mb-8 md:mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+              Resources on van sales &amp; distribution for SAP
+            </h2>
+            <a href="/blog" class="text-sm text-gray-500 hover:text-primary transition-colors">
+              View all posts »
+            </a>
+          </div>
+          <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {clusterWithImages.map(({ post, image }) => (
+              <PostCard post={post} image={image} showCategory={false} showMeta={false} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <CtaBanner
     title="Make SAP SD work for your field sales teams"
     subtitle="Use UpBuff to extend SAP S/4HANA, ECC, and Business One into real-time sales and distribution execution — without risky core customizations."

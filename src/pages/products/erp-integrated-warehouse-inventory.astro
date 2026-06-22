@@ -17,23 +17,35 @@ import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
 
 import { headerData } from '~/navigation';
+import PostCard from '~/components/blog/PostCard.astro';
+import { findPostsByIds } from '~/utils/blog';
+import { findImage } from '~/utils/images';
+
+const clusterPostIds = [
+  'barcode-warehouse-app-sap-business-one',
+  'sap-business-one-mobile-field-teams',
+];
+const clusterPosts = await findPostsByIds(clusterPostIds);
+const clusterWithImages = await Promise.all(
+  clusterPosts.map(async (post) => ({ post, image: await findImage(post.image) }))
+);
 
 const metadata = {
-  title: 'ERP-Integrated Warehouse & Inventory Management for SAP | UpBuff',
+  title: 'SAP Business One Warehouse Management App (WMS) | UpBuff',
   description:
-    'Extend SAP S/4HANA, ECC, and SAP Business One with real-time warehouse and inventory execution. Barcode-enabled, mobile-first, and securely integrated with SAP systems.',
+    'Warehouse management app (WMS) for SAP Business One & S/4HANA — barcode goods receipt, picking, transfers, and mobile stock counts synced to SAP in real time.',
   canonical: 'https://www.upbuff.com/products/erp-integrated-warehouse-inventory/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/products/erp-integrated-warehouse-inventory',
-    title: 'ERP-Integrated Warehouse & Inventory Management | UpBuff',
+    title: 'SAP Business One Warehouse Management App (WMS) | UpBuff',
     description: 'Real-time warehouse execution integrated with SAP S/4HANA, ECC, and SAP Business One. Improve inventory accuracy and operational control.',
     image: 'https://www.upbuff.com/images/erp-warehouse-og.jpg',
   },
   twitter: {
     cardType: 'summary_large_image',
-    title: 'ERP-Integrated Warehouse & Inventory | UpBuff',
+    title: 'SAP Business One Warehouse Management App | UpBuff',
     description: 'Real-time warehouse execution integrated with SAP — barcode-enabled, mobile-first, no core modifications.',
   },
 };
@@ -72,8 +84,8 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <HeroOrbital
     tagline="ERP-Integrated Warehouse & Inventory"
-    title="Real-Time Warehouse Execution Connected to SAP"
-    subtitle="UpBuff ERP-Integrated Warehouse & Inventory is a Warehouse Management System (WMS) for SAP that extends SAP S/4HANA, ECC, and SAP Business One into real-time warehouse operations — without modifying core ERP. It acts as an ERP Execution Layer, transforming SAP inventory data into live execution across warehouses, stores, and distribution centers. ERP remains the system of record, while UpBuff enables real-time warehouse execution across operations."
+    title="Warehouse Management for SAP Business One"
+    subtitle="UpBuff is a barcode-enabled warehouse management system (WMS) and inventory app for SAP Business One, SAP S/4HANA, and ECC — mobile inventory audits, goods receipt, transfers, and real-time stock sync across warehouses, stores, and distribution centers, without modifying ERP core. ERP stays the system of record."
     actions={[
       { text: 'Request Demo',       href: '/contact', variant: 'primary' },
       { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
@@ -131,7 +143,7 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FeaturesGrid
     tagline="Solution"
-    title="Why Choose UpBuff ERP-Integrated Warehouse & Inventory?"
+    title="Why choose UpBuff warehouse management for SAP Business One?"
     subtitle="Each capability is purpose-built to enhance SAP warehouse execution while keeping ERP as the system of record."
     items={[
       {
@@ -172,7 +184,7 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FeaturesCarousel
     tagline="Use Cases"
-    title="How SAP enterprises use UpBuff Warehouse & Inventory"
+    title="How SAP Business One warehouse management works with UpBuff"
     subtitle="Discover how ERP-Integrated warehouse execution transforms SAP-based supply chains across distribution, manufacturing, retail, and asset management."
     items={[
       {
@@ -472,6 +484,29 @@ const metadata = {
   <!-- ══════════════════════════════════════════════════════════
        13. CTA BANNER
        ══════════════════════════════════════════════════════════ -->
+  <!-- ── RESOURCES (related posts) ─────────────────────────────── -->
+  {
+    clusterWithImages.length > 0 && (
+      <section class="not-prose bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+          <div class="flex items-baseline justify-between mb-8 md:mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+              Resources on warehouse management for SAP
+            </h2>
+            <a href="/blog" class="text-sm text-gray-500 hover:text-primary transition-colors">
+              View all posts »
+            </a>
+          </div>
+          <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            {clusterWithImages.map(({ post, image }) => (
+              <PostCard post={post} image={image} showCategory={false} showMeta={false} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <CtaBanner
     title="Connect your SAP inventory to the warehouse floor — in real time"
     subtitle="Use UpBuff to extend SAP S/4HANA, ECC, Business One, and other ERP environments into live warehouse execution without risky core modifications or expensive implementation projects."
