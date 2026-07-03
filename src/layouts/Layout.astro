@@ -44,29 +44,9 @@ const { language, textDirection } = I18N;
 
   <body class="antialiased text-default bg-page tracking-tight">
     <slot />
-<!-- Paste before </body> in your Layout.astro -->
-<!-- <script is:inline>
-  window.chatbotConfig = {
-    agentId: "agt-101",
-    primaryColor: "#0f172a",
-    appearance: "light",
-    apiBase: "https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api",
-  };
-</script>
-<script src="https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api/widget.js" async is:inline></script>
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    if (!document.querySelector('#cw-bubble')) {
-      const s = document.createElement('script');
-      s.src = "https://upbuffai-backend-prod-922638147742.europe-west1.run.app/api/widget.js";
-      s.async = true;
-      document.body.appendChild(s);
-    }
-  });
-</script> -->
 
 <!-- Paste before </body> in your Layout.astro -->
-<script is:inline>
+<!-- <script is:inline>
   window.chatbotConfig = {
     agentId: "6a28f661886aa987a2525e76",
     primaryColor: "#002FA7",
@@ -85,27 +65,27 @@ const { language, textDirection } = I18N;
       document.body.appendChild(s);
     }
   });
-</script>
+</script> -->
 <!-- Paste before </body> in your Layout.astro -->
-<!-- <script is:inline>
+<script is:inline>
   window.chatbotConfig = {
-    agentId: "agt-101",
-    primaryColor: "#16a34a",
+    agentId: "agt-102",
+    primaryColor: "#0f172a",
     appearance: "light",
-    apiBase: "http://127.0.0.1:8001/api",
+    apiBase: "http://3.81.55.21:4013/api",
   };
 </script>
-<script src="http://127.0.0.1:8001/api/widget.js" async is:inline></script>
+<script src="http://3.81.55.21:4013/api/widget.js" async is:inline></script>
 <script is:inline>
   document.addEventListener('astro:page-load', () => {
     if (!document.querySelector('#cw-bubble')) {
       const s = document.createElement('script');
-      s.src = "http://127.0.0.1:8001/api/widget.js";
+      s.src = "http://3.81.55.21:4013/api/widget.js";
       s.async = true;
       document.body.appendChild(s);
     }
   });
-</script> -->
+</script>
     <BasicScripts />
   </body>
 </html>
