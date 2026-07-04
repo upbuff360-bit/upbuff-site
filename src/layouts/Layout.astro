@@ -70,17 +70,17 @@ const { language, textDirection } = I18N;
 <script is:inline>
   window.chatbotConfig = {
     agentId: "agt-102",
-    primaryColor: "#0f172a",
+    primaryColor: "#16a34a",
     appearance: "light",
-    apiBase: "http://3.81.55.21:4013/api",
+    apiBase: "https://backend.upbuff.ai/api",
   };
 </script>
-<script src="http://3.81.55.21:4013/api/widget.js" async is:inline></script>
+<script src="https://backend.upbuff.ai/api/widget.js" async is:inline></script>
 <script is:inline>
   document.addEventListener('astro:page-load', () => {
     if (!document.querySelector('#cw-bubble')) {
       const s = document.createElement('script');
-      s.src = "http://3.81.55.21:4013/api/widget.js";
+      s.src = "https://backend.upbuff.ai/api/widget.js";
       s.async = true;
       document.body.appendChild(s);
     }
