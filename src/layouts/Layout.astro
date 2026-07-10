@@ -45,29 +45,9 @@ const { language, textDirection } = I18N;
   <body class="antialiased text-default bg-page tracking-tight">
     <slot />
 
+
 <!-- Paste before </body> in your Layout.astro -->
 <!-- <script is:inline>
-  window.chatbotConfig = {
-    agentId: "6a28f661886aa987a2525e76",
-    primaryColor: "#002FA7",
-    appearance: "light",
-    apiBase: "http://localhost:8000/api",
-    appOrigin: "http://localhost:3000",
-  };
-</script>
-<script src="http://localhost:3000/widget.js" async is:inline></script>
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    if (!document.querySelector('#cw-bubble')) {
-      const s = document.createElement('script');
-      s.src = "http://localhost:3000/widget.js";
-      s.async = true;
-      document.body.appendChild(s);
-    }
-  });
-</script> -->
-<!-- Paste before </body> in your Layout.astro -->
-<script is:inline>
   window.chatbotConfig = {
     agentId: "agt-102",
     primaryColor: "#16a34a",
@@ -81,6 +61,27 @@ const { language, textDirection } = I18N;
     if (!document.querySelector('#cw-bubble')) {
       const s = document.createElement('script');
       s.src = "https://backend.upbuff.ai/api/widget.js";
+      s.async = true;
+      document.body.appendChild(s);
+    }
+  });
+</script> -->
+
+<!-- Paste before </body> in your Layout.astro -->
+<script is:inline>
+  window.chatbotConfig = {
+    agentId: "agt-102",
+    primaryColor: "#16a34a",
+    appearance: "light",
+    apiBase: "http://127.0.0.1:8001/api",
+  };
+</script>
+<script src="http://127.0.0.1:8001/api/widget.js" async is:inline></script>
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    if (!document.querySelector('#cw-bubble')) {
+      const s = document.createElement('script');
+      s.src = "http://127.0.0.1:8001/api/widget.js";
       s.async = true;
       document.body.appendChild(s);
     }
