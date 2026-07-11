@@ -1,6 +1,6 @@
 site:
   name: UpBuff
-  site: 'https://upbuff-site.vercel.app'
+  site: 'https://www.upbuff.com'
   base: '/'
   trailingSlash: false
 
@@ -16,15 +16,15 @@ metadata:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: UpBuff Technologies
     images:
       - url: '~/assets/images/default.png'
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
+    handle: '@upbuff'
+    site: '@upbuff'
     cardType: summary_large_image
 
 i18n:
