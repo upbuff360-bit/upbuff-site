@@ -23,3 +23,16 @@ pnpm-lock.yaml
 
 .astro
 .vercel
+
+# Temporary PDF-extraction scratch folders (case-study image processing)
+_pdf_tmp/
+_bt_tmp/
+_ir_tmp/
+_*_tmp/
+
+# Marketing / strategy working docs (deliverables, not part of the site build)
+/africa-digital-marketing-plan.md
+/backlink-directory-target-list.md
+/content-briefs-top-3-products.md
+/forums-communities-engagement-list.md
+/po-to-so-traffic-launch-playbook.md
