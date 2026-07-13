@@ -27,6 +27,24 @@ export default defineConfig({
   output: 'static',
   adapter: vercel(),  
   site: 'https://www.upbuff.com',
+
+  // 301 redirects for legacy (old WordPress) URLs → current pages.
+  // Keeps old links/search-console entries consolidated onto live pages.
+  redirects: {
+    '/about-upbuff': { status: 301, destination: '/about' },
+    '/about-upbuff/': { status: 301, destination: '/about' },
+    '/schedule-a-upbuff-demo': { status: 301, destination: '/request-demo' },
+    '/schedule-a-upbuff-demo/': { status: 301, destination: '/request-demo' },
+    '/tos': { status: 301, destination: '/legal/terms' },
+    '/tos/': { status: 301, destination: '/legal/terms' },
+    '/vansales-pos': { status: 301, destination: '/products/erp-integrated-sales-distribution' },
+    '/vansales-pos/': { status: 301, destination: '/products/erp-integrated-sales-distribution' },
+    '/partner-program': { status: 301, destination: '/contact' },
+    '/partner-program/': { status: 301, destination: '/contact' },
+    '/knowledge-playbook': { status: 301, destination: '/blog' },
+    '/knowledge-playbook/': { status: 301, destination: '/blog' },
+  },
+
   devToolbar: {
     enabled: false,
   },
