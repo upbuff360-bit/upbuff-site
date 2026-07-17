@@ -3,7 +3,6 @@ import type { GetStaticPaths } from 'astro';
 import { Icon } from 'astro-icon/components';
 
 import Layout from '~/layouts/PageLayout.astro';
-import Header from '~/components/widgets/Header.astro';
 import Image from '~/components/common/Image.astro';
 import Breadcrumb from '~/components/blog/Breadcrumb.astro';
 import ShareBar from '~/components/blog/ShareBar.astro';
@@ -85,7 +84,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <meta name="author" content={caseStudy.author || 'UpBuff Technologies'} />
     {caseStudy.publishDate && <meta property="article:published_time" content={caseStudy.publishDate.toISOString()} />}
@@ -140,13 +139,6 @@ const breadcrumbItems = [
 
   <Fragment slot="announcement" />
 
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      isSticky
-    />
-  </Fragment>
 
   <article class="not-prose">
     <!-- ── Hero: breadcrumb → title → meta ──────────────────── -->

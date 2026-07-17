@@ -1,6 +1,5 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Header from '~/components/widgets/Header.astro';
 import { headerData } from '~/navigation';
 
 const metadata = {
@@ -14,17 +13,10 @@ const metadata = {
 const lastUpdated = '01 April 2026';
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
 
   <Fragment slot="announcement" />
 
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      isSticky
-    />
-  </Fragment>
 
   <!-- ── Page hero ─────────────────────────────────────────── -->
   <section class="bg-gray-50 border-b border-gray-200 not-prose">

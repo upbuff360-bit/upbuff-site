@@ -3,7 +3,6 @@ import type { GetStaticPaths } from 'astro';
 import { Icon } from 'astro-icon/components';
 
 import Layout from '~/layouts/PageLayout.astro';
-import Header from '~/components/widgets/Header.astro';
 import Breadcrumb from '~/components/blog/Breadcrumb.astro';
 import PostCard from '~/components/blog/PostCard.astro';
 
@@ -66,7 +65,7 @@ const breadcrumbItems = [
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <script
       type="application/ld+json"
@@ -108,13 +107,6 @@ const breadcrumbItems = [
 
   <Fragment slot="announcement" />
 
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      isSticky
-    />
-  </Fragment>
 
   <!-- ── Hero ──────────────────────────────────────────────── -->
   <section class="bg-gray-50 border-b border-gray-200 not-prose">

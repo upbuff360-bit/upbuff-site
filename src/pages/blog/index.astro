@@ -1,6 +1,5 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Header from '~/components/widgets/Header.astro';
 import Image from '~/components/common/Image.astro';
 import PostCard from '~/components/blog/PostCard.astro';
 import { Icon } from 'astro-icon/components';
@@ -63,7 +62,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <meta name="author" content="UpBuff Technologies" />
     <script
@@ -112,13 +111,6 @@ const metadata = {
 
   <Fragment slot="announcement" />
 
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      isSticky
-    />
-  </Fragment>
 
   <!-- ── Hero ──────────────────────────────────────────────── -->
   <section class="bg-gray-50 border-b border-gray-200 not-prose">

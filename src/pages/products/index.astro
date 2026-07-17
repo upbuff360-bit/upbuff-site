@@ -1,6 +1,5 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Header from '~/components/widgets/Header.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import FeaturesCarousel from '~/components/widgets/FeaturesCarousel.astro';
 import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
@@ -133,7 +132,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <meta
       name="keywords"
@@ -178,13 +177,6 @@ const metadata = {
 
   <Fragment slot="announcement" />
 
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="white"
-      isSticky
-    />
-  </Fragment>
 
   <!-- ── 1. HERO (H1 + definitional intro for SEO & LLMs) ──────── -->
   <HeroText

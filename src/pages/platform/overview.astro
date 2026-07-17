@@ -1,6 +1,5 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Header from '~/components/widgets/Header.astro';
 
 import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
 import LogoBar from '~/components/widgets/LogoBar.astro';
@@ -40,7 +39,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} headerTheme="black">
   <Fragment slot="head">
     <meta name="author" content="UpBuff Technologies" />
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -65,13 +64,6 @@ const metadata = {
   </Fragment>
 
   <!-- ── Black theme header ──────────────────────────────────── -->
-  <Fragment slot="header">
-    <Header
-      {...headerData}
-      theme="black"
-      isSticky
-    />
-  </Fragment>
 
   <!-- ══════════════════════════════════════════════════════════
        1. HERO — orbital network diagram
