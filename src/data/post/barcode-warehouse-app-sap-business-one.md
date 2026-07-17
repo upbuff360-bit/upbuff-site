@@ -1,7 +1,8 @@
 ---
-publishDate: 2026-06-22T00:00:00Z
+publishDate: 2026-06-24T00:00:00Z
 title: "Barcode Warehouse App for SAP Business One: A Practical Guide"
 excerpt: "Manual and desktop-bound warehouse work quietly erodes SAP Business One inventory accuracy. Here's how a barcode warehouse app adds mobile scanning, real-time stock counts, and bin control to SAP B1."
+image: ~/assets/images/blog/barcode-warehouse-app-sap-business-one/barcode-warehouse-app-sap-business-one.png
 author: UpBuff Team
 readingTime: 9
 category: ERP Operations

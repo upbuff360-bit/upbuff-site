@@ -132,7 +132,8 @@ export const headerData = {
     // },
   ],
   actions: [
-    { text: 'Request Demo', href: getPermalink('/request-demo'), variant: 'primary' },
+    { text: 'Quick Contact', href: getPermalink('/contact'), variant: 'secondary' },
+    { text: 'Contact Sales', href: getPermalink('/request-demo'), variant: 'primary' },
   ],
 };
 
