@@ -334,11 +334,9 @@ const testimonialParagraphs = testimonial
 
             <div id="hcf-verification" class="hidden justify-center mt-1">
               <div
-                class="cf-turnstile"
+                id="hcf-turnstile-widget"
                 data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
-                data-theme="light"
-                data-size="flexible"
-              />
+              ></div>
             </div>
 
             <div class="grid grid-cols-2 gap-3 pt-1">
@@ -376,55 +374,262 @@ const testimonialParagraphs = testimonial
     </div>
   </div>
 
-  <script is:inline>
-    (function () {
-      function ensureTurnstileScript() {
-        if (document.querySelector('script[data-turnstile-loader]')) return;
-        const s = document.createElement('script');
-        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-        s.async = true;
-        s.defer = true;
-        s.setAttribute('data-turnstile-loader', 'true');
-        document.head.appendChild(s);
+ <script>
+  import { validateOptionalPhone } from '~/utils/phone-validation';
+
+  (function () {
+    type TurnstileApi = {
+      render: (
+        container: HTMLElement | string,
+        options: Record<string, unknown>
+      ) => string;
+      reset: (widgetId?: string) => void;
+      remove: (widgetId: string) => void;
+    };
+
+    let turnstileWidgetId: string | null = null;
+    let turnstileScriptPromise: Promise<TurnstileApi> | null = null;
+
+    function getTurnstile(): TurnstileApi | undefined {
+      return (window as any).turnstile as TurnstileApi | undefined;
+    }
+
+    function waitForTurnstile(): Promise<TurnstileApi> {
+      return new Promise((resolve, reject) => {
+        let attempts = 0;
+
+        const check = () => {
+          const turnstile = getTurnstile();
+
+          if (turnstile) {
+            resolve(turnstile);
+            return;
+          }
+
+          attempts += 1;
+
+          if (attempts >= 100) {
+            reject(
+              new Error('Cloudflare verification failed to initialise.')
+            );
+            return;
+          }
+
+          window.setTimeout(check, 100);
+        };
+
+        check();
+      });
+    }
+
+    function loadTurnstile(): Promise<TurnstileApi> {
+      const existingTurnstile = getTurnstile();
+
+      if (existingTurnstile) {
+        return Promise.resolve(existingTurnstile);
       }
 
-      function renderAllWidgets() {
-        if (!window.turnstile || typeof window.turnstile.render !== 'function') {
-          if ((window.__tsRetries || 0) < 15) {
-            window.__tsRetries = (window.__tsRetries || 0) + 1;
-            setTimeout(renderAllWidgets, 200);
-          }
+      if (turnstileScriptPromise) {
+        return turnstileScriptPromise;
+      }
+
+      turnstileScriptPromise = new Promise<void>((resolve, reject) => {
+        const selector =
+          'script[src^="https://challenges.cloudflare.com/turnstile/v0/api.js"]';
+
+        const existingScript =
+          document.querySelector<HTMLScriptElement>(selector);
+
+        if (existingScript) {
+          resolve();
           return;
         }
-        window.__tsRetries = 0;
-        document.querySelectorAll('.cf-turnstile').forEach(function (el) {
-          if (el.getAttribute('data-rendered') === 'true') return;
-          const sitekey = el.getAttribute('data-sitekey');
-          if (!sitekey) return;
-          try {
-            window.turnstile.render(el, {
-              sitekey: sitekey,
-              theme: el.getAttribute('data-theme') || 'auto',
-              size: el.getAttribute('data-size') || 'normal',
-            });
-            el.setAttribute('data-rendered', 'true');
-          } catch (err) {
-            console.warn('[turnstile] render skipped:', err);
-          }
+
+        const script = document.createElement('script');
+
+        script.src =
+          'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+
+        script.async = true;
+        script.defer = true;
+        script.setAttribute('data-turnstile-loader', 'true');
+
+        script.addEventListener(
+          'load',
+          () => resolve(),
+          { once: true }
+        );
+
+        script.addEventListener(
+          'error',
+          () => {
+            reject(
+              new Error(
+                'Cloudflare verification script could not be loaded.'
+              )
+            );
+          },
+          { once: true }
+        );
+
+        document.head.appendChild(script);
+      })
+        .then(() => waitForTurnstile())
+        .catch((error) => {
+          turnstileScriptPromise = null;
+          throw error;
         });
+
+      return turnstileScriptPromise;
+    }
+
+    function removeTurnstileWidget() {
+      const turnstile = getTurnstile();
+
+      if (turnstile && turnstileWidgetId) {
+        try {
+          turnstile.remove(turnstileWidgetId);
+        } catch (error) {
+          console.warn(
+            '[Turnstile] Could not remove widget:',
+            error
+          );
+        }
       }
 
-      ensureTurnstileScript();
-      document.addEventListener('DOMContentLoaded', renderAllWidgets);
-      document.addEventListener('astro:page-load', renderAllWidgets);
-    })();
-  </script>
+      turnstileWidgetId = null;
 
-  <script>
-    import { validateOptionalPhone } from '~/utils/phone-validation';
+      const container =
+        document.getElementById('hcf-turnstile-widget');
 
-    (function () {
-      function serializeForm(form: HTMLFormElement): Record<string, string> {
+      container?.replaceChildren();
+    }
+
+    function resetTurnstileWidget() {
+      const turnstile = getTurnstile();
+
+      if (turnstile && turnstileWidgetId) {
+        try {
+          turnstile.reset(turnstileWidgetId);
+        } catch (error) {
+          console.warn(
+            '[Turnstile] Could not reset widget:',
+            error
+          );
+        }
+      }
+    }
+
+    async function renderTurnstileWidget(
+      errorBox: HTMLElement
+    ) {
+      const verification =
+        document.getElementById('hcf-verification');
+
+      const container =
+        document.getElementById('hcf-turnstile-widget');
+
+      if (!verification || !container) {
+        return;
+      }
+
+      // Do not render while the verification area is hidden.
+      if (verification.classList.contains('hidden')) {
+        return;
+      }
+
+      // Prevent duplicate widget rendering.
+      if (turnstileWidgetId) {
+        return;
+      }
+
+      const sitekey = container.dataset.sitekey;
+
+      if (!sitekey) {
+        console.error(
+          '[Turnstile] PUBLIC_TURNSTILE_SITE_KEY is missing.'
+        );
+
+        errorBox.textContent =
+          'Security verification is temporarily unavailable. Please email sales@upbuff.com.';
+
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const turnstile = await loadTurnstile();
+
+        // The user may have moved back to another step
+        // while the Cloudflare script was loading.
+        if (
+          !document.body.contains(container) ||
+          verification.classList.contains('hidden')
+        ) {
+          return;
+        }
+
+        container.replaceChildren();
+
+        turnstileWidgetId = turnstile.render(container, {
+          sitekey,
+          theme: 'light',
+          size: 'flexible',
+
+          retry: 'auto',
+          'retry-interval': 5000,
+          'refresh-expired': 'auto',
+
+          callback: () => {
+            errorBox.classList.add('hidden');
+          },
+
+          'error-callback': (errorCode: string) => {
+            console.error(
+              '[Turnstile] Verification failed:',
+              errorCode
+            );
+
+            errorBox.textContent =
+              `Security verification failed (${errorCode}). ` +
+              'Please disable any VPN or ad blocker, or refresh the page and try again.';
+
+            errorBox.classList.remove('hidden');
+
+            // Return false to allow Cloudflare automatic retry.
+            return false;
+          },
+
+          'expired-callback': () => {
+            errorBox.textContent =
+              'The security verification expired. Please complete it again.';
+
+            errorBox.classList.remove('hidden');
+          },
+
+          'timeout-callback': () => {
+            errorBox.textContent =
+              'The security verification timed out. Please try again.';
+
+            errorBox.classList.remove('hidden');
+          },
+        });
+      } catch (error) {
+        console.error(
+          '[Turnstile] Loading failed:',
+          error
+        );
+
+        errorBox.textContent =
+          'Cloudflare verification could not load. Please refresh the page or disable any ad blocker.';
+
+        errorBox.classList.remove('hidden');
+      }
+    }
+
+    function serializeForm(
+      form: HTMLFormElement
+    ): Record<string, string> {
         const data: Record<string, string> = {};
         new FormData(form).forEach((value, key) => {
           if (typeof value !== 'string') return;
@@ -499,12 +704,23 @@ const testimonialParagraphs = testimonial
           });
 
           backButton.classList.toggle('hidden', isFirst);
+
           nextButton.classList.toggle('hidden', isLast);
           nextButton.classList.toggle('col-span-2', isFirst);
+
           submitBtn.classList.toggle('hidden', !isLast);
           submitBtn.classList.toggle('flex', isLast);
+
           verification?.classList.toggle('hidden', !isLast);
           verification?.classList.toggle('flex', isLast);
+
+          if (isLast) {
+            requestAnimationFrame(() => {
+              void renderTurnstileWidget(errEl);
+            });
+          } else {
+            removeTurnstileWidget();
+          }
         }
 
         function setFieldState(
@@ -668,8 +884,12 @@ const testimonialParagraphs = testimonial
           const data = serializeForm(formEl);
 
           if (!data['cf-turnstile-response']) {
-            errEl.textContent = 'Please complete the verification and try again.';
+            errEl.textContent =
+              'Please complete the verification and try again.';
+
             errEl.classList.remove('hidden');
+
+            resetTurnstileWidget();
             return;
           }
 
@@ -698,8 +918,7 @@ const testimonialParagraphs = testimonial
             spinner.classList.add('hidden');
             label.textContent = originalLabel;
 
-            const ts = (window as any).turnstile;
-            if (ts && typeof ts.reset === 'function') ts.reset();
+            resetTurnstileWidget();
           }
         });
 
@@ -708,6 +927,10 @@ const testimonialParagraphs = testimonial
 
       document.addEventListener('astro:page-load', init);
       document.addEventListener('DOMContentLoaded', init);
+      document.addEventListener(
+        'astro:before-swap',
+        removeTurnstileWidget
+      );
     })();
   </script>
 </section>
