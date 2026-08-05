@@ -44,7 +44,7 @@ A purpose-built warehouse app turns a handheld or phone into a scanning-driven e
 - **Cycle and stock counts** — fast, accurate counts that post straight to SAP.
 - **Bin, batch, and serial tracking** — maintain location and traceability precision.
 
-Because each scan posts to SAP Business One in real time, the system reflects reality and audits become straightforward.
+Because each scan posts to SAP Business One in real time, the system reflects reality and audits become straightforward. If you run production, see our dedicated guide to a [SAP Business One WMS for manufacturers](/blog/sap-business-one-wms-for-manufacturers) — covering batch traceability, production material issue, and FEFO control.
 
 ## Barcode and QR scanning on mobile and handheld devices
 

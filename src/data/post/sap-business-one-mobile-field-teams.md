@@ -70,7 +70,7 @@ Goods were received at 9am. The SAP inventory reflects it at 5pm. In between, yo
 
 The standard SAP Business One goods receipt workflow requires a desktop, multiple confirmation steps, and a trained user. In a real warehouse with forklifts, cold storage, and a shift-based team, that is not how work gets done.
 
-So warehouse teams do it the practical way: paper, printed lists, or a mobile spreadsheet. [Real-time inventory accuracy](/products/erp-integrated-warehouse-inventory) goes out the window. And it costs you in overselling, stock disputes, and audit issues.
+So warehouse teams do it the practical way: paper, printed lists, or a mobile spreadsheet. [Real-time inventory accuracy](/products/erp-integrated-warehouse-inventory) goes out the window. And it costs you in overselling, stock disputes, and audit issues. For manufacturers, the fix is a scan-driven [SAP Business One WMS](/blog/sap-business-one-wms-for-manufacturers) feeding SAP in real time.
 
 ### Sign 3 — Field service technicians are not closing jobs in SAP
 

@@ -22,6 +22,7 @@ import { findPostsByIds } from '~/utils/blog';
 import { findImage } from '~/utils/images';
 
 const clusterPostIds = [
+  'sap-business-one-wms-for-manufacturers',
   'barcode-warehouse-app-sap-business-one',
   'sap-business-one-mobile-field-teams',
 ];
@@ -72,7 +73,10 @@ const metadata = {
         { "@type": "Question", "name": "Does it integrate with SAP S/4HANA?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It integrates with SAP S/4HANA, ECC, and SAP Business One using secure APIs such as OData, BAPI, and Service Layer." } },
         { "@type": "Question", "name": "Does it support barcode scanning?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Handheld scanners and mobile devices are supported for goods receipt, picking, transfers, and cycle counts." } },
         { "@type": "Question", "name": "Does it replace SAP WM or EWM?", "acceptedAnswer": { "@type": "Answer", "text": "No. It complements SAP by providing execution-level capabilities while synchronizing data back to SAP securely." } },
-        { "@type": "Question", "name": "Is it suitable for multi-location enterprises?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The solution supports multi-warehouse and multi-store operations globally." } }
+        { "@type": "Question", "name": "Is it suitable for multi-location enterprises?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The solution supports multi-warehouse and multi-store operations globally." } },
+        { "@type": "Question", "name": "Does SAP Business One have a built-in WMS?", "acceptedAnswer": { "@type": "Answer", "text": "SAP Business One includes inventory management but not a mobile, scan-driven WMS. UpBuff adds the warehouse management system layer on top of SAP B1 — barcode execution, guided picking, and real-time posting via the Service Layer, with no core modification." } },
+        { "@type": "Question", "name": "Can it issue materials to SAP B1 production orders?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Operators issue scanned components against SAP Business One production orders and receive finished goods with new batch numbers, keeping consumption and traceability records exact." } },
+        { "@type": "Question", "name": "Does it support batch traceability and FEFO for manufacturing?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Batches and expiry are captured at goods receipt, tracked through production issue, and linked to finished goods — enabling forward and backward traceability plus FEFO picking." } }
       ]
     })} />
   </Fragment>
@@ -210,6 +214,47 @@ const metadata = {
         title: 'Maintain Inventory Accuracy for Assets',
         description: 'Track serialized assets and spare parts integrated with SAP maintenance modules. Serial number traceability, maintenance inventory accuracy, audit-ready documentation, and reduced shrinkage — for field service and asset-intensive industries.',
         image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Asset-and-Spare-Parts-Management.png" class="w-full object-top" alt="Asset and Spare Parts Management" loading="lazy" /></div>',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
+       5b. BUILT FOR MANUFACTURERS — SAP B1 WMS manufacturing depth
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="Built for Manufacturers"
+    title="A SAP Business One WMS built for manufacturing warehouses"
+    subtitle="From raw material receipt to production issue and finished goods — every movement scanned, every batch traced, posted to SAP B1 in real time."
+    items={[
+      {
+        icon: 'tabler:package-import',
+        title: 'Barcode GRPO at the Gate',
+        description: 'Receive raw materials against open SAP B1 purchase orders by scanning — capture supplier batches and expiry at the dock, print labels, and post the goods receipt to SAP instantly.',
+      },
+      {
+        icon: 'tabler:arrow-right-circle',
+        title: 'Production Material Issue',
+        description: 'Issue scanned components against SAP Business One production orders — right item, right batch, right quantity. Consumption records in SAP stay exact, without manual keying.',
+      },
+      {
+        icon: 'tabler:git-branch',
+        title: 'End-to-End Batch Traceability',
+        description: 'Trace any batch forward from supplier delivery to customer shipment — or backward from a complaint to source deliveries. Audit- and recall-ready, straight from SAP data.',
+      },
+      {
+        icon: 'tabler:clock-check',
+        title: 'FEFO & Expiry Control',
+        description: 'First-expired-first-out picking suggestions with expiry captured at receipt — critical for food, beverage, pharma, and chemical manufacturers running SAP B1.',
+      },
+      {
+        icon: 'tabler:stack-2',
+        title: 'WIP & Line-Side Visibility',
+        description: 'Track work-in-progress and line-side store movements as they happen, so SAP reflects material reality between stores and the production line.',
+      },
+      {
+        icon: 'tabler:clipboard-check',
+        title: 'Cycle Counts Without Stopping Production',
+        description: 'Count by bin or item on mobile devices and post results directly to SAP Business One — no spreadsheets, no production downtime, no end-of-year surprises.',
       },
     ]}
   />
@@ -456,6 +501,18 @@ const metadata = {
       {
         question: 'Is it suitable for multi-location enterprises?',
         answer: 'Yes. The solution supports multi-warehouse, multi-store, and multi-country operations with centralized SAP-driven inventory governance and local execution flexibility. All sites share real-time stock visibility through SAP.',
+      },
+      {
+        question: 'Does SAP Business One have a built-in WMS?',
+        answer: 'SAP Business One includes inventory management — warehouses, bins, batches, and stock documents — but not a mobile, scan-driven WMS. UpBuff adds the warehouse management system layer on top of SAP B1: barcode execution, guided picking, and real-time posting through the Service Layer, with no core modification.',
+      },
+      {
+        question: 'Can it issue materials to SAP B1 production orders?',
+        answer: 'Yes. Warehouse operators issue scanned components directly against SAP Business One production orders and receive finished goods back with new batch numbers — keeping consumption, WIP, and traceability records exact for manufacturers.',
+      },
+      {
+        question: 'Does it support batch traceability and FEFO for manufacturing?',
+        answer: 'Yes. Supplier batches and expiry dates are captured at goods receipt, tracked through production issue, and linked to finished goods — enabling forward and backward batch traceability plus first-expired-first-out (FEFO) picking for regulated manufacturers.',
       },
     ]}
   />
