@@ -124,6 +124,12 @@ export const headerData = {
           icon: 'tabler:writing',
           description: 'Read the latest insights, updates, trends, and product-related articles.',
         },
+        {
+          text: 'Free SAP B1 Consultation',
+          href: getPermalink('/free-sap-consultation'),
+          icon: 'tabler:lifebuoy',
+          description: 'Quick fixes under 2 hours — resolved free by our SAP B1 consultants.',
+        },
       ],
     },
     // {
@@ -178,6 +184,7 @@ export const footerData = {
       links: [
         { text: 'Blog',         href: getPermalink('/blog') },
         { text: 'Case Studies', href: getPermalink('/case-studies') },
+        { text: 'Free SAP B1 Consultation', href: getPermalink('/free-sap-consultation') },
       ],
     },
     {
