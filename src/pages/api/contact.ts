@@ -58,10 +58,13 @@ export const POST: APIRoute = async ({ request }) => {
       },
     });
 
+    const isConsultation = typeof product === 'string' && product.startsWith('Quick Fix');
+    const emailTitle = isConsultation ? 'Free SAP Consultation Request — UpBuff' : 'New Contact Form Submission — UpBuff';
+
     const html = `
       <div style="font-family:Inter,Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;background:#ffffff;">
         <div style="background:#0a0a0a;border-radius:12px;padding:24px 28px;margin-bottom:28px;">
-          <p style="color:#ffffff;font-size:18px;font-weight:700;margin:0;">📬 New Contact Form Submission — UpBuff</p>
+          <p style="color:#ffffff;font-size:18px;font-weight:700;margin:0;">📬 ${emailTitle}</p>
         </div>
         <table style="width:100%;border-collapse:collapse;font-size:14px;color:#374151;">
           <tr>
@@ -87,7 +90,7 @@ export const POST: APIRoute = async ({ request }) => {
       from:    `"UpBuff Website" <${import.meta.env.SMTP_USER}>`,
       to:      (import.meta.env.SMTP_TO ?? import.meta.env.SMTP_USER).split(',').map((e: string) => e.trim()).join(', '),
       replyTo: email,
-      subject: `Contact: ${name}${product ? ` — ${product}` : ''}`,
+      subject: isConsultation ? `SAP Free Consultation Request by ${name}` : `Contact: ${name}${product ? ` — ${product}` : ''}`,
       html,
     });
 
