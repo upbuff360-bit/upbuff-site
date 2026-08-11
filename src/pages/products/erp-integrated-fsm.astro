@@ -21,6 +21,7 @@ import { findImage } from '~/utils/images';
 
 const clusterPostIds = [
   'field-service-management-sap-business-one',
+  'sap-field-service-management-app-business-one',
   'sap-field-service-management-close-service-tickets-on-site',
   'sap-business-one-mobile-field-teams',
 ];
@@ -71,7 +72,10 @@ const metadata = {
         { "@type": "Question", "name": "Does UpBuff FSM replace SAP Service Management?", "acceptedAnswer": { "@type": "Answer", "text": "No. It complements SAP by enabling mobile-first execution while keeping SAP as the system of record." } },
         { "@type": "Question", "name": "Does it work with SAP S/4HANA?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It integrates with SAP S/4HANA, ECC, and SAP Business One using secure OData, BAPI, and Service Layer APIs." } },
         { "@type": "Question", "name": "Is offline mode supported?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Technicians can work offline and sync data securely when connectivity is restored." } },
-        { "@type": "Question", "name": "Is it secure for enterprise environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Role-based access, audit logging, encrypted communication, and controlled integration ensure enterprise-grade security." } }
+        { "@type": "Question", "name": "Is it secure for enterprise environments?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Role-based access, audit logging, encrypted communication, and controlled integration ensure enterprise-grade security." } },
+        { "@type": "Question", "name": "Does SAP Business One have field service management?", "acceptedAnswer": { "@type": "Answer", "text": "SAP Business One includes a back-office service module for contracts and service calls, but not mobile technician execution. UpBuff adds the field service management layer — real-time work orders, offline mobile execution, and on-site closure — integrated with SAP B1 via the Service Layer with no core modification." } },
+        { "@type": "Question", "name": "What is the best field service management app for SAP Business One?", "acceptedAnswer": { "@type": "Answer", "text": "The right SAP B1 field service app integrates through official APIs, works fully offline, covers dispatch to on-site sign-off, and keeps SAP Business One as the system of record. UpBuff FSM meets these criteria with real-time two-way sync and technician-first mobile workflows." } },
+        { "@type": "Question", "name": "Can field technicians close service calls from a mobile app?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Technicians open the work order, capture readings, photos, parts, and the customer signature on their phone — even offline — and the completed service call posts back to SAP Business One automatically." } }
       ]
     })} />
   </Fragment>
@@ -365,6 +369,18 @@ const metadata = {
       {
         question: 'Is it secure for enterprise environments?',
         answer: 'Yes. Role-based access control, full audit logging, TLS encrypted communication, and controlled API-based integration ensure enterprise-grade security. ERP remains the system of record at all times.',
+      },
+      {
+        question: 'Does SAP Business One have field service management?',
+        answer: 'SAP Business One includes a back-office service module for contracts and service calls, but it was not built for technicians in the field. UpBuff adds the mobile execution layer — real-time work orders, offline capture, asset history, and on-site closure — synced to SAP B1 through the Service Layer with no core modification.',
+      },
+      {
+        question: 'What is the best field service management app for SAP Business One?',
+        answer: 'Look for official SAP B1 API integration (Service Layer / DI API), full offline capability, complete job coverage from dispatch to customer sign-off, and SAP kept as the system of record with an audit trail. UpBuff FSM is built to those criteria, with technician-first mobile workflows tailored to how your service team actually operates.',
+      },
+      {
+        question: 'Can field technicians close service calls from a mobile app?',
+        answer: 'Yes. Technicians open the assigned work order on their phone, capture readings, photos, parts consumed, and the customer signature on-site — even with no connectivity — and the completed call syncs back to SAP Business One automatically once online.',
       },
     ]}
   />

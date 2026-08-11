@@ -2,7 +2,7 @@
 publishDate: 2026-08-05T00:00:00Z
 title: "SAP Business One WMS for Manufacturers"
 excerpt: "SAP Business One holds your inventory data, but manufacturing warehouses need scan-driven execution — raw materials, batch traceability, WIP, and production issue. Here's what a SAP B1 WMS adds, and how to choose one."
-image: ~/assets/images/blog/sap-business-one-wms-for-manufacturers/sap-business-one-wms-for-manufacturers.jpg
+image: /images/blog/sap-business-one-wms-for-manufacturers/sap-business-one-wms-for-manufacturers.jpg
 author: Rajesh K
 readingTime: 10
 category: ERP Operations

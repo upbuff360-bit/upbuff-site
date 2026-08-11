@@ -16,8 +16,7 @@ tags:
   - Manufacturing
   - Engineering
   - Offline Field Service App
-author: Aryasree K
-authorLinkedIn: https://www.linkedin.com/in/aryasreek22/
+author: Shiburaj
 readingTime: 7
 metadata:
   title: "SAP Field Service Management: Close Service Tickets from Site | UpBuff"

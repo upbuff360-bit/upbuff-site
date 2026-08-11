@@ -2,7 +2,7 @@
 publishDate: 2026-07-17T00:00:00Z
 title: "ZRA Smart Invoice + SAP Business One: The Zambia Compliance Guide"
 excerpt: "Zambia's ZRA Smart Invoice is mandatory for VAT-registered businesses — and only Smart Invoice invoices qualify for input VAT. Here's how SAP Business One connects to it through VSDC, in plain language."
-image: ~/assets/images/blog/zra-smart-invoice-sap-business-one/zra-smart-invoice-sap-business-one.png
+image: /images/blog/zra-smart-invoice-sap-business-one/zra-smart-invoice-sap-business-one.png
 author: Adrian Ovens
 readingTime: 8
 category: ERP Operations

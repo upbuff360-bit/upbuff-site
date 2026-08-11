@@ -40,11 +40,14 @@ const path = getPermalink(post.permalink, 'post');
 const canonicalUrl = post.metadata?.canonical || String(getCanonical(path));
 const shareUrl = canonicalUrl;
 
-// Open Graph image — use post image if it's a public/external URL string.
+// Open Graph image — use post image if it's a public/external URL string,
+// or the built asset URL when the frontmatter uses ~/assets (ImageMetadata).
 const rawOgImage =
   typeof post.image === 'string' && (post.image.startsWith('http') || post.image.startsWith('/'))
     ? post.image
-    : 'https://www.upbuff.com/assets/og-image.jpg';
+    : typeof post.image === 'object' && post.image !== null && 'src' in post.image
+      ? (post.image as { src: string }).src
+      : 'https://www.upbuff.com/assets/og-image.jpg';
 const ogImage = rawOgImage.startsWith('/') ? `https://www.upbuff.com${rawOgImage}` : rawOgImage;
 const pageDescription = post.metadata?.description || post.excerpt;
 

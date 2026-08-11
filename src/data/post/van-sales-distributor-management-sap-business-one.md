@@ -2,8 +2,8 @@
 publishDate: 2026-06-29T00:00:00Z
 title: "Van Sales & Distributor Management for SAP Business One: A Practical Guide"
 excerpt: "SAP Business One runs your back office, but van sales and secondary sales happen in the field. Here's how distributors add a van sales app and distributor management to SAP B1 — synced in real time."
-image: ~/assets/images/blog/van-sales-distributor-management-sap-business-one/van-sales-distributor-management-sap-business-one.png
-author: UpBuff Team
+image: /images/blog/van-sales-distributor-management-sap-business-one/van-sales-distributor-management-sap-business-one.png
+author: Subrat
 readingTime: 9
 category: ERP Operations
 tags:
