@@ -19,7 +19,7 @@ export const GET: APIRoute = async () => {
       if (trimmed === '/index') return '/';
       return trimmed.replace(/\/index$/, '');
     })
-    .filter((url) => url !== '/404' && !url.includes('[') && !url.includes('/api'));
+    .filter((url) => url !== '/404' && !url.includes('[') && !url.includes('/api') && !url.includes('/_'));
 
   // 2. Dynamic content-collection routes (the part the old generator missed).
   const [posts, caseStudies] = await Promise.all([fetchPosts(), fetchCaseStudies()]);
