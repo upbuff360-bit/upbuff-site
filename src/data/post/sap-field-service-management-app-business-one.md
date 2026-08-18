@@ -72,4 +72,4 @@ No. It executes in the field what SAP B1 manages in the back office — contract
 
 ## Put SAP work orders in your technicians' pockets
 
-If your service team still closes jobs on paper, the fastest fix is an app they'll actually use, feeding SAP in real time. See [UpBuff Field Service Management for SAP Business One](/products/erp-integrated-fsm) — or [request a demo](/request-demo) and watch a job go from dispatch to signed-off without touching a desktop. Have a smaller SAP B1 problem first? Try our [free SAP Business One consultation](/resources/free-sap-consultation).
+If your service team still closes jobs on paper, the fastest fix is an app they'll actually use, feeding SAP in real time. See [UpBuff Field Service Management for SAP Business One](/products/erp-integrated-fsm) — or [request a demo](/request-demo) and watch a job go from dispatch to signed-off without touching a desktop. Have a smaller SAP B1 problem first? Try our [free SAP Business One consultation](/resources/sap-consultation).

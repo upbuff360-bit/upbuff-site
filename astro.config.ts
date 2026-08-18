@@ -37,6 +37,7 @@ export default defineConfig({
     '/vansales-pos': { status: 301, destination: '/products/erp-integrated-sales-distribution' },
     '/partner-program': { status: 301, destination: '/contact' },
     '/knowledge-playbook': { status: 301, destination: '/blog' },
+    '/resources/free-sap-consultation': { status: 301, destination: '/resources/sap-consultation' },
   },
 
   devToolbar: {
