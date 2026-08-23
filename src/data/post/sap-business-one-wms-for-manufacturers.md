@@ -46,7 +46,7 @@ Native SAP B1 can *store* all of this data. A WMS makes sure the data actually g
 
 A purpose-built warehouse management app for SAP Business One turns a handheld scanner or smartphone into a real-time extension of SAP B1:
 
-- **Barcode-verified GRPO** — scan incoming goods against open purchase orders, capture supplier batches and expiry dates at the gate, print labels, and post the receipt instantly.
+- **Barcode-verified GRPO** — scan incoming goods against open purchase orders, capture supplier batches and expiry dates at the gate, print labels, and post the receipt instantly (see our full [GRPO guide for SAP Business One](/blog/grpo-sap-business-one)).
 - **Guided putaway and bin management** — directed placement with scan confirmation, so bin-level stock in SAP matches reality.
 - **Scan-verified picking** — pick against sales orders or production orders with item, batch, and bin validated on the spot.
 - **Production material issue** — issue components to a SAP B1 production order by scanning, keeping batch consumption records exact.

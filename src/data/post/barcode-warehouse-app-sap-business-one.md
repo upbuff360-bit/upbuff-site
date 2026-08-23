@@ -38,7 +38,7 @@ The outcome is inventory you can't fully trust — which ripples into purchasing
 
 A purpose-built warehouse app turns a handheld or phone into a scanning-driven extension of SAP Business One:
 
-- **Goods receipt (GRPO)** — scan incoming stock against purchase orders.
+- **Goods receipt (GRPO)** — scan incoming stock against purchase orders ([full GRPO guide here](/blog/grpo-sap-business-one)).
 - **Picking and packing** — guided, scan-verified picking against sales orders.
 - **Inter-warehouse and bin transfers** — move stock accurately with scan confirmation.
 - **Cycle and stock counts** — fast, accurate counts that post straight to SAP.
