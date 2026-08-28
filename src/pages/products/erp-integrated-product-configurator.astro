@@ -20,9 +20,9 @@ import CtaBanner from '~/components/widgets/CtaBanner.astro';
 import { headerData } from '~/navigation';
 
 const metadata = {
-  title: 'Product Configurator & CPQ for SAP Business One | UpBuff',
+  title: 'ERP Product Configurator & CPQ for SAP Business One | UpBuff',
   description:
-    'Product configurator & CPQ for SAP Business One & S/4HANA — rule-based configuration that automates quotes, pricing, and BOM generation, synced to SAP.',
+    'ERP product configurator & CPQ for SAP Business One & S/4HANA — rule-based configuration that automates quotes, pricing, and BOM generation, synced to SAP.',
   canonical: 'https://www.upbuff.com/products/erp-integrated-product-configurator/',
   robots: {
     index: true,
@@ -31,9 +31,9 @@ const metadata = {
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/products/erp-integrated-product-configurator',
-    title: 'Product Configurator & CPQ for SAP Business One | UpBuff',
+    title: 'ERP Product Configurator & CPQ for SAP Business One | UpBuff',
     description:
-      'Rule-based product configuration integrated with SAP for accurate quotations, BOM automation, and seamless order creation.',
+      'Rule-based ERP product configuration integrated with SAP for accurate quotations, BOM automation, and seamless order creation.',
     image: 'https://www.upbuff.com/images/product-configurator-og.jpg',
   },
 };
@@ -101,10 +101,18 @@ const metadata = {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is an ERP-Integrated Product Configurator?",
+          "name": "What is an ERP product configurator?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It is a rule-based configuration engine integrated with SAP that automates quotations, pricing validation, BOM generation, and order creation without modifying ERP core."
+            "text": "An ERP product configurator is a rule-based configuration engine integrated with your ERP that automates quotations, pricing validation, BOM generation, and order creation. Because it works on live ERP master data, every configured product is buildable and correctly priced, without modifying the ERP core."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is CPQ for SAP Business One?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CPQ (Configure, Price, Quote) for SAP Business One lets sales teams configure complex products, apply SAP-consistent pricing, and generate quotations that post directly into SAP B1 as documents, eliminating spreadsheet quoting and manual re-entry."
           }
         },
         {
@@ -507,8 +515,12 @@ const metadata = {
     subtitle="Get answers to common questions about the UpBuff ERP-Integrated Product Configurator and its SAP integration."
     items={[
       {
-        question: 'What is an ERP-Integrated Product Configurator?',
-        answer: 'It is a rule-based configuration system that integrates directly with SAP to generate validated quotations, BOMs, and sales orders without manual re-entry.',
+        question: 'What is an ERP product configurator?',
+        answer: 'An ERP product configurator is a rule-based configuration system integrated with your ERP that generates validated quotations, BOMs, and sales orders from live master data — so every configured product is buildable and correctly priced, with no manual re-entry.',
+      },
+      {
+        question: 'What is CPQ for SAP Business One?',
+        answer: 'CPQ (Configure, Price, Quote) for SAP Business One lets sales teams configure complex products, apply SAP-consistent pricing, and generate quotations that post directly into SAP B1 as documents — replacing spreadsheet quoting entirely.',
       },
       {
         question: 'Is this similar to SAP Variant Configuration?',
