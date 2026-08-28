@@ -18,23 +18,23 @@ import CtaBanner from '~/components/widgets/CtaBanner.astro';
 import { headerData } from '~/navigation';
 
 const metadata = {
-  title: 'SAP Business One Integration & Generative AI Reporting Platform | UpBuff',
+  title: 'SAP Business One Integration: Service Layer & Custom Connectors | UpBuff',
   description:
-    'Integrate SAP Business One using Clean Core Service Layer APIs. Enable mobile execution for manufacturing, warehouse, field service, and sales — plus Generative AI-powered ERP intelligence without core modification.',
+    'Integrate SAP Business One with e-commerce, logistics, CRM, payment, and AI tools through official Service Layer APIs. Custom connectors and mobile execution with no core modification.',
   canonical: 'https://www.upbuff.com/integrations/sap-business-one/',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/integrations/sap-business-one/',
-    title: 'SAP Business One Integration & Generative AI Reporting | UpBuff',
-    description: 'Extend SAP Business One with Clean Core execution workflows and secure Generative AI-powered ERP intelligence — upgrade-safe, API-first.',
+    title: 'SAP Business One Integration: Service Layer & Custom Connectors | UpBuff',
+    description: 'Connect e-commerce, logistics, CRM, payment, and AI tools to SAP Business One through official Service Layer APIs — upgrade-safe, API-first.',
     image: 'https://www.upbuff.com/images/sap-business-one-gen-ai.png',
     site_name: 'UpBuff',
     locale: 'en_US',
   },
   twitter: {
     cardType: 'summary_large_image',
-    title: 'SAP Business One Integration & Gen AI Reporting | UpBuff',
+    title: 'SAP Business One Integration | UpBuff',
     description: 'Clean Core SAP Business One execution — mobile workflows, warehouse mobility, and Generative AI ERP intelligence.',
     site: '@upbufftech',
   },
@@ -102,7 +102,7 @@ const metadata = {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "SAP Business One Integration & Generative AI Reporting Platform | UpBuff",
+      "name": "SAP Business One Integration: Service Layer & Custom Connectors | UpBuff",
       "description": "Integrate SAP Business One using Clean Core Service Layer APIs. Enable mobile execution for manufacturing, warehouse, field service, and sales — plus Generative AI-powered ERP intelligence.",
       "url": "https://www.upbuff.com/integrations/sap-business-one/",
       "inLanguage": "en-US",
@@ -194,6 +194,21 @@ const metadata = {
           "@type": "Question",
           "name": "Can UpBuff work offline with SAP Business One?",
           "acceptedAnswer": { "@type": "Answer", "text": "Yes. Warehouse scanning and field service workflows continue in offline mode and sync automatically to SAP Business One via Service Layer when connectivity is restored — critical for shopfloor and remote environments." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I integrate a third-party application with SAP Business One?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Any application with an API — e-commerce platforms, courier and shipping services, CRMs, payment gateways, BI tools, or AI assistants — can be connected to SAP Business One through the Service Layer. Where no off-the-shelf connector exists, UpBuff builds custom connectors that keep SAP B1 as the untouched system of record." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the SAP Business One Service Layer?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The Service Layer is SAP's official REST API for SAP Business One. It exposes business objects like orders, items, and business partners over HTTPS with full authorization, making it the safe, upgrade-proof way to integrate external applications — no direct database access, no core modification." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you build a custom SAP Business One integration for our tools?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. UpBuff designs and builds custom SAP Business One integrations end to end — assessment, connector development against the Service Layer, testing against your data, and go-live with monitoring. Typical integrations are live in 3–6 weeks." }
         }
       ]
     })} />
@@ -500,6 +515,48 @@ const metadata = {
   />
 
   <!-- ══════════════════════════════════════════════════════════
+       11a. WHAT CAN YOU INTEGRATE
+       ══════════════════════════════════════════════════════════ -->
+  <FeaturesGrid
+    tagline="Integration Scope"
+    title="What can you integrate with SAP Business One?"
+    subtitle="Anything with an API can talk to SAP Business One through the Service Layer. These are the categories we connect most often — and if your tool isn't listed, we build custom connectors for exactly that reason."
+    columns={3}
+    items={[
+      {
+        icon: 'tabler:shopping-cart',
+        title: 'E-Commerce & Web Stores',
+        description: 'Shopify, WooCommerce, Magento, and custom B2B portals — web orders posted into SAP B1 as Sales Orders, with stock and prices flowing back in real time.',
+      },
+      {
+        icon: 'tabler:truck',
+        title: 'Couriers & Logistics Platforms',
+        description: 'Shipping and courier APIs for dispatch, label printing, and delivery tracking — connected to SAP B1 deliveries so fulfilment status lives in the ERP.',
+      },
+      {
+        icon: 'tabler:users',
+        title: 'CRM & Marketing Tools',
+        description: 'Sync customers, quotations, and activities between SAP B1 and your CRM — or use UpBuff\'s ERP-integrated CRM that lives on SAP data natively.',
+      },
+      {
+        icon: 'tabler:credit-card',
+        title: 'Payments & Banking',
+        description: 'Payment gateways and bank statement feeds connected to SAP B1 for incoming payments and faster reconciliation.',
+      },
+      {
+        icon: 'tabler:chart-bar',
+        title: 'BI & Analytics',
+        description: 'Power BI and reporting platforms fed by clean SAP B1 data — plus UpBuff\'s Generative AI layer for plain-English answers without report development.',
+      },
+      {
+        icon: 'tabler:robot',
+        title: 'AI Assistants & Custom Apps',
+        description: 'Connect AI assistants and bespoke applications to SAP B1 through governed, read-only Service Layer access — validation and audit built in.',
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════════
        11. TESTIMONIALS
        ══════════════════════════════════════════════════════════ -->
   <TestimonialsGrid
@@ -578,6 +635,18 @@ const metadata = {
       {
         question: 'Can UpBuff work offline with SAP Business One?',
         answer: 'Yes. Warehouse scanning and field service workflows run offline and sync automatically to SAP Business One via Service Layer when connectivity resumes — critical for shopfloor and remote environments with unreliable connectivity.',
+      },
+      {
+        question: 'Can I integrate a third-party application with SAP Business One?',
+        answer: 'Yes. Any application with an API — e-commerce platforms, courier and shipping services, CRMs, payment gateways, BI tools, or AI assistants — can be connected to SAP Business One through the Service Layer. Where no off-the-shelf connector exists, UpBuff builds custom connectors that keep SAP B1 as the untouched system of record.',
+      },
+      {
+        question: 'What is the SAP Business One Service Layer?',
+        answer: 'The Service Layer is SAP\'s official REST API for SAP Business One. It exposes business objects like orders, items, and business partners over HTTPS with full authorization, making it the safe, upgrade-proof way to integrate external applications — no direct database access, no core modification.',
+      },
+      {
+        question: 'Can you build a custom SAP Business One integration for our tools?',
+        answer: 'Yes. UpBuff designs and builds custom SAP Business One integrations end to end — starting with an assessment of your systems, then connector development against the Service Layer, testing against your data, and go-live with monitoring. Typical integrations are live in 3–6 weeks.',
       },
     ]}
   />

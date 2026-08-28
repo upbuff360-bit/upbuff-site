@@ -36,7 +36,7 @@ A manufacturing warehouse is not one warehouse — it is several flows sharing a
 
 - **Inbound raw materials.** Receiving against purchase orders, supplier batch capture, QC hold, and putaway. If GRPO is keyed at a desk hours later, purchasing and planning run on stale numbers.
 - **Production issue.** Materials issued to production orders must be the *right batch* in the *right quantity*. Manual issue is where batch traceability usually breaks.
-- **Work-in-progress (WIP).** Components sitting at line-side stores are invisible if movements aren't captured as they happen.
+- **Work-in-progress (WIP).** Components sitting at line-side stores are invisible if movements aren't captured as they happen — the same gap [shop floor data capture](/blog/shop-floor-data-capture-sap-business-one) closes on the production side.
 - **Finished goods.** Receipt from production with new batch/lot numbers, then putaway, picking, and dispatch.
 - **Traceability across all of it.** Food, pharma, chemicals, and electronics manufacturers must trace a batch from supplier delivery through production to the customer shipment — in both directions — for audits and recalls.
 

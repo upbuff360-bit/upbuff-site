@@ -15,8 +15,8 @@ tags:
   - purchasing
   - erp-execution-layer
 metadata:
-  title: "GRPO in SAP Business One: Goods Receipt PO Guide | UpBuff"
-  description: "What GRPO (Goods Receipt PO) means in SAP Business One, how to create one, GRPO vs Goods Receipt, and how barcode scanning makes receiving fast and accurate."
+  title: "What Is GRPO in SAP Business One? Meaning, Steps & Accounting"
+  description: "GRPO (Goods Receipt PO) records incoming goods against a purchase order in SAP B1. See exactly what it posts, GRPO vs Goods Receipt, and how to create one step by step."
   canonical: https://www.upbuff.com/blog/grpo-sap-business-one
 ---
 
