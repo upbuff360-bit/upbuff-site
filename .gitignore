@@ -2,6 +2,9 @@
 dist/
 .output/
 
+# Claude-generated output
+/Claude outputs/
+
 # dependencies
 node_modules/
 

@@ -11,6 +11,7 @@ import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
 import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
 import HeroChatConsole from '~/components/widgets/HeroChatConsole.astro';
+import ParticleGlobe from '~/components/widgets/ParticleGlobe.astro';
 import Steps from '~/components/widgets/Steps.astro';
 
 import { headerData } from '~/navigation';
@@ -119,6 +120,7 @@ const metadata = {
     ]}
   >
     <Fragment slot="background">
+      <ParticleGlobe />
       <div
         class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px]"
         style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.15) 0%,transparent 70%);"

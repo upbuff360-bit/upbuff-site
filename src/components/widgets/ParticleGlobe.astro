@@ -1,0 +1,432 @@
+---
+/**
+ * ParticleGlobe.astro
+ * ------------------------------------------------------------------
+ * A sphere of small dashes that slowly rotates, floats, and reacts to
+ * the cursor. Points sit on an evenly-spaced Fibonacci lattice, spin
+ * around the Y axis, tilt, and project with perspective — depth drives
+ * each dash's size and opacity, which is what gives the globe volume.
+ *
+ * On pointer move the globe leans toward the cursor and nearby dashes
+ * are pushed outward, then spring back.
+ *
+ * Purely decorative: pointer-events disabled, aria-hidden, and it draws
+ * a single static frame when `prefers-reduced-motion: reduce` is set.
+ *
+ * Usage:
+ *   <Fragment slot="background">
+ *     <ParticleGlobe />
+ *   </Fragment>
+ */
+
+export interface Props {
+  /** Number of dashes on the sphere. */
+  count?: number;
+  /** Dash colours, picked at random per point. */
+  colors?: string[];
+  /** On-screen globe radius as a fraction of min(width, height). */
+  radiusScale?: number;
+  /** Hard ceiling on the radius in px, for very large heroes. */
+  maxRadius?: number;
+  /** Nudge the globe centre, as a fraction of width / height. */
+  offsetX?: number;
+  offsetY?: number;
+  /** Auto-rotation speed in radians per second. */
+  spinSpeed?: number;
+  /** Resting tilt in radians. */
+  tilt?: number;
+  /** Vertical float in px, and its speed. */
+  floatAmp?: number;
+  floatSpeed?: number;
+  /** Cursor influence radius (px) and push strength. */
+  cursorRadius?: number;
+  cursorStrength?: number;
+  /** How far the globe leans toward the pointer. */
+  parallax?: number;
+  /** Overall dash opacity multiplier. */
+  brightness?: number;
+  /** Soft coloured halo behind the globe. Set false to remove. */
+  halo?: boolean;
+  /** CSS colour of that halo. */
+  haloColor?: string;
+}
+
+const {
+  count = 820,
+  colors = ['#27AE61', '#27AE61', '#188B4A', '#4ADE80', '#8FE8B4'],
+  radiusScale = 0.42,
+  maxRadius = 400,
+  offsetX = 0,
+  offsetY = 0,
+  spinSpeed = 0.055,
+  tilt = -0.32,
+  floatAmp = 10,
+  floatSpeed = 0.42,
+  cursorRadius = 150,
+  cursorStrength = 34,
+  parallax = 0.3,
+  brightness = 0.95,
+  halo = true,
+  haloColor = 'rgba(39, 174, 97, 0.10)',
+} = Astro.props;
+
+const config = JSON.stringify({
+  count, colors, radiusScale, maxRadius, offsetX, offsetY,
+  spinSpeed, tilt, floatAmp, floatSpeed,
+  cursorRadius, cursorStrength, parallax, brightness,
+});
+---
+
+{halo && (
+  <div
+    class="particle-globe-halo"
+    style={`background: radial-gradient(circle, ${haloColor} 0%, transparent 62%);`}
+    aria-hidden="true"
+  />
+)}
+
+<canvas
+  class="particle-globe"
+  data-particle-globe
+  data-config={config}
+  aria-hidden="true"></canvas>
+
+<style>
+  .particle-globe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+  }
+
+  .particle-globe-halo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(78vw, 700px);
+    height: min(78vw, 700px);
+    pointer-events: none;
+  }
+</style>
+
+<script is:inline>
+/* ------------------------------------------------------------------
+ * Particle globe — a sphere of small dashes that slowly rotates,
+ * floats, and reacts to the cursor.
+ *
+ * Points are distributed evenly on a sphere (Fibonacci lattice), spun
+ * around the Y axis, tilted, then projected with perspective. Each dash
+ * is drawn along its local direction of travel, so the field reads as a
+ * rotating globe rather than a random scatter. Depth controls size and
+ * opacity, which is what gives it volume.
+ *
+ * Cursor: the globe tilts toward the pointer (parallax) and dashes near
+ * the cursor are pushed outward in screen space, then spring back.
+ * ------------------------------------------------------------------ */
+(function () {
+  function initParticleGlobe(canvas) {
+    if (canvas.dataset.pgInit === '1') return;
+    canvas.dataset.pgInit = '1';
+
+    var context2d = canvas.getContext('2d');
+    if (!context2d) return;
+    var ctx = context2d;
+
+    var cfg = {
+      count: 780,
+      colors: ['#27AE61', '#27AE61', '#188B4A', '#4ADE80', '#8FE8B4'],
+      // Radius of the globe *as drawn on screen*, as a fraction of
+      // min(width, height). Perspective growth is compensated for below,
+      // so 0.4 really does mean "80% of the short edge, edge to edge".
+      radiusScale: 0.4,
+      maxRadius: 420, // hard ceiling in px on very wide heroes
+      offsetX: 0, // nudge the globe centre, as a fraction of width
+      offsetY: 0, // …and of height
+      spinSpeed: 0.055, // radians / second
+      tilt: -0.32, // resting tilt in radians
+      floatAmp: 10, // vertical bob in px
+      floatSpeed: 0.42,
+      cursorRadius: 150,
+      cursorStrength: 34,
+      parallax: 0.3, // how far the globe leans toward the pointer
+      brightness: 1, // overall dash opacity multiplier
+    };
+    try {
+      var parsed = JSON.parse(canvas.dataset.config || '{}');
+      for (var k in parsed) if (Object.prototype.hasOwnProperty.call(parsed, k)) cfg[k] = parsed[k];
+    } catch (e) {
+      /* keep defaults */
+    }
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var pts = [];
+    var w = 0;
+    var h = 0;
+    var cx = 0;
+    var cy = 0;
+    var R = 0;
+    var raf = 0;
+    var running = false;
+    var pageVisible = true;
+    var onScreen = true;
+
+    // pointer state
+    var mx = -9999;
+    var my = -9999;
+    var hasPointer = false;
+
+    // eased camera
+    var spin = 0;
+    var tiltX = cfg.tilt;
+    var tiltY = 0;
+    var targetTiltX = cfg.tilt;
+    var targetTiltY = 0;
+
+    var FOV = 2.4;
+    var lastT = 0;
+
+    function rand(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    function build() {
+      var rect = canvas.getBoundingClientRect();
+      w = Math.max(1, Math.round(rect.width));
+      h = Math.max(1, Math.round(rect.height));
+
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      cx = w / 2 + w * cfg.offsetX;
+      cy = h / 2 + h * cfg.offsetY;
+
+      // Points nearest the camera are magnified by FOV / (FOV - 1).
+      // Divide it out so radiusScale describes the on-screen size.
+      var perspMax = FOV / (FOV - 1);
+      var target = Math.min(Math.min(w, h) * cfg.radiusScale, cfg.maxRadius);
+      R = target / perspMax;
+
+      if (pts.length !== cfg.count) {
+        pts = [];
+        var golden = Math.PI * (3 - Math.sqrt(5));
+        for (var i = 0; i < cfg.count; i++) {
+          var y = 1 - (i / Math.max(1, cfg.count - 1)) * 2; // 1 → -1
+          var ring = Math.sqrt(Math.max(0, 1 - y * y));
+          var theta = golden * i;
+          pts.push({
+            x: Math.cos(theta) * ring,
+            y: y,
+            z: Math.sin(theta) * ring,
+            color: cfg.colors[(Math.random() * cfg.colors.length) | 0],
+            len: rand(0.75, 1.45), // dash length multiplier
+            jit: rand(-0.5, 0.5), // stable angular jitter so it isn't too uniform
+            fade: rand(0.75, 1), // per-dash opacity variation
+            // screen-space displacement from the cursor
+            ox: 0,
+            oy: 0,
+            vx: 0,
+            vy: 0,
+          });
+        }
+      }
+    }
+
+    function frame(dt, time) {
+      // ── camera ────────────────────────────────────────────────────
+      spin += cfg.spinSpeed * dt;
+
+      if (hasPointer) {
+        targetTiltY = ((mx - cx) / Math.max(1, w / 2)) * cfg.parallax;
+        targetTiltX = cfg.tilt + ((my - cy) / Math.max(1, h / 2)) * cfg.parallax * 0.55;
+      } else {
+        targetTiltY = 0;
+        targetTiltX = cfg.tilt;
+      }
+      tiltY += (targetTiltY - tiltY) * Math.min(1, dt * 2.4);
+      tiltX += (targetTiltX - tiltX) * Math.min(1, dt * 2.4);
+
+      // gentle float
+      var bob = Math.sin(time * cfg.floatSpeed) * cfg.floatAmp;
+      var bobX = Math.cos(time * cfg.floatSpeed * 0.62) * cfg.floatAmp * 0.45;
+      var ocx = cx + bobX;
+      var ocy = cy + bob;
+
+      var sa = Math.sin(spin + tiltY);
+      var ca = Math.cos(spin + tiltY);
+      var st = Math.sin(tiltX);
+      var ct = Math.cos(tiltX);
+
+      var CR = cfg.cursorRadius;
+      var CR2 = CR * CR;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.lineCap = 'round';
+
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+
+        // ── rotate: Y axis (spin), then X axis (tilt) ──────────────
+        var x1 = p.x * ca + p.z * sa;
+        var z1 = -p.x * sa + p.z * ca;
+        var y1 = p.y;
+
+        var y2 = y1 * ct - z1 * st;
+        var z2 = y1 * st + z1 * ct;
+
+        // ── perspective projection ─────────────────────────────────
+        var persp = FOV / (FOV + z2);
+        var sx = ocx + x1 * R * persp;
+        var sy = ocy + y2 * R * persp;
+
+        // ── local direction of travel → dash angle ─────────────────
+        // d/dspin of the rotation gives the tangent along the latitude
+        var vx = z1;
+        var vyRaw = -x1;
+        var vy = vyRaw * st; // tilt applied to the tangent's y component
+        var ang = Math.atan2(vy, vx) + p.jit;
+
+        // ── cursor repulsion in screen space ───────────────────────
+        var ax = 0;
+        var ay = 0;
+        if (hasPointer) {
+          var dx = sx + p.ox - mx;
+          var dy = sy + p.oy - my;
+          var d2 = dx * dx + dy * dy;
+          if (d2 < CR2) {
+            var d = Math.sqrt(d2) || 0.0001;
+            var falloff = 1 - d / CR;
+            var push = falloff * falloff * cfg.cursorStrength;
+            ax = (dx / d) * push * 0.14;
+            ay = (dy / d) * push * 0.14;
+            ang += falloff * 0.9; // swirl a little near the pointer
+          }
+        }
+
+        // spring the displacement back to zero
+        p.vx += -p.ox * 0.055 + ax;
+        p.vy += -p.oy * 0.055 + ay;
+        p.vx *= 0.87;
+        p.vy *= 0.87;
+        p.ox += p.vx;
+        p.oy += p.vy;
+
+        // ── depth shading ──────────────────────────────────────────
+        // z2 runs -1 (front, toward viewer) → +1 (back)
+        var depth = (1 - z2) / 2; // 0 back … 1 front
+        var alpha = (0.07 + 0.55 * depth * depth) * p.fade * cfg.brightness;
+        var len = (3 + 6.5 * depth) * p.len * persp;
+        var lw = (0.8 + 1.25 * depth) * persp;
+
+        var hl = len / 2;
+        var c = Math.cos(ang) * hl;
+        var s = Math.sin(ang) * hl;
+        var px = sx + p.ox;
+        var py = sy + p.oy;
+
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = p.color;
+        ctx.lineWidth = lw;
+        ctx.beginPath();
+        ctx.moveTo(px - c, py - s);
+        ctx.lineTo(px + c, py + s);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = 1;
+    }
+
+    function step(t) {
+      if (!lastT) lastT = t;
+      var dt = Math.min(0.05, (t - lastT) / 1000); // clamp after tab switches
+      lastT = t;
+      frame(dt, t / 1000);
+      raf = requestAnimationFrame(step);
+    }
+
+    function start() {
+      if (running || reduceMotion) return;
+      running = true;
+      lastT = 0;
+      raf = requestAnimationFrame(step);
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(raf);
+    }
+
+    function sync() {
+      if (pageVisible && onScreen) start();
+      else stop();
+    }
+
+    function onPointerMove(e) {
+      if (e.pointerType === 'touch') return;
+      var rect = canvas.getBoundingClientRect();
+      mx = e.clientX - rect.left;
+      my = e.clientY - rect.top;
+      hasPointer = true;
+    }
+
+    function onPointerLeave() {
+      hasPointer = false;
+      mx = -9999;
+      my = -9999;
+    }
+
+    // ── wiring ──────────────────────────────────────────────────────
+    build();
+    frame(0, 0);
+
+    if (reduceMotion) return; // one static frame, no listeners, no loop
+
+    var host = canvas.closest('section') || canvas.parentElement || canvas;
+    host.addEventListener('pointermove', onPointerMove, { passive: true });
+    host.addEventListener('pointerleave', onPointerLeave, { passive: true });
+
+    var resizeTimer = 0;
+    var ro = new ResizeObserver(function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        build();
+        if (!running) frame(0, 0);
+      }, 150);
+    });
+    ro.observe(canvas);
+
+    var io = new IntersectionObserver(
+      function (entries) {
+        onScreen = entries[0] ? entries[0].isIntersecting : true;
+        sync();
+      },
+      { rootMargin: '120px' }
+    );
+    io.observe(canvas);
+
+    document.addEventListener('visibilitychange', function () {
+      pageVisible = !document.hidden;
+      sync();
+    });
+
+    sync();
+  }
+
+  function boot() {
+    var els = document.querySelectorAll('canvas[data-particle-globe]');
+    for (var i = 0; i < els.length; i++) initParticleGlobe(els[i]);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+  document.addEventListener('astro:page-load', boot);
+})();
+</script>

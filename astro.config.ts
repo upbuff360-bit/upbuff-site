@@ -28,6 +28,12 @@ export default defineConfig({
   adapter: vercel(),  
   site: 'https://www.upbuff.com',
 
+  // Canonical URL form: no trailing slash (matches SITE.trailingSlash in
+  // src/config.yaml, which drives getCanonical() and the sitemap).
+  // The Vercel adapter turns this into a 308 from /path/ -> /path for every
+  // page except the root, so the duplicate URL stops existing at the CDN.
+  trailingSlash: 'never',
+
   // 301 redirects for legacy (old WordPress) URLs → current pages.
   // Keeps old links/search-console entries consolidated onto live pages.
   redirects: {
