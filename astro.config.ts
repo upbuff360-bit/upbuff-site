@@ -77,6 +77,8 @@ export default defineConfig({
       HTML: {
         'html-minifier-terser': {
           removeAttributeQuotes: false,
+          // Preserve Cloudflare email-obfuscation opt-outs in the deployed HTML.
+          ignoreCustomFragments: [/<!--email_off-->[\s\S]*?<!--\/email_off-->/],
         },
       },
       Image: false,
