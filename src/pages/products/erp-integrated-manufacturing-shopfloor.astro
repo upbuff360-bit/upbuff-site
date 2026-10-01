@@ -31,23 +31,68 @@ const clusterWithImages = await Promise.all(
 );
 
 const metadata = {
-  title: 'Shopfloor Data Capture & MES for SAP | UpBuff',
+  title: 'Shop Floor Data Collection for SAP Business One | UpBuff',
   description:
-    'Shopfloor data capture & MES for SAP Business One & S/4HANA — live production tracking, material movements, and quality capture synced to SAP in real time.',
-  canonical: 'https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor/',
+    'Shop floor data collection for SAP Business One: capture confirmations, scrap, downtime and material issue at the work centre, posted to SAP in real time.',
+  canonical: 'https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor',
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     type: 'website',
-    url: 'https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor-touchpoints',
-    title: 'Shopfloor Data Capture & MES for SAP | UpBuff',
+    url: 'https://www.upbuff.com/products/erp-integrated-manufacturing-shopfloor',
+    title: 'Shop Floor Data Collection for SAP Business One | UpBuff',
     description:
-      'Real-time shopfloor execution integrated with SAP PP and MM. Improve production visibility and manufacturing control.',
+      'Collect production data at the work centre and post it to SAP Business One production orders in real time — no paper, no re-entry, no ERP core changes.',
     image: 'https://www.upbuff.com/images/erp-manufacturing-og.jpg',
   },
 };
+
+// One source of truth for the visible FAQ and the FAQPage schema,
+// so the two can never drift apart.
+const faqs = [
+  {
+    question: 'What is shop floor data collection?',
+    answer:
+      'Shop floor data collection (SFDC), also called shop floor data capture, means recording production events the moment they happen. That includes operation start and finish, good quantity, scrap, downtime, labour time and material used. Operators record each event at the work centre on a tablet, terminal or phone. It then posts to the production order straight away. No more paper route cards keyed in at the end of the shift.',
+  },
+  {
+    question: 'Does SAP Business One have shop floor data collection built in?',
+    answer:
+      'No. SAP Business One manages bills of materials, production orders, issue for production, receipt from production and costing. But it has no native operator terminals and no real-time data capture from the work centre. That layer comes from an add-on that connects through the SAP B1 Service Layer and DI API. UpBuff is that add-on.',
+  },
+  {
+    question: 'What data can you collect on the shop floor?',
+    answer:
+      'You can collect operation confirmations against production orders, good quantity, and scrap and rejects with reason codes. You can also record downtime with reasons, operator and work-centre time, and quality check results. Operators issue material by scanning the batch, and receive finished goods with their batch numbers. UpBuff ties every record to the right production order before it reaches SAP.',
+  },
+  {
+    question: 'What is the difference between shop floor data collection and MES?',
+    answer:
+      'Shop floor data collection is the capture layer. It gets accurate production data off the floor and into the ERP in real time. A full MES (manufacturing execution system) adds detailed scheduling, sequencing and process control on top. Most SAP Business One manufacturers need the capture layer first. Without accurate floor data, no MES or planning tool can work. UpBuff covers data collection, plus MES-style features such as live work-centre status and dashboards.',
+  },
+  {
+    question: 'Which devices does it run on?',
+    answer:
+      'It runs on Android and iOS phones and tablets, rugged handheld scanners, industrial touch terminals and any modern web browser. Most plants use a mix: fixed terminals at machines and handhelds for material issue and receipts.',
+  },
+  {
+    question: 'Does it work if the shop floor has no network coverage?',
+    answer:
+      'Yes. Operators keep recording when connectivity drops. Transactions queue on the device and post to SAP in order, without duplicates, as soon as the connection returns.',
+  },
+  {
+    question: 'Can machines send data automatically?',
+    answer:
+      'Yes. Machine signals and IoT sensors can feed counts and status into UpBuff alongside operator input. UpBuff matches each signal to the right production order before posting it to SAP.',
+  },
+  {
+    question: 'Does it work with SAP S/4HANA, ECC, Oracle and Epicor as well?',
+    answer:
+      'Yes. SAP Business One connects through the Service Layer. SAP S/4HANA connects through OData, BAPI and IDoc, and ECC through BAPI and IDoc. Oracle and Epicor connect through their standard integration services. In every case the ERP stays the system of record, and UpBuff never modifies its core.',
+  },
+];
 ---
 
 <Layout metadata={metadata}>
@@ -79,10 +124,10 @@ const metadata = {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints",
+      "name": "UpBuff Shop Floor Data Collection for SAP Business One",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Industrial Terminals",
-      "description": "ERP-integrated manufacturing execution solution extending SAP PP and MM modules with real-time shopfloor data synchronization.",
+      "description": "Shop floor data collection for SAP Business One, SAP S/4HANA, ECC, Oracle and Epicor: operation confirmations, scrap, downtime, labour time and material issue captured at the work centre and posted to the ERP in real time, without modifying the ERP core.",
       "offers": {
         "@type": "Offer",
         "price": "Contact for pricing",
@@ -92,32 +137,11 @@ const metadata = {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is ERP-Integrated Manufacturing & Shopfloor Touchpoints?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "It extends SAP Production Planning and Materials Management modules into real-time shopfloor operations without modifying SAP core."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does it integrate with SAP S/4HANA PP?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. It integrates securely with SAP S/4HANA, ECC, and SAP Business One using OData, IDoc, BAPI, and Service Layer APIs."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is material movement synchronized with SAP?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Goods issue, goods receipt, and material consumption postings follow SAP MM configuration and validation rules."
-          }
-        }
-      ]
+      "mainEntity": faqs.map((f) => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+      })),
     })} />
   </Fragment>
 
@@ -128,16 +152,16 @@ const metadata = {
        Source: Hero2 tagline, title, subtitle, image, actions
        ══════════════════════════════════════════════════════════ -->
   <HeroOrbital
-    tagline="ERP-Integrated Manufacturing & Shopfloor Touchpoints"
-    title="Shopfloor Execution & MES for SAP Business One"
-    subtitle="UpBuff brings shopfloor data capture and MES-style execution to SAP Business One, SAP S/4HANA, and ECC — live production tracking, material movements, quality capture, and workforce updates in real time, feeding directly into SAP without modifying ERP core."
+    tagline="Manufacturing &amp; Shop Floor · SAP Business One"
+    title="Shop Floor Data Collection for SAP Business One"
+    subtitle="Shop floor data collection means recording production events as they happen: confirmations, good quantity, scrap, downtime and material used. UpBuff captures them at the work centre on tablets, terminals and phones. Each one posts to SAP Business One production orders in real time, without modifying the ERP core."
     actions={[
-      { text: 'Request Demo',       href: '/contact', variant: 'primary' },
-      { text: 'Talk to ERP Expert', href: '/contact', variant: 'secondary' },
+      { text: 'Book a Demo',       href: '/request-demo', variant: 'primary' },
+      { text: 'See how it works', href: '#how-it-works', variant: 'secondary' },
     ]}
     image={{
       src: '/uploads/Epicore-Integrated-Manufacturing-Shopfloor.png',
-      alt: 'UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints',
+      alt: 'Shop floor data collection screens posting production confirmations to SAP Business One',
     }}
   />
 
@@ -163,24 +187,24 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <ProblemSplit
     tagline="The Problem"
-    title="SAP PP and MM stay locked inside ERP — while your shopfloor runs on paper"
-    subtitle="Each capability in UpBuff Manufacturing exists to solve a specific gap between SAP and the shopfloor. Here is what SAP-driven manufacturers face without a real-time execution layer."
+    title="Production runs all day. SAP finds out at the end of the shift."
+    subtitle="SAP Business One holds your production orders, BOMs and costing. But it gives operators no way to report from the floor. So teams write data on paper and key it in later. Everything downstream runs on yesterday's numbers."
     items={[
       {
-        title: 'No real-time production order visibility',
-        description: 'Operators work from printed job sheets — disconnected from live SAP production orders. Confirmations, scrap, and downtime are entered hours later, causing inaccurate WIP and delayed order closure.',
+        title: 'Production orders run on paper',
+        description: 'Operators work from printed route cards, and someone types the confirmations into SAP hours later. Nobody can say how far along an order is right now. WIP is a guess, and orders close late.',
       },
       {
-        title: 'Shopfloor data never reaches SAP automatically',
-        description: 'Machine-level and operator-level data — quantities, scrap, rejection, downtime — is captured on paper and manually keyed into SAP, creating errors, audit gaps, and reconciliation overhead.',
+        title: 'Scrap and downtime are never really recorded',
+        description: 'When a machine stops or quality rejects a batch, the reason ends up on a clipboard — or nowhere. Without that data, you cannot see where you lose capacity and material, let alone fix it.',
       },
       {
-        title: 'Material movements are delayed or missed',
-        description: 'Goods issue, backflush, and consumption postings happen after the fact — causing SAP inventory to diverge from physical stock, compounding costing errors and month-end closing pain.',
+        title: 'Material issue does not match the line',
+        description: 'Someone posts issue for production after the fact, or SAP backflushes it from the BOM. SAP stock drifts away from what is physically on the floor. Production costing is wrong before month-end even starts.',
       },
       {
-        title: 'Shopfloor quality stays disconnected from SAP QM',
-        description: 'Quality checkpoints and inspection results are captured separately and never flow into SAP Quality Management — creating compliance blind spots and missing traceability in batch and lot records.',
+        title: 'Batch records break at production',
+        description: 'Most plants trace batches at receipt and at dispatch, but not through production, where the plant consumes and creates them. That gap is exactly where audits, recalls and customer complaints get expensive.',
       },
     ]}
   />
@@ -192,32 +216,32 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FeaturesCarousel
     tagline="Use Cases"
-    title="Discover how shopfloor data capture & MES transform SAP-driven production."
-    subtitle="Each industry scenario maps directly to proven execution patterns across SAP S/4HANA, ECC, and SAP Business One environments."
+    title="Shop floor data collection for every kind of production"
+    subtitle="Whatever you make, shop floor data collection solves the same problem: the floor knows things SAP does not. These are the patterns we see most."
     items={[
       {
         gradient: '#ffffff',
-        title: 'Discrete Manufacturing: Improve Production Order Visibility',
-        description: 'Connect work centers directly with SAP PP for accurate confirmations and reduced delays. Achieve reduced production lag, accurate WIP visibility, faster order closure, and improved traceability.',
+        title: 'Discrete Manufacturing: Live Production Order Status',
+        description: 'Operators confirm each operation at the work centre as they finish it. Supervisors see real WIP by order and machine, and every scrap entry carries a reason. Orders close the day they finish, not the week after.',
         image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Discrete-Manufacturing.png" class="w-full object-top" alt="Discrete Manufacturing SAP PP Integration" loading="lazy" /></div>',
       },
       {
         gradient: 'linear-gradient(135deg, #065f46 0%, #0f766e 100%)',
-        title: 'Process Manufacturing: Real-Time Batch & Lot Control',
-        description: 'Enable batch-level traceability and consumption tracking aligned with SAP. Achieve reduced material variance, improved compliance, accurate yield tracking, and automated reporting.',
+        title: 'Process Manufacturing: Batch & Lot Control Through Production',
+        description: 'Issue ingredients by scanning the exact batch, and record actual consumption and yield. Receive finished goods with new batch numbers linked to their inputs. That gives you full genealogy from supplier batch to customer shipment.',
         image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Process-Manufacturing.png" class="w-full object-top" alt="Process Manufacturing Batch Control SAP" loading="lazy" /></div>',
       },
       {
         gradient: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
-        title: 'Multi-Plant Enterprises: Standardize Global Manufacturing Execution',
-        description: 'Maintain SAP-driven governance across plants while enabling localized execution. Centralized production monitoring, plant-level performance analytics, standardized workflows, and audit-ready reporting.',
+        title: 'Multi-Plant Operations: One Way of Collecting Data, Every Site',
+        description: 'Roll the same work-centre screens and reason codes out to every plant. Output, scrap and downtime then compare cleanly across sites. Each plant still posts to its own warehouses and production orders in SAP.',
         image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/Multi-Plant-Enterprises.png" class="w-full object-top" alt="Multi-Plant Manufacturing SAP Governance" loading="lazy" /></div>',
       },
       {
         gradient: 'linear-gradient(135deg, #003f7c 0%, #0070c0 100%)',
-        title: 'SME Manufacturing (SAP Business One): Simplify Shopfloor Control',
-        description: 'Bring structured execution into smaller manufacturing environments using SAP B1. Enable digital production tracking, inventory accuracy, reduced paperwork, and faster month-end closing.',
-        image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/SME-Manufacturing.png" class="w-full object-top" alt="SME Manufacturing SAP Business One Shopfloor" loading="lazy" /></div>',
+        title: 'Growing Manufacturers on SAP Business One: Paper to Real Time',
+        description: 'Replace route cards and end-of-shift data entry with a tablet at each work centre. No new ERP, no MES project — just accurate production data in SAP Business One, the day you go live.',
+        image: '<div class="w-full h-full overflow-hidden"><img src="/uploads/SME-Manufacturing.png" class="w-full object-top" alt="Shop floor data collection for SAP Business One manufacturers" loading="lazy" /></div>',
       },
     ]}
   />
@@ -229,39 +253,39 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FeaturesGrid
     id="features"
-    tagline="Why UpBuff Manufacturing"
-    title="Why choose UpBuff for shopfloor execution & MES on SAP?"
-    subtitle="Each capability enhances SAP manufacturing modules while preserving ERP integrity."
+    tagline="What You Can Collect"
+    title="Every production event, captured once, at the work centre"
+    subtitle="UpBuff ties each record to the right SAP production order and posts it the moment it happens. Nobody types it in again."
     items={[
       {
-        icon: 'tabler:database',
-        title: 'Native SAP PP & MM Integration (S/4HANA, ECC, SAP B1)',
-        description: 'Secure bi-directional integration using OData, IDoc, BAPI, and Service Layer APIs. No SAP customization required.',
-      },
-      {
         icon: 'tabler:clipboard-check',
-        title: 'Real-Time Production Order Execution',
-        description: 'Operators update production orders, confirmations, and status directly from tablets or industrial terminals — instantly synchronized with SAP.',
+        title: 'Operation confirmations',
+        description: 'Start, pause and complete operations against SAP production orders from a tablet or terminal at the machine. Order status in SAP is always current.',
       },
       {
-        icon: 'tabler:device-desktop-analytics',
-        title: 'Shopfloor Data Capture & Workstation Logging',
-        description: 'Capture machine-level and operator-level data including production quantities, scrap & rejection, downtime reasons, and batch traceability. All posted back to SAP automatically.',
+        icon: 'tabler:package',
+        title: 'Good quantity, scrap & rejects',
+        description: 'Report output as you produce it, with a reason code on every scrap and reject. You measure your losses instead of estimating them.',
       },
       {
-        icon: 'tabler:refresh',
-        title: 'Material Issue & Consumption Sync',
-        description: 'Record material movements (GI/GR, backflush, consumption) in real time — fully aligned with SAP inventory logic.',
+        icon: 'tabler:clock-pause',
+        title: 'Downtime & reasons',
+        description: 'Log when a work centre stops and why — changeover, breakdown, no material, no operator. The data you need to recover lost capacity.',
+      },
+      {
+        icon: 'tabler:users',
+        title: 'Operator & work-centre time',
+        description: 'Capture who worked on which operation, and for how long. You get actual labour and machine time against each production order.',
+      },
+      {
+        icon: 'tabler:barcode',
+        title: 'Material issue by scan',
+        description: 'Issue components to production orders by scanning item and batch. Consumption in SAP then matches what the line actually used.',
       },
       {
         icon: 'tabler:certificate',
-        title: 'Quality & Inspection Integration',
-        description: 'Integrate shopfloor quality checkpoints with SAP Quality Management workflows.',
-      },
-      {
-        icon: 'tabler:chart-bar',
-        title: 'Live Production Visibility Dashboards',
-        description: 'Provide supervisors and plant managers with real-time dashboards integrated with SAP master and transactional data.',
+        title: 'Receipt from production & quality checks',
+        description: 'Receive finished goods with new batch numbers linked to their inputs. Record quality check results at the point of production.',
       },
     ]}
   />
@@ -272,10 +296,11 @@ const metadata = {
        tagline, title, all 4 items, and image taken from original.
        ══════════════════════════════════════════════════════════ -->
   <ContentSplitCard
-    tagline="Built for SAP Manufacturing Enterprises"
-    title="It Enhances SAP — It Does Not Replace It."
-    cardTitle="Native OData, IDoc, BAPI & Service Layer — real-time, bi-directional, upgrade-safe"
-    cardDescription="UpBuff connects to SAP S/4HANA Production Planning via OData, IDoc, and BAPI. SAP ECC via BAPI and IDoc. SAP Business One via Service Layer. Every shopfloor confirmation, material movement, and quality record flows back into SAP as the authoritative system of record — with no core modifications required and no upgrade risk."
+    id="how-it-works"
+    tagline="How It Works With SAP Business One"
+    title="It extends SAP Business One. It never modifies it."
+    cardTitle="Release in SAP. Execute on the floor. Post back in real time."
+    cardDescription="When you release a production order in SAP Business One, it appears on the work-centre screen. Operators issue materials by scanning, confirm each operation, and report good quantity, scrap and downtime. Then they receive finished goods with their batch numbers. Every event posts to SAP through the official <a href='https://help.sap.com/docs/SAP_BUSINESS_ONE/f110a154dd0f4c20bf7f3ebca9eeb794/44fda5d585e94b0bbd9d711584db0b96.html' target='_blank' rel='noopener' class='underline'>SAP Business One Service Layer</a> as it happens. If the network drops, events queue on the device. SAP stays the system of record, and UpBuff installs nothing inside it, so upgrades stay safe. Issue and receipt from production are also where the shop floor meets the stores. See how <a href='/products/erp-integrated-warehouse-inventory' class='underline'>UpBuff's warehouse management for SAP Business One</a> handles that side."
     cardImage="/uploads/SAP-Compatibility-Manufacturing-Shopfloor.png"
     cardGradient="linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)"
     testimonial={{
@@ -287,18 +312,18 @@ const metadata = {
     features={[
       {
         icon: 'tabler:check',
-        title: 'Extends SAP S/4HANA Production Planning (PP)',
-        description: 'Full integration with SAP S/4HANA PP using OData, IDoc, BAPI, and secure APIs for real-time production execution.',
+        title: 'SAP Business One',
+        description: 'Production orders, issue for production and receipt from production, through the Service Layer and DI API. Runs on SQL Server or HANA.',
       },
       {
         icon: 'tabler:check',
-        title: 'Extends SAP ECC PP & MM',
-        description: 'Native integration for real-time synchronization across manufacturing and materials management.',
+        title: 'SAP S/4HANA & ECC',
+        description: 'The same shop floor screens against SAP PP and MM, connected through OData, BAPI and IDoc.',
       },
       {
         icon: 'tabler:check',
-        title: 'Extends SAP Business One Manufacturing',
-        description: 'Structured shopfloor execution for SME manufacturing environments using SAP B1.',
+        title: 'Oracle & Epicor',
+        description: 'Connected through their standard integration services — so the shop floor layer survives an ERP change.',
       },
     ]}
   />
@@ -312,23 +337,23 @@ const metadata = {
        Images use the original 4 use case images.
        ══════════════════════════════════════════════════════════ -->
   <FeaturesHighlights
-    tagline="Platform Pillars"
-    title="Three pillars of real-time shopfloor execution"
-    subtitle="Each pillar connects a key SAP manufacturing module directly to the shopfloor — without modifying ERP core."
+    tagline="What Changes"
+    title="What changes when you connect the shop floor to SAP"
+    subtitle="Three things plants notice in the first weeks after shop floor data capture goes live."
     items={[
       {
-        title: 'Native SAP Integration & Real-Time Production Execution',
-        description: 'Secure bi-directional integration using OData, IDoc, BAPI, and Service Layer APIs — no SAP customization required. Operators update production orders, confirmations, and status directly from tablets or industrial terminals, instantly synchronized with SAP. Live production visibility dashboards give supervisors and plant managers real-time insight into every work center.',
+        title: 'You can see production as it happens',
+        description: 'Live work-centre status — running, idle, down — and output against plan, from the same data that posts to SAP. Supervisors stop walking the floor to find out where an order is, and planners stop promising dates from stale numbers.',
         image: '<div class="w-full h-full flex items-center justify-center bg-gray-50 p-6"><div class="bg-white rounded-2xl shadow-md w-72 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-center text-gray-700">Production Control · Live SAP Sync</div><div class="grid grid-cols-2 gap-3"><div class="bg-green-50 border border-green-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-01</span><span class="text-sm font-bold text-green-600">Running</span><span class="text-[10px] text-gray-400">Output: 120</span></div><div class="bg-yellow-50 border border-yellow-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-02</span><span class="text-sm font-bold text-yellow-600 animate-pulse">Idle</span><span class="text-[10px] text-gray-400">Waiting</span></div><div class="bg-green-50 border border-green-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-03</span><span class="text-sm font-bold text-green-600">Running</span><span class="text-[10px] text-gray-400">Output: 98</span></div><div class="bg-red-50 border border-red-200 rounded-lg p-2 flex flex-col items-center gap-1"><span class="text-[10px] text-gray-500">WC-04</span><span class="text-sm font-bold text-red-600 animate-pulse">Delay</span><span class="text-[10px] text-gray-400">Maintenance</span></div></div><div class="flex items-center justify-center gap-2 text-[10px] text-blue-600"><span class="w-2 h-2 bg-blue-500 rounded-full animate-ping"></span><span>Bi-directional SAP Sync Active</span></div></div></div>',
       },
       {
-        title: 'Shopfloor Data Capture & Workstation Logging',
-        description: 'Capture machine-level and operator-level data including production quantities, scrap & rejection, downtime reasons, and batch traceability — all posted back to SAP automatically. No paper. No re-entry. No delay between the shopfloor and SAP.',
+        title: 'Data goes in once, from the person who knows it',
+        description: 'The operator records quantities, scrap, downtime reasons and batches at the work centre. Nobody in the office has to reconstruct them from a route card. No paper, no re-entry, and no delay between the shop floor and SAP Business One.',
         image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-green-50 p-6"><div class="bg-white rounded-2xl shadow-md w-64 p-4 flex flex-col gap-4"><div class="text-xs font-semibold text-gray-700 text-center">Workstation · Data Capture</div><div class="flex flex-col gap-2"><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Produced</span><span class="font-semibold text-gray-800">120 pcs</span></div><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Scrap</span><span class="font-semibold text-red-600">5 pcs</span></div><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Downtime</span><span class="font-semibold text-yellow-600">12 min</span></div><div class="flex justify-between items-center text-[10px] text-gray-500"><span>Batch</span><span class="font-semibold text-blue-600">B-204</span></div></div><div class="grid grid-cols-3 gap-2 text-[10px]"><div class="bg-gray-100 rounded-lg py-2 text-center">+10</div><div class="bg-gray-100 rounded-lg py-2 text-center">+5</div><div class="bg-gray-100 rounded-lg py-2 text-center text-red-500">Scrap</div></div><div class="bg-green-600 text-white text-xs font-semibold py-2 rounded-lg text-center shadow animate-pulse">Submit to SAP</div><div class="text-[10px] text-green-600 text-center font-medium">Auto sync · No manual entry</div></div></div>',
       },
       {
-        title: 'Material Issue & Quality Inspection Sync',
-        description: 'Record material movements — GI/GR, backflush, and consumption — in real time, fully aligned with SAP MM inventory logic. Integrate shopfloor quality checkpoints directly with SAP Quality Management workflows for end-to-end batch traceability and compliance.',
+        title: 'Stock, costing and traceability line up',
+        description: 'When operators issue material by scan, SAP consumption matches the line. Stock and production costing are right without month-end corrections. UpBuff links every batch from input to output, giving you traceability through production, the step most audits find missing. Read more in our guide to <a href="/blog/batch-traceability-sap-business-one" class="underline">batch traceability in SAP Business One</a>.',
         image: '<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-6"><div class="bg-white rounded-2xl shadow-md w-64 p-4 flex flex-col items-center gap-4"><div class="text-xs font-semibold text-gray-700">Material Flow · Quality Check</div><div class="flex items-center justify-between w-full"><div class="flex flex-col items-center gap-1"><div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-[10px] text-gray-600">GI</div><span class="text-[10px] text-gray-500">Material</span></div><div class="relative flex-1 mx-2 h-[2px] bg-gray-200 overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-[shimmer_1.2s_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="w-12 h-12 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center text-[10px] text-blue-600 font-semibold animate-pulse">QC</div><span class="text-[10px] text-gray-500">Inspection</span></div><div class="relative flex-1 mx-2 h-[2px] bg-gray-200 overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-transparent via-green-400 to-transparent animate-[shimmer_1.2s_infinite]"></div></div><div class="flex flex-col items-center gap-1"><div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-[10px] text-green-700 font-semibold">SAP</div><span class="text-[10px] text-gray-500">Posted</span></div></div><div class="flex justify-between w-full text-[10px]"><span class="text-green-600 font-medium">✓ Passed</span><span class="text-red-500 font-medium animate-pulse">Rejected → Rework</span></div><div class="text-[10px] text-blue-600 text-center font-medium">SAP MM · QM Sync · Compliance enforced</div></div></div>',
       },
     ]}
@@ -339,7 +364,7 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <ToolsMarquee
     title="Integrates with your manufacturing ecosystem"
-    description="UpBuff connects your SAP PP and MM environment with the tools your production and operations teams already rely on."
+    description="UpBuff connects your SAP Business One production with the tools your teams already rely on. It works the same way with S/4HANA, ECC, Oracle and Epicor."
     speed={30}
     tools={[
       { name: 'SAP',             logo: '<img src="/uploads/logo/sap-integration-with-upbuff-crm.png" alt="SAP integration with UpBuff Manufacturing" class="w-10 h-10 object-contain" />' },
@@ -361,7 +386,7 @@ const metadata = {
        9. TESTIMONIALS GRID
        ══════════════════════════════════════════════════════════ -->
   <TestimonialsGrid
-    title="What our manufacturing customers say"
+    title="What our customers say"
     subtitle="Trusted by <strong>10,000+</strong> businesses — from SAP Business One manufacturers to large enterprise production environments"
      row1={[
       {
@@ -412,30 +437,9 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <FaqAccordion
     tagline="FAQs"
-    title="Frequently Asked Questions"
-    subtitle="Get answers to common questions about UpBuff ERP-Integrated Manufacturing & Shopfloor Touchpoints."
-    items={[
-      {
-        question: 'What is ERP-Integrated Manufacturing & Shopfloor Touchpoints?',
-        answer: 'It is an execution layer that connects SAP production modules with real-time shopfloor operations for live data synchronization.',
-      },
-      {
-        question: 'Does it replace SAP PP?',
-        answer: 'No. It extends SAP PP into operational manufacturing environments without modifying SAP core.',
-      },
-      {
-        question: 'How are material movements handled?',
-        answer: "All goods issue, goods receipt, and consumption postings follow SAP's MM configuration and validation logic.",
-      },
-      {
-        question: 'Is batch traceability supported?',
-        answer: 'Yes. Batch and lot-level traceability is synchronized with SAP master and transactional data.',
-      },
-      {
-        question: 'Does it support multi-plant environments?',
-        answer: 'Yes. The platform supports centralized governance with plant-level operational control.',
-      },
-    ]}
+    title="Shop floor data collection: frequently asked questions"
+    subtitle="Common questions from SAP Business One manufacturers looking to replace paper on the production floor."
+    items={faqs}
   />
 
   <!-- ══════════════════════════════════════════════════════════
@@ -445,23 +449,23 @@ const metadata = {
        ══════════════════════════════════════════════════════════ -->
   <SecuritySplit
     tagline="Reach out to us"
-    title="Have questions about ERP-Integrated Manufacturing & Shopfloor Touchpoints?"
-    subtitle="Feel free to contact us. We're here to help!"
+    title="Questions about shop floor data collection for SAP Business One?"
+    subtitle="Talk to a team that has rolled out shop floor data collection on production floors running SAP B1."
     features={[
       {
-        title: 'Schedule a Demo',
-        description: 'See live ERP sync, mobile order capture, and pricing enforcement in action. Schedule a 30-minute demo with our SAP integration specialists.',
-        href: '/contact',
+        title: 'Book a Demo',
+        description: 'See production orders released in SAP, confirmed on the floor and posted back in real time. A 30-minute walkthrough with our SAP integration team.',
+        href: '/request-demo',
       },
       {
-        title: 'Join Partner Program',
-        description: 'SAP reseller and ERP channel partner program for VARs and system integrators. Earn commissions on every UpBuff deployment you bring to market.',
-        href: '/partners',
+        title: 'See the Warehouse Side',
+        description: 'Issue for production and receipt from production are where the shop floor meets the stores. See how UpBuff WMS for SAP Business One handles them.',
+        href: '/products/erp-integrated-warehouse-inventory',
       },
       {
-        title: 'Explore CRM Modules',
-        description: 'Browse field sales, distribution management, collections, and performance reporting modules organized by industry and ERP platform.',
-        href: '/solutions',
+        title: 'Free SAP Business One Consultation',
+        description: 'Not sure what your plant needs first? Get a no-obligation review of your SAP B1 production setup with our consultants.',
+        href: '/resources/sap-consultation',
       },
     ]}
   />
@@ -475,7 +479,7 @@ const metadata = {
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
           <div class="flex items-baseline justify-between mb-8 md:mb-10">
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
-              Resources on shopfloor execution for SAP
+              Guides to shop floor data collection in SAP Business One
             </h2>
             <a href="/blog" class="text-sm text-gray-500 hover:text-primary transition-colors">
               View all posts »
@@ -495,11 +499,11 @@ const metadata = {
        12. CTA BANNER
        ══════════════════════════════════════════════════════════ -->
   <CtaBanner
-    title="Connect your SAP PP to the shopfloor — in real time"
-    subtitle="Use UpBuff to extend SAP S/4HANA, ECC, and Business One into live shopfloor execution — without modifying core ERP."
+    title="Connect your shop floor to SAP Business One — in real time"
+    subtitle="Collect production data at the work centre and post it to SAP the moment it happens. Works with SAP Business One, S/4HANA, ECC, Oracle and Epicor, with no changes to the ERP core."
     action={{
-      text: 'Contact us',
-      href: '/contact',
+      text: 'Book a Demo',
+      href: '/request-demo',
       variant: 'primary',
     }}
     note="No SAP core modifications required"

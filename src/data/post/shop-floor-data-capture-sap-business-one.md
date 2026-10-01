@@ -1,6 +1,6 @@
 ---
 publishDate: 2026-08-28T00:00:00Z
-title: "Shop Floor Data Capture for SAP Business One: From Paper to Real Time"
+title: "How to Capture Shop Floor Data in SAP Business One: From Paper to Real Time"
 excerpt: "Production runs all day; SAP Business One finds out at the end of the shift. Here's how shop floor data capture closes that gap: operation confirmations, material issue, scrap and downtime reasons, posted to SAP B1 as they happen."
 image: /images/blog/shop-floor-data-capture-sap-business-one/shop-floor-data-capture-sap-business-one.png
 author: Subrat
@@ -15,8 +15,8 @@ tags:
   - mes
   - erp-execution-layer
 metadata:
-  title: "Shop Floor Data Capture for SAP Business One | UpBuff"
-  description: "How shop floor data capture and collection work with SAP Business One: real-time production confirmations, material issue, scrap and downtime tracking via official APIs."
+  title: "How to Capture Shop Floor Data in SAP Business One | UpBuff"
+  description: "How to capture production data in SAP Business One: operation confirmations, material issue, scrap and downtime posted to production orders in real time."
   canonical: https://www.upbuff.com/blog/shop-floor-data-capture-sap-business-one
 ---
 
@@ -82,7 +82,7 @@ Searching for shopfloor solutions, you will run into **SAP Digital Manufacturing
 
 ## How UpBuff answers this checklist
 
-[UpBuff's Manufacturing & Shopfloor execution](/products/erp-integrated-manufacturing-shopfloor) was built against these requirements for SAP Business One plants. Operators confirm operations, report quantities with scrap reasons, issue materials by scan, and book finished goods with linked batch numbers, all from terminals or mobile devices at the work centre. Every event posts to SAP B1 through the Service Layer in real time, works offline when connectivity drops, and leaves SAP Business One untouched as the system of record. It pairs naturally with [UpBuff's WMS](/products/erp-integrated-warehouse-inventory), so the flow from raw material receipt through production to dispatch is captured end to end. [See it live in a demo](/request-demo) against your own production data.
+[UpBuff's shop floor data collection for SAP Business One](/products/erp-integrated-manufacturing-shopfloor) was built against these requirements for SAP Business One plants. Operators confirm operations, report quantities with scrap reasons, issue materials by scan, and book finished goods with linked batch numbers, all from terminals or mobile devices at the work centre. Every event posts to SAP B1 through the Service Layer in real time, works offline when connectivity drops, and leaves SAP Business One untouched as the system of record. It pairs naturally with [UpBuff's WMS](/products/erp-integrated-warehouse-inventory), so the flow from raw material receipt through production to dispatch is captured end to end. [See it live in a demo](/request-demo) against your own production data.
 
 ## Frequently asked questions
 
@@ -103,4 +103,4 @@ Yes. Beyond operator input, machine signals and IoT sensors can feed counts and 
 
 ## Stop running production on yesterday's data
 
-If your planners schedule against WIP numbers written on paper, the fastest fix is capturing production events where they happen and posting them to SAP Business One in real time. See [UpBuff's Manufacturing & Shopfloor execution](/products/erp-integrated-manufacturing-shopfloor), pair it with [Warehouse & Inventory Management](/products/erp-integrated-warehouse-inventory) for the full raw-material-to-dispatch loop, or [request a demo](/request-demo) against your own production orders. Have a smaller SAP B1 issue first? Bring it to our [free SAP Business One consultation](/resources/sap-consultation).
+If your planners schedule against WIP numbers written on paper, the fastest fix is capturing production events where they happen and posting them to SAP Business One in real time. See [UpBuff's shop floor data collection for SAP Business One](/products/erp-integrated-manufacturing-shopfloor), pair it with [Warehouse & Inventory Management](/products/erp-integrated-warehouse-inventory) for the full raw-material-to-dispatch loop, or [request a demo](/request-demo) against your own production orders. Have a smaller SAP B1 issue first? Bring it to our [free SAP Business One consultation](/resources/sap-consultation).
