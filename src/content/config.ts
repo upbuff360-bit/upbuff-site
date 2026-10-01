@@ -28,6 +28,9 @@ const metadataDefinition = () =>
                 url: z.string(),
                 width: z.number().optional(),
                 height: z.number().optional(),
+                alt: z.string().optional(),
+                type: z.string().optional(),
+                secureUrl: z.string().url().optional(),
               })
             )
             .optional(),

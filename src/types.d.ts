@@ -74,6 +74,9 @@ export interface MetaDataImage {
   url: string;
   width?: number;
   height?: number;
+  alt?: string;
+  type?: string;
+  secureUrl?: string;
 }
 
 export interface MetaDataOpenGraph {

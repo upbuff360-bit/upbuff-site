@@ -67,6 +67,8 @@ export const adaptOpenGraphImages = async (
   const adaptedImages = await Promise.all(
     images.map(async (image) => {
       if (image?.url) {
+        const targetWidth = image.width ?? defaultWidth;
+        const targetHeight = image.height ?? defaultHeight;
         const resolvedImage = (await findImage(image.url)) as ImageMetadata | string | undefined;
         if (!resolvedImage) {
           return {
@@ -81,17 +83,18 @@ export const adaptOpenGraphImages = async (
           (resolvedImage.startsWith('http://') || resolvedImage.startsWith('https://')) &&
           isUnpicCompatible(resolvedImage)
         ) {
-          _image = (await unpicOptimizer(resolvedImage, [defaultWidth], defaultWidth, defaultHeight, 'jpg'))[0];
+          _image = (await unpicOptimizer(resolvedImage, [targetWidth], targetWidth, targetHeight, 'jpg'))[0];
         } else if (resolvedImage) {
           const dimensions =
-            typeof resolvedImage !== 'string' && resolvedImage?.width <= defaultWidth
+            typeof resolvedImage !== 'string' && resolvedImage?.width <= targetWidth
               ? [resolvedImage?.width, resolvedImage?.height]
-              : [defaultWidth, defaultHeight];
+              : [targetWidth, targetHeight];
           _image = (await astroAssetsOptimizer(resolvedImage, [dimensions[0]], dimensions[0], dimensions[1], 'jpg'))[0];
         }
 
         if (typeof _image === 'object') {
           return {
+            ...image,
             url: 'src' in _image && typeof _image.src === 'string' ? String(new URL(_image.src, astroSite)) : '',
             width: 'width' in _image && typeof _image.width === 'number' ? _image.width : undefined,
             height: 'height' in _image && typeof _image.height === 'number' ? _image.height : undefined,
