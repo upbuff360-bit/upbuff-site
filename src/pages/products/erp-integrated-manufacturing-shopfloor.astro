@@ -90,7 +90,7 @@ const faqs = [
   {
     question: 'Does it work with SAP S/4HANA, ECC, Oracle and Epicor as well?',
     answer:
-      'Yes. SAP Business One connects through the Service Layer. SAP S/4HANA connects through OData, BAPI and IDoc, and ECC through BAPI and IDoc. Oracle and Epicor connect through their standard integration services. In every case the ERP stays the system of record, and UpBuff never modifies its core.',
+      'Yes. UpBuff gives you the same shopfloor connectivity on every ERP. SAP Business One connects through the Service Layer. SAP S/4HANA connects through OData, BAPI and IDoc, and ECC through BAPI and IDoc, so real-time shop floor data reaches each one. Oracle and Epicor connect through their standard integration services. In every case the ERP stays the system of record, and UpBuff never modifies its core.',
   },
 ];
 ---
@@ -297,8 +297,8 @@ const faqs = [
        ══════════════════════════════════════════════════════════ -->
   <ContentSplitCard
     id="how-it-works"
-    tagline="How It Works With SAP Business One"
-    title="It extends SAP Business One. It never modifies it."
+    tagline="How Shopfloor Integration Works"
+    title="Shopfloor integration with SAP Business One, without touching the core"
     cardTitle="Release in SAP. Execute on the floor. Post back in real time."
     cardDescription="When you release a production order in SAP Business One, it appears on the work-centre screen. Operators issue materials by scanning, confirm each operation, and report good quantity, scrap and downtime. Then they receive finished goods with their batch numbers. Every event posts to SAP through the official <a href='https://help.sap.com/docs/SAP_BUSINESS_ONE/f110a154dd0f4c20bf7f3ebca9eeb794/44fda5d585e94b0bbd9d711584db0b96.html' target='_blank' rel='noopener' class='underline'>SAP Business One Service Layer</a> as it happens. If the network drops, events queue on the device. SAP stays the system of record, and UpBuff installs nothing inside it, so upgrades stay safe. Issue and receipt from production are also where the shop floor meets the stores. See how <a href='/products/erp-integrated-warehouse-inventory' class='underline'>UpBuff's warehouse management for SAP Business One</a> handles that side."
     cardImage="/uploads/SAP-Compatibility-Manufacturing-Shopfloor.png"
