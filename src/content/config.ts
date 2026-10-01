@@ -46,7 +46,7 @@ const metadataDefinition = () =>
     })
     .optional();
 
-// Shared schema used by both blog posts and case studies.
+// Shared schema used by blog posts, case studies, newsroom items and events.
 const contentSchema = z.object({
   publishDate: z.date().optional(),
   updateDate: z.date().optional(),
@@ -75,7 +75,24 @@ const caseStudyCollection = defineCollection({
   schema: contentSchema,
 });
 
+const newsCollection = defineCollection({
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/news' }),
+  schema: contentSchema,
+});
+
+// Events reuse the shared schema. `publishDate` is the event (start) date.
+const eventCollection = defineCollection({
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/events' }),
+  schema: contentSchema.extend({
+    eventEndDate: z.date().optional(),
+    location: z.string().optional(),
+    eventUrl: z.string().url().optional(),
+  }),
+});
+
 export const collections = {
   post: postCollection,
   caseStudy: caseStudyCollection,
+  news: newsCollection,
+  event: eventCollection,
 };

@@ -1,0 +1,252 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Image from '~/components/common/Image.astro';
+import NewsCard from '~/components/news/NewsCard.astro';
+import { Icon } from 'astro-icon/components';
+
+import { fetchNews } from '~/utils/news';
+import { getPermalink } from '~/utils/permalinks';
+import { findImage } from '~/utils/images';
+import { getFormattedDate } from '~/utils/utils';
+
+import { headerData } from '~/navigation';
+
+const posts = await fetchNews();
+
+// Featured = newest news item; rest = remaining items.
+const [featured, ...rest] = posts;
+
+// Build category list with counts for the filter pills.
+const categoryMap = new Map<string, { slug: string; title: string; count: number }>();
+for (const post of posts) {
+  const c = post.category;
+  if (!c?.slug) continue;
+  const existing = categoryMap.get(c.slug);
+  if (existing) {
+    existing.count += 1;
+  } else {
+    categoryMap.set(c.slug, { slug: c.slug, title: c.title, count: 1 });
+  }
+}
+const categories = Array.from(categoryMap.values()).sort((a, b) => b.count - a.count);
+
+// Resolve featured image once (the helper is async).
+const featuredImage = featured ? await findImage(featured.image) : null;
+
+// Pre-resolve images for the rest of the grid so the JSX map stays synchronous.
+const restWithImages = await Promise.all(
+  rest.map(async (post) => ({
+    post,
+    image: await findImage(post.image),
+  }))
+);
+
+const metadata = {
+  title: 'All News | UpBuff Newsroom',
+  description:
+    'Company announcements, product launches, partnerships, and press releases from UpBuff Technologies — the AI-powered ERP Execution Platform.',
+  canonical: 'https://www.upbuff.com/newsroom/news',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/newsroom/news',
+    title: 'All News | UpBuff Newsroom',
+    description:
+      'The latest company news from UpBuff Technologies — product launches, customer go-lives, partnerships, events, and press releases.',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'UpBuff Newsroom | Company News & Announcements',
+    description: 'Product launches, partnerships, and press releases from UpBuff Technologies.',
+  },
+};
+---
+
+<Layout metadata={metadata} headerTheme="white">
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': 'https://www.upbuff.com/newsroom/news#collection',
+        name: 'UpBuff News & Updates',
+        url: 'https://www.upbuff.com/newsroom/news',
+        description:
+          'Company announcements, product launches, partnerships, and press releases from UpBuff Technologies.',
+        publisher: {
+          '@type': 'Organization',
+          name: 'UpBuff Technologies',
+          url: 'https://www.upbuff.com',
+        },
+        hasPart: posts.slice(0, 10).map((post) => ({
+          '@type': 'NewsArticle',
+          headline: post.title,
+          url: 'https://www.upbuff.com' + getPermalink(post.permalink, 'post'),
+          datePublished: post.publishDate.toISOString(),
+          author: post.author
+            ? {
+                '@type': 'Person',
+                name: post.author,
+                ...(post.authorLinkedIn ? { url: post.authorLinkedIn, sameAs: [post.authorLinkedIn] } : {}),
+              }
+            : undefined,
+        })),
+      })}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': 'https://www.upbuff.com/newsroom/news#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Newsroom', item: 'https://www.upbuff.com/newsroom/' },
+          { '@type': 'ListItem', position: 3, name: 'News', item: 'https://www.upbuff.com/newsroom/news' },
+        ],
+      })}
+    />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="bg-gray-50 border-b border-gray-200 not-prose">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-5">
+        <span class="w-2 h-2 rounded-full bg-[rgb(39,174,97)] shrink-0"></span>
+        <a href="/newsroom" class="text-xs font-semibold text-gray-500 uppercase tracking-widest hover:text-primary transition-colors">Newsroom</a>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4 max-w-3xl">
+        News &amp; Updates
+      </h1>
+      <p class="text-gray-600 text-lg leading-relaxed max-w-2xl">
+        Company announcements, product launches, customer go-lives, partnerships, and press releases
+        from UpBuff Technologies.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── Featured news ─────────────────────────────────────── -->
+  {
+    featured && (
+      <section class="not-prose bg-white border-b border-gray-100">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+          <article class="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+            <div class="relative aspect-[16/10] overflow-hidden rounded-2xl bg-gray-100 shadow-sm">
+              <a href={getPermalink(featured.permalink, 'post')} class="group block w-full h-full">
+                {featuredImage && (
+                  <Image
+                    src={featuredImage}
+                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                    widths={[400, 768, 1024]}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    alt={featured.title}
+                    width={1024}
+                    height={640}
+                    loading="eager"
+                    decoding="async"
+                  />
+                )}
+              </a>
+              <span class="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-semibold text-gray-900 shadow-sm">
+                <Icon name="tabler:sparkles" class="w-3.5 h-3.5 text-[rgb(39,174,97)]" />
+                Featured
+              </span>
+            </div>
+
+            <div>
+              {featured.category && (
+                <span class="inline-flex text-xs font-semibold text-[rgb(39,174,97)] uppercase tracking-widest mb-3">
+                  {featured.category.title}
+                </span>
+              )}
+              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight tracking-tight mb-3">
+                <a
+                  href={getPermalink(featured.permalink, 'post')}
+                  class="hover:text-primary transition-colors"
+                >
+                  {featured.title}
+                </a>
+              </h2>
+              {featured.excerpt && (
+                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-5">
+                  {featured.excerpt}
+                </p>
+              )}
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
+                {featured.author &&
+                  (featured.authorLinkedIn ? (
+                    <a
+                      href={featured.authorLinkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-medium text-gray-900 hover:text-primary transition-colors"
+                    >
+                      {featured.author}
+                    </a>
+                  ) : (
+                    <span class="font-medium text-gray-900">{featured.author}</span>
+                  ))}
+                {featured.author && <span class="text-gray-300">·</span>}
+                <time datetime={featured.publishDate.toISOString()}>
+                  {getFormattedDate(featured.publishDate)}
+                </time>
+                {featured.readingTime && (
+                  <>
+                    <span class="text-gray-300">·</span>
+                    <span>{featured.readingTime} min read</span>
+                  </>
+                )}
+              </div>
+              <a
+                href={getPermalink(featured.permalink, 'post')}
+                class="group inline-flex items-center justify-center gap-2 mt-6 rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[rgb(39,174,97)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(39,174,97)]"
+              >
+                Read story
+                <Icon
+                  name="tabler:arrow-right"
+                  class="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                />
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── News grid ────────────────────────────────────────── -->
+  <section class="not-prose bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      {
+        rest.length > 0 ? (
+          <>
+            <div class="flex items-baseline justify-between mb-8 md:mb-10">
+              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+                Latest news
+              </h2>
+              <span class="text-sm text-gray-500">
+                {posts.length} {posts.length === 1 ? 'update' : 'updates'}
+              </span>
+            </div>
+
+            <div class="grid gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {restWithImages.map(({ post, image }) => <NewsCard post={post} image={image} />)}
+            </div>
+          </>
+        ) : !featured ? (
+          <div class="text-center py-16">
+            <Icon name="tabler:news-off" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">No news yet</h2>
+            <p class="text-gray-500">Check back soon for the latest announcements from UpBuff.</p>
+          </div>
+        ) : null
+      }
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,50 @@
+---
+/**
+ * Places <Quote> cards side by side (2 columns on tablet/desktop, stacked on mobile).
+ *
+ *   import Quote from '~/components/common/Quote.astro';
+ *   import QuoteGrid from '~/components/common/QuoteGrid.astro';
+ *
+ *   <QuoteGrid>
+ *     <Quote name="..." role="...">...</Quote>
+ *     <Quote name="..." role="...">...</Quote>
+ *   </QuoteGrid>
+ */
+export interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`quote-grid not-prose ${className}`}>
+  <slot />
+</div>
+
+<style is:global>
+  .quote-grid,
+  .blog-article .quote-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin: 2.5rem 0;
+  }
+  @media (min-width: 768px) {
+    .quote-grid,
+    .blog-article .quote-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem;
+    }
+  }
+  .quote-grid > .quote-card,
+  .blog-article .quote-grid > .quote-card {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Push the name/photo row to the bottom so both columns line up */
+  .quote-grid > .quote-card > figcaption.qc-person,
+  .blog-article .quote-grid > .quote-card > figcaption.qc-person {
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+</style>

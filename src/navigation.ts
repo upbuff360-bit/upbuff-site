@@ -125,6 +125,12 @@ export const headerData = {
           description: 'Read the latest insights, updates, trends, and product-related articles.',
         },
         {
+          text: 'Newsroom',
+          href: getPermalink('/newsroom'),
+          icon: 'tabler:news',
+          description: 'Company news, press releases, and the events where you can meet the UpBuff team.',
+        },
+        {
           text: 'Free SAP B1 Consultation',
           href: getPermalink('/resources/sap-consultation'),
           icon: 'tabler:lifebuoy',
@@ -183,6 +189,7 @@ export const footerData = {
       title: 'Resources',
       links: [
         { text: 'Blog',         href: getPermalink('/blog') },
+        { text: 'Newsroom',     href: getPermalink('/newsroom') },
         { text: 'Case Studies', href: getPermalink('/case-studies') },
         { text: 'Free SAP B1 Consultation', href: getPermalink('/resources/sap-consultation') },
       ],

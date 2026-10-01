@@ -1,0 +1,246 @@
+---
+/**
+ * Quote card — reusable anywhere (pages, blog posts, case studies, newsroom MDX).
+ *
+ * In an .astro page:
+ *   import Quote from '~/components/common/Quote.astro';
+ *   <Quote name="Jane Doe" role="CEO, UpBuff" photo="/images/team/jane-doe.jpg">Quote text</Quote>
+ *
+ * In an .mdx article: add the same import line below the frontmatter, then use the tag.
+ *
+ * Props
+ *   name   — person's name (required)
+ *   role   — small label above the name, e.g. "CEO and Founder, UpBuff" (optional)
+ *   photo  — image path inside /public (optional). If missing or the file doesn't
+ *            exist, the person's initials are shown instead.
+ *   linkedin — LinkedIn profile URL; shows a small LinkedIn button next to the name (optional)
+ *   class  — extra classes for the outer card (optional)
+ *
+ * Optional bio: add an element with slot="bio" inside the tag. It is shown
+ * between the quote and the name, in smaller grey text:
+ *   <Quote name="..." role="...">
+ *     Quote text
+ *     <p slot="bio">Short biography…</p>
+ *   </Quote>
+ */
+import { existsSync } from 'node:fs';
+import nodePath from 'node:path';
+
+export interface Props {
+  name: string;
+  role?: string;
+  photo?: string;
+  linkedin?: string;
+  class?: string;
+}
+
+const { name, role, photo, linkedin, class: className = '' } = Astro.props;
+const hasBio = Astro.slots.has('bio');
+
+const hasPhoto =
+  !!photo &&
+  (photo.startsWith('http') || (photo.startsWith('/') && existsSync(nodePath.join(process.cwd(), 'public', photo))));
+
+const initials = name
+  .split(' ')
+  .map((n) => n[0])
+  .slice(0, 2)
+  .join('')
+  .toUpperCase();
+---
+
+<figure class={`quote-card not-prose ${className}`}>
+  <svg class="qc-mark" viewBox="0 0 56 32" aria-hidden="true">
+    <path fill="currentColor" d="M14 0h12L14 32H2L14 0Zm22 0h12L36 32H24L36 0Z"></path>
+  </svg>
+
+  <blockquote class="qc-text">
+    <slot />
+  </blockquote>
+
+  {
+    hasBio && (
+      <div class="qc-bio">
+        <slot name="bio" />
+      </div>
+    )
+  }
+
+  <figcaption class="qc-person">
+    {
+      hasPhoto ? (
+        <img src={photo} alt={name} width="88" height="88" loading="lazy" decoding="async" class="qc-photo" />
+      ) : (
+        <span class="qc-initials" aria-hidden="true">
+          {initials}
+        </span>
+      )
+    }
+    <span class="qc-meta">
+      {role && <span class="qc-role">{role}</span>}
+      <span class="qc-name">{name}</span>
+      {
+        linkedin && (
+          <a href={linkedin} target="_blank" rel="noopener noreferrer" aria-label={`${name} on LinkedIn`} class="qc-linkedin">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+        )
+      }
+    </span>
+  </figcaption>
+</figure>
+
+<style is:global>
+  /* Global (not scoped) so it out-ranks the article typography in ArticleBody.astro.
+     Every selector starts with .quote-card, so nothing else on the site is affected. */
+  .quote-card,
+  .blog-article .quote-card {
+    margin: 2.5rem 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    text-align: left;
+    color: rgb(17 24 39);
+  }
+
+  .quote-card .qc-mark {
+    display: block;
+    width: 1.75rem;
+    height: 1rem;
+    color: rgb(17 24 39);
+    margin-bottom: 1rem;
+  }
+
+  .quote-card blockquote.qc-text,
+  .blog-article .quote-card blockquote.qc-text {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    text-align: left;
+    font-style: normal;
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: rgb(17 24 39);
+  }
+  @media (min-width: 768px) {
+    .quote-card blockquote.qc-text,
+    .blog-article .quote-card blockquote.qc-text {
+      font-size: 1.0625rem;
+    }
+  }
+  .quote-card blockquote.qc-text > p,
+  .blog-article .quote-card blockquote.qc-text > p {
+    margin: 0 0 0.75em;
+  }
+  .quote-card blockquote.qc-text > p:last-child,
+  .blog-article .quote-card blockquote.qc-text > p:last-child {
+    margin-bottom: 0;
+  }
+
+  .quote-card > figcaption.qc-person,
+  .blog-article .quote-card > figcaption.qc-person {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+    text-align: left;
+    font-style: normal;
+    font-size: 1rem;
+    color: rgb(17 24 39);
+  }
+  .quote-card .qc-bio,
+  .blog-article .quote-card .qc-bio {
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: rgb(75 85 99);
+  }
+  .quote-card .qc-bio > p,
+  .blog-article .quote-card .qc-bio > p {
+    margin: 0 0 0.75em;
+  }
+  .quote-card .qc-bio > p:last-child,
+  .blog-article .quote-card .qc-bio > p:last-child {
+    margin-bottom: 0;
+  }
+  .quote-card .qc-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    margin-top: 0.5rem;
+    border-radius: 9999px;
+    background: #0a66c2;
+    color: #fff;
+    transition: background-color 0.2s;
+  }
+  .quote-card .qc-linkedin:hover {
+    background: #004182;
+  }
+  .quote-card .qc-linkedin svg {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+  .quote-card .qc-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.25;
+  }
+  .quote-card .qc-role {
+    font-size: 0.8125rem;
+    color: rgb(55 65 81);
+    margin-bottom: 0.25rem;
+  }
+  .quote-card .qc-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgb(17 24 39);
+  }
+  @media (min-width: 768px) {
+    .quote-card .qc-name {
+      font-size: 1.0625rem;
+    }
+  }
+
+  .quote-card img.qc-photo,
+  .blog-article .quote-card img.qc-photo,
+  .quote-card .qc-initials {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0;
+    border-radius: 0.875rem;
+    flex-shrink: 0;
+    box-shadow: none;
+  }
+  @media (min-width: 768px) {
+    .quote-card img.qc-photo,
+    .blog-article .quote-card img.qc-photo,
+    .quote-card .qc-initials {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+    }
+  }
+  .quote-card img.qc-photo,
+  .blog-article .quote-card img.qc-photo {
+    object-fit: cover;
+  }
+  .quote-card .qc-initials {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, rgb(39 174 97), rgb(24 139 74));
+  }
+</style>

@@ -1,0 +1,437 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Image from '~/components/common/Image.astro';
+import { Icon } from 'astro-icon/components';
+
+import { fetchNews } from '~/utils/news';
+import { fetchEvents } from '~/utils/events';
+import { getPermalink } from '~/utils/permalinks';
+import { findImage } from '~/utils/images';
+import { getFormattedDate } from '~/utils/utils';
+
+const [news, events] = await Promise.all([fetchNews(), fetchEvents()]);
+
+// News layout: newest items rotate in the carousel, the next few are listed beside it.
+const CAROUSEL_COUNT = 4;
+const LIST_COUNT = 3;
+
+// Set to true to show the Events section on the newsroom landing page again.
+const SHOW_EVENTS = false;
+const carouselNews = news.slice(0, CAROUSEL_COUNT);
+const listNews = news.slice(CAROUSEL_COUNT, CAROUSEL_COUNT + LIST_COUNT);
+
+// Pre-resolve images so the JSX maps stay synchronous (same pattern as the blog listing).
+const withImages = <T extends { image?: unknown }>(items: T[]) =>
+  Promise.all(items.map(async (item) => ({ item, image: await findImage(item.image as string) })));
+
+const [carouselItems, listItems, eventItems] = await Promise.all([
+  withImages(carouselNews),
+  withImages(listNews),
+  withImages(events.slice(0, 8)),
+]);
+
+const eventDateLabel = (e: (typeof events)[number]) =>
+  e.eventEndDate
+    ? `${getFormattedDate(e.publishDate)} – ${getFormattedDate(e.eventEndDate)}`
+    : getFormattedDate(e.publishDate);
+
+const metadata = {
+  title: 'Newsroom | UpBuff Technologies',
+  description:
+    'Company announcements, product launches, partnerships, press releases, and events from UpBuff Technologies — the AI-powered ERP Execution Platform.',
+  canonical: 'https://www.upbuff.com/newsroom/',
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: 'website',
+    url: 'https://www.upbuff.com/newsroom/',
+    title: 'UpBuff Newsroom | Company News, Press Releases & Events',
+    description:
+      'The latest from UpBuff Technologies — product launches, customer go-lives, partnerships, press releases, and events.',
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    title: 'UpBuff Newsroom | Company News & Events',
+    description: 'Product launches, partnerships, press releases, and events from UpBuff Technologies.',
+  },
+};
+---
+
+<Layout metadata={metadata} headerTheme="white">
+  <Fragment slot="head">
+    <meta name="author" content="UpBuff Technologies" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': 'https://www.upbuff.com/newsroom/#newsroom',
+        name: 'UpBuff Newsroom',
+        url: 'https://www.upbuff.com/newsroom/',
+        description:
+          'Company announcements, product launches, partnerships, press releases, and events from UpBuff Technologies.',
+        publisher: {
+          '@type': 'Organization',
+          name: 'UpBuff Technologies',
+          url: 'https://www.upbuff.com',
+        },
+        hasPart: [
+          ...news.slice(0, 10).map((post) => ({
+            '@type': 'NewsArticle',
+            headline: post.title,
+            url: 'https://www.upbuff.com' + getPermalink(post.permalink, 'post'),
+            datePublished: post.publishDate.toISOString(),
+            author: post.author
+              ? {
+                  '@type': 'Person',
+                  name: post.author,
+                  ...(post.authorLinkedIn ? { url: post.authorLinkedIn, sameAs: [post.authorLinkedIn] } : {}),
+                }
+              : undefined,
+          })),
+          ...(SHOW_EVENTS ? events : []).slice(0, 10).map((e) => ({
+            '@type': 'Event',
+            name: e.title,
+            url: 'https://www.upbuff.com' + getPermalink(e.permalink, 'post'),
+            startDate: e.publishDate.toISOString(),
+            ...(e.eventEndDate ? { endDate: e.eventEndDate.toISOString() } : {}),
+            ...(e.location ? { location: { '@type': 'Place', name: e.location, address: e.location } } : {}),
+            organizer: { '@type': 'Organization', name: 'UpBuff Technologies', url: 'https://www.upbuff.com' },
+          })),
+        ],
+      })}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': 'https://www.upbuff.com/newsroom/#breadcrumb',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.upbuff.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Newsroom', item: 'https://www.upbuff.com/newsroom/' },
+        ],
+      })}
+    />
+  </Fragment>
+
+  <Fragment slot="announcement" />
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="bg-gray-50 border-b border-gray-200 not-prose">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-200 bg-white shadow-sm mb-5">
+        <span class="w-2 h-2 rounded-full bg-[rgb(39,174,97)] shrink-0"></span>
+        <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Resources</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight mb-4 max-w-3xl">
+        Newsroom
+      </h1>
+      <p class="text-gray-600 text-lg leading-relaxed max-w-2xl">
+        Company announcements, product launches, customer go-lives, partnerships, and the latest
+        updates from the UpBuff team.
+      </p>
+    </div>
+  </section>
+
+  <div class="not-prose bg-white text-gray-900">
+    <!-- ── News & Updates ────────────────────────────────────── -->
+    <section id="news" class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 md:pt-16 pb-12 md:pb-16">
+
+      {
+        news.length === 0 ? (
+          <div class="rounded-3xl border border-gray-200 bg-gray-50 text-center py-16 px-6">
+            <Icon name="tabler:news-off" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
+            <h3 class="text-xl font-semibold mb-2">No news yet</h3>
+            <p class="text-gray-500">Check back soon for the latest announcements from UpBuff.</p>
+          </div>
+        ) : (
+          <div class={`grid gap-10 lg:gap-12 ${listItems.length ? 'lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]' : ''}`}>
+            <!-- Carousel -->
+            <div data-carousel class="min-w-0">
+              <div
+                data-track
+                class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth rounded-2xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {carouselItems.map(({ item, image }, i) => (
+                  <a
+                    href={getPermalink(item.permalink, 'post')}
+                    data-slide
+                    class="group relative block w-full shrink-0 snap-start aspect-[4/5] sm:aspect-[16/11] overflow-hidden rounded-2xl bg-gray-100 border border-gray-200"
+                    aria-label={`${i + 1} of ${carouselItems.length}: ${item.title}`}
+                  >
+                    {image && (
+                      <Image
+                        src={image}
+                        class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        widths={[480, 800, 1200]}
+                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        alt={item.title}
+                        width={1200}
+                        height={825}
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
+                      />
+                    )}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+                    <div class="absolute inset-x-0 bottom-0 p-5 md:p-7 text-white">
+                      <time datetime={item.publishDate.toISOString()} class="block text-xs text-white/70 mb-2">
+                        {getFormattedDate(item.publishDate)}
+                      </time>
+                      <h3 class="text-lg md:text-xl font-bold leading-snug max-w-[40ch] group-hover:text-[rgb(39,174,97)] transition-colors">
+                        {item.title}
+                      </h3>
+                      {item.excerpt && (
+                        <p class="mt-3 text-white/75 text-sm leading-relaxed max-w-[60ch] line-clamp-2">
+                          {item.excerpt}
+                        </p>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              {carouselItems.length > 1 && (
+                <div class="flex items-center justify-between mt-6">
+                  <div class="flex items-center gap-2">
+                    {carouselItems.map((_, i) => (
+                      <button
+                        type="button"
+                        data-dot={i}
+                        aria-label={`Go to slide ${i + 1}`}
+                        class="w-2.5 h-2.5 rounded-full border border-gray-400 transition-colors data-[active=true]:bg-gray-900 data-[active=true]:border-gray-900"
+                      />
+                    ))}
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <button
+                      type="button"
+                      data-prev
+                      aria-label="Previous news"
+                      class="w-10 h-10 rounded-full border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 hover:text-white transition-colors disabled:opacity-40 disabled:pointer-events-none"
+                    >
+                      <Icon name="tabler:arrow-left" class="w-4 h-4" />
+                    </button>
+                    <span class="text-sm font-medium text-gray-700 tabular-nums min-w-[3rem] text-center">
+                      <span data-current>1</span> / {carouselItems.length}
+                    </span>
+                    <button
+                      type="button"
+                      data-next
+                      aria-label="Next news"
+                      class="w-10 h-10 rounded-full border border-gray-300 text-gray-700 flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 hover:text-white transition-colors disabled:opacity-40 disabled:pointer-events-none"
+                    >
+                      <Icon name="tabler:arrow-right" class="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Latest updates list -->
+            {listItems.length > 0 && (
+              <div class="min-w-0">
+                <div class="flex items-center justify-between gap-4 mb-4">
+                  <h3 class="text-lg md:text-xl font-bold text-gray-900 tracking-tight">Latest Updates</h3>
+                  <a
+                    href="/newsroom/news"
+                    class="group inline-flex items-center gap-3 rounded-full border border-gray-300 pl-4 pr-1 py-1 text-sm font-medium text-gray-900 hover:border-gray-900 transition-colors shrink-0"
+                  >
+                    View All
+                    <span class="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center">
+                      <Icon name="tabler:arrow-up-right" class="w-4 h-4 group-hover:rotate-45 transition-transform" />
+                    </span>
+                  </a>
+                </div>
+                <ul>
+                  {listItems.map(({ item, image }) => (
+                    <li class="border-b border-gray-200 last:border-b-0">
+                      <a href={getPermalink(item.permalink, 'post')} class="group flex gap-4 py-5">
+                        <div class="flex-1 min-w-0">
+                          <time datetime={item.publishDate.toISOString()} class="block text-xs text-gray-500 mb-1.5">
+                            {getFormattedDate(item.publishDate)}
+                          </time>
+                          <h4 class="text-base font-semibold text-gray-900 leading-snug group-hover:text-[rgb(39,174,97)] transition-colors">
+                            {item.title}
+                          </h4>
+                          {item.category && (
+                            <span class="inline-block mt-3 text-xs font-semibold text-[rgb(39,174,97)] uppercase tracking-widest">
+                              {item.category.title}
+                            </span>
+                          )}
+                        </div>
+                        {image && (
+                          <div class="w-24 sm:w-32 aspect-[4/3] shrink-0 overflow-hidden rounded-xl bg-gray-100">
+                            <Image
+                              src={image}
+                              class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                              widths={[160, 320]}
+                              sizes="160px"
+                              alt={item.title}
+                              width={320}
+                              height={240}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
+                        )}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )
+      }
+    </section>
+
+    {SHOW_EVENTS && (
+    <>
+    <!-- ── Events ────────────────────────────────────────────── -->
+    <section id="events" class="bg-gray-50 border-t border-gray-200">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 pt-12 md:pt-16 pb-12 md:pb-16">
+        <div class="flex items-center justify-between gap-4 mb-8 md:mb-10">
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Events</h2>
+          {
+            events.length > 0 && (
+              <a
+                href="/newsroom/events"
+                class="group inline-flex items-center gap-3 rounded-full border border-gray-300 pl-4 pr-1 py-1 text-sm font-medium text-gray-900 hover:border-gray-900 transition-colors shrink-0"
+              >
+                View All
+                <span class="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center">
+                  <Icon name="tabler:arrow-up-right" class="w-4 h-4 group-hover:rotate-45 transition-transform" />
+                </span>
+              </a>
+            )
+          }
+        </div>
+
+        {
+          events.length === 0 ? (
+            <div class="rounded-3xl border border-gray-200 bg-gray-50 text-center py-16 px-6">
+              <Icon name="tabler:calendar-off" class="w-12 h-12 text-gray-300 mx-auto mb-4" />
+              <h3 class="text-xl font-semibold mb-2">No events yet</h3>
+              <p class="text-gray-500">Check back soon for upcoming UpBuff events.</p>
+            </div>
+          ) : (
+            <div data-carousel class="relative">
+              <div
+                data-track
+                class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {eventItems.map(({ item, image }) => (
+                  <a
+                    href={getPermalink(item.permalink, 'post')}
+                    data-slide
+                    class="group shrink-0 snap-start w-[85%] sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3.3)] rounded-3xl border border-gray-200 bg-white shadow-sm p-4 md:p-5 hover:border-gray-300 hover:shadow-md transition-colors"
+                  >
+                    <div class="aspect-[16/10] overflow-hidden rounded-xl bg-gray-100">
+                      {image && (
+                        <Image
+                          src={image}
+                          class="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                          widths={[400, 800]}
+                          sizes="(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 30vw"
+                          alt={item.title}
+                          width={800}
+                          height={500}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                    </div>
+                    <time datetime={item.publishDate.toISOString()} class="block mt-5 text-xs text-gray-500">
+                      {eventDateLabel(item)}
+                    </time>
+                    <h3 class="mt-2 text-lg font-bold text-gray-900 leading-snug group-hover:text-[rgb(39,174,97)] transition-colors">
+                      {item.title}
+                    </h3>
+                    {item.location && (
+                      <p class="mt-3 flex items-center gap-1.5 text-sm text-gray-500">
+                        <Icon name="tabler:map-pin" class="w-4 h-4 shrink-0" />
+                        {item.location}
+                      </p>
+                    )}
+                  </a>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                data-prev
+                aria-label="Previous events"
+                class="hidden md:flex absolute left-4 lg:left-8 top-[28%] w-11 h-11 rounded-full bg-white/95 text-gray-900 border border-gray-200 shadow-lg items-center justify-center hover:bg-white transition disabled:opacity-0 disabled:pointer-events-none"
+              >
+                <Icon name="tabler:arrow-left" class="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                data-next
+                aria-label="Next events"
+                class="hidden md:flex absolute right-4 lg:right-8 top-[28%] w-11 h-11 rounded-full bg-white/95 text-gray-900 border border-gray-200 shadow-lg items-center justify-center hover:bg-white transition disabled:opacity-0 disabled:pointer-events-none"
+              >
+                <Icon name="tabler:arrow-right" class="w-5 h-5" />
+              </button>
+            </div>
+          )
+        }
+      </div>
+    </section>
+    </>
+    )}
+  </div>
+</Layout>
+
+<script>
+  // Lightweight scroll-snap carousel: arrows, dots and "n / total" counter.
+  // Works for every [data-carousel] on the page (news slider + events row).
+  const initCarousels = () => {
+    document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+      if (root.dataset.ready) return;
+      root.dataset.ready = 'true';
+
+      const track = root.querySelector<HTMLElement>('[data-track]');
+      if (!track) return;
+      const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
+      const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
+      const next = root.querySelector<HTMLButtonElement>('[data-next]');
+      const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+      const current = root.querySelector<HTMLElement>('[data-current]');
+
+      const activeIndex = () => {
+        const left = track.scrollLeft;
+        let best = 0;
+        slides.forEach((s, i) => {
+          if (Math.abs(s.offsetLeft - track.offsetLeft - left) < Math.abs(slides[best].offsetLeft - track.offsetLeft - left)) best = i;
+        });
+        return best;
+      };
+
+      const goTo = (i: number) => {
+        const target = slides[Math.max(0, Math.min(slides.length - 1, i))];
+        if (target) track.scrollTo({ left: target.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      };
+
+      const update = () => {
+        const i = activeIndex();
+        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        if (prev) prev.disabled = track.scrollLeft <= 4;
+        if (next) next.disabled = atEnd;
+        const shown = atEnd && dots.length ? slides.length - 1 : i;
+        dots.forEach((d, n) => (d.dataset.active = String(n === shown)));
+        if (current) current.textContent = String(shown + 1);
+      };
+
+      prev?.addEventListener('click', () => goTo(activeIndex() - 1));
+      next?.addEventListener('click', () => goTo(activeIndex() + 1));
+      dots.forEach((d) => d.addEventListener('click', () => goTo(Number(d.dataset.dot))));
+      track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    });
+  };
+
+  initCarousels();
+  document.addEventListener('astro:page-load', initCarousels);
+</script>

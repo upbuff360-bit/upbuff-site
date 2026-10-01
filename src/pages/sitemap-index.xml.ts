@@ -2,6 +2,8 @@ import type { APIRoute } from 'astro';
 
 import { fetchPosts } from '~/utils/blog';
 import { fetchCaseStudies } from '~/utils/case-studies';
+import { fetchNews } from '~/utils/news';
+import { fetchEvents } from '~/utils/events';
 import { trimSlash, CATEGORY_BASE } from '~/utils/permalinks';
 
 export const prerender = true;
@@ -22,13 +24,24 @@ export const GET: APIRoute = async () => {
     .filter((url) => url !== '/404' && !url.includes('[') && !url.includes('/api') && !url.includes('/_'));
 
   // 2. Dynamic content-collection routes (the part the old generator missed).
-  const [posts, caseStudies] = await Promise.all([fetchPosts(), fetchCaseStudies()]);
+  const [posts, caseStudies, news, events] = await Promise.all([
+    fetchPosts(),
+    fetchCaseStudies(),
+    fetchNews(),
+    fetchEvents(),
+  ]);
 
   // Blog post detail pages (robots index: true).
   const postUrls = posts.map((post) => `/${trimSlash(post.permalink)}`);
 
   // Case study detail pages.
   const caseStudyUrls = caseStudies.map((cs) => `/${trimSlash(cs.permalink)}`);
+
+  // Newsroom detail pages.
+  const newsUrls = news.map((item) => `/${trimSlash(item.permalink)}`);
+
+  // Event detail pages.
+  const eventUrls = events.map((item) => `/${trimSlash(item.permalink)}`);
 
   // Blog category archive pages (robots index: true). Tag pages are noindex, so excluded.
   const categorySlugs = new Set<string>();
@@ -38,7 +51,7 @@ export const GET: APIRoute = async () => {
   const categoryUrls = [...categorySlugs].map((slug) => `/${trimSlash(`${CATEGORY_BASE}/${slug}`)}`);
 
   // 3. Combine + de-duplicate, preserving a stable order.
-  const allUrls = Array.from(new Set([...staticUrls, ...postUrls, ...caseStudyUrls, ...categoryUrls]));
+  const allUrls = Array.from(new Set([...staticUrls, ...postUrls, ...caseStudyUrls, ...newsUrls, ...eventUrls, ...categoryUrls]));
 
   const urls = allUrls
     .map((url) => {
