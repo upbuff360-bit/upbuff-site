@@ -88,7 +88,7 @@ export const headerData = {
         },
         {
           text: 'Clarior',
-          href: getPermalink('/clarior'),
+          href: getPermalink('/products/clarior'),
           icon: 'tabler:brain',
           description: 'Conversational AI for SAP Business One',
         },
@@ -170,7 +170,7 @@ export const footerData = {
         { text: 'ERP-Integrated Product Configurator', href: getPermalink('/products/erp-integrated-product-configurator') },
         { text: 'Asset Tracking System',               href: getPermalink('/products/asset-tracking-system') },
         { text: 'Intelligent PO-to-SO & Invoice Automation', href: getPermalink('/products/intelligent-po-to-so-invoice-automation') },
-        { text: 'Clarior',                        href: getPermalink('/clarior') },
+        { text: 'Clarior',                        href: getPermalink('/products/clarior') },
       ],
     },
     {

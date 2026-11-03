@@ -1,5 +1,5 @@
 /**
- * POST /api/clarior-lead — both Clarior forms on /clarior.
+ * POST /api/clarior-lead — both Clarior forms on /products/clarior.
  *
  *   formType "notify"  launch-update signup   (work email required)
  *   formType "demo"    demo / program request (name, email, company, country required)
@@ -116,7 +116,9 @@ export const POST: APIRoute = async ({ request }) => {
 
     // ── 1. Lead to the sales team ──
     const rows = Object.entries(lead)
-      .filter(([, v]) => v)
+      .filter(([key, value]) =>
+        value && !['formType', 'pageVersion', 'launchNotificationConsent', 'marketingConsent', 'landingUrl'].includes(key)
+      )
       .map(
         ([k, v]) =>
           `<tr><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;font-weight:600;width:40%;color:#6b7280;">${escHtml(k)}</td><td style="padding:8px 0;border-bottom:1px solid #f3f4f6;">${escHtml(v)}</td></tr>`
@@ -135,7 +137,7 @@ export const POST: APIRoute = async ({ request }) => {
             <p style="color:#ffffff;font-size:18px;font-weight:700;margin:0;">${escHtml(teamTitle)}</p>
           </div>
           <table style="width:100%;border-collapse:collapse;font-size:14px;color:#374151;">${rows}</table>
-          <p style="margin-top:28px;font-size:12px;color:#9ca3af;text-align:center;">Submitted via upbuff.com/clarior</p>
+          <p style="margin-top:28px;font-size:12px;color:#9ca3af;text-align:center;">Submitted via upbuff.com/products/clarior</p>
         </div>`,
     });
 

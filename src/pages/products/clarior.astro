@@ -1,7 +1,7 @@
 ---
 /**
  * Clarior — Conversational AI for SAP Business One.
- * One permanent URL: upbuff.com/clarior
+ * One permanent URL: upbuff.com/products/clarior
  *
  *   Phase A (prelaunch teaser)   until LAUNCH_AT
  *   Phase B (full product page)  from LAUNCH_AT onward
@@ -10,7 +10,7 @@
  * switches from Phase A to Phase B by itself at LAUNCH_AT — no redeploy and
  * no URL change, so every social post, QR code and invitation stays valid.
  *
- * Preview Phase B before launch (local dev only):  /clarior?phase=b
+ * Preview Phase B before launch (local dev only):  /products/clarior?phase=b
  *
  * Both forms post to /api/clarior-lead, which emails the sales team, sends
  * the visitor an automatic confirmation, and (optionally) appends a row to a
@@ -39,7 +39,7 @@ const previewB = import.meta.env.DEV && Astro.url.searchParams.get('phase') === 
 const phase: 'A' | 'B' = previewB || Date.now() >= LAUNCH_AT.getTime() ? 'B' : 'A';
 const pageVersion = phase === 'A' ? 'A-prelaunch' : 'B-launch';
 
-const pageUrl = 'https://www.upbuff.com/clarior';
+const pageUrl = 'https://www.upbuff.com/products/clarior';
 
 const metaTitle =
   phase === 'A'
