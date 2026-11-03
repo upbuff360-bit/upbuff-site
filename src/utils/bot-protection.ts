@@ -25,6 +25,7 @@ const ALLOWED_ORIGINS = [
   'https://upbuff.com',
   'https://www.upbuff.com',
   'http://localhost:4321', // Astro dev
+  'http://localhost:4322', // Astro dev (alternate project port)
   'http://localhost:3000',
 ];
 
