@@ -16,7 +16,7 @@ export interface Props extends Widget {
   title?: string;
   subtitle?: string;
   tagline?: string;
-  actions?: Array<{ text: string; href: string; variant?: 'primary' | 'secondary'; icon?: string }>;
+  actions?: Array<{ text: string; href: string; variant?: 'primary' | 'secondary' | 'outline'; icon?: string }>;
   /** @deprecated Use actions instead */
   linkAction?: CallToAction;
   /** Optional image to replace the orbital diagram */
@@ -116,6 +116,15 @@ const badgePositions: Record<string, { top: string; left: string; transform: str
                 <a
                   href={action.href}
                   class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full btn-primary hover:bg-blue-700 text-white font-semibold text-sm transition-colors duration-150"
+                  role="button"
+                  aria-label={action.text}
+                >
+                  {action.text}
+                </a>
+              ) : action.variant === 'outline' ? (
+                <a
+                  href={action.href}
+                  class="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:border-white hover:bg-white/10"
                   role="button"
                   aria-label={action.text}
                 >
