@@ -3,6 +3,7 @@ import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
 import Announcement from '~/components/widgets/Announcement.astro';
+import ClariorAnnouncementMarquee from '~/components/widgets/ClariorAnnouncementMarquee.astro';
 import ClariorLaunchPopup from '~/components/widgets/ClariorLaunchPopup.astro';
 
 import { headerData, footerData } from '~/navigation';
@@ -33,8 +34,9 @@ const headerActions = (headerData.actions ?? []) as CallToAction[];
   <slot name="announcement" />
 
   <!-- Common header — Announcement + nav bar together, both sticky -->
-  <slot name="header">
-    <div class="sticky top-0 z-40">
+  <div class="sticky top-0 z-40">
+    <ClariorAnnouncementMarquee />
+    <slot name="header">
       <Announcement />
       <Header
         links={headerData.links}
@@ -42,8 +44,8 @@ const headerActions = (headerData.actions ?? []) as CallToAction[];
         theme={headerTheme}
         isSticky={false}
       />
-    </div>
-  </slot>
+    </slot>
+  </div>
 
   <main>
     <slot />

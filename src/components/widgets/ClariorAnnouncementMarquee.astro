@@ -1,0 +1,170 @@
+<div class="clarior-marquee" role="region" aria-label="Clarior launch announcement">
+  <div class="clarior-marquee__track">
+    <div class="clarior-marquee__group">
+      <a href="/products/clarior" data-clarior-popup-discover>
+        <span class="clarior-marquee__badge">Coming Soon</span>
+        <span>Your ERP knows more than you think</span>
+        <span class="clarior-marquee__separator" aria-hidden="true">✦</span>
+        <span>Something is waking up inside your ERP</span>
+        <span class="clarior-marquee__cta">
+          Meet Clarior
+          <svg aria-hidden="true" class="clarior-marquee__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17 17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+    <div class="clarior-marquee__group" aria-hidden="true">
+      <a href="/products/clarior" tabindex="-1" data-clarior-popup-discover>
+        <span class="clarior-marquee__badge">Coming Soon</span>
+        <span>Your ERP knows more than you think</span>
+        <span class="clarior-marquee__separator" aria-hidden="true">✦</span>
+        <span>Something is waking up inside your ERP</span>
+        <span class="clarior-marquee__cta">
+          Meet Clarior
+          <svg aria-hidden="true" class="clarior-marquee__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17 17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupClariorMarquee() {
+    const marquee = document.querySelector<HTMLElement>('.clarior-marquee');
+    if (!marquee || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const track = marquee.querySelector<HTMLElement>('.clarior-marquee__track');
+    const groups = track?.querySelectorAll<HTMLElement>('.clarior-marquee__group');
+    if (!track || !groups?.length) return;
+
+    const firstLink = groups[0].querySelector<HTMLAnchorElement>('a');
+    if (!firstLink) return;
+
+    const itemWidth = firstLink.getBoundingClientRect().width;
+    if (!itemWidth) return;
+
+    groups.forEach((group) => {
+      group.querySelectorAll('[data-marquee-clone]').forEach((clone) => clone.remove());
+
+      while (group.scrollWidth < window.innerWidth + itemWidth) {
+        const clone = firstLink.cloneNode(true) as HTMLAnchorElement;
+        clone.dataset.marqueeClone = 'true';
+        clone.tabIndex = -1;
+        clone.setAttribute('aria-hidden', 'true');
+        group.append(clone);
+      }
+    });
+
+    const groupWidth = groups[0].getBoundingClientRect().width;
+    track.style.setProperty('--marquee-duration', `${groupWidth / 42}s`);
+  }
+
+  setupClariorMarquee();
+  document.addEventListener('astro:page-load', setupClariorMarquee);
+  window.addEventListener('resize', setupClariorMarquee, { passive: true });
+</script>
+
+<style>
+  .clarior-marquee {
+    overflow: hidden;
+    background: #052e24;
+    color: white;
+    border-bottom: 1px solid rgb(255 255 255 / 12%);
+  }
+
+  .clarior-marquee__track {
+    display: flex;
+    width: max-content;
+    min-height: 40px;
+    animation: clarior-marquee-scroll var(--marquee-duration, 34s) linear infinite;
+  }
+
+  .clarior-marquee:hover .clarior-marquee__track,
+  .clarior-marquee:focus-within .clarior-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .clarior-marquee__group {
+    display: flex;
+    flex: none;
+    align-items: center;
+  }
+
+  .clarior-marquee__group a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 2rem;
+    color: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.015em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .clarior-marquee__group a:hover .clarior-marquee__cta {
+    color: #bbf7d0;
+  }
+
+  .clarior-marquee__badge {
+    border: 1px solid rgb(187 247 208 / 45%);
+    border-radius: 9999px;
+    padding: 0.2rem 0.6rem;
+    color: #bbf7d0;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .clarior-marquee__separator {
+    color: #86efac;
+  }
+
+  .clarior-marquee__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #86efac;
+    font-weight: 700;
+  }
+
+  .clarior-marquee__arrow {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  @keyframes clarior-marquee-scroll {
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clarior-marquee__track {
+      width: 100%;
+      animation: none;
+    }
+
+    .clarior-marquee__group:not(:first-child) {
+      display: none;
+    }
+
+    .clarior-marquee__group a {
+      width: 100%;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .clarior-marquee__group a > span:nth-of-type(3) {
+      display: none;
+    }
+  }
+</style>
