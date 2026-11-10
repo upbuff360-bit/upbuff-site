@@ -2,6 +2,8 @@
 
 FastAPI service for storing contact form submissions in MongoDB and serving the private admin inbox. `vercel.json` deploys it alongside the Astro site in the same Vercel project. The Astro contact API calls `/internal/contact` only after its existing validation and bot checks; the existing team and customer emails continue to be sent by Astro.
 
+Contact, SAP consultation, and demo forms show success only after FastAPI confirms the MongoDB save. On Vercel, Astro then sends the team and visitor emails with `waitUntil`, so SMTP delivery does not delay the form response. Email failures are logged; the saved submission remains available in the admin inbox. Background email has no retry and is limited by the function's maximum duration. If storage fails or is not configured, the form reports an error and does not send emails.
+
 ## Configure
 
 Set these environment variables in the Vercel project for the FastAPI service:
