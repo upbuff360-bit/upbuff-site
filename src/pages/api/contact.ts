@@ -4,6 +4,7 @@ import { verifyFormSubmission } from '../../utils/bot-protection';
 import { LEAD_FORM_TURNSTILE_ENABLED } from '../../utils/lead-form-turnstile';
 import { validateOptionalPhone } from '../../utils/phone-validation';
 import { getCountryName } from '../../data/countryDialCodes';
+import { getFastApiBaseUrl } from '../../utils/fastapi-base-url';
 
 export const prerender = false;
 
@@ -57,7 +58,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Save a copy for the private admin inbox. This is deliberately additive:
     // if the separate storage service is unavailable, the existing email flow
     // below still runs exactly as before.
-    const storageUrl = import.meta.env.FASTAPI_BASE_URL;
+    const storageUrl = getFastApiBaseUrl();
     const storageKey = import.meta.env.CONTACT_STORAGE_API_KEY;
     if (storageUrl && storageKey) {
       try {

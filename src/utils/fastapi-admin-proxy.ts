@@ -1,6 +1,7 @@
-const backendBaseUrl = import.meta.env.FASTAPI_BASE_URL?.replace(/\/+$/, '');
+import { getFastApiBaseUrl } from './fastapi-base-url';
 
 export async function proxyFastApiAdminRequest(request: Request, backendPath: string): Promise<Response> {
+  const backendBaseUrl = getFastApiBaseUrl();
   if (!backendBaseUrl) {
     return Response.json({ detail: 'Admin API is not configured.' }, { status: 503 });
   }

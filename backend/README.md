@@ -1,10 +1,10 @@
 # Contact submissions service
 
-FastAPI service for storing contact form submissions in MongoDB and serving the private admin inbox. Deploy this service separately from the Astro/Vercel site. The Astro contact API calls `/internal/contact` only after its existing validation and bot checks; the existing team and customer emails continue to be sent by Astro.
+FastAPI service for storing contact form submissions in MongoDB and serving the private admin inbox. `vercel.json` deploys it alongside the Astro site in the same Vercel project. The Astro contact API calls `/internal/contact` only after its existing validation and bot checks; the existing team and customer emails continue to be sent by Astro.
 
 ## Configure
 
-Set these environment variables on the FastAPI host:
+Set these environment variables in the Vercel project for the FastAPI service:
 
 | Variable | Purpose |
 | --- | --- |
@@ -17,7 +17,9 @@ Set these environment variables on the FastAPI host:
 | `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile secret used to verify admin login challenges. |
 | `COOKIE_SECURE` | Keep `true` in production HTTPS. Set `false` only for local HTTP development. |
 
-Also set `FASTAPI_BASE_URL`, `PUBLIC_TURNSTILE_SITE_KEY`, and the same `CONTACT_STORAGE_API_KEY` in the Astro/Vercel environment. `FASTAPI_BASE_URL` is the HTTPS origin of this service, without a trailing slash. The admin login uses `PUBLIC_TURNSTILE_SITE_KEY` to show the challenge and sends its token to FastAPI, which verifies it with `TURNSTILE_SECRET_KEY` before checking credentials. Keep secret values in the hosting providers' environment-variable settings; do not commit real credentials.
+Also set `PUBLIC_TURNSTILE_SITE_KEY` and the same `CONTACT_STORAGE_API_KEY` for Astro. The admin login uses `PUBLIC_TURNSTILE_SITE_KEY` to show the challenge and sends its token to FastAPI, which verifies it with `TURNSTILE_SECRET_KEY` before checking credentials. Keep secret values in Vercel's environment-variable settings; do not commit real credentials.
+
+`vercel.json` connects the Astro and FastAPI services with a private binding. Vercel supplies `FASTAPI_SERVICE_URL` to Astro functions at runtime; do not set this variable yourself. Remove any production `FASTAPI_BASE_URL` value of `localhost` or `127.0.0.1`, since those addresses refer to the function itself. `FASTAPI_BASE_URL` is retained as a fallback for local development or a separately hosted backend. An HTTP 502 from `/api/admin/login` means the Astro proxy could not reach FastAPI. Ensure MongoDB is reachable from Vercel and configure `TURNSTILE_SECRET_KEY` before signing in.
 
 ## Run locally
 
