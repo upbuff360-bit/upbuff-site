@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import nodemailer from 'nodemailer';
 import { verifyFormSubmission } from '../../utils/bot-protection';
+import { LEAD_FORM_TURNSTILE_ENABLED } from '../../utils/lead-form-turnstile';
 import { validateOptionalPhone } from '../../utils/phone-validation';
 import { getCountryName } from '../../data/countryDialCodes';
 
@@ -15,6 +16,9 @@ export const POST: APIRoute = async ({ request }) => {
     );
     const body = await request.json();
     const { name, email, countryCode, phone, product, message } = body as Record<string, string>;
+    const isConsultation = body.submissionType === 'consultation' || (typeof product === 'string' && product.startsWith('Quick Fix'));
+    const referrer = body.referrer || request.headers.get('referer') || '';
+    const leadSource = body.leadSource || referrer || 'Direct';
     const countryName = getCountryName(countryCode);
     const phoneCheck = validateOptionalPhone(countryCode, phone);
 
@@ -32,8 +36,10 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // ── Bot protection (honeypot + timing + origin + content + Turnstile) ──
-    const check = await verifyFormSubmission(body as Record<string, string>, request);
+    // Apply the form checks and Cloudflare Turnstile verification.
+    const check = await verifyFormSubmission(body as Record<string, string>, request, {
+      skipTurnstile: !LEAD_FORM_TURNSTILE_ENABLED,
+    });
     if (!check.ok) {
       console.warn(
         '[contact] blocked:',
@@ -48,6 +54,43 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    // Save a copy for the private admin inbox. This is deliberately additive:
+    // if the separate storage service is unavailable, the existing email flow
+    // below still runs exactly as before.
+    const storageUrl = import.meta.env.FASTAPI_BASE_URL;
+    const storageKey = import.meta.env.CONTACT_STORAGE_API_KEY;
+    if (storageUrl && storageKey) {
+      try {
+        const storageResponse = await fetch(`${storageUrl.replace(/\/+$/, '')}/internal/contact`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Contact-Storage-Key': storageKey,
+          },
+          body: JSON.stringify({
+            submissionType: isConsultation ? 'consultation' : 'contact',
+            name,
+            email,
+            countryCode,
+            country: countryName,
+            phone: phoneCheck.fullPhone,
+            product,
+            leadSource,
+            referrer,
+            message,
+          }),
+          signal: AbortSignal.timeout(2000),
+        });
+        if (!storageResponse.ok) {
+          console.error('[contact] admin storage returned HTTP', storageResponse.status);
+        }
+      } catch (storageError) {
+        console.error('[contact] admin storage unavailable; continuing email delivery:', storageError);
+      }
+    } else {
+      console.warn('[contact] admin storage is not configured; continuing email delivery');
+    }
+
     const transporter = nodemailer.createTransport({
       host:   import.meta.env.SMTP_HOST,
       port:   Number(import.meta.env.SMTP_PORT ?? 587),
@@ -58,7 +101,6 @@ export const POST: APIRoute = async ({ request }) => {
       },
     });
 
-    const isConsultation = typeof product === 'string' && product.startsWith('Quick Fix');
     const emailTitle = isConsultation ? 'Free SAP Consultation Request — UpBuff' : 'New Contact Form Submission — UpBuff';
 
     const html = `

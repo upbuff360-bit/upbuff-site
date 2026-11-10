@@ -33,6 +33,24 @@ export const headerData = {
       text: 'Products',
       links: [
         {
+          text: 'Clarior',
+          href: getPermalink('/products/clarior'),
+          icon: 'tabler:brain',
+          description: 'Conversational AI for SAP Business One',
+        },
+        {
+          text: 'Warehouse & Inventory Management',
+          href: getPermalink('/products/erp-integrated-warehouse-inventory'),
+          icon: 'tabler:building-warehouse',
+          description: 'Mobile GRN, transfers, and batch tracking',
+        },
+        {
+          text: 'Manufacturing & Shopfloor',
+          href: getPermalink('/products/erp-integrated-manufacturing-shopfloor'),
+          icon: 'tabler:settings-cog',
+          description: 'Production updates and shopfloor execution',
+        },
+        {
           text: 'ERP-Integrated CRM',
           href: getPermalink('/products/erp-integrated-crm'),
           icon: 'tabler:users',
@@ -45,22 +63,10 @@ export const headerData = {
           description: 'Work orders, assets, and technician workflows',
         },
         {
-          text: 'Warehouse & Inventory Management',
-          href: getPermalink('/products/erp-integrated-warehouse-inventory'),
-          icon: 'tabler:building-warehouse',
-          description: 'Mobile GRN, transfers, and batch tracking',
-        },
-        {
           text: 'Sales & Distribution Execution',
           href: getPermalink('/products/erp-integrated-sales-distribution'),
           icon: 'tabler:truck-delivery',
           description: 'Van sales, route-to-market, and distributor management',
-        },
-        {
-          text: 'Manufacturing & Shopfloor',
-          href: getPermalink('/products/erp-integrated-manufacturing-shopfloor'),
-          icon: 'tabler:settings-cog',
-          description: 'Production updates and shopfloor execution',
         },
         {
           text: 'Enterprise & Partner Portals',
@@ -85,12 +91,6 @@ export const headerData = {
           href: getPermalink('/products/intelligent-po-to-so-invoice-automation'),
           icon: 'tabler:robot',
           description: 'AI PO-to-SO conversion, invoice automation, and Chat with ERP for SAP',
-        },
-        {
-          text: 'Clarior',
-          href: getPermalink('/products/clarior'),
-          icon: 'tabler:brain',
-          description: 'Conversational AI for SAP Business One',
         },
       ],
     },
@@ -151,7 +151,7 @@ export const headerData = {
   ],
   actions: [
     { text: 'Quick Contact', href: getPermalink('/contact'), variant: 'secondary' },
-    { text: 'Contact Sales', href: getPermalink('/request-demo'), variant: 'primary' },
+    { text: 'Request a Demo', href: getPermalink('/request-demo'), variant: 'primary' },
   ],
 };
 

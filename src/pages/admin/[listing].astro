@@ -1,0 +1,15 @@
+---
+import AdminInbox from '~/components/admin/AdminInbox.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { listing: 'quick-contact' }, props: { initialView: 'contact' as const } },
+    { params: { listing: 'request-demo' }, props: { initialView: 'demo' as const } },
+    { params: { listing: 'sap-consultation' }, props: { initialView: 'consultation' as const } },
+  ];
+}
+
+const { initialView } = Astro.props;
+---
+
+<AdminInbox initialView={initialView} />

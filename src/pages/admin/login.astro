@@ -1,0 +1,79 @@
+---
+import '~/assets/styles/tailwind.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Sign in | UpBuff Admin</title>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  </head>
+  <body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
+    <main class="flex min-h-screen items-center justify-center px-4 py-8">
+      <section class="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8" aria-labelledby="login-title">
+        <img src="/uploads/upbuff-logo.png" alt="UpBuff" class="mb-6 h-10 w-auto object-contain" />
+        <h1 id="login-title" class="text-xl font-semibold">Sign in to UpBuff</h1>
+        <p class="mt-2 text-sm text-gray-500">Enter your admin credentials to manage inquiries.</p>
+        <form id="login-form" class="mt-6 space-y-4">
+          <label class="block text-sm font-medium" for="admin-username">
+            Username
+            <input id="admin-username" name="username" autocomplete="username" required class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-[#27AE61] focus:outline-none focus:ring-2 focus:ring-[#27AE61]/20" />
+          </label>
+          <label class="block text-sm font-medium" for="admin-password">
+            Password
+            <input id="admin-password" name="password" type="password" autocomplete="current-password" required class="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-[#27AE61] focus:outline-none focus:ring-2 focus:ring-[#27AE61]/20" />
+          </label>
+          <div class="flex justify-center">
+            <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} data-theme="light" data-size="flexible"></div>
+          </div>
+          <p id="login-error" class="hidden text-sm text-red-600" role="alert"></p>
+          <button id="login-button" type="submit" class="w-full rounded-lg bg-[#27AE61] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-60">Sign in</button>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const loginForm = document.querySelector<HTMLFormElement>('#login-form')!;
+      const loginError = document.querySelector<HTMLElement>('#login-error')!;
+      const loginButton = document.querySelector<HTMLButtonElement>('#login-button')!;
+
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        loginError.classList.add('hidden');
+        const fields = new FormData(loginForm);
+        const turnstileToken = fields.get('cf-turnstile-response');
+        if (!turnstileToken) {
+          loginError.textContent = 'Please complete the verification and try again.';
+          loginError.classList.remove('hidden');
+          return;
+        }
+        loginButton.disabled = true;
+        try {
+          const response = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ username: fields.get('username'), password: fields.get('password'), turnstileToken }),
+          });
+          const result = await response.json().catch(() => {
+            throw new Error('Sign in is temporarily unavailable. Please try again.');
+          });
+          if (!response.ok) throw new Error(result.detail || 'Sign in failed.');
+
+          const requested = new URLSearchParams(window.location.search).get('next')?.replace(/\/+$/, '');
+          const destination = requested && ['/admin/quick-contact', '/admin/request-demo', '/admin/sap-consultation'].includes(requested)
+            ? requested : '/admin/quick-contact';
+          window.location.replace(destination);
+        } catch (error) {
+          loginError.textContent = error instanceof Error ? error.message : 'Sign in failed. Please try again.';
+          loginError.classList.remove('hidden');
+          loginButton.disabled = false;
+          (window as Window & { turnstile?: { reset: () => void } }).turnstile?.reset();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -11,10 +11,6 @@
  * no URL change, so every social post, QR code and invitation stays valid.
  *
  * Preview Phase B before launch (local dev only):  /products/clarior?phase=b
- *
- * Both forms post to /api/clarior-lead, which emails the sales team, sends
- * the visitor an automatic confirmation, and (optionally) appends a row to a
- * Google Sheet. See the header of src/pages/api/clarior-lead.ts.
  */
 import Layout from '~/layouts/PageLayout.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
@@ -22,33 +18,31 @@ import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
 import HeroChatConsole from '~/components/widgets/HeroChatConsole.astro';
 import ParticleGlobe from '~/components/widgets/ParticleGlobe.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
-import Button from '~/components/ui/Button.astro';
+import ContentSplitCard from '~/components/widgets/ContentSplitCard.astro';
+import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
+import ProblemSplit from '~/components/widgets/ProblemSplit.astro';
+import FeaturesHighlights from '~/components/widgets/FeaturesHighlights.astro';
 import { Icon } from 'astro-icon/components';
-import { countryDialCodes } from '~/data/countryDialCodes';
 
 export const prerender = false;
 
 // Global unveiling: November 8, 2026 · 6:00 PM IST
 const LAUNCH_AT = new Date('2026-11-08T18:00:00+05:30');
 
-// "Watch Clarior in Action": paste the video URL here once it exists.
-// While empty, the button scrolls to "From question to business insight".
-const VIDEO_URL = '';
-
 const previewB = import.meta.env.DEV && Astro.url.searchParams.get('phase') === 'b';
 const phase: 'A' | 'B' = previewB || Date.now() >= LAUNCH_AT.getTime() ? 'B' : 'A';
-const pageVersion = phase === 'A' ? 'A-prelaunch' : 'B-launch';
 
 const pageUrl = 'https://www.upbuff.com/products/clarior';
 
 const metaTitle =
   phase === 'A'
     ? 'Clarior — Unveiling November 8, 2026'
-    : 'Clarior — Conversational AI for SAP Business One';
+    : 'Clarior: SAP Business One AI Integration & Chatbot';
 const metaDescription =
   phase === 'A'
     ? 'What if your ERP could answer you? Clarior, an innovation from UpBuff Technologies, is unveiled on November 8, 2026 at 6:00 PM IST. Designed for businesses using SAP Business One.'
-    : 'Clarior is conversational AI for SAP Business One. Ask business questions in natural language and explore the answers as tables, charts and dashboards — without searching through reports.';
+    : 'Clarior is the ERP AI chatbot for SAP Business One. Ask questions in plain language and get answers as tables, charts and dashboards, with read-only queries.';
 
 const metadata = {
   title: metaTitle,
@@ -69,14 +63,6 @@ const metadata = {
 };
 
 // ── Phase B content ───────────────────────────────────────────────
-const questions = [
-  'Who are my top 10 customers this year?',
-  'Which customers have overdue payments?',
-  'Which products haven’t moved in the last 90 days?',
-  'How did our sales perform last month?',
-  'Which products generate the highest margins?',
-];
-
 const steps = [
   { title: 'Ask naturally', description: 'Type your business question in everyday language.' },
   {
@@ -91,36 +77,59 @@ const steps = [
   },
 ];
 
-// ── Demo form options ─────────────────────────────────────────────
-const roles = [
-  'Business owner / management',
-  'Finance / operations',
-  'IT / ERP administrator',
-  'SAP consultant / partner',
-];
-const usesB1 = ['Yes', 'No', 'Planning to implement / evaluating'];
-const intents = [
-  { value: 'Book a product demonstration', anchor: 'book-demo' },
-  { value: 'Explore the Founding Customer Program', anchor: 'founding-program' },
-  { value: 'Discuss a partnership', anchor: 'partnership' },
-  { value: 'Request security information', anchor: 'security-overview' },
+// ── FAQ: one source for the visible accordion and the FAQPage schema ──
+const faqs = [
+  {
+    question: 'What is Clarior?',
+    answer:
+      'Clarior is conversational AI for SAP Business One, an innovation from UpBuff Technologies. It lets you access your ERP information by asking business questions in natural language, instead of searching through multiple reports or navigating complicated filters.',
+  },
+  {
+    question: 'Which ERP does Clarior work with?',
+    answer: 'Clarior is designed for businesses using SAP Business One.',
+  },
+  {
+    question: 'What kind of questions can I ask Clarior?',
+    answer:
+      'Everyday business questions such as “Who are my top 10 customers this year?”, “Which customers have overdue payments?”, “Which products haven’t moved in the last 90 days?”, “How did our sales perform last month?” and “Which products generate the highest margins?”.',
+  },
+  {
+    question: 'How does Clarior turn a question into an answer?',
+    answer:
+      'You type your business question in everyday language. Clarior uses AI to interpret your request and prepare an authorized, read-only database query. You then view the answer as a table or chart, ask follow-up questions, and save useful insights to dashboards.',
+  },
+  {
+    question: 'Can Clarior change data in SAP Business One?',
+    answer: 'No. Database queries are read-only.',
+  },
+  {
+    question: 'Is my transactional data sent to the cloud?',
+    answer:
+      'Transactional query results remain within the customer’s environment rather than being sent to the cloud AI service. Question text, conversation context, authorized schema information, and certain metadata are processed through the cloud services needed to operate Clarior.',
+  },
+  {
+    question: 'How does Clarior’s SAP Business One AI integration work?',
+    answer:
+      'Clarior connects to SAP Business One through a customer-hosted gateway. Access is governed by configured permissions.',
+  },
+  {
+    question: 'What is the Clarior Founding Customer Program?',
+    answer:
+      'We’re inviting qualifying SAP Business One customers to join the Clarior Founding Customer Program. It offers a structured evaluation, guided onboarding, and introductory commercial opportunities. Book a demo to apply.',
+  },
+  {
+    question: 'Where can I see Clarior in action?',
+    answer:
+      'Book a live demonstration with our team, or visit the UpBuff Technologies exhibitor pod at Huddle Global (November 12–14, 2026, Kerala, India) and take the Clarior Live Challenge.',
+  },
 ];
 
-const notifySuccess =
-  phase === 'A'
-    ? 'You’re on the list. We’ll notify you when Clarior is unveiled on November 8. Watch for our invitation.'
-    : 'You’re on the list. We’ll keep you updated on Clarior.';
+// ── Security card visuals: same markup as the "Three pillars" cards on erp-integrated-crm ──
+const securityVisual = (src: string, alt: string, caption: string, sub: string, subColor: string) =>
+  `<div class="flex flex-col items-center justify-center gap-2"><img src="${src}" alt="${alt}" class="max-h-[180px] w-auto object-contain"/><p class="text-sm font-semibold text-gray-800 text-center">${caption}</p><p class="text-xs ${subColor} text-center">${sub}</p></div>`;
 
-const inputClass =
-  'w-full px-3.5 py-2.5 rounded-lg border border-gray-200 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-shadow';
 // Same button style as the homepage hero's "Schedule a Demo" button (HeroOrbital primary).
 const BTN = 'inline-flex items-center gap-2 px-6 py-2.5 rounded-full btn-primary hover:bg-blue-700 text-white font-semibold text-sm transition-colors duration-150';
-const labelClass = 'text-xs font-semibold text-gray-600';
-const svgArrow =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E";
-const selectStyle = `background-image:url("${svgArrow}");background-repeat:no-repeat;background-position:right 14px center;`;
-const ts = String(Date.now());
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <Layout metadata={metadata}>
@@ -156,6 +165,17 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         "offers": { "@type": "Offer", "price": "Contact for pricing", "priceCurrency": "USD" },
       })} />
     )}
+    {phase === 'B' && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map((f) => ({
+          "@type": "Question",
+          "name": f.question,
+          "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+        })),
+      })} />
+    )}
   </Fragment>
 
   <Fragment slot="announcement" />
@@ -187,12 +207,85 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
                 </div>
               ))}
             </div>
-            <a href="#notify" class={BTN + ' mt-7 w-full justify-center'}>Notify Me at Launch</a>
+            <a href="/request-demo" class={BTN + ' mt-7 w-full justify-center'}>Request a Demo</a>
           </div>
         </Fragment>
       </HeroOrbital>
 
-      <!-- ══════════ PHASE A · 2. "WHAT IF" BOARD — headline, ribbon, questions around the notify form ══════════ -->
+    </>
+  ) : (
+    <>
+      <!-- ══════════ PHASE B · 1. HERO ══════════ -->
+      <HeroOrbital
+        tagline="Clarior"
+        title="I'm Clarior. Stop Searching. Start Asking."
+        subtitle={'<strong class="block text-lg text-white mb-3">The ERP AI chatbot for SAP Business One</strong>Your ERP contains valuable business information. With its SAP Business One AI integration, Clarior helps you access it through natural-language questions, without searching through multiple reports or navigating complicated filters.<strong class="block text-white mt-4">Ask a question. Explore your data. Discover the answers.</strong>'}
+        actions={[
+          { text: 'Book a Live Demo', href: '/request-demo', variant: 'primary' },
+          { text: 'Watch Product Launch', href: '#clarior-video', variant: 'secondary' },
+        ]}
+      >
+        <Fragment slot="background">
+          <ParticleGlobe />
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px]"
+            style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.15) 0%,transparent 70%);"
+          />
+        </Fragment>
+        <Fragment slot="visual">
+          <div class="w-full max-w-xl">
+            <HeroChatConsole inputDemo title="Clarior" genAiIcon />
+          </div>
+        </Fragment>
+      </HeroOrbital>
+
+      <!-- ══════════ PHASE B · 1b. INDUSTRY PROBLEM (same ProblemSplit block as erp-integrated-crm) ══════════ -->
+      <ProblemSplit
+        id="problem"
+        tagline="The Problem"
+        title="Business decisions move faster than ERP reports"
+        subtitle="Distributors, manufacturers and retailers running SAP Business One make daily decisions on stock, credit, pricing and margins. But getting a clear answer out of the ERP still takes reports, exports and specialist help — so decisions wait, or get made on yesterday’s numbers."
+        items={[
+          {
+            title: 'Decisions on old numbers',
+            description: 'By the time a report is run, exported and shared, stock, receivables and sales have already moved on.',
+          },
+          {
+            title: 'A growing report backlog',
+            description: 'Every new business question becomes a request to IT or a consultant, and the queue for custom reports keeps getting longer.',
+          },
+          {
+            title: 'Numbers that don’t match',
+            description: 'Each team pulls its own export and builds its own spreadsheet, so sales, finance and operations arrive with figures that don’t match.',
+          },
+          {
+            title: 'Only experts get answers',
+            description: 'Only users trained on SAP Business One screens and reports can get answers, so owners and managers wait on them for every question.',
+          },
+        ]}
+      />
+
+      <!-- ══════════ PHASE B · 2. THE PROBLEM (same FeaturesGrid block as asset-tracking-system) ══════════ -->
+      <FeaturesGrid
+        id="your-erp"
+        tagline="Why Clarior"
+        title="Your ERP has the data. Now get the answers."
+        subtitle="Your sales, finance, purchasing, and inventory information is already available in SAP Business One."
+        items={[
+          { icon: 'tabler:report-search', title: 'Searching reports', description: 'The figure you need is often spread across several standard reports, and you first have to know which one to open.' },
+          { icon: 'tabler:filter', title: 'Applying filters', description: 'Getting the right view means choosing date ranges, customers, items and warehouses — and getting every selection right.' },
+          { icon: 'tabler:file-spreadsheet', title: 'Exporting to Excel', description: 'Many answers only appear after exporting data and reworking it in a spreadsheet — time spent, and a copy that soon goes out of date.' },
+          { icon: 'tabler:users', title: 'Depending on someone else', description: 'When no report fits the question, you wait for a colleague or consultant to build one — and the decision waits with you.' },
+          { icon: 'tabler:sparkles', title: 'Clarior introduces a more natural way.', description: 'Type your business question in everyday language. Clarior interprets it and prepares an authorized, read-only database query.' },
+          { icon: 'tabler:message-question', title: 'Simply ask what you want to know.', description: 'View the answer as a table or chart, ask follow-up questions, and save useful insights to dashboards.' },
+        ]}
+      />
+
+    </>
+  )}
+
+  <!-- Phase A: right after the hero. Phase B: replaces the plain "What can you ask Clarior?" grid. -->
+      <!-- ══════════ BOTH PHASES · QUESTION BOARD — headline, ribbon, and example questions ══════════ -->
       <section id="questions" class="cl-board relative not-prose overflow-hidden bg-white dark:bg-slate-900 scroll-mt-[72px]">
         <!-- Light gray ribbon (decorative) -->
         <svg class="cl-ribbon absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1440 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -208,60 +301,29 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         </svg>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 md:pt-24 pb-16 lg:pb-0">
+          {phase === 'A' && (
           <div class="relative z-10 text-center max-w-2xl mx-auto">
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.05] tracking-tight font-heading text-gray-950 dark:text-white">
-              What if getting the answer was as easy as asking the question?
+              {phase === 'A' ? 'What if getting the answer was as easy as asking the question?' : 'What can you ask Clarior?'}
             </h2>
-            <p class="mt-6 text-lg text-gray-600 dark:text-gray-300">Designed for businesses using SAP Business One.</p>
+            <p class="mt-6 text-lg text-gray-600 dark:text-gray-300">
+              {phase === 'A'
+                ? 'Designed for businesses using SAP Business One.'
+                : 'Clarior helps transform authorized ERP information into tables, charts, and dashboards.'}
+            </p>
           </div>
+          )}
 
-          <!-- Notify form in the centre, question cards scattered around it -->
+          <!-- Clarior overview card with example questions around it -->
           <div class="cl-cards relative z-10 mt-10 lg:mt-12">
-            <div id="notify" class="cl-form scroll-mt-[96px]">
-              <div class="relative rounded-3xl bg-white border border-gray-200 cl-shadow-form p-6 md:p-8 text-left" data-cl-card>
-                <p class="text-2xl md:text-xl font-bold leading-tight tracking-tight font-heading text-gray-900 text-center mb-6">Be among the first to discover it.</p>
-
-                <div class="hidden flex-col items-center text-center py-4" data-cl-success>
-                  <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mb-4">
-                    <Icon name="tabler:check" class="w-7 h-7 text-green-500" />
-                  </div>
-                  <p class="text-base md:text-lg font-semibold text-gray-900 leading-relaxed">{notifySuccess}</p>
+            <div class="cl-feature-card scroll-mt-[96px]">
+              <div class="relative rounded-3xl bg-white border border-gray-200 cl-shadow-card px-6 py-10 md:px-10 md:py-14 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight font-heading text-gray-900">What can you ask Clarior?</h2>
+                <p class="mt-4 text-lg text-gray-600 leading-relaxed">Clarior helps transform authorized ERP information into tables, charts, and dashboards.</p>
+                <div class="pt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
+                  <span class="text-base font-semibold text-gray-900">Want to try it?</span>
+                  <a href="/request-demo" class={BTN}>Request a Demo</a>
                 </div>
-
-                <div class="hidden rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 mb-4" data-cl-error>
-                  Something went wrong. Please try again or email us at
-                  <a href="mailto:sales@upbuff.com" class="underline font-medium">sales@upbuff.com</a>.
-                </div>
-
-                <form class="flex flex-col gap-4" data-cl-form="notify" novalidate>
-                  <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
-                    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
-                  </div>
-                  <input type="hidden" name="ts" value={ts} />
-                  <input type="hidden" name="formType" value="notify" />
-                  <input type="hidden" name="pageVersion" value={pageVersion} />
-
-                  <div class="flex flex-col gap-1.5">
-                    <label for="cl-a-email" class={labelClass}>Work email *</label>
-                    <input id="cl-a-email" name="email" type="email" required autocomplete="email" placeholder="Your work email address" class={inputClass} />
-                  </div>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-1.5">
-                      <label for="cl-a-name" class={labelClass}>First name <span class="font-normal text-gray-400">(optional)</span></label>
-                      <input id="cl-a-name" name="name" type="text" autocomplete="given-name" class={inputClass} />
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                      <label for="cl-a-company" class={labelClass}>Company name <span class="font-normal text-gray-400">(optional)</span></label>
-                      <input id="cl-a-company" name="company" type="text" autocomplete="organization" class={inputClass} />
-                    </div>
-                  </div>
-
-                  <div class="flex justify-center">
-                    <div class="cl-turnstile" data-sitekey={siteKey}></div>
-                  </div>
-
-                  <Button variant="primary" type="submit" text="Notify Me at Launch" class={`${BTN} w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed`} data-cl-submit />
-                </form>
               </div>
             </div>
 
@@ -284,310 +346,640 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           </div>
         </div>
       </section>
-    </>
-  ) : (
+
+  {phase === 'B' && (
     <>
-      <!-- ══════════ PHASE B · 1. HERO ══════════ -->
-      <HeroOrbital
-        tagline="CLARIOR"
-        title="Stop Searching. Start Asking."
-        subtitle={'<strong class="block text-lg text-white mb-3">Conversational AI for SAP Business One</strong>Your ERP contains valuable business information. Clarior helps you access it through natural-language questions, without searching through multiple reports or navigating complicated filters.<strong class="block text-white mt-4">Ask a question. Explore your data. Discover the answers.</strong>' +
-          `<span class="flex flex-wrap items-center gap-5 mt-7"><a href="#book-demo" class="${BTN}">Book a Live Demo</a>` +
-          `<a href="${VIDEO_URL || '#how-it-works'}" class="inline-flex items-center gap-1.5 text-white font-semibold text-sm hover:opacity-75 transition-opacity group">Watch Clarior in Action <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></span>`}
-      >
-        <Fragment slot="background">
-          <ParticleGlobe />
-          <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px]"
-            style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.15) 0%,transparent 70%);"
-          />
-        </Fragment>
-        <Fragment slot="visual">
-          <div class="w-full max-w-xl">
-            <HeroChatConsole />
+      <!-- ══════════ PHASE B · 3b. CLARIOR IN ACTION (tabbed showcase, layout from the reference) ══════════
+           Example questions, names and figures in the chat mock-ups are illustrative. -->
+      <section id="clarior-in-action" class="not-prose bg-white dark:bg-slate-900 py-16 md:py-20 scroll-mt-[72px]">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6">
+          <h2 class="text-center text-4xl md:text-6xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-white mb-8 md:mb-8">Explore Clarior in action</h2>
+          <div class="ia-tabs" role="tablist" aria-label="Clarior capabilities">
+            <button type="button" role="tab" id="ia-tab-engage" aria-controls="ia-panel-engage" aria-selected="true" tabindex="0" class="ia-tab" data-ia-tab="engage">
+              Engage
+            </button>
+            <button type="button" role="tab" id="ia-tab-respond" aria-controls="ia-panel-respond" aria-selected="false" tabindex="-1" class="ia-tab" data-ia-tab="respond">
+              Respond
+            </button>
+            <button type="button" role="tab" id="ia-tab-summarize" aria-controls="ia-panel-summarize" aria-selected="false" tabindex="-1" class="ia-tab" data-ia-tab="summarize">
+              Summarize
+            </button>
+            <button type="button" role="tab" id="ia-tab-suggestions" aria-controls="ia-panel-suggestions" aria-selected="false" tabindex="-1" class="ia-tab" data-ia-tab="suggestions">
+              Smart suggestions
+            </button>
+            <button type="button" role="tab" id="ia-tab-insights" aria-controls="ia-panel-insights" aria-selected="false" tabindex="-1" class="ia-tab" data-ia-tab="insights">
+              Insights
+            </button>
           </div>
-        </Fragment>
-      </HeroOrbital>
-
-      <!-- ══════════ PHASE B · 2. THE PROBLEM ══════════ -->
-      <WidgetWrapper id="your-erp" containerClass="max-w-3xl">
-        <div class="text-center">
-          <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100 mb-6">
-            Your ERP has the data. Now get the answers.
-          </h2>
-          <div class="space-y-4 text-lg text-muted">
-            <p>Your sales, finance, purchasing, and inventory information is already available in SAP Business One.</p>
-            <p>But finding the right information often means searching reports, applying filters, exporting to Excel, or depending on someone else.</p>
-            <p class="font-semibold text-heading dark:text-gray-100">Clarior introduces a more natural way.</p>
-            <p class="font-semibold text-heading dark:text-gray-100">Simply ask what you want to know.</p>
-          </div>
-        </div>
-      </WidgetWrapper>
-
-      <!-- ══════════ PHASE B · 3. WHAT CAN YOU ASK ══════════ -->
-      <WidgetWrapper id="what-can-you-ask" containerClass="max-w-6xl">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100">
-            What can you ask Clarior?
-          </h2>
-        </div>
-        <div class="flex flex-wrap justify-center gap-5">
-          {questions.map((q) => (
-            <div class="w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.84rem)] rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-md transition-shadow flex gap-4 items-start">
-              <span class="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <Icon name="tabler:message-question" class="w-6 h-6" />
-              </span>
-              <p class="text-lg font-semibold text-heading dark:text-gray-100 leading-snug">“{q}”</p>
+          <div class="ia-card" data-ia>
+          <div role="tabpanel" id="ia-panel-engage" aria-labelledby="ia-tab-engage" class="ia-panel is-active grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-12 items-center">
+            <div class="px-8 pt-10 lg:p-0 lg:pl-14">
+              <h3 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white mb-6">Generative AI powered 24/7 online AI assistant</h3>
+              <p class="text-lg text-white/80 leading-relaxed">Clarior is available around the clock. Your team asks questions about SAP Business One in plain language, whenever they need an answer, with no reports to build and no one to wait for.</p>
             </div>
-          ))}
-        </div>
-        <p class="text-center text-lg text-muted mt-10 max-w-2xl mx-auto">
-          Clarior helps transform authorized ERP information into tables, charts, and dashboards.
-        </p>
-      </WidgetWrapper>
-
-      <!-- ══════════ PHASE B · 4. HOW IT WORKS ══════════ -->
-      <WidgetWrapper id="how-it-works" containerClass="max-w-6xl">
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100">
-            From question to business insight
-          </h2>
-        </div>
-        <div class="grid md:grid-cols-3 gap-5">
-          {steps.map((s, i) => (
-            <div class:list={[
-              'rounded-2xl p-6',
-              i === steps.length - 1
-                ? 'bg-gray-950 text-white relative overflow-hidden'
-                : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900',
-            ]}>
-              {i === steps.length - 1 && (
-                <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-primary/30 blur-3xl" aria-hidden="true"></div>
-              )}
-              <div class="relative">
-                <div class:list={[
-                  'w-9 h-9 rounded-full text-sm font-bold flex items-center justify-center mb-4',
-                  i === steps.length - 1 ? 'bg-primary text-white' : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900',
-                ]}>{i + 1}</div>
-                <h3 class:list={['text-lg font-bold mb-2', i === steps.length - 1 ? '' : 'text-heading dark:text-gray-100']}>{s.title}</h3>
-                <p class:list={['text-sm leading-relaxed', i === steps.length - 1 ? 'text-gray-300' : 'text-muted']}>{s.description}</p>
+            <div class="ia-stage" aria-hidden="true">
+              <div class="ia-chat">
+                    <div class="ia-row ia-row-user ia-in" style="--d:.1s">
+                      <div class="ia-user">
+                        <p class="ia-meta"><b>You</b> 11:42 PM</p>
+                        <p>What were our sales last month by region?</p>
+                      </div>
+                      <span class="ia-avatar">You</span>
+                    </div>
+                <div class="ia-row ia-in" style="--d:.9s">
+                  <span class="ia-bot"><img src="/uploads/clarior-icon.svg" width="20" height="18" alt="" class="w-5 h-5 object-contain" /></span>
+                  <div class="ia-ai">
+                    <p class="ia-meta"><b>Clarior</b> 11:42 PM<b></b></p>
+                    <p>Here are last month’s sales by region.</p>
+                        <div class="ia-table"><div><span>North</span><b>1,240,000</b></div><div><span>South</span><b>986,500</b></div><div><span>West</span><b>742,300</b></div><div><span>East</span><b>618,900</b></div></div>
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </WidgetWrapper>
-
-      <!-- ══════════ PHASE B · 5. SECURITY ══════════ -->
-      <WidgetWrapper id="security" containerClass="max-w-5xl">
-        <div class="rounded-3xl bg-gray-950 text-white p-8 md:p-12">
-          <div class="grid lg:grid-cols-[1fr_1.4fr] gap-10 items-start">
-            <div>
-              <h2 class="text-3xl md:text-4xl font-bold leading-tight font-heading mb-4">Designed with data security in mind</h2>
-              <p class="text-gray-400 mb-6">Clarior connects to SAP Business One through a customer-hosted gateway.</p>
-              <a href="#security-overview" class="inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:opacity-75">
-                Request the Security Architecture Overview
-                <Icon name="tabler:arrow-right" class="w-4 h-4" />
-              </a>
-            </div>
-            <ul class="space-y-6">
-              <li class="flex gap-4">
-                <span class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0"><Icon name="tabler:lock" class="w-5 h-5 text-primary" /></span>
-                <p class="text-gray-300 pt-2">Database queries are read-only. Transactional query results remain within the customer’s environment rather than being sent to the cloud AI service.</p>
-              </li>
-              <li class="flex gap-4">
-                <span class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0"><Icon name="tabler:cloud" class="w-5 h-5 text-primary" /></span>
-                <p class="text-gray-300 pt-2">Question text, conversation context, authorized schema information, and certain metadata are processed through the cloud services needed to operate Clarior.</p>
-              </li>
-              <li class="flex gap-4">
-                <span class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0"><Icon name="tabler:shield-check" class="w-5 h-5 text-primary" /></span>
-                <p class="text-gray-300 pt-2">Access is governed by configured permissions.</p>
-              </li>
-            </ul>
           </div>
-        </div>
-      </WidgetWrapper>
-
-      <!-- ══════════ PHASE B · 6. HUDDLE GLOBAL ══════════ -->
-      <WidgetWrapper id="huddle-global" containerClass="max-w-5xl">
-        <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-slate-800/50 p-8 md:p-10">
-          <div class="grid md:grid-cols-[1fr_1.2fr] gap-8 items-start">
-            <div>
-              <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100 mb-4">
-                Experience Clarior at Huddle Global
-              </h2>
-              <p class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold text-heading dark:text-gray-100">
-                <Icon name="tabler:calendar-event" class="w-5 h-5 text-primary" />
-                November 12–14, 2026
-                <span class="text-gray-400">|</span>
-                <Icon name="tabler:map-pin" class="w-5 h-5 text-primary" />
-                Kerala, India
-              </p>
+          <div role="tabpanel" id="ia-panel-respond" aria-labelledby="ia-tab-respond" class="ia-panel grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-12 items-center" inert>
+            <div class="px-8 pt-10 lg:p-0 lg:pl-14">
+              <h3 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white mb-6">AI powered natural language reply</h3>
+              <p class="text-lg text-white/80 leading-relaxed">Clarior understands the question behind the words and replies in clear, natural language, with the figures you need as a table, chart or dashboard.</p>
             </div>
-            <div class="space-y-4 text-lg text-muted">
-              <p>Visit the UpBuff Technologies exhibitor pod and take the <strong class="text-heading dark:text-gray-100">Clarior Live Challenge</strong>.</p>
-              <p>Bring a business question. See how Clarior works using a demonstration ERP database.</p>
+            <div class="ia-stage" aria-hidden="true">
+              <div class="ia-chat">
+                    <div class="ia-row ia-row-user ia-in" style="--d:.1s">
+                      <div class="ia-user">
+                        <p class="ia-meta"><b>You</b> 10:05 AM</p>
+                        <p>How did our gross margin change in October?</p>
+                      </div>
+                      <span class="ia-avatar">You</span>
+                    </div>
+                <div class="ia-row ia-in" style="--d:.9s">
+                  <span class="ia-bot"><img src="/uploads/clarior-icon.svg" width="20" height="18" alt="" class="w-5 h-5 object-contain" /></span>
+                  <div class="ia-ai">
+                    <p class="ia-meta"><b>Clarior</b> 10:05 AM<b></b></p>
+                    <p>Gross margin was <strong>27%</strong> in October, down from <strong>31%</strong> in September.</p>
+                        <p>The largest decreases were in:</p>
+                        <div class="ia-bars"><div><span>Packaging</span><i style="--w:72%"></i><b>−6 pts</b></div><div><span>Spare parts</span><i style="--w:48%"></i><b>−4 pts</b></div><div><span>Consumables</span><i style="--w:24%"></i><b>−2 pts</b></div></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </WidgetWrapper>
-
-      <!-- ══════════ PHASE B · 7. FOUNDING CUSTOMERS ══════════ -->
-      <WidgetWrapper id="founding-customers" containerClass="max-w-5xl">
-        <div class="rounded-2xl border border-primary/30 bg-primary/5 dark:bg-primary/10 p-8 md:p-10 text-center">
-          <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tight font-heading text-heading dark:text-gray-100 mb-4">
-            Be among our founding customers
-          </h2>
-          <div class="space-y-3 text-lg text-muted max-w-2xl mx-auto mb-8">
-            <p>We’re inviting qualifying SAP Business One customers to join the Clarior Founding Customer Program.</p>
-            <p>Explore a structured evaluation, guided onboarding, and introductory commercial opportunities.</p>
+          <div role="tabpanel" id="ia-panel-summarize" aria-labelledby="ia-tab-summarize" class="ia-panel grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-12 items-center" inert>
+            <div class="px-8 pt-10 lg:p-0 lg:pl-14">
+              <h3 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white mb-6">Summarise each moment</h3>
+              <p class="text-lg text-white/80 leading-relaxed">Ask for a summary of any day, week or month, and Clarior turns your ERP activity into a short, readable overview.</p>
+            </div>
+            <div class="ia-stage" aria-hidden="true">
+              <div class="ia-chat">
+                    <div class="ia-row ia-row-user ia-in" style="--d:.1s">
+                      <div class="ia-user">
+                        <p class="ia-meta"><b>You</b> 6:15 PM</p>
+                        <p>Summarise today’s activity</p>
+                      </div>
+                      <span class="ia-avatar">You</span>
+                    </div>
+                <div class="ia-row ia-in" style="--d:.9s">
+                  <span class="ia-bot"><img src="/uploads/clarior-icon.svg" width="20" height="18" alt="" class="w-5 h-5 object-contain" /></span>
+                  <div class="ia-ai">
+                    <p class="ia-meta"><b>Clarior</b> 6:15 PM<b></b></p>
+                    <p>Here’s today at a glance:</p>
+                        <ul class="ia-list"><li><b>42</b> sales orders created, totalling 186,400</li><li><b>12</b> deliveries still pending</li><li><b>8</b> purchase orders received</li><li><b>3</b> invoices now more than 60 days overdue</li></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <Button variant="primary" href="#founding-program" text="Apply for the Founding Customer Program" class={BTN} />
+          <div role="tabpanel" id="ia-panel-suggestions" aria-labelledby="ia-tab-suggestions" class="ia-panel grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-12 items-center" inert>
+            <div class="px-8 pt-10 lg:p-0 lg:pl-14">
+              <h3 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white mb-6">Smart suggestions</h3>
+              <p class="text-lg text-white/80 leading-relaxed">After each answer, Clarior suggests the next question to ask, so your team can go deeper without needing to know where to look.</p>
+            </div>
+            <div class="ia-stage" aria-hidden="true">
+              <div class="ia-chat">
+                    <div class="ia-row ia-row-user ia-in" style="--d:.1s">
+                      <div class="ia-user">
+                        <p class="ia-meta"><b>You</b> 2:30 PM</p>
+                        <p>Who are my top customers this quarter?</p>
+                      </div>
+                      <span class="ia-avatar">You</span>
+                    </div>
+                <div class="ia-row ia-in" style="--d:.9s">
+                  <span class="ia-bot"><img src="/uploads/clarior-icon.svg" width="20" height="18" alt="" class="w-5 h-5 object-contain" /></span>
+                  <div class="ia-ai">
+                    <p class="ia-meta"><b>Clarior</b> 2:30 PM<b></b></p>
+                    <p>Your top 3 customers this quarter are <strong>Northwind Traders</strong>, <strong>Acme Foods</strong> and <strong>Bluewave Distributors</strong>.</p>
+                        <p class="ia-muted">You might also ask:</p>
+                        <div class="ia-chips"><span>Show sales by salesperson</span><span>Compare with last quarter</span><span>Which items did they buy most?</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" id="ia-panel-insights" aria-labelledby="ia-tab-insights" class="ia-panel grid lg:grid-cols-[1fr_1.15fr] gap-8 lg:gap-12 items-center" inert>
+            <div class="px-8 pt-10 lg:p-0 lg:pl-14">
+              <h3 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight font-heading text-white mb-6">Proactive insights</h3>
+              <p class="text-lg text-white/80 leading-relaxed">Clarior highlights what needs your attention, such as overdue payments, slow-moving stock or unusual changes, before you think to ask.</p>
+            </div>
+            <div class="ia-stage" aria-hidden="true">
+              <div class="ia-chat">
+                <div class="ia-row ia-in" style="--d:.3s">
+                  <span class="ia-bot"><img src="/uploads/clarior-icon.svg" width="20" height="18" alt="" class="w-5 h-5 object-contain" /></span>
+                  <div class="ia-ai">
+                    <p class="ia-meta"><b>Clarior</b></p>
+                    <p class="ia-tag">Insight · Today, 9:00 AM</p>
+                        <p>Overdue receivables rose <strong>18%</strong> this week. <strong>3 customers</strong> are now more than 60 days overdue.</p>
+                        <div class="ia-chips"><span>View customers</span><span>Show ageing report</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
         </div>
-      </WidgetWrapper>
+      </section>
 
-      <!-- ══════════ PHASE B · 8. FINAL CTA ══════════ -->
-      <CtaBanner
-        title="Ready to experience Clarior?"
-        subtitle={`Discover how conversational AI can simplify access to your ERP information.<span class="block mt-8"><a href="#book-demo" class="${BTN}">Book Your Live Demonstration</a></span>`}
+      <!-- ══════════ PHASE B · 4. HOW IT WORKS (same block as /resources/sap-consultation) ══════════ -->
+      <section id="how-it-works" class="not-prose scroll-mt-[72px]">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-12">
+            <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(39,174,97)] mb-2">How It Works</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">From question to business insight</h2>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8">
+            {steps.map((s, i) => (
+              <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
+                <div class="w-12 h-12 rounded-full bg-[rgb(39,174,97)] text-white flex items-center justify-center font-bold text-xl mx-auto mb-4">{i + 1}</div>
+                <h3 class="font-bold text-lg text-gray-900 mb-2">{s.title}</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">{s.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════ PHASE B · 4b. SAP B1 INTEGRATION (ContentSplitCard, same block as erp-integrated-crm; Clarior content) ══════════ -->
+      <ContentSplitCard
+        tagline="SAP Business One Integration"
+        title="SAP Business One AI integration"
+        cardTitle="How Clarior works with SAP Business One"
+        cardDescription="Clarior’s SAP Business One AI integration runs through a customer-hosted gateway. When you ask a question, Clarior interprets it and prepares an authorized, read-only database query. Transactional query results remain within your environment rather than being sent to the cloud AI service, and access is governed by configured permissions."
+        cardImage="/uploads/clarior-sap-b1-integration.png"
+        cardGradient="linear-gradient(135deg, #003f7c 0%, #0070c0 50%, #1d4ed8 100%)"
+        testimonial={{
+          // DRAFT quote — get Shiburaj's approval of the exact wording before deploying.
+          quote: 'Your ERP already holds the answers. With Clarior, we wanted anyone in a business running SAP Business One to get them simply by asking — without searching reports, exporting to Excel, or waiting on someone else.',
+          name: 'Shiburaj Krishnapillai',
+          company: 'Founder & CEO, UpBuff Technologies',
+          avatar: '/uploads/shiburaj.png',
+        }}
+        features={[
+          {
+            icon: 'tabler:plug-connected',
+            title: 'Customer-hosted gateway',
+            description: 'Clarior connects to SAP Business One through a gateway hosted in your own environment.',
+          },
+          {
+            icon: 'tabler:lock',
+            title: 'Read-only queries',
+            description: 'Database queries are read-only. Transactional query results stay within your environment.',
+          },
+          {
+            icon: 'tabler:chart-bar',
+            title: 'Answers you can explore',
+            description: 'View answers as tables or charts, ask follow-up questions, and save useful insights to dashboards.',
+          },
+        ]}
       />
 
-      <!-- ══════════ PHASE B · 9. REGISTRATION FORM (2 tabs) ══════════ -->
-      <WidgetWrapper id="clarior-form" containerClass="max-w-2xl">
-        <!-- In-page targets for every CTA; each pre-selects "What would you like to do?" -->
-        {intents.map((it) => <span id={it.anchor} class="block relative -top-24" aria-hidden="true"></span>)}
+      <!-- ══════════ PHASE B · 5. SECURITY (same FeaturesHighlights block as erp-integrated-crm "Three pillars") ══════════ -->
+      <FeaturesHighlights
+        id="security"
+        tagline="Security & Compliance"
+        title="Designed with security, privacy and compliance in mind"
+        subtitle="Clarior connects to SAP Business One through a customer-hosted gateway."
+        items={[
+          {
+            title: 'Read-only queries',
+            description: 'Database queries are read-only. Transactional query results remain within the customer’s environment rather than being sent to the cloud AI service.',
+            image: securityVisual('/uploads/erp-first-architecture-upbuff.png', 'Read-only database queries through a customer-hosted gateway', 'Read-only · Customer-hosted gateway', 'Results stay in your environment', 'text-green-600'),
+          },
+          {
+            title: 'What the cloud processes',
+            description: 'Question text, conversation context, authorized schema information, and certain metadata are processed through the cloud services needed to operate Clarior.',
+            image: securityVisual('/uploads/clarior-cloud-processing.png', 'Clarior cloud services processing questions, context and schema information', 'Questions · Context · Schema', 'Only what Clarior needs to operate', 'text-blue-600'),
+          },
+          {
+            title: 'Permission-based access',
+            description: 'Access is governed by configured permissions.',
+            image: securityVisual('/uploads/upbuff-data-integrity-security.png', 'Access governed by configured permissions', 'Configured permissions', 'Access follows your settings', 'text-gray-500'),
+          },
+        ]}
+      />
 
-        <div class="relative bg-white rounded-2xl border border-gray-200 shadow-xl p-7 md:p-8 text-left" data-cl-card>
-          <div class="inline-flex p-1 rounded-full bg-gray-100 mb-6" role="tablist">
-            <button type="button" role="tab" aria-selected="false" data-cl-tab="notify" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 transition-colors">Launch updates</button>
-            <button type="button" role="tab" aria-selected="true" data-cl-tab="demo" class="px-4 py-1.5 rounded-full text-sm font-medium text-gray-500 transition-colors">Book a demo</button>
-          </div>
-
-          <div class="hidden flex-col items-center text-center py-8" data-cl-success>
-            <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mb-4">
-              <Icon name="tabler:check" class="w-7 h-7 text-green-500" />
+      <!-- ══════════ PHASE B · 5b. PRIVACY & COMPLIANCE (continues the security section) ══════════
+           Wording deliberately says "fits the principles of", not "compliant with":
+           confirm masking / AI-provider retention / hosting region / encryption with the
+           product team before making stronger claims.
+           The demo shows only what the page already states: the question text and schema
+           information reach the AI; query results stay in the customer's environment.
+           Customer names and amounts in the demo are fictional. -->
+      <WidgetWrapper id="privacy-compliance" containerClass="max-w-5xl !pt-0 md:!pt-0 lg:!pt-0">
+        <div>
+          <div class="grid lg:grid-cols-[1fr_1.6fr] gap-8 lg:gap-10 items-center">
+            <div>
+              <!-- tabler:shield-lock, stroke halved -->
+              <svg class="w-14 h-14 text-green-600 mb-4" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"><path d="M12 3a12 12 0 0 0 8.5 3A12 12 0 0 1 12 21A12 12 0 0 1 3.5 6A12 12 0 0 0 12 3"/><path d="M11 11a1 1 0 1 0 2 0a1 1 0 1 0-2 0m1 1v2.5"/></g></svg>
+              <h3 class="font-bold leading-tight tracking-tight font-heading text-heading text-4xl md:text-5xl dark:text-gray-200 mb-4">Privacy by design</h3>
+              <p class="text-lg text-muted leading-relaxed">
+                Clarior only sends the AI what it needs to understand your question. Your transactional records — customer, supplier, financial and stock data — stay in your environment, and the AI service never receives the query results.
+              </p>
             </div>
-            <p class="text-base font-semibold text-gray-900 leading-relaxed" data-cl-success-text></p>
-          </div>
 
-          <div class="hidden rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 mb-4" data-cl-error>
-            Something went wrong. Please try again or email us at
-            <a href="mailto:sales@upbuff.com" class="underline font-medium">sales@upbuff.com</a>.
-          </div>
+            <!-- Animated demo: same look as the hero chat console (HeroChatConsole inputDemo) -->
+            <div class="pv-chat" data-pv-demo data-pv-flip="5500" data-pv-cycle="15000" aria-hidden="true">
+              <div class="pv-card">
+                <div class="pv-head">
+                  <div class="pv-title">
+                    <img class="pv-gen-ai-icon" src="/uploads/clarior-icon.svg" width="25" height="23" alt="" />
+                    Clarior
+                  </div>
+                </div>
 
-          <!-- Tab 1: Launch updates -->
-          <form class="hidden flex-col gap-4" data-cl-form="notify" data-cl-panel="notify" data-cl-success-msg={notifySuccess} novalidate>
-            <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
-              <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
-            </div>
-            <input type="hidden" name="ts" value={ts} />
-            <input type="hidden" name="formType" value="notify" />
-            <input type="hidden" name="pageVersion" value={pageVersion} />
+                <div class="pv-rowpos pv-right pv-qrow">
+                  <div class="pv-bubble pv-user pv-step" style="--d:.1s">Which customers have overdue payments?</div>
+                </div>
 
-            <div class="flex flex-col gap-1.5">
-              <label for="cl-n-email" class={labelClass}>Work email *</label>
-              <input id="cl-n-email" name="email" type="email" required autocomplete="email" placeholder="name@company.com" class={inputClass} />
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="flex flex-col gap-1.5">
-                <label for="cl-n-name" class={labelClass}>First name <span class="font-normal text-gray-400">(optional)</span></label>
-                <input id="cl-n-name" name="name" type="text" autocomplete="given-name" class={inputClass} />
+                <!-- Front: the chat result. Back: what the AI sees vs what stays with you. -->
+                <div class="pv-flip">
+                  <div class="pv-flipper">
+                    <div class="pv-face pv-front">
+                      <div class="pv-rowpos pv-left pv-slot">
+                        <div class="pv-typing"><span></span><span></span><span></span></div>
+                        <div class="pv-answer pv-step" style="--d:1.7s">
+                          <div class="pv-answer-head"><div class="pv-ans-h">Overdue payments</div></div>
+                          <table class="pv-table">
+                            <thead><tr><th>Customer</th><th class="pv-r">Overdue</th><th class="pv-r">Days</th></tr></thead>
+                            <tbody>
+                              <tr class="pv-step" style="--d:2.1s"><td class="pv-name">Northwind Traders</td><td class="pv-val">18,400</td><td class="pv-days">45</td></tr>
+                              <tr class="pv-step" style="--d:2.4s"><td class="pv-name">Acme Foods</td><td class="pv-val">7,950</td><td class="pv-days">32</td></tr>
+                              <tr class="pv-step" style="--d:2.7s"><td class="pv-name">Globex Retail</td><td class="pv-val">3,120</td><td class="pv-days">61</td></tr>
+                              <tr class="pv-step" style="--d:3.0s"><td class="pv-name">Bluewave Distributors</td><td class="pv-val">2,480</td><td class="pv-days">38</td></tr>
+                              <tr class="pv-step" style="--d:3.3s"><td class="pv-name">Summit Pharma</td><td class="pv-val">1,960</td><td class="pv-days">27</td></tr>
+                              <tr class="pv-step" style="--d:3.6s"><td class="pv-name">Harbor Textiles</td><td class="pv-val">1,240</td><td class="pv-days">73</td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="pv-face pv-back">
+                      <div class="pv-panels">
+                        <div class="pv-panel pv-ai">
+                          <p class="pv-label pv-label-ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.657 18c-2.572 0-4.657-2.007-4.657-4.483c0-2.475 2.085-4.482 4.657-4.482c.393-1.762 1.794-3.2 3.675-3.773c1.88-.572 3.956-.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927-1.551 3.487-3.465 3.487h-11.878"/></svg> What the AI sees</p>
+                          <div class="pv-q pv-bstep" style="--d:.4s">“Which customers have overdue payments?”</div>
+                          <p class="pv-small pv-bstep" style="--d:.7s">Schema information</p>
+                          <div class="pv-chips pv-bstep" style="--d:.9s"><span>Invoices</span><span>Customers</span><span>Due dates</span><span>Balance due</span></div>
+                          <p class="pv-small pv-bstep" style="--d:1.1s">Never sent</p>
+                          <ul class="pv-list"><li class="pv-no pv-bstep" style="--d:1.3s"><b>✕</b> Customer names or records</li><li class="pv-no pv-bstep" style="--d:1.5s"><b>✕</b> Invoice amounts</li><li class="pv-no pv-bstep" style="--d:1.7s"><b>✕</b> Query results</li><li class="pv-no pv-bstep" style="--d:1.9s"><b>✕</b> Your SAP B1 login details</li></ul>
+                        </div>
+                        <div class="pv-panel pv-local">
+                          <p class="pv-label pv-label-local"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zm3-2V7a4 4 0 1 1 8 0v4"/></svg> What stays with you</p>
+                          <div class="pv-mini pv-bstep" style="--d:1.8s">
+                            <div><span>Northwind Traders</span><b>18,400</b></div>
+                            <div><span>Acme Foods</span><b>7,950</b></div>
+                            <div><span>Globex Retail</span><b>3,120</b></div>
+                            <div><span>Bluewave Distributors</span><b>2,480</b></div>
+                            <div><span>Summit Pharma</span><b>1,960</b></div>
+                            <div><span>Harbor Textiles</span><b>1,240</b></div>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="pv-note pv-bstep" style="--d:3.0s">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1-8.5 15a12 12 0 0 1-8.5-15a12 12 0 0 0 8.5-3"/><path d="M9 12l2 2l4-4"/></svg>
+                        Results stay in your environment
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-              <div class="flex flex-col gap-1.5">
-                <label for="cl-n-company" class={labelClass}>Company name <span class="font-normal text-gray-400">(optional)</span></label>
-                <input id="cl-n-company" name="company" type="text" autocomplete="organization" class={inputClass} />
+            </div>
+          </div>
+        </div>
+
+        <!-- Data protection: animation left, text right (mirror of Privacy by design).
+             Front: a sales user asks for customer balances and sees only their customers.
+             Back: the same question for two roles, each answer following SAP Business One permissions.
+             Roles and counts are illustrative. -->
+        <div class="mt-16 md:mt-20 grid lg:grid-cols-[1.6fr_1fr] gap-8 lg:gap-10 items-center">
+          <div class="lg:order-2">
+            <!-- tabler:scale, stroke halved -->
+            <svg class="w-14 h-14 text-green-600 mb-4" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 20h10M6 6l6-1l6 1m-6-3v17m-3-8L6 6l-3 6a3 3 0 0 0 6 0m12 0l-3-6l-3 6a3 3 0 0 0 6 0"/></svg>
+            <h3 class="font-bold leading-tight tracking-tight font-heading text-heading text-4xl md:text-5xl dark:text-gray-200 mb-4">Supports your data-protection obligations</h3>
+            <p class="text-lg text-muted leading-relaxed">
+              Clarior is built on data minimisation, a core principle of data-protection laws worldwide. Your transactional records stay in your environment, queries are read-only, and every answer follows your SAP Business One permissions, so you stay in control of who sees what.
+            </p>
+          </div>
+
+          <div class="pv-chat pv-chat--left lg:order-1" data-pv-demo data-pv-flip="8000" data-pv-cycle="19000" aria-hidden="true">
+            <div class="pv-card">
+              <div class="pv-head">
+                <div class="pv-title"><img class="pv-gen-ai-icon" src="/uploads/clarior-icon.svg" width="25" height="23" alt="" /> Clarior</div>
+              </div>
+
+              <div class="pv-rowpos pv-right pv-qrow">
+                <div class="pv-bubble pv-user pv-step" style="--d:.1s">Show customer balances</div>
+              </div>
+
+              <div class="pv-flip">
+                <div class="pv-flipper">
+                  <div class="pv-face pv-front">
+                    <div class="pv-rowpos pv-left pv-slot">
+                      <div class="pv-typing"><span></span><span></span><span></span></div>
+                      <div class="pv-answer pv-step" style="--d:1.7s">
+                        <div class="pv-answer-head"><div class="pv-ans-h">Customer balances · Sales user</div></div>
+                        <table class="pv-table">
+                          <thead><tr><th>Customer</th><th class="pv-r">Balance</th></tr></thead>
+                          <tbody>
+                            <tr class="pv-step" style="--d:2.1s"><td class="pv-name">Northwind Traders</td><td class="pv-val">18,400</td></tr>
+                            <tr class="pv-step" style="--d:2.4s"><td class="pv-name">Acme Foods</td><td class="pv-val">7,950</td></tr>
+                            <tr class="pv-step" style="--d:2.7s"><td class="pv-name">Globex Retail</td><td class="pv-val">3,120</td></tr>
+                            <tr class="pv-step" style="--d:3.0s"><td class="pv-name">Bluewave Distributors</td><td class="pv-val">12,600</td></tr>
+                            <tr class="pv-step" style="--d:3.3s"><td class="pv-name">Summit Pharma</td><td class="pv-val">9,340</td></tr>
+                            <tr class="pv-step" style="--d:3.6s"><td class="pv-name">Harbor Textiles</td><td class="pv-val">4,780</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pv-face pv-back">
+                    <div class="pv-panels">
+                      <div class="pv-panel pv-ai">
+                        <p class="pv-label pv-label-ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg> Sales user</p>
+                        <p class="pv-small pv-bstep" style="--d:.4s">Sees assigned customers only</p>
+                        <div class="pv-big pv-bstep" style="--d:.7s"><b>6</b> customers</div>
+                        <div class="pv-mini pv-bstep" style="--d:.9s">
+                          <div><span>Open balance</span><b>56,190</b></div>
+                          <div><span>Accounts</span><b>Own territory</b></div>
+                        </div>
+                        <ul class="pv-list"><li class="pv-yes pv-bstep" style="--d:1.2s"><b>✓</b> Their customers and balances</li><li class="pv-yes pv-bstep" style="--d:1.4s"><b>✓</b> Their open invoices</li><li class="pv-no pv-bstep" style="--d:1.6s"><b>✕</b> Other sales reps' accounts</li><li class="pv-no pv-bstep" style="--d:1.8s"><b>✕</b> Company-wide totals</li></ul>
+                      </div>
+                      <div class="pv-panel pv-local">
+                        <p class="pv-label pv-label-local"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg> Finance manager</p>
+                        <p class="pv-small pv-bstep" style="--d:1.6s">Sees all customers</p>
+                        <div class="pv-big pv-bstep" style="--d:1.9s"><b>48</b> customers</div>
+                        <div class="pv-mini pv-bstep" style="--d:2.1s">
+                          <div><span>Open balance</span><b>412,860</b></div>
+                          <div><span>Accounts</span><b>All territories</b></div>
+                        </div>
+                        <ul class="pv-list"><li class="pv-yes pv-bstep" style="--d:2.4s"><b>✓</b> All customers and balances</li><li class="pv-yes pv-bstep" style="--d:2.6s"><b>✓</b> All open invoices</li><li class="pv-yes pv-bstep" style="--d:2.8s"><b>✓</b> Company-wide totals</li><li class="pv-yes pv-bstep" style="--d:3.0s"><b>✓</b> Ageing across all accounts</li></ul>
+                      </div>
+                    </div>
+                    <p class="pv-note pv-bstep" style="--d:3.3s">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1-8.5 15a12 12 0 0 1-8.5-15a12 12 0 0 0 8.5-3"/><path d="M9 12l2 2l4-4"/></svg>
+                      Same question, answers follow SAP Business One permissions. Read-only.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="flex justify-center"><div class="cl-turnstile" data-sitekey={siteKey}></div></div>
-            <Button variant="primary" type="submit" text="Notify Me" class={`${BTN} self-center disabled:opacity-60 disabled:cursor-not-allowed`} data-cl-submit />
-          </form>
+          </div>
+        </div>
 
-          <!-- Tab 2: Book a demo -->
-          <form class="flex flex-col gap-4" data-cl-form="demo" data-cl-panel="demo" data-cl-success-msg="We’ll be in touch soon! One of our specialists will reach out within one business day to confirm your session. A confirmation has been sent to your email." novalidate>
-            <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
-              <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        <p class="mt-10 text-xs text-muted text-center">Compliance with data-protection law remains the responsibility of each organisation.</p>
+      </WidgetWrapper>
+
+      <!-- ══════════ PHASE B · 6. HUDDLE GLOBAL (black theme, animated particle stream) ══════════
+           Background: our own canvas animation (green particles flowing up a curved stream). -->
+      <WidgetWrapper id="huddle-global" containerClass="max-w-7xl">
+        <div class="hg-card relative overflow-hidden rounded-3xl bg-black text-white">
+          <canvas class="hg-canvas" data-hg-canvas aria-hidden="true"></canvas>
+          <div class="relative z-10 px-8 py-14 md:px-16 md:py-24 max-w-3xl">
+            <p class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold text-white mb-6">
+              <Icon name="tabler:calendar-event" class="w-5 h-5 text-primary" />
+              Nov 12-14, 2026
+              <span class="text-white/30">|</span>
+              <Icon name="tabler:map-pin" class="w-5 h-5 text-primary" />
+              Kerala, India
+            </p>
+            <h2 class="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight font-heading text-white mb-8">
+              Experience Clarior at Huddle Global
+            </h2>
+            <p class="text-lg md:text-2xl text-white/90 leading-relaxed mb-10">
+              Visit the UpBuff Technologies exhibitor pod and take the <strong class="text-white">Clarior Live Challenge</strong>. Bring a business question. See how Clarior works using a demonstration ERP database.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="/request-demo" class="inline-flex items-center px-7 py-3 rounded-full bg-white text-black font-semibold text-base hover:bg-gray-200 transition-colors duration-150">Book a Live Demo</a>
+              <a href="#clarior-video" class="inline-flex items-center px-7 py-3 rounded-full border-2 border-white text-white font-semibold text-base hover:bg-white/10 transition-colors duration-150">Watch Product Launch</a>
             </div>
-            <input type="hidden" name="ts" value={ts} />
-            <input type="hidden" name="formType" value="demo" />
-            <input type="hidden" name="pageVersion" value={pageVersion} />
-
-            <div class="flex flex-col gap-1.5">
-              <label for="cl-d-name" class={labelClass}>Full name *</label>
-              <input id="cl-d-name" name="name" type="text" required autocomplete="name" placeholder="Your full name" class={inputClass} />
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="cl-d-email" class={labelClass}>Work email *</label>
-              <input id="cl-d-email" name="email" type="email" required autocomplete="email" placeholder="name@company.com" class={inputClass} />
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="cl-d-company" class={labelClass}>Company name *</label>
-              <input id="cl-d-company" name="company" type="text" required autocomplete="organization" placeholder="Company / organization" class={inputClass} />
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="cl-d-country" class={labelClass}>Country *</label>
-              <select id="cl-d-country" name="country" required class={`${inputClass} appearance-none`} style={selectStyle}>
-                <option value="" disabled selected>Country</option>
-                {countryDialCodes.map((c) => <option value={c.name}>{c.name}</option>)}
-              </select>
-            </div>
-
-            <fieldset class="flex flex-col gap-2">
-              <legend class={`${labelClass} mb-2`}>Your role</legend>
-              {roles.map((r) => (
-                <label class="flex items-center gap-2.5 text-sm text-gray-800 cursor-pointer">
-                  <input type="radio" name="role" value={r} class="w-4 h-4 accent-gray-900" />{r}
-                </label>
-              ))}
-            </fieldset>
-
-            <fieldset class="flex flex-col gap-2">
-              <legend class={`${labelClass} mb-2`}>Does your organization use SAP Business One?</legend>
-              {usesB1.map((u) => (
-                <label class="flex items-center gap-2.5 text-sm text-gray-800 cursor-pointer">
-                  <input type="radio" name="usesSapB1" value={u} class="w-4 h-4 accent-gray-900" />{u}
-                </label>
-              ))}
-            </fieldset>
-
-            <fieldset class="flex flex-col gap-2">
-              <legend class={`${labelClass} mb-2`}>What would you like to do?</legend>
-              {intents.map((it, i) => (
-                <label class="flex items-center gap-2.5 text-sm text-gray-800 cursor-pointer">
-                  <input type="radio" name="intent" value={it.value} data-cl-anchor={it.anchor} checked={i === 0} class="w-4 h-4 accent-gray-900" />{it.value}
-                </label>
-              ))}
-            </fieldset>
-
-            <label class="flex items-start gap-2.5 text-sm text-gray-700 cursor-pointer mt-1">
-              <input type="checkbox" name="marketingConsent" value="yes" class="w-4 h-4 mt-0.5 accent-gray-900 shrink-0" />
-              I agree to receive occasional Clarior product updates. I can unsubscribe at any time.
-            </label>
-
-            <div class="flex justify-center"><div class="cl-turnstile" data-sitekey={siteKey}></div></div>
-            <Button variant="primary" type="submit" text="Book a demo" class={`${BTN} self-center disabled:opacity-60 disabled:cursor-not-allowed`} data-cl-submit />
-          </form>
+          </div>
         </div>
       </WidgetWrapper>
 
-      <!-- ══════════ PHASE B · 10. SIGN-OFF ══════════ -->
-      <p class="text-center text-sm italic text-muted pb-16 px-4">Clarior — An innovation from UpBuff Technologies Pvt Ltd.</p>
+      <!-- ══════════ PHASE B · 7. FAQ (replaces "Be among our founding customers") ══════════ -->
+      <FaqAccordion
+        id="faq"
+        tagline="FAQs"
+        title="Questions about Clarior"
+        subtitle="What SAP Business One teams ask us about Clarior."
+        items={faqs}
+      />
+
+      <!-- ══════════ PHASE B · 8. CTA BANNER (same block as asset-tracking-system) ══════════ -->
+      <CtaBanner
+        title="Ready to experience Clarior?"
+        subtitle="Discover how conversational AI can simplify access to your ERP information."
+        action={{
+          text: 'Book Your Live Demonstration',
+          href: '/request-demo',
+          variant: 'primary',
+        }}
+      />
     </>
+  )}
+  {phase === 'B' && (
+    <div
+      id="clarior-video-overlay"
+      class="fixed inset-0 z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Clarior video"
+      aria-hidden="true"
+      inert
+    >
+      <div id="clarior-video-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+      <div class="relative z-10 w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl">
+        <button
+          id="clarior-video-close"
+          type="button"
+          class="absolute top-3 right-3 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/60 hover:bg-black/90 text-white transition-colors"
+          aria-label="Close video"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <iframe
+          id="clarior-video-iframe"
+          title="Clarior video"
+          src=""
+          class="w-full h-full"
+          allow="autoplay; encrypted-media; fullscreen"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
   )}
 </Layout>
 
 <style>
+
+  /* ── Privacy-by-design demo: values copied from HeroChatConsole (inputDemo) ── */
+  .pv-chat { width: 100%; max-width: 640px; margin: 0 0 0 auto; text-align: left; }
+  .pv-card { background: #ffffff; border: 1px solid rgba(15, 23, 42, 0.15); border-radius: 20px; padding: 24px; }
+  .pv-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .pv-title { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; line-height: 1.25; color: #1f2937; }
+  .pv-gen-ai-icon { width: 25px; height: 23px; flex: none; object-fit: contain; }
+
+  .pv-rowpos { display: flex; }
+  .pv-right { justify-content: flex-end; }
+  .pv-left { justify-content: flex-start; }
+  .pv-slot { position: relative; }
+
+  .pv-bubble { max-width: 82%; font-size: 13px; line-height: 1.4; padding: 10px 14px; border-radius: 16px; }
+  .pv-qrow { margin-bottom: 12px; }
+  .pv-user { font-weight: 700; background: #e5e7eb; color: #1f2937; border-bottom-right-radius: 5px; }
+
+
+  .pv-typing { position: absolute; left: 0; top: 0; display: flex; gap: 5px; background: #f1f5f9; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 5px; opacity: 0; }
+  .pv-typing span { width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; animation: pvDotB 1.2s ease-in-out infinite; }
+  .pv-typing span:nth-child(2) { animation-delay: .15s; }
+  .pv-typing span:nth-child(3) { animation-delay: .3s; }
+  .pv-chat.is-play .pv-typing { animation: pvThink 1.1s ease .6s forwards; }
+
+  .pv-answer { width: 100%; background: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-radius: 16px; border-bottom-left-radius: 5px; padding: 12px 14px; }
+  .pv-answer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
+  .pv-ans-h { white-space: nowrap; font-size: 11px; font-weight: 600; color: #94a3b8; }
+
+  .pv-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .pv-table thead th { text-align: left; font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: .03em; padding: 0 8px 7px 8px; border-bottom: 1px solid #e2e8f0; }
+  .pv-table thead th.pv-r { text-align: right; }
+  .pv-table td { padding: 8px; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+  .pv-table tbody tr:last-child td { border-bottom: 0; }
+  .pv-name { color: #334155; }
+  .pv-val { color: #0f172a; font-weight: 700; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .pv-days { color: #64748b; text-align: right; }
+
+
+  .pv-flip { perspective: 1400px; }
+  .pv-flipper { display: grid; transition: transform .8s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
+  .pv-chat.is-flipped .pv-flipper { transform: rotateY(180deg); }
+  .pv-face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: 12px; min-height: 320px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .pv-back { transform: rotateY(180deg); justify-content: center; }
+
+  .pv-panels { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 640px) { .pv-panels { grid-template-columns: 1fr 1fr; } }
+  .pv-panel { background: #f8fafc; border: 1px solid rgba(15, 23, 42, 0.06); border-radius: 16px; padding: 12px 14px; }
+  .pv-ai { border-color: #bfdbfe; }
+  .pv-local { border-color: #bbf7d0; }
+  .pv-label { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
+  .pv-label-ai { color: #2563eb; }
+  .pv-label-local { color: #16a34a; }
+  .pv-q { font-weight: 700; background: #eff6ff; color: #1e3a8a; border-radius: 10px; padding: 7px 10px; font-size: 12px; line-height: 1.4; margin-bottom: 10px; }
+  .pv-small { font-size: 10px; color: #94a3b8; margin-bottom: 5px; }
+  .pv-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .pv-chips span { font-size: 11px; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; padding: 2px 8px; color: #334155; }
+  .pv-no { font-size: 12px; color: #64748b; margin-top: 3px; }
+  .pv-no b { color: #ef4444; font-size: 10px; margin-right: 4px; }
+  .pv-mini { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 12px; }
+  .pv-mini div { display: flex; justify-content: space-between; gap: 8px; padding: 7px 10px; border-top: 1px solid #eef2f7; color: #334155; }
+  .pv-mini div:first-child { border-top: 0; }
+  .pv-mini b { color: #0f172a; font-variant-numeric: tabular-nums; }
+  .pv-note { display: flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 13px; font-weight: 400; color: #111827; }
+  .pv-note svg { flex: none; color: #111827; }
+  .pv-bstep { opacity: 0; transform: translateY(8px); }
+  .pv-chat.is-flipped .pv-bstep { animation: pvIn .35s ease forwards; animation-delay: calc(var(--d, 0s) + .4s); }
+  .pv-chat--left { margin: 0 auto 0 0; }
+  .pv-big { font-size: 13px; color: #334155; margin: 2px 0 8px; }
+  .pv-big b { font-size: 28px; font-weight: 700; color: #0f172a; margin-right: 4px; }
+  .pv-yes { font-size: 12px; color: #64748b; margin-top: 3px; }
+  .pv-yes b { color: #16a34a; font-size: 10px; margin-right: 4px; }
+  .pv-list { list-style: none; margin: 6px 0 0; padding: 0; }
+  .pv-chips + .pv-small { margin-top: 10px; }
+  .pv-list li { margin-top: 4px; }
+  .pv-ai .pv-mini, .pv-local .pv-mini { margin-bottom: 4px; }
+  .pv-chat.is-paused, .pv-chat.is-paused * { animation-play-state: paused !important; }
+  /* ── Clarior in action (tabs) ── */
+  .ia-tabs { display: flex; gap: 8px 28px; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin-bottom: 28px; padding: 0 4px; }
+  .ia-tabs::-webkit-scrollbar { display: none; }
+  .ia-tabs > :first-child { margin-left: auto; }
+  .ia-tabs > :last-child { margin-right: auto; }
+  .ia-tab { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 8px 2px 10px; font-size: 18px; color: #4b5563; border-bottom: 3px solid transparent; background: none; cursor: pointer; transition: color .15s ease, border-color .15s ease; }
+  .ia-tab:hover { color: #111827; }
+  .ia-tab[aria-selected='true'] { color: #16a34a; font-weight: 600; border-bottom-color: #16a34a; }
+  .ia-card { display: grid; background: #000; border-radius: 24px; overflow: hidden; }
+  .ia-panel { grid-area: 1 / 1; transition: transform .6s cubic-bezier(.4, 0, .2, 1), opacity .6s ease; }
+  .ia-panel:not(.is-active) { opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(var(--ia-off, 100%)); transition: transform .6s cubic-bezier(.4, 0, .2, 1), opacity .6s ease, visibility 0s linear .6s; }
+  .ia-panel.ia-notr { transition: none !important; }
+  @media (prefers-reduced-motion: reduce) { .ia-panel, .ia-panel:not(.is-active) { transition: none; transform: none; } }
+  .ia-stage { background: linear-gradient(160deg, #22c55e, #15803d); border-radius: 18px; margin: 0 16px 16px; padding: 40px 16px 0; height: 460px; overflow: hidden; display: flex; justify-content: center; align-items: flex-end; }
+  @media (min-width: 1024px) { .ia-stage { margin: 32px 32px 32px 0; padding: 56px 48px 0; height: 520px; } }
+  .ia-chat { width: 100%; max-width: 520px; height: 100%; background: #fff; border-radius: 22px 22px 0 0; padding: 28px 24px; display: flex; flex-direction: column; gap: 22px; font-size: 15px; color: #1f2937; }
+  .ia-row { display: flex; gap: 12px; align-items: flex-start; }
+  .ia-row-user { justify-content: flex-end; }
+  .ia-user { max-width: 82%; background: #16a34a; color: #fff; border-radius: 16px; border-top-right-radius: 4px; padding: 14px 16px; line-height: 1.45; }
+  .ia-avatar { flex: none; width: 40px; height: 40px; border-radius: 50%; background: #e5e7eb; color: #374151; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .ia-bot { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; }
+  .ia-ai { flex: 1; border: 1px solid #e5e7eb; border-radius: 16px; border-top-left-radius: 4px; padding: 14px 16px; line-height: 1.5; }
+  .ia-ai p + p, .ia-ai p + div, .ia-ai p + ul { margin-top: 8px; }
+  .ia-meta { font-size: 13px; color: #6b7280; margin-bottom: 6px; }
+  .ia-meta b { color: #111827; margin-right: 6px; }
+  .ia-user .ia-meta { color: rgba(255,255,255,.85); }
+  .ia-user .ia-meta b { color: #fff; }
+  .ia-muted { color: #6b7280; font-size: 13px; }
+  .ia-tag { font-size: 12px; font-weight: 700; color: #16a34a; text-transform: uppercase; letter-spacing: .04em; }
+  .ia-table { border: 1px solid #eef2f7; border-radius: 10px; font-size: 13px; }
+  .ia-table div { display: flex; justify-content: space-between; padding: 7px 12px; border-top: 1px solid #eef2f7; }
+  .ia-table div:first-child { border-top: 0; }
+  .ia-table b, .ia-bars b { font-variant-numeric: tabular-nums; }
+  .ia-bars { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+  .ia-bars div { display: grid; grid-template-columns: 92px 1fr 52px; align-items: center; gap: 8px; }
+  .ia-bars i { height: 8px; border-radius: 99px; background: #fca5a5; width: var(--w); }
+  .ia-bars b { text-align: right; color: #b91c1c; }
+  .ia-list { list-style: none; padding: 0; margin: 0; font-size: 14px; }
+  .ia-list li { padding: 5px 0; border-top: 1px solid #f1f5f9; }
+  .ia-list li:first-child { border-top: 0; }
+  .ia-list b { color: #16a34a; margin-right: 4px; }
+  .ia-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ia-chips span { font-size: 12px; font-weight: 600; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 999px; padding: 4px 10px; }
+  .ia-in { opacity: 0; transform: translateY(10px); }
+  .ia-panel.is-live .ia-in { animation: iaIn .45s ease forwards; animation-delay: var(--d, 0s); }
+  @keyframes iaIn { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .ia-in { opacity: 1; transform: none; } .ia-panel.is-live .ia-in { animation: none; } }
+  /* ── Huddle Global particle stream ── */
+  .hg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+  .pv-step { opacity: 0; transform: translateY(8px); }
+  .pv-chat.is-play .pv-step { animation: pvIn .35s ease forwards; animation-delay: var(--d, 0s); }
+  @keyframes pvIn { to { opacity: 1; transform: none; } }
+  @keyframes pvThink { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes pvDotB { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .pv-step, .pv-bstep { opacity: 1; transform: none; }
+    .pv-chat.is-play .pv-step, .pv-chat.is-play .pv-typing, .pv-chat.is-flipped .pv-bstep { animation: none; }
+    .pv-flipper { transition: none; }
+    .pv-typing span { animation: none; }
+  }
   /* ── Phase A "what if" board ── */
   .cl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; max-width: 44rem; margin-inline: auto; }
-  .cl-form { grid-column: 1 / -1; order: -1; margin-bottom: .75rem; }
+  .cl-feature-card { grid-column: 1 / -1; order: -1; margin-bottom: .75rem; }
   .cl-q--last { grid-column: 1 / -1; width: 60%; justify-self: center; }
   .cl-q { transform: rotate(calc(var(--r) * .35)); }
   @media (min-width: 640px) { .cl-cards { gap: 1.25rem; } }
   @media (min-width: 1024px) {
     .cl-cards { display: block; max-width: none; height: 640px; }
-    .cl-form { position: absolute; left: 50%; top: 0; width: 28rem; transform: translateX(-50%); z-index: 3; margin: 0; }
+    .cl-feature-card { position: absolute; left: 50%; top: 0; width: 28rem; transform: translateX(-50%); z-index: 3; margin: 0; }
     .cl-q { position: absolute; left: var(--x); top: var(--y); width: 16rem; transform: rotate(var(--r)); }
     .cl-q--last { width: 16rem; }
   }
-  .cl-shadow-form { box-shadow: 0 40px 80px -20px rgba(15,23,42,.3), 0 12px 28px -10px rgba(15,23,42,0) !important; }
+  .cl-shadow-card { box-shadow: 0 40px 80px -20px rgba(15,23,42,.3), 0 12px 28px -10px rgba(15,23,42,0) !important; }
   .cl-ribbon { opacity: .9; }
   @media (max-width: 1023px) { .cl-ribbon { opacity: .45; } }
   .cl-ribbon path { stroke-dasharray: 1; stroke-dashoffset: 0; }
@@ -595,70 +987,9 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   .cl-board.cl-draw.is-drawn .cl-ribbon path { stroke-dashoffset: 0; transition: stroke-dashoffset 2.6s cubic-bezier(.65,0,.35,1); }
   @media (prefers-reduced-motion: reduce) { .cl-board.cl-draw .cl-ribbon path { stroke-dashoffset: 0; transition: none; } }
 
-  [data-cl-tab][aria-selected='true'] { background: #fff; color: rgb(17 24 39); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
 </style>
 
 <script>
-  type TurnstileApi = {
-    render: (el: HTMLElement, opts: Record<string, unknown>) => string;
-    reset: (id?: string) => void;
-  };
-
-  const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
-
-  // Remember UTMs for the whole visit, so a visitor who lands with UTMs and
-  // submits after a reload is still attributed to the right campaign.
-  function getAttribution(): Record<string, string> {
-    const params = new URLSearchParams(location.search);
-    let stored: Record<string, string> = {};
-    try { stored = JSON.parse(sessionStorage.getItem('cl-attr') || '{}'); } catch {}
-    if (UTM_KEYS.some((k) => params.get(k))) {
-      stored = {};
-      UTM_KEYS.forEach((k) => { if (params.get(k)) stored[k] = params.get(k) as string; });
-    }
-    if (!stored.referrer && document.referrer && !document.referrer.startsWith(location.origin)) {
-      stored.referrer = document.referrer;
-    }
-    try { sessionStorage.setItem('cl-attr', JSON.stringify(stored)); } catch {}
-    return stored;
-  }
-
-  let tsPromise: Promise<TurnstileApi> | null = null;
-  function loadTurnstile(): Promise<TurnstileApi> {
-    const w = window as unknown as { turnstile?: TurnstileApi };
-    if (w.turnstile) return Promise.resolve(w.turnstile);
-    if (tsPromise) return tsPromise;
-    tsPromise = new Promise((resolve, reject) => {
-      if (!document.querySelector('script[data-turnstile-loader]')) {
-        const s = document.createElement('script');
-        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-        s.async = true;
-        s.setAttribute('data-turnstile-loader', 'true');
-        document.head.appendChild(s);
-      }
-      let tries = 0;
-      const t = setInterval(() => {
-        if (w.turnstile) { clearInterval(t); resolve(w.turnstile); }
-        else if (++tries > 100) { clearInterval(t); tsPromise = null; reject(new Error('Turnstile failed to load')); }
-      }, 100);
-    });
-    return tsPromise;
-  }
-
-  async function renderVisibleTurnstiles() {
-    const els = [...document.querySelectorAll<HTMLElement>('.cl-turnstile')].filter(
-      (el) => el.offsetParent !== null && !el.dataset.widgetId && el.dataset.sitekey
-    );
-    if (!els.length) return;
-    try {
-      const ts = await loadTurnstile();
-      els.forEach((el) => {
-        if (el.dataset.widgetId) return;
-        el.dataset.widgetId = ts.render(el, { sitekey: el.dataset.sitekey, theme: el.dataset.theme || 'light', size: 'flexible' });
-      });
-    } catch (err) { console.error('[clarior]', err); }
-  }
-
   let countdownTimer: ReturnType<typeof setInterval> | undefined;
   function initCountdown() {
     clearInterval(countdownTimer);
@@ -695,87 +1026,253 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     io.observe(board);
   }
 
+  function initClariorVideo() {
+    const overlay = document.getElementById('clarior-video-overlay');
+    const backdrop = document.getElementById('clarior-video-backdrop');
+    const closeButton = document.getElementById('clarior-video-close');
+    const iframe = document.getElementById('clarior-video-iframe');
+    const videoLink = document.querySelector<HTMLAnchorElement>('[href="#clarior-video"]');
+    if (!overlay || !backdrop || !closeButton || !iframe || !videoLink) return;
+
+    const closeVideo = () => {
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.inert = true;
+      iframe.removeAttribute('src');
+      document.body.style.overflow = '';
+      videoLink.focus();
+    };
+
+    videoLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      iframe.setAttribute('src', 'https://www.youtube.com/embed/qahCMMyeGzw?autoplay=1&rel=0&modestbranding=1');
+      overlay.inert = false;
+      overlay.setAttribute('aria-hidden', 'false');
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'hidden';
+      closeButton.focus();
+    });
+    closeButton.addEventListener('click', closeVideo);
+    backdrop.addEventListener('click', closeVideo);
+  }
+
   function initClarior() {
     initCountdown();
     initRibbon();
-    const forms = document.querySelectorAll<HTMLFormElement>('form[data-cl-form]');
-    if (!forms.length) return;
+    initClariorVideo();
+  }
 
-    const now = String(Date.now());
-    forms.forEach((f) => { const ts = f.querySelector<HTMLInputElement>('input[name="ts"]'); if (ts) ts.value = now; });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.getElementById('clarior-video-overlay')?.getAttribute('aria-hidden') === 'false') {
+      document.getElementById('clarior-video-close')?.click();
+    }
+  });
+  document.addEventListener('astro:page-load', initClarior);
+</script>
 
-    // ── Tabs (Phase B) ──
-    const tabs = document.querySelectorAll<HTMLButtonElement>('[data-cl-tab]');
-    const showTab = (name: string) => {
-      tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.clTab === name)));
-      document.querySelectorAll<HTMLElement>('[data-cl-panel]').forEach((p) => {
-        p.classList.toggle('hidden', p.dataset.clPanel !== name);
-        p.classList.toggle('flex', p.dataset.clPanel === name);
-      });
-      renderVisibleTurnstiles();
+<script>
+  // Privacy demo: shows the chat result, flips to "what the AI sees / what stays with you",
+  // flips back and repeats while the demo is on screen.
+  function initPrivacyDemo() {
+    document.querySelectorAll<HTMLElement>('[data-pv-demo]').forEach(bindPrivacyDemo);
+  }
+  function bindPrivacyDemo(demo: HTMLElement) {
+    if (demo.dataset.pvBound) return;
+    demo.dataset.pvBound = '1';
+    // Each demo has its own timing (data-pv-flip / data-pv-cycle, in ms) so they don't flip together.
+    const FLIP_AT = Number(demo.dataset.pvFlip) || 5500;
+    const CYCLE = Math.max(Number(demo.dataset.pvCycle) || 15000, FLIP_AT + 4000);
+
+    // One pending step at a time, so it can be paused on hover and resumed with the time left.
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let action: (() => void) | undefined;
+    let dueAt = 0;
+    let remaining = 0;
+    let visible = false;
+    let hovered = false;
+
+    const schedule = (fn: () => void, ms: number) => {
+      clearTimeout(timer);
+      action = fn; dueAt = Date.now() + ms; remaining = ms;
+      if (visible && !hovered) timer = setTimeout(fn, ms);
     };
-    tabs.forEach((t) => t.addEventListener('click', () => showTab(t.dataset.clTab as string)));
-
-    // ── CTA anchors pre-select the demo intent ──
-    const applyHash = () => {
-      const anchor = location.hash.slice(1);
-      const radio = document.querySelector<HTMLInputElement>(`input[data-cl-anchor="${anchor}"]`);
-      if (radio) { showTab('demo'); radio.checked = true; }
+    const flip = () => { demo.classList.add('is-flipped'); schedule(cycle, CYCLE - FLIP_AT); };
+    function cycle() {
+      demo.classList.remove('is-play', 'is-flipped');
+      void demo.offsetWidth;
+      demo.classList.add('is-play');
+      schedule(flip, FLIP_AT);
+    }
+    const pause = () => {
+      if (timer === undefined) return;
+      clearTimeout(timer); timer = undefined;
+      remaining = Math.max(0, dueAt - Date.now());
     };
-    window.addEventListener('hashchange', applyHash);
-    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) =>
-      a.addEventListener('click', () => setTimeout(applyHash, 0))
-    );
-    applyHash();
+    const resume = () => {
+      if (!visible || hovered || !action) return;
+      dueAt = Date.now() + remaining;
+      timer = setTimeout(action, remaining);
+    };
 
-    // ── Submit ──
-    forms.forEach((form) => {
-      const card = form.closest<HTMLElement>('[data-cl-card]') as HTMLElement;
-      const errorBox = card.querySelector<HTMLElement>('[data-cl-error]');
-      const successBox = card.querySelector<HTMLElement>('[data-cl-success]');
-      const button = form.querySelector<HTMLButtonElement>('[data-cl-submit]');
+    demo.addEventListener('mouseenter', () => { hovered = true; demo.classList.add('is-paused'); pause(); });
+    demo.addEventListener('mouseleave', () => { hovered = false; demo.classList.remove('is-paused'); resume(); });
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        errorBox?.classList.add('hidden');
-        if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (!('IntersectionObserver' in window)) { visible = true; cycle(); return; }
+    new IntersectionObserver((entries) => {
+      const now = entries.some((e) => e.isIntersecting);
+      if (now === visible) return;
+      visible = now;
+      clearTimeout(timer); timer = undefined;
+      if (visible) cycle();
+    }, { threshold: 0.35 }).observe(demo);
+  }
+  document.addEventListener('astro:page-load', initPrivacyDemo);
+</script>
 
-        const data: Record<string, string> = {};
-        new FormData(form).forEach((v, k) => { data[k] = String(v); });
-        data.marketingConsent = data.marketingConsent === 'yes' ? 'yes' : 'no';
-        Object.assign(data, getAttribution(), { landingUrl: location.href });
+<script>
+  // Huddle Global background: green particles rising along a curved stream (canvas, no libraries).
+  // Used by the Huddle Global card and the "Explore Clarior in action" card.
+  function initHuddleStream() {
+    document.querySelectorAll<HTMLCanvasElement>('[data-hg-canvas]').forEach(bindStream);
+  }
+  function bindStream(canvas: HTMLCanvasElement) {
+    if (canvas.dataset.hgBound) return;
+    canvas.dataset.hgBound = '1';
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        if (button) button.disabled = true;
-        try {
-          const res = await fetch('/api/clarior-lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-          });
-          const json = await res.json().catch(() => ({}));
-          if (!res.ok || !json.success) throw new Error(json.error || 'Request failed');
+    type P = { t: number; off: number; r: number; a: number; l: number; sp: number; wob: number; ph: number; stray: boolean; sx: number; sy: number };
+    let W = 0, H = 0, parts: P[] = [], raf = 0, running = false;
 
-          const msg = form.dataset.clSuccessMsg;
-          const msgEl = card.querySelector<HTMLElement>('[data-cl-success-text]');
-          if (msg && msgEl) msgEl.textContent = msg;
-          card.querySelectorAll('form, [data-cl-tab]').forEach((el) => el.classList.add('hidden'));
-          card.querySelector('[role="tablist"]')?.classList.add('hidden');
-          successBox?.classList.remove('hidden');
-          successBox?.classList.add('flex');
-        } catch (err) {
-          console.error('[clarior]', err);
-          errorBox?.classList.remove('hidden');
-          const tsEl = form.querySelector<HTMLElement>('.cl-turnstile');
-          const w = window as unknown as { turnstile?: TurnstileApi };
-          if (tsEl?.dataset.widgetId && w.turnstile) w.turnstile.reset(tsEl.dataset.widgetId);
-        } finally {
-          if (button) button.disabled = false;
+    // Stream path: in from the bottom-left, along the bottom, then up the right side.
+    const P0 = [-0.05, 1.08], P1 = [0.55, 0.7], P2 = [1.02, 1.05], P3 = [0.9, -0.08];
+    const bez = (t: number) => {
+      const u = 1 - t;
+      const x = u*u*u*P0[0] + 3*u*u*t*P1[0] + 3*u*t*t*P2[0] + t*t*t*P3[0];
+      const y = u*u*u*P0[1] + 3*u*u*t*P1[1] + 3*u*t*t*P2[1] + t*t*t*P3[1];
+      const dx = 3*u*u*(P1[0]-P0[0]) + 6*u*t*(P2[0]-P1[0]) + 3*t*t*(P3[0]-P2[0]);
+      const dy = 3*u*u*(P1[1]-P0[1]) + 6*u*t*(P2[1]-P1[1]) + 3*t*t*(P3[1]-P2[1]);
+      return [x, y, dx, dy];
+    };
+    const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+
+    const make = (): P => ({
+      t: Math.random(), off: gauss(), r: Math.random() < 0.8 ? 0.5 + Math.random() * 1.3 : 1.8 + Math.random() * 1.8,
+      a: 0.45 + Math.random() * 0.55, l: 48 + Math.random() * 22, sp: 0.00025 + Math.random() * 0.0006,
+      wob: 2 + Math.random() * 6, ph: Math.random() * Math.PI * 2, stray: Math.random() < 0.06,
+      sx: Math.random(), sy: Math.random(),
+    });
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = rect.width; H = rect.height;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.round(Math.min(6000, Math.max(1500, W * H / 120)));
+      parts = Array.from({ length: n }, make);
+    };
+
+    const draw = (time: number) => {
+      ctx.clearRect(0, 0, W, H);
+      const minSide = Math.min(W, H);
+      for (const p of parts) {
+        let x: number, y: number;
+        if (p.stray) {
+          p.sy -= p.sp * 0.6; if (p.sy < -0.02) { p.sy = 1.02; p.sx = Math.random(); }
+          x = p.sx * W; y = p.sy * H;
+        } else {
+          p.t += p.sp; if (p.t > 1) { p.t = 0; p.off = gauss(); }
+          const [bx, by, dx, dy] = bez(p.t);
+          const len = Math.hypot(dx * W, dy * H) || 1;
+          const nx = -dy * H / len, ny = dx * W / len;               // normal to the stream
+          const width = minSide * (0.13 + 0.13 * Math.sin(p.t * Math.PI)); // wider in the middle
+          const w = Math.sin(time / 1400 + p.ph) * p.wob;
+          x = bx * W + nx * (p.off * width + w);
+          y = by * H + ny * (p.off * width + w) - Math.cos(time / 1700 + p.ph) * p.wob;
         }
+        const edge = Math.max(0, 1 - Math.abs(p.off) * 0.9);
+        ctx.globalAlpha = p.stray ? p.a * 0.4 : p.a * (0.45 + 0.55 * edge);
+        ctx.fillStyle = `hsl(150, 62%, ${p.l}%)`;
+        ctx.beginPath(); ctx.arc(x, y, p.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const loop = (time: number) => { draw(time); raf = requestAnimationFrame(loop); };
+    const start = () => { if (running || reduce) return; running = true; raf = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    resize(); draw(0);
+    let rt: ReturnType<typeof setTimeout> | undefined;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); draw(performance.now()); }, 150); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((e) => (e.some((x) => x.isIntersecting) ? start() : stop())).observe(canvas);
+    } else start();
+  }
+  document.addEventListener('astro:page-load', initHuddleStream);
+</script>
+
+<script>
+  // Clarior in action: tabs play automatically; clicking a tab stops autoplay.
+  // Panels slide left/right when switching, and the chat replays on each panel.
+  function initInAction() {
+    const root = document.querySelector<HTMLElement>('#clarior-in-action');
+    if (!root || root.dataset.iaBound) return;
+    root.dataset.iaBound = '1';
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-ia-tab]'));
+    const panelOf = (t: HTMLButtonElement) => root.querySelector<HTMLElement>('#' + t.getAttribute('aria-controls'))!;
+    const INTERVAL = 6000;
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    let autoplay = true;
+    let visible = false;
+
+    const show = (next: number, focus = false) => {
+      if (next === current) return;
+      const dir = next > current ? 1 : -1;
+      const oldP = panelOf(tabs[current]);
+      const newP = panelOf(tabs[next]);
+      // Put the incoming panel on the side it enters from, without animating that move.
+      newP.classList.add('ia-notr');
+      newP.style.setProperty('--ia-off', `${dir * 100}%`);
+      void newP.offsetWidth;
+      newP.classList.remove('ia-notr');
+      oldP.style.setProperty('--ia-off', `${-dir * 100}%`);
+      oldP.classList.remove('is-active', 'is-live'); oldP.inert = true;
+      newP.classList.add('is-active'); newP.inert = false;
+      void newP.offsetWidth; newP.classList.add('is-live');
+      tabs.forEach((t, i) => { t.setAttribute('aria-selected', String(i === next)); t.tabIndex = i === next ? 0 : -1; });
+      const bar = tabs[next].parentElement!;
+      bar.scrollTo({ left: tabs[next].offsetLeft - bar.clientWidth / 2 + tabs[next].offsetWidth / 2, behavior: 'smooth' });
+      if (focus) tabs[next].focus();
+      current = next;
+    };
+    const stopAuto = () => { autoplay = false; clearInterval(timer); };
+    const runAuto = () => {
+      clearInterval(timer);
+      if (autoplay && visible) timer = setInterval(() => show((current + 1) % tabs.length), INTERVAL);
+    };
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => { stopAuto(); show(i); });
+      t.addEventListener('keydown', (e) => {
+        const k = (e as KeyboardEvent).key;
+        if (k !== 'ArrowRight' && k !== 'ArrowLeft') return;
+        e.preventDefault(); stopAuto();
+        show((i + (k === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length, true);
       });
     });
 
-    renderVisibleTurnstiles();
+    const first = panelOf(tabs[0]);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((e) => {
+        visible = e.some((x) => x.isIntersecting);
+        if (visible) first.classList.add('is-live');
+        runAuto();
+      }, { threshold: 0.3 }).observe(root.querySelector('[data-ia]')!);
+    } else { visible = true; first.classList.add('is-live'); runAuto(); }
   }
-
-  document.addEventListener('astro:page-load', initClarior);
+  document.addEventListener('astro:page-load', initInAction);
 </script>

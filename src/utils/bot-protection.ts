@@ -26,7 +26,9 @@ const ALLOWED_ORIGINS = [
   'https://www.upbuff.com',
   'http://localhost:4321', // Astro dev
   'http://localhost:4322', // Astro dev (alternate project port)
+  'http://localhost:4323', // Astro dev (alternate project port)
   'http://localhost:3000',
+  'http://127.0.0.1:4323', // Astro dev via IPv4
 ];
 
 const SPAM_KEYWORDS = [
@@ -47,9 +49,15 @@ export interface BotCheckResult {
   reason?: string;
 }
 
+export interface BotProtectionOptions {
+  /** Skip Turnstile while keeping honeypot, timing, origin, and content checks. */
+  skipTurnstile?: boolean;
+}
+
 export async function verifyFormSubmission(
   body: Record<string, string>,
-  request: Request
+  request: Request,
+  options: BotProtectionOptions = {}
 ): Promise<BotCheckResult> {
   // ── 1. Honeypot ──────────────────────────────────────────────
   // The `website` field is hidden from real users via CSS/aria.
@@ -90,6 +98,10 @@ export async function verifyFormSubmission(
   }
   if (SPAM_KEYWORDS.some((kw) => text.includes(kw))) {
     return { ok: false, reason: 'spam_keyword' };
+  }
+
+  if (options.skipTurnstile) {
+    return { ok: true };
   }
 
   // ── 5. Cloudflare Turnstile server-side verification ─────────

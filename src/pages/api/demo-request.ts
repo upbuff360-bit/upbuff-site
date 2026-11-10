@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import nodemailer from 'nodemailer';
 import { verifyFormSubmission } from '../../utils/bot-protection';
+import { LEAD_FORM_TURNSTILE_ENABLED } from '../../utils/lead-form-turnstile';
 import { validateOptionalPhone } from '../../utils/phone-validation';
 import { getCountryName } from '../../data/countryDialCodes';
 
@@ -22,6 +23,8 @@ export const POST: APIRoute = async ({ request }) => {
       heardFrom,
       message,
     } = body as Record<string, string>;
+    const referrer = body.referrer || request.headers.get('referer') || '';
+    const leadSource = body.leadSource || referrer || 'Direct';
     const countryName = getCountryName(countryCode);
     const phoneCheck = validateOptionalPhone(countryCode, phone);
 
@@ -39,8 +42,10 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // ── Bot protection (honeypot + timing + origin + content + Turnstile) ──
-    const check = await verifyFormSubmission(body as Record<string, string>, request);
+    // Apply the form checks and Cloudflare Turnstile verification.
+    const check = await verifyFormSubmission(body as Record<string, string>, request, {
+      skipTurnstile: !LEAD_FORM_TURNSTILE_ENABLED,
+    });
     if (!check.ok) {
       console.warn(
         '[demo-request] blocked:',
@@ -53,6 +58,48 @@ export const POST: APIRoute = async ({ request }) => {
         JSON.stringify({ success: true }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
+    }
+
+    // Persist demo requests in the same private inbox as contact submissions.
+    // Storage failures are logged but do not prevent the existing email flow.
+    const storageUrl = import.meta.env.FASTAPI_BASE_URL;
+    const storageKey = import.meta.env.CONTACT_STORAGE_API_KEY;
+    if (storageUrl && storageKey) {
+      try {
+        const storageResponse = await fetch(`${storageUrl.replace(/\/+$/, '')}/internal/contact`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Contact-Storage-Key': storageKey,
+          },
+          body: JSON.stringify({
+            submissionType: 'demo',
+            name,
+            company,
+            email,
+            countryCode,
+            country: countryName,
+            phone: phoneCheck.fullPhone,
+            product: 'Request a Demo',
+            erp,
+            focus,
+            automation,
+            monthlyDocuments,
+            heardFrom,
+            leadSource,
+            referrer,
+            message,
+          }),
+          signal: AbortSignal.timeout(5000),
+        });
+        if (!storageResponse.ok) {
+          console.error('[demo-request] admin storage returned HTTP', storageResponse.status);
+        }
+      } catch (storageError) {
+        console.error('[demo-request] admin storage unavailable; continuing email delivery:', storageError);
+      }
+    } else {
+      console.warn('[demo-request] admin storage is not configured; continuing email delivery');
     }
 
     const transporter = nodemailer.createTransport({

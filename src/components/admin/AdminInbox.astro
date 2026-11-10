@@ -1,0 +1,1306 @@
+---
+import '~/assets/styles/tailwind.css';
+
+export interface Props {
+  initialView?: 'contact' | 'demo' | 'consultation';
+}
+
+const { initialView = 'contact' } = Astro.props;
+const viewLabel = initialView === 'demo' ? 'Request Demo' : initialView === 'consultation' ? 'SAP Consultation' : 'Quick Contact';
+const title = `${viewLabel} submissions`;
+
+const metadata = {
+  title: `${title} | UpBuff Admin`,
+  description: 'Private UpBuff lead inbox.',
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>{metadata.title}</title>
+  </head>
+  <body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
+    <div class="flex h-[100dvh] flex-col md:min-h-screen md:flex-row">
+      <aside id="admin-sidebar" class="hidden w-full flex-col border-b border-gray-200 bg-white px-5 py-5 text-gray-900 md:fixed md:inset-y-0 md:flex md:w-28 md:border-b-0 md:border-r md:px-3 md:py-7">
+        <a href="/admin/quick-contact" class="flex items-center justify-center" aria-label="UpBuff Admin home">
+          <img src="/uploads/upbuff-logo.png" alt="UpBuff" class="h-7 w-8 object-contain object-center" />
+        </a>
+
+        <nav aria-label="Admin listings" class="mt-6 flex gap-2 md:flex-col">
+          <a
+            href="/admin/quick-contact"
+            aria-current={initialView === 'contact' ? 'page' : undefined}
+            class:list={[
+              'flex flex-1 flex-col items-center gap-2 rounded-lg px-2 py-3 text-center text-sm font-medium transition-colors md:flex-none',
+              initialView === 'contact' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+            ]}
+          >
+            <span class="relative flex h-5 w-5 items-center justify-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z" />
+              </svg>
+              <span data-unread-view="contact" class="absolute -right-1 -top-1 hidden h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"><span class="sr-only">New inquiries</span></span>
+            </span>
+            <span class="leading-tight"><span class="block">Quick</span><span class="block">Contact</span></span>
+          </a>
+          <a
+            href="/admin/request-demo"
+            aria-current={initialView === 'demo' ? 'page' : undefined}
+            class:list={[
+              'flex flex-1 flex-col items-center gap-2 rounded-lg px-2 py-3 text-center text-sm font-medium transition-colors md:flex-none',
+              initialView === 'demo' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+            ]}
+          >
+            <span class="relative flex h-5 w-5 items-center justify-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <path d="M8 2v4m8-4v4M3 10h18m-12 4h6m-6 3h4" />
+              </svg>
+              <span data-unread-view="demo" class="absolute -right-1 -top-1 hidden h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"><span class="sr-only">New inquiries</span></span>
+            </span>
+            <span class="leading-tight"><span class="block">Request</span><span class="block">Demo</span></span>
+          </a>
+          <a
+            href="/admin/sap-consultation"
+            aria-current={initialView === 'consultation' ? 'page' : undefined}
+            class:list={[
+              'flex flex-1 flex-col items-center gap-2 rounded-lg px-2 py-3 text-center text-sm font-medium transition-colors md:flex-none',
+              initialView === 'consultation' ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+            ]}
+          >
+            <span class="relative flex h-5 w-5 items-center justify-center text-gray-600">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="17" rx="2" />
+                <path d="M8 4V3h8v1M12 9v8m-4-4h8" />
+              </svg>
+              <span data-unread-view="consultation" class="absolute -right-1 -top-1 hidden h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"><span class="sr-only">New inquiries</span></span>
+            </span>
+            <span class="text-xs leading-tight"><span class="block">SAP</span><span class="block">Consultation</span></span>
+          </a>
+        </nav>
+
+        <div class="mt-5 pt-4 md:mt-auto md:pt-5">
+          <button id="logout-button" type="button" aria-label="Sign out" title="Sign out" class="hidden w-full rounded-lg p-2.5 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2v10" />
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
+      <main id="admin-app" data-view={initialView} class="min-h-0 min-w-0 flex-1 bg-white pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:ml-28 md:h-screen md:overflow-hidden md:pb-0">
+        <div class="h-full w-full">
+          <section id="submissions-panel" class="flex h-full min-h-0 flex-col overflow-hidden bg-white md:grid md:h-screen md:grid-cols-[minmax(280px,360px)_minmax(0,1fr)]" aria-busy="true">
+            <div id="submission-list-column" class="flex min-h-0 flex-1 flex-col md:h-full md:border-b-0 md:border-r">
+              <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4">
+                <div class="min-w-0">
+                  <h2 class="text-lg font-semibold text-gray-900">{viewLabel}</h2>
+                  <p id="submission-count" class="mt-0.5 text-xs text-gray-500"></p>
+                </div>
+                <button id="refresh-button" type="button" class="shrink-0 rounded-lg border border-gray-300 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50">Refresh</button>
+              </div>
+              <div class="flex gap-6 px-5" role="tablist" aria-label="Submission folders">
+                <button id="inbox-tab" type="button" role="tab" aria-selected="true" aria-controls="submission-list" class="border-b-2 border-[#27AE61] py-3 text-sm font-semibold text-black">Inbox</button>
+                <button id="trash-tab" type="button" role="tab" aria-selected="false" aria-controls="submission-list" class="border-b-2 border-transparent py-3 text-sm font-semibold text-gray-500 hover:text-gray-700">Trash</button>
+              </div>
+              <p id="table-error" class="hidden border-b border-red-100 bg-red-50 px-5 py-3 text-sm text-red-700" role="alert"></p>
+              <div id="list-empty-state" class="hidden px-5 py-10 text-center text-sm text-gray-500">
+                No {initialView === 'demo' ? 'demo requests' : initialView === 'consultation' ? 'SAP consultations' : 'quick contact submissions'} yet.
+              </div>
+              <div id="submission-list" role="tabpanel" aria-labelledby="inbox-tab" class="min-h-0 flex-1 overflow-y-auto"></div>
+            </div>
+
+            <div id="detail-panel" class="fixed inset-0 z-50 hidden min-h-0 min-w-0 flex-col bg-white md:static md:z-auto md:flex md:h-full" tabindex="-1">
+              <div class="flex shrink-0 items-center justify-between border-b border-gray-200 px-5 py-3 md:hidden">
+                <span class="text-base font-semibold text-gray-900">Inquiry details</span>
+                <button id="close-detail-button" type="button" aria-label="Close inquiry details" class="rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                </button>
+              </div>
+              <div id="detail-empty-state" class="flex h-full min-h-[420px] items-center justify-center px-8 text-center">
+                <div>
+                  <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-500" aria-hidden="true">✉</div>
+                  <p class="mt-4 text-sm font-medium text-gray-700">Select a submission to view its details</p>
+                  <p class="mt-1 text-sm text-gray-500">Choose an item from the inbox list.</p>
+                </div>
+              </div>
+              <article id="detail-content" class="hidden min-h-0 flex-1 overflow-y-auto p-5 pb-[calc(2rem+env(safe-area-inset-bottom))] sm:p-8">
+                <h2 id="detail-title" class="text-3xl font-bold tracking-tight text-gray-900"></h2>
+                <p id="detail-company" class="mt-3 text-base text-gray-600"></p>
+                <div class="mt-7 grid items-start gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(260px,0.8fr)]">
+                  <div class="grid gap-5">
+                    <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-6" aria-label="Contact inquiry">
+                      <h3 class="text-lg font-semibold text-gray-900">Basic details</h3>
+                      <div id="detail-fields" class="mt-5 grid gap-5 sm:grid-cols-2"></div>
+                      <div id="detail-message-wrap" class="mt-7 border-t border-gray-200 pt-5">
+                        <h3 class="text-base font-semibold text-gray-900">Message</h3>
+                        <p id="detail-message" class="mt-2 whitespace-pre-wrap text-base leading-7 text-gray-700"></p>
+                      </div>
+                    </section>
+                    <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-6" aria-label="Submission information">
+                      <h3 class="text-lg font-semibold text-gray-900">Submission information</h3>
+                      <div class="mt-5 grid gap-5">
+                        <div>
+                          <p class="text-sm font-semibold uppercase tracking-wide text-gray-500">Submitted date and time</p>
+                          <time id="detail-time" class="mt-1 block break-words text-base text-gray-900"></time>
+                        </div>
+                        <div id="detail-deleted-wrap" class="hidden">
+                          <p class="text-sm font-semibold uppercase tracking-wide text-gray-500">Moved to Trash</p>
+                          <time id="detail-deleted-time" class="mt-1 block break-words text-base text-gray-900"></time>
+                        </div>
+                        <div id="detail-meta-fields" class="grid gap-5"></div>
+                      </div>
+                    </section>
+                  </div>
+                  <div class="grid content-start gap-5">
+                    <section class="rounded-xl border border-[#27AE61] bg-[#EDF9F1] p-5 sm:p-6" aria-label="Actions">
+                      <h3 class="text-lg font-semibold text-gray-900">Actions</h3>
+                      <fieldset id="useful-fieldset" class="mt-5">
+                        <legend class="text-sm font-semibold text-gray-900">Is this lead useful?</legend>
+                        <div class="mt-1 flex flex-wrap gap-5 text-sm text-gray-700">
+                          <label class="flex cursor-pointer items-center gap-2">
+                            <input type="radio" name="useful-status" value="true" class="peer sr-only" />
+                            <span class="flex h-5 w-5 items-center justify-center rounded-full border border-gray-400 text-transparent peer-checked:border-[#27AE61] peer-checked:bg-[#27AE61] peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#27AE61]/30 peer-focus-visible:ring-offset-2 peer-disabled:opacity-50" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8 3 3 6-6" /></svg>
+                            </span>
+                            Yes
+                          </label>
+                          <label class="flex cursor-pointer items-center gap-2">
+                            <input type="radio" name="useful-status" value="false" class="peer sr-only" />
+                            <span class="flex h-5 w-5 items-center justify-center rounded-full border border-gray-400 text-transparent peer-checked:border-[#27AE61] peer-checked:bg-[#27AE61] peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#27AE61]/30 peer-focus-visible:ring-offset-2 peer-disabled:opacity-50" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8 3 3 6-6" /></svg>
+                            </span>
+                            No
+                          </label>
+                        </div>
+                      </fieldset>
+                      <fieldset id="contacted-fieldset" class="mt-4">
+                        <legend class="text-sm font-semibold text-gray-900">Have you contacted the lead?</legend>
+                        <div class="mt-1 flex flex-wrap gap-5 text-sm text-gray-700">
+                          <label class="flex cursor-pointer items-center gap-2">
+                            <input type="radio" name="contacted-status" value="true" class="peer sr-only" />
+                            <span class="flex h-5 w-5 items-center justify-center rounded-full border border-gray-400 text-transparent peer-checked:border-[#27AE61] peer-checked:bg-[#27AE61] peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#27AE61]/30 peer-focus-visible:ring-offset-2 peer-disabled:opacity-50" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8 3 3 6-6" /></svg>
+                            </span>
+                            Contacted
+                          </label>
+                          <label class="flex cursor-pointer items-center gap-2">
+                            <input type="radio" name="contacted-status" value="false" class="peer sr-only" />
+                            <span class="flex h-5 w-5 items-center justify-center rounded-full border border-gray-400 text-transparent peer-checked:border-[#27AE61] peer-checked:bg-[#27AE61] peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#27AE61]/30 peer-focus-visible:ring-offset-2 peer-disabled:opacity-50" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8 3 3 6-6" /></svg>
+                            </span>
+                            Not contacted
+                          </label>
+                        </div>
+                      </fieldset>
+                      <p id="action-status" class="mt-3 hidden text-sm" role="status" aria-live="polite"></p>
+                      <div id="restore-action" class="mt-5 hidden">
+                        <p class="text-sm text-gray-600">Move this inquiry back to the inbox.</p>
+                        <button id="restore-submission-button" type="button" class="mt-3 rounded-lg bg-[#27AE61] px-4 py-2 text-sm font-semibold text-white hover:bg-[#27AE61] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60">Restore to Inbox</button>
+                      </div>
+                    </section>
+                    <section id="delete-action" class="rounded-xl border border-gray-200 bg-white p-5 sm:p-6" aria-label="Delete lead">
+                      <h3 class="text-sm font-semibold text-gray-900">Do you want to delete the lead?</h3>
+                      <button id="delete-submission-button" type="button" class="mt-3 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60">
+                        Delete contact
+                      </button>
+                    </section>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <nav id="mobile-admin-nav" aria-label="Admin navigation" class="fixed inset-x-0 bottom-0 z-30 flex h-[calc(4.5rem+env(safe-area-inset-bottom))] border-t border-gray-200 bg-white pb-[env(safe-area-inset-bottom)] md:hidden">
+        <a href="/admin/quick-contact" aria-current={initialView === 'contact' ? 'page' : undefined} class:list={[
+          'flex min-w-0 flex-1 flex-col items-center justify-center gap-1 text-center text-xs font-semibold transition-colors',
+          initialView === 'contact' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900',
+        ]}>
+          <span class="relative h-5 w-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z" /></svg>
+            <span data-unread-view="contact" class="absolute -right-1 -top-1 hidden h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"><span class="sr-only">New inquiries</span></span>
+          </span>
+          <span class="leading-tight"><span class="block">Quick</span><span class="block">Contact</span></span>
+        </a>
+        <a href="/admin/request-demo" aria-current={initialView === 'demo' ? 'page' : undefined} class:list={[
+          'flex min-w-0 flex-1 flex-col items-center justify-center gap-1 text-center text-xs font-semibold transition-colors',
+          initialView === 'demo' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900',
+        ]}>
+          <span class="relative h-5 w-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M8 2v4m8-4v4M3 10h18m-12 4h6m-6 3h4" /></svg>
+            <span data-unread-view="demo" class="absolute -right-1 -top-1 hidden h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"><span class="sr-only">New inquiries</span></span>
+          </span>
+          <span class="leading-tight"><span class="block">Request</span><span class="block">a Demo</span></span>
+        </a>
+        <a href="/admin/sap-consultation" aria-current={initialView === 'consultation' ? 'page' : undefined} class:list={[
+          'flex min-w-0 flex-1 flex-col items-center justify-center gap-1 text-center text-xs font-semibold transition-colors',
+          initialView === 'consultation' ? 'bg-gray-100 text-gray-900' : 'text-gray-500 hover:text-gray-900',
+        ]}>
+          <span class="relative h-5 w-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2" /><path d="M8 4V3h8v1M12 9v8m-4-4h8" /></svg>
+            <span data-unread-view="consultation" class="absolute -right-1 -top-1 hidden h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"><span class="sr-only">New inquiries</span></span>
+          </span>
+          <span class="leading-tight"><span class="block">SAP</span><span class="block">Consultation</span></span>
+        </a>
+        <button id="mobile-logo-button" type="button" aria-label="Account menu" aria-controls="mobile-account-menu" aria-expanded="false" class="flex min-w-0 flex-1 items-center justify-center transition-colors hover:bg-gray-100">
+          <img src="/uploads/upbuff-logo.png" alt="" class="h-7 w-8 object-contain" />
+        </button>
+        <div id="mobile-account-menu" class="absolute bottom-[calc(100%+0.5rem)] right-2 hidden w-44 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
+          <button id="mobile-logout-button" type="button" class="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-medium text-gray-900 hover:bg-gray-100 disabled:opacity-60">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v10" /><path d="M18.36 6.64a9 9 0 1 1-12.73 0" /></svg>
+            Sign out
+          </button>
+          <p id="mobile-logout-error" class="hidden px-3 py-2 text-xs text-red-600" role="alert"></p>
+        </div>
+      </nav>
+    </div>
+
+    <dialog id="delete-confirm-dialog" class="w-[calc(100vw-2rem)] max-w-md rounded-2xl border border-gray-200 bg-white p-0 shadow-2xl backdrop:bg-gray-900/60" aria-labelledby="delete-confirm-title" aria-describedby="delete-confirm-description">
+      <div class="p-6">
+        <h2 id="delete-confirm-title" class="text-lg font-semibold text-gray-900">Move this contact to Trash?</h2>
+        <p id="delete-confirm-description" class="mt-2 text-sm leading-6 text-gray-600">You can restore this submission from the Trash tab later.</p>
+        <p id="delete-confirm-name" class="mt-3 break-words text-sm font-medium text-gray-900"></p>
+        <p id="delete-confirm-error" class="mt-3 hidden text-sm text-red-600" role="alert"></p>
+        <div class="mt-6 flex justify-end gap-3">
+          <button id="cancel-delete-button" type="button" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Cancel</button>
+          <button id="confirm-delete-button" type="button" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60">Move to Trash</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script>
+      type Submission = {
+        id: string;
+        submissionType: string;
+        submittedAt: string;
+        deletedAt: string;
+        name: string;
+        company: string;
+        email: string;
+        phone: string;
+        country: string;
+        product: string;
+        erp: string;
+        focus: string;
+        automation: string;
+        monthlyDocuments: string;
+        heardFrom: string;
+        leadSource: string;
+        referrer: string;
+        isRead: boolean;
+        contacted: boolean | null;
+        useful: boolean | null;
+        message: string;
+      };
+
+      type View = 'contact' | 'demo' | 'consultation';
+      type Folder = 'inbox' | 'trash';
+      type CachedList = {
+        savedAt: number;
+        submissions: Submission[];
+        total: number;
+        unread: number;
+        unreadViews?: View[];
+        hasMore: boolean;
+        nextCursor: { submittedAt: string; id: string } | null;
+        selectedId: string | null;
+      };
+
+      const adminApp = document.querySelector<HTMLElement>('#admin-app')!;
+      const currentView: View = adminApp.dataset.view === 'demo' ? 'demo'
+        : adminApp.dataset.view === 'consultation' ? 'consultation' : 'contact';
+      const unreadIndicators = document.querySelectorAll<HTMLElement>('[data-unread-view]');
+      const submissionsPanel = document.querySelector<HTMLElement>('#submissions-panel')!;
+      const mobileNav = document.querySelector<HTMLElement>('#mobile-admin-nav')!;
+      const mobileLogoButton = document.querySelector<HTMLButtonElement>('#mobile-logo-button')!;
+      const mobileAccountMenu = document.querySelector<HTMLElement>('#mobile-account-menu')!;
+      const mobileLogoutError = document.querySelector<HTMLElement>('#mobile-logout-error')!;
+      const listColumn = document.querySelector<HTMLElement>('#submission-list-column')!;
+      const detailPanel = document.querySelector<HTMLElement>('#detail-panel')!;
+      const closeDetailButton = document.querySelector<HTMLButtonElement>('#close-detail-button')!;
+      const mobileMedia = window.matchMedia('(max-width: 767px)');
+      const logoutButton = document.querySelector<HTMLButtonElement>('#logout-button')!;
+      const mobileLogoutButton = document.querySelector<HTMLButtonElement>('#mobile-logout-button')!;
+      const tableError = document.querySelector<HTMLElement>('#table-error')!;
+      const listEmptyState = document.querySelector<HTMLElement>('#list-empty-state')!;
+      const submissionList = document.querySelector<HTMLElement>('#submission-list')!;
+      const detailEmptyState = document.querySelector<HTMLElement>('#detail-empty-state')!;
+      const detailContent = document.querySelector<HTMLElement>('#detail-content')!;
+      const count = document.querySelector<HTMLElement>('#submission-count')!;
+      const inboxTab = document.querySelector<HTMLButtonElement>('#inbox-tab')!;
+      const trashTab = document.querySelector<HTMLButtonElement>('#trash-tab')!;
+      const detailDeletedWrap = document.querySelector<HTMLElement>('#detail-deleted-wrap')!;
+      const detailDeletedTime = document.querySelector<HTMLElement>('#detail-deleted-time')!;
+      const contactedFieldset = document.querySelector<HTMLElement>('#contacted-fieldset')!;
+      const usefulFieldset = document.querySelector<HTMLElement>('#useful-fieldset')!;
+      const deleteAction = document.querySelector<HTMLElement>('#delete-action')!;
+      const restoreAction = document.querySelector<HTMLElement>('#restore-action')!;
+      const restoreSubmissionButton = document.querySelector<HTMLButtonElement>('#restore-submission-button')!;
+      const actionStatus = document.querySelector<HTMLElement>('#action-status')!;
+      const contactedRadios = document.querySelectorAll<HTMLInputElement>('input[name="contacted-status"]');
+      const usefulRadios = document.querySelectorAll<HTMLInputElement>('input[name="useful-status"]');
+      const deleteSubmissionButton = document.querySelector<HTMLButtonElement>('#delete-submission-button')!;
+      const deleteConfirmDialog = document.querySelector<HTMLDialogElement>('#delete-confirm-dialog')!;
+      const deleteConfirmName = document.querySelector<HTMLElement>('#delete-confirm-name')!;
+      const deleteConfirmError = document.querySelector<HTMLElement>('#delete-confirm-error')!;
+      const cancelDeleteButton = document.querySelector<HTMLButtonElement>('#cancel-delete-button')!;
+      const confirmDeleteButton = document.querySelector<HTMLButtonElement>('#confirm-delete-button')!;
+      const initialSubmissionCount = 12;
+      const scrollBatchSize = 3;
+      const cachePrefix = 'upbuff-admin-list-v2';
+      const cacheMaxAgeMs = 10 * 60 * 1000;
+      let currentFolder: Folder = 'inbox';
+      let hasLoadedCurrentFolder = false;
+      let selectedSubmissionId: string | null = null;
+      let isLoading = false;
+      let isLoadingMore = false;
+      let isUpdatingContacted = false;
+      let isUpdatingUseful = false;
+      let isDeletingSubmission = false;
+      let isRestoringSubmission = false;
+      let pendingDeleteId: string | null = null;
+      let mobileDetailOpen = false;
+      let mobileDetailTrigger: HTMLButtonElement | null = null;
+      let mobileAccountMenuOpen = false;
+      let listVersion = 0;
+      let totalSubmissionCount = 0;
+      let unreadSubmissionCount = 0;
+      let hasMoreSubmissions = false;
+      let nextCursor: { submittedAt: string; id: string } | null = null;
+      const submissionsById = new Map<string, Submission>();
+      const unreadViews = new Set<View>();
+
+      function updateMenuIndicators() {
+        unreadIndicators.forEach((indicator) => {
+          indicator.classList.toggle('hidden', !unreadViews.has(indicator.dataset.unreadView as View));
+        });
+      }
+
+      function setUnreadViews(views: unknown) {
+        if (!Array.isArray(views)) return;
+        unreadViews.clear();
+        views.forEach((view) => {
+          if (view === 'contact' || view === 'demo' || view === 'consultation') unreadViews.add(view);
+        });
+        updateMenuIndicators();
+      }
+
+      try {
+        if (sessionStorage.getItem(`${cachePrefix}-folder-${currentView}`) === 'trash') currentFolder = 'trash';
+      } catch {
+        // Storage can be unavailable in restricted browser contexts.
+      }
+
+      async function parseJsonResponse(response: Response) {
+        const body = await response.text();
+        try {
+          return JSON.parse(body);
+        } catch {
+          throw new Error(
+            response.ok
+              ? 'Admin service returned an invalid response.'
+              : `Admin service error (HTTP ${response.status}). Check the FastAPI terminal for details.`
+          );
+        }
+      }
+
+      function listCacheKey(folder: Folder = currentFolder) {
+        return `${cachePrefix}-${currentView}-${folder}`;
+      }
+
+      function readCachedList(): CachedList | null {
+        try {
+          const raw = sessionStorage.getItem(listCacheKey());
+          if (!raw) return null;
+          const cached = JSON.parse(raw) as CachedList;
+          const age = Date.now() - cached.savedAt;
+          if (!Array.isArray(cached.submissions) || !Number.isFinite(cached.total)
+            || !Number.isFinite(cached.unread) || !Number.isFinite(age) || age < 0 || age > cacheMaxAgeMs) {
+            sessionStorage.removeItem(listCacheKey());
+            return null;
+          }
+          return cached;
+        } catch {
+          return null;
+        }
+      }
+
+      function cacheCurrentList() {
+        if (!hasLoadedCurrentFolder) return;
+        const submissions = Array.from(submissionsById.values()).slice(0, initialSubmissionCount);
+        if (submissions.length === 0 && totalSubmissionCount > 0) {
+          try { sessionStorage.removeItem(listCacheKey()); } catch { /* Storage unavailable. */ }
+          return;
+        }
+        const lastSubmission = submissions.at(-1);
+        const cursor = lastSubmission
+          ? { submittedAt: currentFolder === 'trash' ? lastSubmission.deletedAt : lastSubmission.submittedAt, id: lastSubmission.id }
+          : null;
+        const cached: CachedList = {
+          savedAt: Date.now(),
+          submissions,
+          total: totalSubmissionCount,
+          unread: unreadSubmissionCount,
+          unreadViews: Array.from(unreadViews),
+          hasMore: totalSubmissionCount > submissions.length,
+          nextCursor: cursor,
+          selectedId: submissions.some((submission) => submission.id === selectedSubmissionId) ? selectedSubmissionId : null,
+        };
+        try { sessionStorage.setItem(listCacheKey(), JSON.stringify(cached)); } catch { /* Storage unavailable. */ }
+      }
+
+      function clearCachedLists() {
+        try {
+          for (const prefix of ['upbuff-admin-list-v1', cachePrefix]) {
+            for (const view of ['contact', 'demo', 'consultation']) {
+              for (const folder of ['inbox', 'trash']) sessionStorage.removeItem(`${prefix}-${view}-${folder}`);
+              sessionStorage.removeItem(`${prefix}-folder-${view}`);
+            }
+          }
+        } catch { /* Storage unavailable. */ }
+      }
+
+      function invalidateOtherFolderCache() {
+        const otherFolder = currentFolder === 'inbox' ? 'trash' : 'inbox';
+        try { sessionStorage.removeItem(listCacheKey(otherFolder)); } catch { /* Storage unavailable. */ }
+      }
+
+      function showCachedList() {
+        const cached = readCachedList();
+        if (!cached) return false;
+        hasLoadedCurrentFolder = true;
+        totalSubmissionCount = cached.total;
+        unreadSubmissionCount = cached.unread;
+        setUnreadViews(cached.unreadViews);
+        hasMoreSubmissions = cached.hasMore;
+        nextCursor = cached.nextCursor;
+        selectedSubmissionId = cached.selectedId;
+        submissionsById.clear();
+        submissionList.replaceChildren();
+        appendSubmissions(cached.submissions);
+        updateSubmissionCount();
+        listEmptyState.classList.toggle('hidden', cached.submissions.length !== 0);
+        const selected = submissionsById.get(selectedSubmissionId ?? '') ?? (!mobileMedia.matches ? cached.submissions[0] : undefined);
+        if (selected) {
+          selectedSubmissionId = selected.id;
+          const item = submissionList.querySelector<HTMLButtonElement>(`[data-submission-id="${CSS.escape(selected.id)}"]`);
+          if (item) styleInboxItem(item, selected, true);
+          showSubmissionDetails(selected);
+        } else {
+          detailContent.classList.add('hidden');
+          detailEmptyState.classList.remove('hidden');
+        }
+        showSubmissions();
+        return true;
+      }
+
+      function invalidateListRequests() {
+        listVersion += 1;
+        isLoading = false;
+        isLoadingMore = false;
+        submissionsPanel.setAttribute('aria-busy', 'false');
+      }
+
+      function redirectToLogin() {
+        if (deleteConfirmDialog.open) deleteConfirmDialog.close();
+        closeMobileDetails(false);
+        clearCachedLists();
+        hasLoadedCurrentFolder = false;
+        invalidateListRequests();
+        window.location.replace(`/admin/login?next=${encodeURIComponent(window.location.pathname)}`);
+      }
+
+      function showActionStatus(message: string, isError = false) {
+        actionStatus.textContent = message;
+        actionStatus.classList.toggle('hidden', !message);
+        actionStatus.classList.toggle('text-red-600', isError);
+        actionStatus.classList.toggle('text-[#27AE61]', !isError);
+      }
+
+      function updateSubmissionCount() {
+        count.textContent = currentFolder === 'trash'
+          ? `${totalSubmissionCount} trashed submissions`
+          : `${totalSubmissionCount} submissions · ${unreadSubmissionCount} new`;
+        if (currentFolder === 'inbox') {
+          if (unreadSubmissionCount > 0) unreadViews.add(currentView);
+          else unreadViews.delete(currentView);
+          updateMenuIndicators();
+        }
+      }
+
+      function updateFolderTabs() {
+        const inInbox = currentFolder === 'inbox';
+        inboxTab.setAttribute('aria-selected', String(inInbox));
+        trashTab.setAttribute('aria-selected', String(!inInbox));
+        submissionList.setAttribute('aria-labelledby', inInbox ? 'inbox-tab' : 'trash-tab');
+        inboxTab.classList.toggle('border-[#27AE61]', inInbox);
+        inboxTab.classList.toggle('text-black', inInbox);
+        inboxTab.classList.toggle('border-transparent', !inInbox);
+        inboxTab.classList.toggle('text-gray-500', !inInbox);
+        trashTab.classList.toggle('border-[#27AE61]', !inInbox);
+        trashTab.classList.toggle('text-black', !inInbox);
+        trashTab.classList.toggle('border-transparent', inInbox);
+        trashTab.classList.toggle('text-gray-500', inInbox);
+        trashTab.classList.toggle('hover:text-gray-700', inInbox);
+        listEmptyState.textContent = inInbox
+          ? `No ${currentView === 'demo' ? 'demo requests' : currentView === 'consultation' ? 'SAP consultations' : 'quick contact submissions'} yet.`
+          : 'Trash is empty.';
+      }
+
+      function switchFolder(folder: 'inbox' | 'trash') {
+        if (currentFolder === folder) return;
+        closeMobileDetails(false);
+        cacheCurrentList();
+        invalidateListRequests();
+        currentFolder = folder;
+        hasLoadedCurrentFolder = false;
+        selectedSubmissionId = null;
+        hasMoreSubmissions = false;
+        nextCursor = null;
+        submissionsById.clear();
+        submissionList.replaceChildren();
+        submissionList.scrollTop = 0;
+        count.textContent = '';
+        listEmptyState.classList.add('hidden');
+        detailContent.classList.add('hidden');
+        detailEmptyState.classList.remove('hidden');
+        tableError.classList.add('hidden');
+        updateFolderTabs();
+        try { sessionStorage.setItem(`${cachePrefix}-folder-${currentView}`, folder); } catch { /* Storage unavailable. */ }
+        showCachedList();
+        void loadSubmissions();
+      }
+
+      function showSubmissions() {
+        logoutButton.classList.remove('hidden');
+      }
+
+      function setMobileAccountMenuOpen(open: boolean, restoreFocus = false) {
+        mobileAccountMenuOpen = open;
+        mobileAccountMenu.classList.toggle('hidden', !open);
+        mobileLogoButton.setAttribute('aria-expanded', String(open));
+        if (open) mobileLogoutButton.focus();
+        else if (restoreFocus) mobileLogoButton.focus();
+      }
+
+      function openMobileDetails(trigger: HTMLButtonElement) {
+        if (!mobileMedia.matches) return;
+        setMobileAccountMenuOpen(false);
+        mobileDetailTrigger = trigger;
+        mobileDetailOpen = true;
+        detailPanel.classList.remove('hidden');
+        detailPanel.classList.add('flex');
+        detailPanel.setAttribute('role', 'dialog');
+        detailPanel.setAttribute('aria-modal', 'true');
+        detailPanel.setAttribute('aria-labelledby', 'detail-title');
+        document.body.classList.add('overflow-hidden');
+        mobileNav.inert = true;
+        listColumn.inert = true;
+        closeDetailButton.focus();
+      }
+
+      function closeMobileDetails(restoreFocus = true) {
+        if (!mobileDetailOpen) return;
+        mobileDetailOpen = false;
+        detailPanel.classList.add('hidden');
+        detailPanel.classList.remove('flex');
+        detailPanel.removeAttribute('role');
+        detailPanel.removeAttribute('aria-modal');
+        detailPanel.removeAttribute('aria-labelledby');
+        document.body.classList.remove('overflow-hidden');
+        mobileNav.inert = false;
+        listColumn.inert = false;
+        if (restoreFocus && mobileMedia.matches) {
+          const selectedRow = submissionList.querySelector<HTMLButtonElement>(`[data-submission-id="${CSS.escape(selectedSubmissionId ?? '')}"]`);
+          (mobileDetailTrigger?.isConnected ? mobileDetailTrigger : selectedRow ?? inboxTab).focus();
+        } else if (detailPanel.contains(document.activeElement)) {
+          inboxTab.focus();
+        }
+        mobileDetailTrigger = null;
+      }
+
+      function displayDate(value: string) {
+        if (!value) return '';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value;
+        const today = new Date();
+        const isToday = date.toDateString() === today.toDateString();
+        return isToday
+          ? date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+          : date.toLocaleDateString([], { month: 'short', day: 'numeric', year: date.getFullYear() === today.getFullYear() ? undefined : 'numeric' });
+      }
+
+      function displayIndiaDateTime(value: string) {
+        if (!value) return '';
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value;
+        const dateText = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Kolkata', month: 'short', day: '2-digit', year: 'numeric',
+        }).format(date);
+        const timeText = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true,
+        }).format(date);
+        return `${dateText} · ${timeText} IST`;
+      }
+
+      function addDetailField(label: string, value: string, targetId = 'detail-fields') {
+        if (!value) return;
+        const wrapper = document.createElement('div');
+        const heading = document.createElement('p');
+        heading.className = 'text-sm font-semibold uppercase tracking-wide text-gray-500';
+        heading.textContent = label;
+        const content = document.createElement('p');
+        content.className = 'mt-1 break-words text-base text-gray-900';
+        content.textContent = value;
+        wrapper.append(heading);
+        if (targetId === 'detail-fields' && (label === 'Email' || label === 'Phone')) {
+          const row = document.createElement('div');
+          row.className = 'mt-1 flex items-center justify-between gap-3';
+          content.classList.remove('mt-1');
+          content.classList.add('min-w-0');
+          row.append(content);
+
+          const action = document.createElement('a');
+          action.className = 'inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#27AE61] text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27AE61] focus-visible:ring-offset-2 md:hidden';
+          let iconPath = '';
+          if (label === 'Email') {
+            action.href = `mailto:${encodeURIComponent(value.trim()).replace(/%40/gi, '@')}`;
+            action.setAttribute('aria-label', `Email ${value}`);
+            iconPath = 'M20 4H4a2 2 0 0 0-2 2v.5l10 6.25 10-6.25V6a2 2 0 0 0-2-2Zm2 5-9.47 5.92a1 1 0 0 1-1.06 0L2 9.5V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9.5Z';
+          } else {
+            const phoneNumber = `${value.trim().startsWith('+') ? '+' : ''}${value.replace(/\D/g, '')}`;
+            if (phoneNumber.replace(/\D/g, '')) {
+              action.href = `tel:${phoneNumber}`;
+              action.setAttribute('aria-label', `Call ${value}`);
+              iconPath = 'M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.32.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2Z';
+            }
+          }
+          if (action.href) {
+            const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            icon.setAttribute('viewBox', '0 0 24 24');
+            icon.setAttribute('fill', 'currentColor');
+            icon.setAttribute('class', 'h-5 w-5');
+            icon.setAttribute('aria-hidden', 'true');
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', iconPath);
+            icon.append(path);
+            action.append(icon);
+            row.append(action);
+          }
+          wrapper.append(row);
+        } else {
+          wrapper.append(content);
+        }
+        document.querySelector<HTMLElement>(`#${targetId}`)!.append(wrapper);
+      }
+
+      function showContactedSelection(value: boolean | null) {
+        contactedRadios.forEach((radio) => {
+          radio.checked = value !== null && radio.value === String(value);
+        });
+      }
+
+      function showUsefulSelection(value: boolean | null | undefined) {
+        usefulRadios.forEach((radio) => {
+          radio.checked = value != null && radio.value === String(value);
+        });
+      }
+
+      function showSubmissionDetails(submission: Submission) {
+        detailEmptyState.classList.add('hidden');
+        detailContent.classList.remove('hidden');
+        const submittedTime = document.querySelector<HTMLTimeElement>('#detail-time')!;
+        submittedTime.dateTime = submission.submittedAt || '';
+        submittedTime.textContent = displayIndiaDateTime(submission.submittedAt);
+        detailDeletedWrap.classList.toggle('hidden', currentFolder !== 'trash');
+        detailDeletedTime.setAttribute('datetime', submission.deletedAt || '');
+        detailDeletedTime.textContent = displayIndiaDateTime(submission.deletedAt);
+        const senderName = submission.name || 'Unknown sender';
+        const interest = currentView === 'demo'
+          ? submission.erp || submission.product || 'an ERP demo'
+          : submission.product || 'a product';
+        document.querySelector<HTMLElement>('#detail-title')!.textContent = currentView === 'consultation'
+          ? `SAP Consultation: ${senderName}${submission.product ? ` — ${submission.product}` : ''}`
+          : `${currentView === 'demo' ? 'Request Demo' : 'Contact'}: ${senderName} showing interest on ${interest}`;
+        const company = document.querySelector<HTMLElement>('#detail-company')!;
+        company.textContent = submission.company || '';
+        company.classList.toggle('hidden', !submission.company);
+
+        const fields = document.querySelector<HTMLElement>('#detail-fields')!;
+        fields.replaceChildren();
+        addDetailField('Email', submission.email);
+        addDetailField('Phone', submission.phone);
+        addDetailField('Country', submission.country);
+        addDetailField(currentView === 'consultation' ? 'Issue type' : 'Product interest', submission.product);
+        addDetailField('ERP system', submission.erp);
+        addDetailField('Area of interest', submission.focus);
+        addDetailField('Automation', submission.automation);
+        addDetailField('Monthly volume', submission.monthlyDocuments);
+        addDetailField('Heard from', submission.heardFrom);
+        const metaFields = document.querySelector<HTMLElement>('#detail-meta-fields')!;
+        metaFields.replaceChildren();
+        addDetailField('Lead source', submission.leadSource, 'detail-meta-fields');
+        addDetailField('Referrer', submission.referrer, 'detail-meta-fields');
+
+        const messageWrap = document.querySelector<HTMLElement>('#detail-message-wrap')!;
+        const message = document.querySelector<HTMLElement>('#detail-message')!;
+        message.textContent = submission.message || 'No message provided.';
+        messageWrap.classList.remove('hidden');
+        showContactedSelection(submission.contacted);
+        showUsefulSelection(submission.useful);
+        contactedRadios.forEach((radio) => { radio.disabled = isUpdatingContacted || isUpdatingUseful; });
+        usefulRadios.forEach((radio) => { radio.disabled = isUpdatingContacted || isUpdatingUseful; });
+        contactedFieldset.classList.toggle('hidden', currentFolder === 'trash');
+        usefulFieldset.classList.toggle('hidden', currentFolder === 'trash');
+        deleteAction.classList.toggle('hidden', currentFolder === 'trash');
+        restoreAction.classList.toggle('hidden', currentFolder !== 'trash');
+        deleteSubmissionButton.disabled = isDeletingSubmission || isUpdatingContacted || isUpdatingUseful;
+        restoreSubmissionButton.disabled = isRestoringSubmission;
+        showActionStatus('');
+      }
+
+      function styleInboxItem(item: HTMLButtonElement, submission: Submission, selected: boolean) {
+        const sender = item.querySelector<HTMLElement>('[data-lead-name]')!;
+        const subject = item.querySelector<HTMLElement>('[data-lead-subject]')!;
+        item.classList.toggle('bg-[#27AE61]/10', selected);
+        item.classList.toggle('bg-gray-100', submission.isRead && !selected);
+        item.classList.toggle('bg-white', !submission.isRead && !selected);
+        item.classList.toggle('border-l-4', selected);
+        item.classList.toggle('border-[#27AE61]', selected);
+        item.classList.toggle('border-b', !selected);
+        item.classList.toggle('border-gray-200', !selected);
+        item.classList.toggle('pl-4', selected);
+        item.classList.toggle('pl-5', !selected);
+        item.classList.toggle('ring-1', selected);
+        item.classList.toggle('ring-inset', selected);
+        item.classList.toggle('ring-[#27AE61]', selected);
+        item.classList.toggle('hover:bg-[#27AE61]/15', selected);
+        item.classList.toggle('hover:bg-gray-50', !selected);
+        sender.classList.toggle('font-normal', submission.isRead);
+        sender.classList.toggle('font-semibold', !submission.isRead);
+        subject.classList.toggle('font-normal', submission.isRead);
+        subject.classList.toggle('font-semibold', !submission.isRead);
+        item.setAttribute('aria-pressed', String(selected));
+      }
+
+      async function selectSubmission(submission: Submission, item: HTMLButtonElement, openOnMobile = true) {
+        selectedSubmissionId = submission.id;
+        submissionList.querySelectorAll<HTMLButtonElement>('button').forEach((entry) => {
+          const isSelected = entry === item;
+          const rowSubmission = submissionsById.get(entry.dataset.submissionId ?? '');
+          if (rowSubmission) styleInboxItem(entry, rowSubmission, isSelected);
+        });
+        showSubmissionDetails(submission);
+        if (openOnMobile) openMobileDetails(item);
+        cacheCurrentList();
+
+        if (currentFolder === 'inbox' && !submission.isRead && submission.id) {
+          submission.isRead = true;
+          unreadSubmissionCount = Math.max(0, unreadSubmissionCount - 1);
+          updateSubmissionCount();
+          styleInboxItem(item, submission, true);
+          cacheCurrentList();
+          try {
+            const response = await fetch(`/api/admin/submissions/${encodeURIComponent(submission.id)}/read`, {
+              method: 'POST',
+              credentials: 'same-origin',
+            });
+            if (!response.ok) throw new Error(`Mark read failed (${response.status})`);
+          } catch (error) {
+            if (submissionsById.get(submission.id) === submission) {
+              submission.isRead = false;
+              unreadSubmissionCount += 1;
+              updateSubmissionCount();
+              styleInboxItem(item, submission, true);
+              cacheCurrentList();
+            }
+            console.error('[admin] could not mark submission read:', error);
+          }
+        }
+      }
+
+      async function updateContacted(contacted: boolean) {
+        const submission = submissionsById.get(selectedSubmissionId ?? '');
+        if (currentFolder !== 'inbox' || !submission || isUpdatingContacted || isUpdatingUseful || submission.contacted === contacted) return;
+        isUpdatingContacted = true;
+        contactedRadios.forEach((radio) => { radio.disabled = true; });
+        usefulRadios.forEach((radio) => { radio.disabled = true; });
+        deleteSubmissionButton.disabled = true;
+        showActionStatus('');
+        try {
+          const response = await fetch(`/api/admin/submissions/${encodeURIComponent(submission.id)}/contacted`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ contacted }),
+          });
+          if (response.status === 401) {
+            redirectToLogin();
+            return;
+          }
+          const result = await parseJsonResponse(response);
+          if (!response.ok) throw new Error(result.detail || 'Could not save contact status.');
+          submission.contacted = contacted;
+          const currentSubmission = submissionsById.get(submission.id);
+          if (currentSubmission) currentSubmission.contacted = contacted;
+          cacheCurrentList();
+          if (selectedSubmissionId === submission.id) {
+            showContactedSelection(contacted);
+            showActionStatus('Contact status saved.');
+          }
+        } catch (error) {
+          if (selectedSubmissionId === submission.id) {
+            showContactedSelection(submission.contacted);
+            showActionStatus(error instanceof Error ? error.message : 'Could not save contact status.', true);
+          }
+        } finally {
+          isUpdatingContacted = false;
+          contactedRadios.forEach((radio) => { radio.disabled = false; });
+          usefulRadios.forEach((radio) => { radio.disabled = false; });
+          deleteSubmissionButton.disabled = isDeletingSubmission;
+        }
+      }
+
+      async function updateUseful(useful: boolean) {
+        const submission = submissionsById.get(selectedSubmissionId ?? '');
+        if (currentFolder !== 'inbox' || !submission || isUpdatingContacted || isUpdatingUseful || submission.useful === useful) return;
+        isUpdatingUseful = true;
+        contactedRadios.forEach((radio) => { radio.disabled = true; });
+        usefulRadios.forEach((radio) => { radio.disabled = true; });
+        deleteSubmissionButton.disabled = true;
+        showActionStatus('');
+        try {
+          const response = await fetch(`/api/admin/submissions/${encodeURIComponent(submission.id)}/useful`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ useful }),
+          });
+          if (response.status === 401) {
+            redirectToLogin();
+            return;
+          }
+          const result = await parseJsonResponse(response);
+          if (!response.ok) throw new Error(result.detail || 'Could not save lead usefulness.');
+          submission.useful = useful;
+          cacheCurrentList();
+          if (selectedSubmissionId === submission.id) {
+            showUsefulSelection(useful);
+            showActionStatus('Lead usefulness saved.');
+          }
+        } catch (error) {
+          if (selectedSubmissionId === submission.id) {
+            showUsefulSelection(submission.useful);
+            showActionStatus(error instanceof Error ? error.message : 'Could not save lead usefulness.', true);
+          }
+        } finally {
+          isUpdatingUseful = false;
+          contactedRadios.forEach((radio) => { radio.disabled = false; });
+          usefulRadios.forEach((radio) => { radio.disabled = false; });
+          deleteSubmissionButton.disabled = isDeletingSubmission;
+        }
+      }
+
+      function openDeleteDialog() {
+        const submission = submissionsById.get(selectedSubmissionId ?? '');
+        if (currentFolder !== 'inbox' || !submission || isDeletingSubmission || isUpdatingContacted || isUpdatingUseful) return;
+        pendingDeleteId = submission.id;
+        deleteConfirmName.textContent = submission.name || 'Unknown sender';
+        deleteConfirmError.textContent = '';
+        deleteConfirmError.classList.add('hidden');
+        deleteConfirmDialog.showModal();
+        cancelDeleteButton.focus();
+      }
+
+      function removeSubmissionFromList(submission: Submission) {
+        closeMobileDetails(false);
+        invalidateListRequests();
+        invalidateOtherFolderCache();
+        const item = submissionList.querySelector<HTMLButtonElement>(`[data-submission-id="${CSS.escape(submission.id)}"]`);
+        const adjacentItem = (item?.nextElementSibling ?? item?.previousElementSibling) as HTMLButtonElement | null;
+        item?.remove();
+        selectedSubmissionId = null;
+        submissionsById.delete(submission.id);
+        totalSubmissionCount = Math.max(0, totalSubmissionCount - 1);
+        if (currentFolder === 'inbox' && !submission.isRead) {
+          unreadSubmissionCount = Math.max(0, unreadSubmissionCount - 1);
+        }
+        updateSubmissionCount();
+        listEmptyState.classList.toggle('hidden', submissionsById.size !== 0);
+        const adjacentSubmission = submissionsById.get(adjacentItem?.dataset.submissionId ?? '');
+        if (adjacentItem && adjacentSubmission && !mobileMedia.matches) void selectSubmission(adjacentSubmission, adjacentItem, false);
+        else {
+          detailContent.classList.add('hidden');
+          detailEmptyState.classList.remove('hidden');
+          if (adjacentItem && mobileMedia.matches) adjacentItem.focus();
+          if (hasMoreSubmissions && !adjacentItem) void loadMoreSubmissions();
+        }
+        cacheCurrentList();
+      }
+
+      async function deleteSelectedSubmission() {
+        const submission = submissionsById.get(pendingDeleteId ?? '');
+        if (!submission || isDeletingSubmission) return;
+
+        isDeletingSubmission = true;
+        deleteSubmissionButton.disabled = true;
+        cancelDeleteButton.disabled = true;
+        confirmDeleteButton.disabled = true;
+        showActionStatus('');
+        try {
+          const response = await fetch(`/api/admin/submissions/${encodeURIComponent(submission.id)}`, {
+            method: 'DELETE',
+            credentials: 'same-origin',
+          });
+          if (response.status === 401) {
+            redirectToLogin();
+            return;
+          }
+          const result = await parseJsonResponse(response);
+          if (!response.ok) throw new Error(result.detail || 'Could not delete the submission.');
+
+          deleteConfirmDialog.close();
+          removeSubmissionFromList(submission);
+        } catch (error) {
+          deleteConfirmError.textContent = error instanceof Error ? error.message : 'Could not delete the submission.';
+          deleteConfirmError.classList.remove('hidden');
+        } finally {
+          isDeletingSubmission = false;
+          deleteSubmissionButton.disabled = false;
+          cancelDeleteButton.disabled = false;
+          confirmDeleteButton.disabled = false;
+        }
+      }
+
+      async function restoreSelectedSubmission() {
+        const submission = submissionsById.get(selectedSubmissionId ?? '');
+        if (currentFolder !== 'trash' || !submission || isRestoringSubmission) return;
+        isRestoringSubmission = true;
+        restoreSubmissionButton.disabled = true;
+        showActionStatus('');
+        try {
+          const response = await fetch(`/api/admin/submissions/${encodeURIComponent(submission.id)}/restore`, {
+            method: 'POST',
+            credentials: 'same-origin',
+          });
+          if (response.status === 401) {
+            redirectToLogin();
+            return;
+          }
+          const result = await parseJsonResponse(response);
+          if (!response.ok) throw new Error(result.detail || 'Could not restore the submission.');
+          if (currentFolder === 'trash' && submissionsById.get(submission.id) === submission) {
+            removeSubmissionFromList(submission);
+          }
+        } catch (error) {
+          if (currentFolder === 'trash' && selectedSubmissionId === submission.id) {
+            showActionStatus(error instanceof Error ? error.message : 'Could not restore the submission.', true);
+          }
+        } finally {
+          isRestoringSubmission = false;
+          restoreSubmissionButton.disabled = false;
+        }
+      }
+
+      function truncatePreview(text: string, maxWords = 10) {
+        const trimmed = text.trim();
+        if (!trimmed) return '';
+        const words = trimmed.split(/\s+/);
+        return words.length > maxWords
+          ? `${words.slice(0, maxWords).join(' ')}…`
+          : words.join(' ');
+      }
+
+      function appendSubmissions(nextSubmissions: Submission[]) {
+        nextSubmissions.forEach((submission) => {
+          submissionsById.set(submission.id, submission);
+          const item = document.createElement('button');
+          item.type = 'button';
+          item.dataset.submissionId = submission.id;
+          item.className = 'block w-full pr-5 py-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#27AE61]';
+
+          const header = document.createElement('span');
+          header.className = 'flex items-center justify-between gap-3';
+          const sender = document.createElement('span');
+          sender.dataset.leadName = 'true';
+          sender.className = 'truncate text-sm text-gray-900';
+          sender.textContent = submission.name || 'Unknown sender';
+          const date = document.createElement('time');
+          date.className = 'shrink-0 text-xs text-gray-500';
+          const rowDate = currentFolder === 'trash' ? submission.deletedAt : submission.submittedAt;
+          date.dateTime = rowDate || '';
+          date.textContent = displayDate(rowDate);
+          header.append(sender, date);
+
+          const subject = document.createElement('span');
+          subject.dataset.leadSubject = 'true';
+          subject.className = 'block truncate text-sm text-gray-800';
+          subject.textContent = submission.product || submission.erp || submission.company ||
+            (currentView === 'demo' ? 'Demo request' : currentView === 'consultation' ? 'SAP consultation' : 'Quick contact');
+          const preview = document.createElement('span');
+          preview.className = 'mt-1 block overflow-hidden text-ellipsis text-sm leading-5 text-gray-500';
+          preview.textContent = truncatePreview(submission.message || submission.automation || submission.focus || submission.email || '');
+          item.append(header, subject, preview);
+          item.addEventListener('click', () => void selectSubmission(submission, item));
+          styleInboxItem(item, submission, submission.id === selectedSubmissionId);
+          submissionList.append(item);
+        });
+      }
+
+      async function loadSubmissions() {
+        if (isLoading || isLoadingMore) return;
+        isLoading = true;
+        submissionsPanel.setAttribute('aria-busy', 'true');
+        const requestVersion = listVersion;
+        tableError.classList.add('hidden');
+        try {
+          const response = await fetch(`/api/admin/submissions?type=${currentView}&folder=${currentFolder}&limit=${initialSubmissionCount}`, {
+            credentials: 'same-origin',
+            cache: 'no-store',
+          });
+          if (requestVersion !== listVersion) return;
+          if (response.status === 401) {
+            redirectToLogin();
+            return;
+          }
+          const result = await parseJsonResponse(response);
+          if (!response.ok) throw new Error(result.detail || 'Could not load submissions.');
+          if (requestVersion !== listVersion) return;
+          setUnreadViews(result.unreadViews);
+
+          const submissions = result.submissions as Submission[];
+          const visibleFirstPage = Array.from(submissionsById.values()).slice(0, initialSubmissionCount);
+          const unchanged = hasLoadedCurrentFolder
+            && totalSubmissionCount === result.total
+            && unreadSubmissionCount === result.unread
+            && JSON.stringify(visibleFirstPage) === JSON.stringify(submissions);
+          if (unchanged) {
+            if (submissionsById.size <= initialSubmissionCount) {
+              hasMoreSubmissions = Boolean(result.hasMore);
+              const last = submissions.at(-1);
+              nextCursor = last
+                ? { submittedAt: currentFolder === 'trash' ? last.deletedAt : last.submittedAt, id: last.id }
+                : null;
+            }
+            cacheCurrentList();
+            showSubmissions();
+            return;
+          }
+          closeMobileDetails(false);
+          hasLoadedCurrentFolder = true;
+          hasMoreSubmissions = Boolean(result.hasMore);
+          const lastSubmission = submissions.at(-1);
+          nextCursor = lastSubmission
+            ? { submittedAt: currentFolder === 'trash' ? lastSubmission.deletedAt : lastSubmission.submittedAt, id: lastSubmission.id }
+            : null;
+          if (!nextCursor?.submittedAt) hasMoreSubmissions = false;
+          selectedSubmissionId = submissions.some((submission) => submission.id === selectedSubmissionId)
+            ? selectedSubmissionId
+            : null;
+          submissionsById.clear();
+          submissionList.replaceChildren();
+          submissionList.scrollTop = 0;
+          totalSubmissionCount = result.total;
+          unreadSubmissionCount = result.unread;
+          updateSubmissionCount();
+          listEmptyState.classList.toggle('hidden', submissions.length !== 0);
+          detailContent.classList.add('hidden');
+          detailEmptyState.classList.toggle('hidden', submissions.length === 0);
+
+          appendSubmissions(submissions);
+          const selectedSubmission = submissions.find((submission) => submission.id === selectedSubmissionId);
+          if (selectedSubmission) {
+            const selectedItem = submissionList.querySelector<HTMLButtonElement>(`[data-submission-id="${CSS.escape(selectedSubmission.id)}"]`);
+            if (selectedItem) {
+              styleInboxItem(selectedItem, selectedSubmission, true);
+              showSubmissionDetails(selectedSubmission);
+              detailEmptyState.classList.add('hidden');
+            }
+          } else if (submissions[0]) {
+            const firstItem = submissionList.querySelector<HTMLButtonElement>(`[data-submission-id="${CSS.escape(submissions[0].id)}"]`);
+            if (firstItem && !mobileMedia.matches) void selectSubmission(submissions[0], firstItem, false);
+          }
+          cacheCurrentList();
+          showSubmissions();
+        } catch (error) {
+          if (requestVersion === listVersion) {
+            tableError.textContent = error instanceof Error ? error.message : 'Could not load submissions.';
+            tableError.classList.remove('hidden');
+            showSubmissions();
+          }
+        } finally {
+          if (requestVersion === listVersion) {
+            isLoading = false;
+            submissionsPanel.setAttribute('aria-busy', 'false');
+          }
+        }
+      }
+
+      async function loadMoreSubmissions() {
+        if (isLoading || isLoadingMore || !hasMoreSubmissions || !nextCursor) return;
+        isLoadingMore = true;
+        const requestVersion = listVersion;
+        tableError.classList.add('hidden');
+        const params = new URLSearchParams({
+          type: currentView,
+          folder: currentFolder,
+          limit: String(scrollBatchSize),
+          before_at: nextCursor.submittedAt,
+          before_id: nextCursor.id,
+        });
+        try {
+          const response = await fetch(`/api/admin/submissions?${params}`, {
+            credentials: 'same-origin',
+            cache: 'no-store',
+          });
+          if (requestVersion !== listVersion) return;
+          if (response.status === 401) {
+            redirectToLogin();
+            return;
+          }
+          const result = await parseJsonResponse(response);
+          if (!response.ok) throw new Error(result.detail || 'Could not load more submissions.');
+          if (requestVersion !== listVersion) return;
+
+          const submissions = result.submissions as Submission[];
+          appendSubmissions(submissions);
+          if (!selectedSubmissionId && submissions[0]) {
+            const firstItem = submissionList.querySelector<HTMLButtonElement>(`[data-submission-id="${CSS.escape(submissions[0].id)}"]`);
+            if (firstItem && !mobileMedia.matches) void selectSubmission(submissions[0], firstItem, false);
+          }
+          hasMoreSubmissions = Boolean(result.hasMore) && submissions.length > 0;
+          const lastSubmission = submissions.at(-1);
+          if (lastSubmission) nextCursor = {
+            submittedAt: currentFolder === 'trash' ? lastSubmission.deletedAt : lastSubmission.submittedAt,
+            id: lastSubmission.id,
+          };
+          if (!nextCursor?.submittedAt) hasMoreSubmissions = false;
+          cacheCurrentList();
+        } catch (error) {
+          if (requestVersion === listVersion) {
+            tableError.textContent = error instanceof Error ? error.message : 'Could not load more submissions.';
+            tableError.classList.remove('hidden');
+          }
+        } finally {
+          if (requestVersion === listVersion) isLoadingMore = false;
+        }
+      }
+
+      async function signOut() {
+        logoutButton.disabled = true;
+        mobileLogoutButton.disabled = true;
+        mobileLogoutError.classList.add('hidden');
+        mobileLogoutError.textContent = '';
+        try {
+          const response = await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+          if (!response.ok && response.status !== 401) throw new Error('Could not sign out. Please try again.');
+          clearCachedLists();
+          hasLoadedCurrentFolder = false;
+          window.location.replace('/admin/login');
+        } catch (error) {
+          tableError.textContent = error instanceof Error ? error.message : 'Could not sign out.';
+          tableError.classList.remove('hidden');
+          mobileLogoutError.textContent = tableError.textContent;
+          mobileLogoutError.classList.remove('hidden');
+          logoutButton.disabled = false;
+          mobileLogoutButton.disabled = false;
+        }
+      }
+
+      logoutButton.addEventListener('click', () => void signOut());
+      mobileLogoutButton.addEventListener('click', () => void signOut());
+      mobileLogoButton.addEventListener('click', () => setMobileAccountMenuOpen(!mobileAccountMenuOpen, mobileAccountMenuOpen));
+      document.addEventListener('pointerdown', (event) => {
+        if (mobileAccountMenuOpen && !mobileLogoButton.contains(event.target as Node) && !mobileAccountMenu.contains(event.target as Node)) {
+          setMobileAccountMenuOpen(false);
+        }
+      });
+      mobileNav.addEventListener('focusout', (event) => {
+        const next = event.relatedTarget as Node | null;
+        if (mobileAccountMenuOpen && (!next || (!mobileLogoButton.contains(next) && !mobileAccountMenu.contains(next)))) {
+          setMobileAccountMenuOpen(false);
+        }
+      });
+      closeDetailButton.addEventListener('click', () => closeMobileDetails());
+      mobileMedia.addEventListener('change', () => {
+        if (!mobileMedia.matches) {
+          setMobileAccountMenuOpen(false);
+          closeMobileDetails(false);
+          if (!selectedSubmissionId) {
+            const firstItem = submissionList.querySelector<HTMLButtonElement>('[data-submission-id]');
+            const firstSubmission = submissionsById.get(firstItem?.dataset.submissionId ?? '');
+            if (firstItem && firstSubmission) void selectSubmission(firstSubmission, firstItem, false);
+          }
+        }
+      });
+      document.addEventListener('keydown', (event) => {
+        if (mobileAccountMenuOpen && event.key === 'Escape') {
+          event.preventDefault();
+          setMobileAccountMenuOpen(false, true);
+          return;
+        }
+        if (!mobileDetailOpen || deleteConfirmDialog.open) return;
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeMobileDetails();
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = Array.from(detailPanel.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), a[href]'))
+          .filter((element) => element.getClientRects().length > 0);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+
+      document.querySelector<HTMLButtonElement>('#refresh-button')!.addEventListener('click', loadSubmissions);
+      inboxTab.addEventListener('click', () => switchFolder('inbox'));
+      trashTab.addEventListener('click', () => switchFolder('trash'));
+      [inboxTab, trashTab].forEach((tab) => {
+        tab.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          const nextTab = tab === inboxTab ? trashTab : inboxTab;
+          nextTab.focus();
+          switchFolder(nextTab === inboxTab ? 'inbox' : 'trash');
+        });
+      });
+      contactedRadios.forEach((radio) => {
+        radio.addEventListener('change', () => void updateContacted(radio.value === 'true'));
+      });
+      usefulRadios.forEach((radio) => {
+        radio.addEventListener('change', () => void updateUseful(radio.value === 'true'));
+      });
+      restoreSubmissionButton.addEventListener('click', () => void restoreSelectedSubmission());
+      deleteSubmissionButton.addEventListener('click', openDeleteDialog);
+      cancelDeleteButton.addEventListener('click', () => deleteConfirmDialog.close());
+      confirmDeleteButton.addEventListener('click', () => void deleteSelectedSubmission());
+      deleteConfirmDialog.addEventListener('cancel', (event) => {
+        if (isDeletingSubmission) event.preventDefault();
+      });
+      deleteConfirmDialog.addEventListener('close', () => { pendingDeleteId = null; });
+      submissionList.addEventListener('scroll', () => {
+        const nearBottom = submissionList.scrollTop + submissionList.clientHeight >= submissionList.scrollHeight - 40;
+        if (nearBottom) void loadMoreSubmissions();
+      }, { passive: true });
+      updateFolderTabs();
+      showCachedList();
+      window.addEventListener('pagehide', cacheCurrentList);
+      void loadSubmissions();
+    </script>
+  </body>
+</html>

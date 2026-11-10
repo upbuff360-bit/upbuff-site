@@ -4,7 +4,6 @@ import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
 import Announcement from '~/components/widgets/Announcement.astro';
 import ClariorAnnouncementMarquee from '~/components/widgets/ClariorAnnouncementMarquee.astro';
-import ClariorLaunchPopup from '~/components/widgets/ClariorLaunchPopup.astro';
 
 import { headerData, footerData } from '~/navigation';
 import type { MetaData, CallToAction } from '~/types';
@@ -54,7 +53,5 @@ const headerActions = (headerData.actions ?? []) as CallToAction[];
   <slot name="footer">
     <Footer {...footerData} />
   </slot>
-
-  <ClariorLaunchPopup />
 
 </Layout>

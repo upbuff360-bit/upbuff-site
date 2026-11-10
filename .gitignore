@@ -8,6 +8,20 @@ dist/
 # dependencies
 node_modules/
 
+# Backend Python environment and generated output
+/backend/.venv/
+/backend/venv/
+/backend/build/
+/backend/dist/
+/backend/**/*.egg-info/
+/backend/**/__pycache__/
+/backend/**/.pytest_cache/
+/backend/**/.mypy_cache/
+/backend/**/.ruff_cache/
+
+# Dockerfiles
+Dockerfile
+
 # logs
 npm-debug.log*
 yarn-debug.log*
@@ -17,6 +31,7 @@ pnpm-debug.log*
 
 # environment variables
 .env
+.env.example
 .env.production
 
 # macOS-specific files

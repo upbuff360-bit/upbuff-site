@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import LogoBar from '~/components/widgets/LogoBar.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import { countryDialCodes, defaultCountryDialCode } from '~/data/countryDialCodes';
+import { LEAD_FORM_TURNSTILE_ENABLED } from '~/utils/lead-form-turnstile';
 
 const metadata = {
   title: 'Contact UpBuff | Get in Touch with Our ERP Integration Team',
@@ -28,14 +29,14 @@ const svgArrow    = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 const selectStyle = `background-image:url("${svgArrow}");background-repeat:no-repeat;background-position:right 14px center;`;
 
 const products = [
-  'ERP-Integrated CRM',
-  'ERP-Integrated Field Service Management',
+  'Clarior',
   'Warehouse & Inventory Management',
-  'Sales & Distribution Execution',
+  'ERP-Integrated Field Service Management',
   'Manufacturing & Shopfloor',
+  'Sales & Distribution Execution',
+  'ERP-Integrated CRM',
   'Enterprise & Partner Portals',
   'ERP-Integrated Product Configurator',
-  'Free SAP B1 Consultation / Quick Fix',
   'Not sure yet — need guidance',
 ];
 ---
@@ -329,15 +330,17 @@ const products = [
                 <a href="/legal/privacy" class="text-purple-600 hover:underline font-medium">Privacy Policy</a>
               </p>
 
-              <!-- ── Cloudflare Turnstile widget ──────────────────────── -->
-              <div class="flex justify-center mt-1">
-                <div
-                  class="cf-turnstile"
-                  data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
-                  data-theme="light"
-                  data-size="flexible"
-                />
-              </div>
+              <!-- Cloudflare Turnstile verification -->
+              {LEAD_FORM_TURNSTILE_ENABLED && (
+                <div class="flex justify-center mt-1">
+                  <div
+                    class="cf-turnstile"
+                    data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                    data-theme="light"
+                    data-size="flexible"
+                  />
+                </div>
+              )}
 
               <!-- Submit -->
               <button
@@ -406,8 +409,9 @@ const products = [
      The default auto-render only scans the DOM once. When the user navigates
      between pages via ClientRouter, the widget div is re-mounted but never
      rendered. We explicitly render any un-rendered widget on every page-load. -->
-<script is:inline>
+<script is:inline data-turnstile-enabled={LEAD_FORM_TURNSTILE_ENABLED ? 'true' : 'false'}>
   (function () {
+    if (document.currentScript?.getAttribute('data-turnstile-enabled') !== 'true') return;
     function ensureTurnstileScript() {
       if (document.querySelector('script[data-turnstile-loader]')) return;
       const s = document.createElement('script');
@@ -451,6 +455,8 @@ const products = [
 </script>
 
 <script>
+  import { LEAD_FORM_TURNSTILE_ENABLED } from '~/utils/lead-form-turnstile';
+
   (function () {
     function init() {
       const form    = document.getElementById('cf-form') as HTMLFormElement | null;
@@ -484,9 +490,13 @@ const products = [
         form.classList.remove('invisible');
 
         const data = Object.fromEntries(new FormData(form));
+        const referrer = document.referrer;
+        const taggedSource = new URL(window.location.href).searchParams.get('utm_source');
+        data.referrer = referrer;
+        data.leadSource = taggedSource || (referrer ? new URL(referrer).hostname : 'Direct');
 
         // Make sure the Turnstile widget has issued a token.
-        if (!data['cf-turnstile-response']) {
+        if (LEAD_FORM_TURNSTILE_ENABLED && !data['cf-turnstile-response']) {
           errBox.textContent = 'Please complete the verification and try again.';
           errBox.classList.remove('hidden');
           return;
@@ -518,8 +528,10 @@ const products = [
           label.textContent = 'Send message';
 
           // Reset Turnstile so the user can re-submit.
-          const ts = (window as any).turnstile;
-          if (ts && typeof ts.reset === "function") ts.reset();
+          if (LEAD_FORM_TURNSTILE_ENABLED) {
+            const ts = (window as any).turnstile;
+            if (ts && typeof ts.reset === "function") ts.reset();
+          }
         }
       });
     }

@@ -449,6 +449,10 @@ const testimonialParagraphs = testimonial
         form.classList.remove('invisible');
 
         const data = Object.fromEntries(new FormData(form));
+        const referrer = document.referrer;
+        const taggedSource = new URL(window.location.href).searchParams.get('utm_source');
+        data.referrer = referrer;
+        data.leadSource = taggedSource || (referrer ? new URL(referrer).hostname : 'Direct');
 
         // Make sure the Turnstile widget has issued a token.
         if (!data['cf-turnstile-response']) {

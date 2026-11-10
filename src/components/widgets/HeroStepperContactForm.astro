@@ -1,4 +1,6 @@
 ---
+import { LEAD_FORM_TURNSTILE_ENABLED } from '~/utils/lead-form-turnstile';
+
 export interface FormField {
   name: string;
   label: string;
@@ -332,12 +334,15 @@ const testimonialParagraphs = testimonial
               </div>
             ))}
 
-            <div id="hcf-verification" class="hidden justify-center mt-1">
-              <div
-                id="hcf-turnstile-widget"
-                data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
-              ></div>
-            </div>
+            {/* Cloudflare Turnstile verification for Request Demo. */}
+            {LEAD_FORM_TURNSTILE_ENABLED && (
+              <div id="hcf-verification" class="hidden justify-center mt-1">
+                <div
+                  id="hcf-turnstile-widget"
+                  data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+                ></div>
+              </div>
+            )}
 
             <div class="grid grid-cols-2 gap-3 pt-1">
               <button
@@ -376,6 +381,7 @@ const testimonialParagraphs = testimonial
 
  <script>
   import { validateOptionalPhone } from '~/utils/phone-validation';
+  import { LEAD_FORM_TURNSTILE_ENABLED } from '~/utils/lead-form-turnstile';
 
   (function () {
     type TurnstileApi = {
@@ -714,12 +720,14 @@ const testimonialParagraphs = testimonial
           verification?.classList.toggle('hidden', !isLast);
           verification?.classList.toggle('flex', isLast);
 
-          if (isLast) {
-            requestAnimationFrame(() => {
-              void renderTurnstileWidget(errEl);
-            });
-          } else {
-            removeTurnstileWidget();
+          if (LEAD_FORM_TURNSTILE_ENABLED) {
+            if (isLast) {
+              requestAnimationFrame(() => {
+                void renderTurnstileWidget(errEl);
+              });
+            } else {
+              removeTurnstileWidget();
+            }
           }
         }
 
@@ -882,8 +890,12 @@ const testimonialParagraphs = testimonial
           if (!validateStep()) return;
 
           const data = serializeForm(formEl);
+          const referrer = document.referrer;
+          const taggedSource = new URL(window.location.href).searchParams.get('utm_source');
+          data.referrer = referrer;
+          data.leadSource = taggedSource || (referrer ? new URL(referrer).hostname : 'Direct');
 
-          if (!data['cf-turnstile-response']) {
+          if (LEAD_FORM_TURNSTILE_ENABLED && !data['cf-turnstile-response']) {
             errEl.textContent =
               'Please complete the verification and try again.';
 
@@ -918,7 +930,7 @@ const testimonialParagraphs = testimonial
             spinner.classList.add('hidden');
             label.textContent = originalLabel;
 
-            resetTurnstileWidget();
+            if (LEAD_FORM_TURNSTILE_ENABLED) resetTurnstileWidget();
           }
         });
 
@@ -927,10 +939,9 @@ const testimonialParagraphs = testimonial
 
       document.addEventListener('astro:page-load', init);
       document.addEventListener('DOMContentLoaded', init);
-      document.addEventListener(
-        'astro:before-swap',
-        removeTurnstileWidget
-      );
+      if (LEAD_FORM_TURNSTILE_ENABLED) {
+        document.addEventListener('astro:before-swap', removeTurnstileWidget);
+      }
     })();
   </script>
 </section>

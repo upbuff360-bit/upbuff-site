@@ -14,14 +14,15 @@ export const GET: APIRoute = async () => {
   const base = 'https://www.upbuff.com';
   const lastmod = new Date().toISOString();
 
-  // 1. Static .astro pages (skip dynamic [..] routes, /api, and 404).
+  // 1. Static .astro pages (skip dynamic routes, APIs, admin pages, and 404).
   const staticUrls = Object.keys(pages)
     .map((path) => {
       const trimmed = path.replace('/src/pages', '').replace(/\.astro$/, '');
       if (trimmed === '/index') return '/';
       return trimmed.replace(/\/index$/, '');
     })
-    .filter((url) => url !== '/404' && !url.includes('[') && !url.includes('/api') && !url.includes('/_'));
+    .filter((url) => url !== '/404' && !url.includes('[') && !url.includes('/api') && !url.includes('/_')
+      && url !== '/admin' && !url.startsWith('/admin/'));
 
   // 2. Dynamic content-collection routes (the part the old generator missed).
   const [posts, caseStudies, news, events] = await Promise.all([

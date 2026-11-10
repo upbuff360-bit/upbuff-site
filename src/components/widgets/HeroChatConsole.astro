@@ -2,17 +2,31 @@
 /**
  * HeroChatConsole.astro
  * Animated "Chat with ERP" interface for the home hero (white theme).
- * Auto-cycles through 3 scenarios, each answered with a switchable
+ * Auto-cycles through scenarios, each answered with a switchable
  * Table / Graph view. Charts (bar, line, donut) are inline SVG built
  * with the Web Animations API — no external dependencies.
  * Degrades to a static first answer when reduced-motion is requested.
  */
+interface Props {
+  inputDemo?: boolean;
+  title?: string;
+  genAiIcon?: boolean;
+}
+
+const { inputDemo = false, title = 'Chat with ERP', genAiIcon = false } = Astro.props;
 ---
 
-<div class="hero-chat" aria-hidden="true">
+<div class="hero-chat" data-input-demo={String(inputDemo)} aria-hidden="true">
   <div class="hc-card">
     <div class="hc-head">
-      <div class="hc-title"><span class="hc-ai">AI</span>Chat with ERP</div>
+      <div class="hc-title">
+        {genAiIcon ? (
+          <img class="hc-gen-ai-icon" src="/uploads/clarior-icon.svg" width="25" height="23" alt="" />
+        ) : (
+          <span class="hc-ai">AI</span>
+        )}
+        {title}
+      </div>
       <span class="hc-live"><span class="hc-dot"></span>Live</span>
     </div>
 
@@ -29,7 +43,7 @@
       <div class="hc-rowpos hc-left">
         <div class="hc-answer" id="hc-answer">
           <div class="hc-answer-head">
-            <div class="hc-ans-h" id="hc-ans-title">Top customers · this month</div>
+            <div class="hc-ans-h" id="hc-ans-title">{inputDemo ? 'Outstanding payments · over 60 days' : 'Top customers · this month'}</div>
             <div class="hc-toggle" id="hc-toggle">
               <button class="hc-tg-btn is-active" data-view="table" type="button">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>Table
@@ -41,25 +55,67 @@
           </div>
           <div class="hc-view" id="hc-view-table"></div>
           <div class="hc-view" id="hc-view-graph" hidden></div>
+          {inputDemo && (
+            <div class="hc-actions">
+              <div class="hc-export">
+                <span class="hc-actions-label">Download as</span>
+                <button class="hc-action-btn" data-export="xls" type="button">XLS</button>
+                <button class="hc-action-btn" data-export="pdf" type="button">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v3h16v-3"/></svg>
+                  PDF
+                </button>
+                <button class="hc-action-btn" data-export="pptx" type="button" title="PowerPoint"><span class="hc-long-label">PowerPoint</span><span class="hc-short-label">PPT</span></button>
+              </div>
+              <button class="hc-save-btn" data-save-dashboard type="button" title="Save to dashboard">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M17.5 14v7M14 17.5h7"/></svg>
+                <span class="hc-long-label">Save to dashboard</span><span class="hc-short-label">Save</span>
+              </button>
+            </div>
+          )}
         </div>
       </div>
+      {inputDemo && <div class="hc-greeting" id="hc-greeting">How can I help you today?</div>}
     </div>
 
     <div class="hc-foot">
-      <div class="hc-input">Ask your ERP anything…</div>
-      <div class="hc-send" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class:list={['hc-input', { 'hc-input--with-send': inputDemo }]} id="hc-input">
+        <span id="hc-input-text">Ask your ERP anything…</span><span class="hc-input-caret"></span>
+        {inputDemo && (
+          <div class="hc-send hc-send--inside" id="hc-send" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M2.4 2.3c-.9-.4-1.7.4-1.3 1.3l4.2 8.2c.2.4.6.6 1 .7l8.1.5-8.1.6c-.4.1-.8.3-1 .7l-4.2 8.1c-.4.9.4 1.7 1.3 1.3l20-10.6c1-.5 1-1.8 0-2.3L2.4 2.3Z" />
+            </svg>
+          </div>
+        )}
       </div>
+      {!inputDemo && (
+        <div class="hc-send" id="hc-send" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      )}
     </div>
+    {inputDemo && (
+      <div class="hc-toast" id="hc-toast">
+        <span class="hc-toast-badge" id="hc-toast-badge">PDF</span>
+        <span class="hc-toast-copy"><strong id="hc-toast-title"></strong><small id="hc-toast-detail"></small></span>
+      </div>
+    )}
   </div>
+  {inputDemo && (
+    <svg class="hc-pointer" id="hc-pointer" width="24" height="29" viewBox="0 0 24 29" fill="none" aria-hidden="true">
+      <path d="M2 2v21l5.6-5.5 3.8 8.7 3.5-1.5-3.8-8.7H19L2 2Z" fill="white" stroke="#1f2937" stroke-width="2" stroke-linejoin="round" />
+    </svg>
+  )}
 </div>
 
 <style>
   .hero-chat { position: relative; width: 100%; max-width: 520px; margin: 0 auto; text-align: left; }
-  .hc-card { background: #ffffff; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 20px; padding: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); }
+  .hc-card { position: relative; background: #ffffff; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 20px; padding: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); }
   .hc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .hc-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1f2937; }
+  .hero-chat[data-input-demo='true'] .hc-title { font-size: 18px; font-weight: 700; line-height: 1.25; }
   .hc-ai { width: 24px; height: 24px; border-radius: 7px; background: linear-gradient(135deg, #6366f1, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
+  .hc-gen-ai-icon { width: 25px; height: 23px; flex: none; object-fit: contain; }
   .hc-live { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; color: #16a34a; }
   .hc-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: hcLive 2s ease-in-out infinite; }
 
@@ -67,12 +123,20 @@
   .hc-rowpos { position: absolute; left: 0; right: 0; top: 0; display: flex; }
   .hc-right { justify-content: flex-end; }
   .hc-left { justify-content: flex-start; }
+  .hero-chat[data-input-demo='true'] .hc-body { height: 390px; }
+  .hero-chat[data-input-demo='true'] .hc-rowpos:nth-child(2),
+  .hero-chat[data-input-demo='true'] .hc-rowpos:nth-child(3) { top: 65px; }
+  .hero-chat[data-input-demo='true'] #hc-type { white-space: normal; overflow: visible; }
+  .hc-greeting { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; color: #1f2937; font-size: 18px; font-weight: 700; text-align: center; pointer-events: none; transition: opacity .25s ease; }
+  .hc-greeting.is-hidden { opacity: 0; }
 
   .hc-bubble { max-width: 82%; font-size: 13px; line-height: 1.4; padding: 10px 14px; border-radius: 16px; }
   .hc-user { background: linear-gradient(135deg, #4f46e5, #3b82f6); color: #fff; border-bottom-right-radius: 5px; opacity: 0; transition: opacity .3s ease, transform .3s ease; transform: translateY(8px); }
+  .hero-chat[data-input-demo='true'] .hc-user { background: #e5e7eb; color: #1f2937; }
   .hc-user.is-show { opacity: 1; transform: none; }
   #hc-type { display: inline-block; white-space: nowrap; overflow: hidden; }
   #hc-type::after { content: ''; display: inline-block; width: 1px; height: 1em; background: #fff; margin-left: 1px; vertical-align: text-bottom; opacity: .8; }
+  .hero-chat[data-input-demo='true'] #hc-type::after { background: #1f2937; }
   #hc-type.done::after { display: none; }
 
   .hc-typing { display: flex; gap: 5px; background: #f1f5f9; padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 5px; opacity: 0; transition: opacity .3s ease; }
@@ -89,13 +153,41 @@
   .hc-toggle { display: inline-flex; background: #eef2f7; border-radius: 8px; padding: 2px; }
   .hc-tg-btn { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; color: #64748b; background: transparent; border: 0; border-radius: 6px; padding: 3px 7px; cursor: pointer; transition: all .2s ease; }
   .hc-tg-btn.is-active { background: #fff; color: #1f2937; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .hc-tg-btn.is-pressed, .hc-action-btn.is-pressed, .hc-save-btn.is-pressed { transform: scale(.94); }
 
   .hc-view { animation: hcFade .3s ease; }
+  .hc-actions { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0; }
+  .hc-export { display: flex; align-items: center; gap: 4px; min-width: 0; }
+  .hc-actions-label { margin-right: 2px; color: #64748b; font-size: 9px; font-weight: 600; white-space: nowrap; }
+  .hc-short-label { display: none; }
+  .hc-action-btn { display: inline-flex; align-items: center; gap: 4px; padding: 5px 7px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; font-size: 9px; font-weight: 700; line-height: 1.2; white-space: nowrap; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+  .hc-action-btn:hover { background: #f1f5f9; }
+  .hc-save-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 6px; background: #fff; color: #334155; font-size: 10px; font-weight: 600; line-height: 1.2; white-space: nowrap; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+  .hc-save-btn:hover { background: #f1f5f9; }
+  .hc-toast { position: absolute; right: 18px; bottom: 64px; z-index: 6; display: flex; align-items: center; gap: 9px; max-width: calc(100% - 36px); padding: 9px 12px; border: 1px solid #d1d5db; border-radius: 10px; background: #fff; box-shadow: 0 12px 30px rgba(15,23,42,.18); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+  .hc-toast.is-show { opacity: 1; transform: none; }
+  .hc-toast-badge { display: grid; place-items: center; min-width: 34px; height: 28px; padding: 0 4px; border-radius: 5px; background: #fee2e2; color: #b91c1c; font-size: 9px; font-weight: 800; }
+  .hc-toast[data-format='xls'] .hc-toast-badge { background: #dcfce7; color: #15803d; }
+  .hc-toast[data-format='pptx'] .hc-toast-badge { background: #ffedd5; color: #c2410c; }
+  .hc-toast.is-dashboard .hc-toast-badge { background: #dcfce7; color: #15803d; }
+  .hc-toast-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .hc-toast-copy strong { overflow: hidden; color: #111827; font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+  .hc-toast-copy small { color: #64748b; font-size: 10px; }
+  @media (max-width: 480px) {
+    .hero-chat[data-input-demo='true'] :global(.hc-table th),
+    .hero-chat[data-input-demo='true'] :global(.hc-table td) { padding-left: 4px; padding-right: 4px; }
+    .hero-chat[data-input-demo='true'] .hc-actions-label,
+    .hero-chat[data-input-demo='true'] .hc-long-label { display: none; }
+    .hero-chat[data-input-demo='true'] .hc-short-label { display: inline; }
+    .hero-chat[data-input-demo='true'] .hc-action-btn,
+    .hero-chat[data-input-demo='true'] .hc-save-btn { gap: 3px; padding: 5px; font-size: 9px; }
+  }
 
   /* Table — :global because rows are created in client JS (no scope attr) */
   :global(.hc-table) { width: 100%; border-collapse: collapse; font-size: 12px; }
   :global(.hc-table thead th) { text-align: left; font-size: 10px; font-weight: 600; color: #94a3b8 !important; text-transform: uppercase; letter-spacing: .03em; padding: 0 8px 7px 8px; border-bottom: 1px solid #e2e8f0; }
   :global(.hc-table th.hc-th-val) { text-align: right; }
+  :global(.hc-table th.hc-th-days) { text-align: right; white-space: nowrap; }
   :global(.hc-table th.hc-th-bar) { width: 32%; }
   :global(.hc-row) { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
   :global(.hc-row.is-show) { opacity: 1; transform: none; }
@@ -103,6 +195,7 @@
   :global(.hc-table tbody tr:last-child td) { border-bottom: 0; }
   :global(.hc-td-rank) { color: #94a3b8 !important; font-weight: 600; width: 22px; }
   :global(.hc-td-name) { color: #334155 !important; }
+  :global(.hc-td-days) { color: #64748b !important; text-align: right; white-space: nowrap; }
   :global(.hc-td-val) { color: #0f172a !important; font-weight: 700; text-align: right; white-space: nowrap; }
   :global(.hc-td-bar) { width: 32%; }
   :global(.hc-rowtrack) { display: block; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
@@ -125,21 +218,34 @@
   :global(.hc-prog-fill) { height: 100%; width: 0; border-radius: 99px; transition: width .8s cubic-bezier(.22,1,.36,1); }
 
   .hc-foot { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
-  .hc-input { flex: 1; font-size: 12px; color: #94a3b8; background: #f1f5f9; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 12px; padding: 10px 14px; }
-  .hc-send { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+  .hc-input { position: relative; display: flex; align-items: center; min-width: 0; height: 38px; flex: 1; font-size: 12px; color: #94a3b8; background: #f1f5f9; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 12px; padding: 0 14px; overflow: hidden; }
+  .hero-chat[data-input-demo='true'] .hc-input { background: #fff; border-color: #64748b; border-radius: 9999px; }
+  .hc-input--with-send { padding-right: 44px; }
+  #hc-input-text { overflow: hidden; white-space: nowrap; text-overflow: clip; }
+  .hc-input.is-typing { color: #334155; background: #fff; border-color: #a5b4fc; box-shadow: 0 0 0 3px rgba(99, 102, 241, .1); }
+  .hero-chat[data-input-demo='true'] .hc-input.is-typing { border-color: #334155; box-shadow: 0 0 0 3px rgba(51, 65, 85, .12); }
+  .hc-input-caret { display: none; width: 1px; height: 15px; margin-left: 1px; flex: none; background: #4f46e5; animation: hcCaret .8s step-end infinite; }
+  .hc-input.is-typing .hc-input-caret { display: block; }
+  .hc-send { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; transition: transform .15s ease, box-shadow .15s ease; }
+  .hc-send--inside { position: absolute; top: 3px; right: 3px; width: 30px; height: 30px; border-radius: 50%; background: #000; }
+  .hc-send.is-pressed { transform: scale(.88); box-shadow: 0 0 0 5px rgba(99, 102, 241, .18); }
+  .hc-send--inside.is-pressed { box-shadow: 0 0 0 5px rgba(0, 0, 0, .15); }
+  .hc-pointer { position: absolute; left: 0; top: 0; z-index: 5; opacity: 0; pointer-events: none; filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, .35)); }
+  .hc-pointer.is-visible { opacity: 1; }
 
   @keyframes hcLive { 0%, 100% { opacity: .4; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.1); } }
+  @keyframes hcCaret { 50% { opacity: 0; } }
   @keyframes hcDotB { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
   @keyframes hcFade { from { opacity: 0; } to { opacity: 1; } }
 
   @media (prefers-reduced-motion: reduce) {
-    .hc-dot, .hc-typing span { animation: none; }
+    .hc-dot, .hc-typing span, .hc-input-caret { animation: none; }
   }
 </style>
 
 <script>
-  type Row = { label: string; value: number };
-  type Scenario = { q: string; title: string; chart: 'bar' | 'line' | 'donut' | 'progress'; unit: string; suffix: string; rows: Row[] };
+  type Row = { label: string; value: number; daysOverdue?: number };
+  type Scenario = { q: string; title: string; chart: 'bar' | 'line' | 'donut' | 'progress'; unit: string; suffix: string; rows: Row[]; valueLabel?: string };
 
   const SCENARIOS: Scenario[] = [
     {
@@ -170,14 +276,31 @@
       ],
     },
   ];
+  const CLARIOR_SCENARIOS: Scenario[] = [
+    {
+      q: 'Which customers have outstanding payment due by more than 60 days?',
+      title: 'Outstanding payments · over 60 days', chart: 'bar', unit: '₹', suffix: 'M', valueLabel: 'Outstanding',
+      rows: [
+        { label: 'Acme Corp', daysOverdue: 93, value: 2.4 },
+        { label: 'Nimbus Pvt Ltd', daysOverdue: 84, value: 1.8 },
+        { label: 'Vertex Industries', daysOverdue: 77, value: 1.3 },
+        { label: 'Orion Trading', daysOverdue: 69, value: 0.9 },
+        { label: 'Halcyon Foods', daysOverdue: 62, value: 0.6 },
+      ],
+    },
+    ...SCENARIOS.slice(1),
+  ];
   const COLORS = ['#6366f1', '#3b82f6', '#06b6d4', '#22c55e', '#84cc16'];
   const SVGNS = 'http://www.w3.org/2000/svg';
 
   function init() {
-    const root = document.querySelector('.hero-chat');
-    if (!root || (root as HTMLElement).dataset.init === '1') return;
-    (root as HTMLElement).dataset.init = '1';
+    const rootElement = document.querySelector<HTMLElement>('.hero-chat');
+    if (!rootElement || rootElement.dataset.init === '1') return;
+    const root: HTMLElement = rootElement;
+    root.dataset.init = '1';
 
+    const inputDemo = root.dataset.inputDemo === 'true';
+    const scenarios = inputDemo ? CLARIOR_SCENARIOS : SCENARIOS;
     const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fmt = (s: Scenario, v: number) => `${s.unit}${v}${s.suffix}`;
     const el = (tag: string, attrs: Record<string, string | number>) => {
@@ -188,12 +311,15 @@
 
     function buildTable(host: HTMLElement, s: Scenario) {
       host.innerHTML = '';
+      const hasOverdueDays = s.rows.some((row) => row.daysOverdue !== undefined);
       const max = Math.max(...s.rows.map((r) => r.value));
-      const valHead = s.chart === 'progress' ? 'Stock' : s.chart === 'donut' ? 'Share' : 'Value';
+      const valHead = s.valueLabel ?? (s.chart === 'progress' ? 'Stock' : s.chart === 'donut' ? 'Share' : 'Value');
       const table = document.createElement('table');
       table.className = 'hc-table';
       const thead = document.createElement('thead');
-      thead.innerHTML = `<tr><th class="hc-th-rank">#</th><th class="hc-th-name">Name</th><th class="hc-th-val">${valHead}</th><th class="hc-th-bar"></th></tr>`;
+      thead.innerHTML = hasOverdueDays
+        ? `<tr><th class="hc-th-name">Customer</th><th class="hc-th-days">Days overdue</th><th class="hc-th-val">${valHead}</th></tr>`
+        : `<tr><th class="hc-th-rank">#</th><th class="hc-th-name">Name</th><th class="hc-th-val">${valHead}</th><th class="hc-th-bar"></th></tr>`;
       table.appendChild(thead);
       const tbody = document.createElement('tbody');
       s.rows.forEach((r, i) => {
@@ -201,13 +327,18 @@
         tr.className = 'hc-row';
         tr.dataset.w = (r.value / max) * 100 + '%';
         const c = COLORS[i % COLORS.length];
-        tr.innerHTML =
-          `<td class="hc-td-rank">${i + 1}</td>` +
-          `<td class="hc-td-name">${r.label}</td>` +
-          `<td class="hc-td-val">${fmt(s, r.value)}</td>` +
-          `<td class="hc-td-bar"><span class="hc-rowtrack"><span class="hc-rowbar" style="background:${c}"></span></span></td>`;
+        tr.innerHTML = hasOverdueDays
+          ? `<td class="hc-td-name">${r.label}</td><td class="hc-td-days">${r.daysOverdue}</td><td class="hc-td-val">${fmt(s, r.value)}</td>`
+          : `<td class="hc-td-rank">${i + 1}</td>` +
+            `<td class="hc-td-name">${r.label}</td>` +
+            `<td class="hc-td-val">${fmt(s, r.value)}</td>` +
+            `<td class="hc-td-bar"><span class="hc-rowtrack"><span class="hc-rowbar" style="background:${c}"></span></span></td>`;
         tbody.appendChild(tr);
-        if (RM) { tr.classList.add('is-show'); (tr.querySelector('.hc-rowbar') as HTMLElement).style.width = tr.dataset.w!; }
+        if (RM) {
+          tr.classList.add('is-show');
+          const bar = tr.querySelector<HTMLElement>('.hc-rowbar');
+          if (bar) bar.style.width = tr.dataset.w!;
+        }
       });
       table.appendChild(tbody);
       host.appendChild(table);
@@ -328,10 +459,22 @@
     const typeEl = root.querySelector('#hc-type') as HTMLElement;
     const typing = root.querySelector('#hc-typing') as HTMLElement;
     const answer = root.querySelector('#hc-answer') as HTMLElement;
+    const greeting = root.querySelector<HTMLElement>('#hc-greeting');
     const ansTitle = root.querySelector('#hc-ans-title') as HTMLElement;
     const tableHost = root.querySelector('#hc-view-table') as HTMLElement;
     const graphHost = root.querySelector('#hc-view-graph') as HTMLElement;
     const btns = Array.from(root.querySelectorAll('.hc-tg-btn')) as HTMLElement[];
+    const input = root.querySelector('#hc-input') as HTMLElement;
+    const inputText = root.querySelector('#hc-input-text') as HTMLElement;
+    const send = root.querySelector('#hc-send') as HTMLElement;
+    const pointer = root.querySelector('#hc-pointer') as SVGElement | null;
+    const exportButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-export]'));
+    const pdfButton = exportButtons.find((button) => button.dataset.export === 'pdf');
+    const saveButton = root.querySelector<HTMLButtonElement>('[data-save-dashboard]');
+    const toast = root.querySelector<HTMLElement>('#hc-toast');
+    const toastBadge = root.querySelector<HTMLElement>('#hc-toast-badge');
+    const toastTitle = root.querySelector<HTMLElement>('#hc-toast-title');
+    const toastDetail = root.querySelector<HTMLElement>('#hc-toast-detail');
 
     let currentScenario: Scenario | null = null;
     function setView(v: 'table' | 'graph') {
@@ -345,12 +488,33 @@
     }
     btns.forEach((b) => b.addEventListener('click', () => setView(b.dataset.view as 'table' | 'graph')));
 
+    let toastTimer: ReturnType<typeof setTimeout> | undefined;
+    function showToast(badge: string, title: string, detail: string, dashboard = false) {
+      if (!toast || !toastBadge || !toastTitle || !toastDetail) return;
+      clearTimeout(toastTimer);
+      toastBadge.textContent = badge;
+      toastTitle.textContent = title;
+      toastDetail.textContent = detail;
+      toast.dataset.format = badge.toLowerCase();
+      toast.classList.toggle('is-dashboard', dashboard);
+      toast.classList.add('is-show');
+      toastTimer = setTimeout(() => toast.classList.remove('is-show'), 1800);
+    }
+    exportButtons.forEach((button) => button.addEventListener('click', () => {
+      const format = button.dataset.export ?? 'pdf';
+      const label = format.toUpperCase();
+      showToast(label, `Clarior-report.${format}`, `${label} export ready`);
+    }));
+    saveButton?.addEventListener('click', () => {
+      showToast('✓', 'Saved to dashboard', 'This view is saved as a template', true);
+    });
+
     let si = 0;
     const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
     // Natural typing: jittered per-key speed, longer pauses after spaces and
     // punctuation, plus a brief "gathering thoughts" pause before the first key.
-    function keyDelay(ch: string, prev: string): number {
+    function keyDelay(prev: string): number {
       if (prev === ' ') return 80 + Math.random() * 90;          // word boundary
       if ('.,?!:;'.includes(prev)) return 180 + Math.random() * 140; // after punctuation
       const base = 45;
@@ -359,24 +523,84 @@
       return base + jitter + occasionalHitch;
     }
 
-    async function typeText(t: string) {
-      typeEl.classList.remove('done'); typeEl.textContent = '';
+    async function typeText(t: string, target = typeEl) {
+      if (target === typeEl) typeEl.classList.remove('done');
+      target.textContent = '';
       await wait(220); // small pause before typing starts
       for (let i = 0; i < t.length; i++) {
-        typeEl.textContent = t.slice(0, i + 1);
-        await wait(keyDelay(t[i], i > 0 ? t[i - 1] : ''));
+        target.textContent = t.slice(0, i + 1);
+        target.scrollLeft = target.scrollWidth;
+        const delay = keyDelay(i > 0 ? t[i - 1] : '');
+        await wait(target === inputText ? delay * .5 : delay);
       }
       await wait(150); // settle before sending
-      typeEl.classList.add('done');
+      if (target === typeEl) typeEl.classList.add('done');
+    }
+
+    async function clickSend() {
+      if (!pointer) return;
+      const bounds = root.getBoundingClientRect();
+      const inputBounds = input.getBoundingClientRect();
+      const sendBounds = send.getBoundingClientRect();
+      const start = `translate(${inputBounds.left - bounds.left + inputBounds.width * .65}px, ${inputBounds.top - bounds.top - 20}px)`;
+      const end = `translate(${sendBounds.left - bounds.left + sendBounds.width * .5}px, ${sendBounds.top - bounds.top + sendBounds.height * .4}px)`;
+      pointer.style.transition = 'none';
+      pointer.style.transform = start;
+      pointer.classList.add('is-visible');
+      await wait(120);
+      pointer.style.transition = 'transform .7s cubic-bezier(.22, 1, .36, 1)';
+      pointer.style.transform = end;
+      await wait(730);
+      send.classList.add('is-pressed');
+      await wait(190);
+      send.classList.remove('is-pressed');
+      pointer.classList.remove('is-visible');
+    }
+
+    async function clickControl(target: HTMLElement) {
+      if (!pointer || !root.isConnected) return;
+      const bounds = root.getBoundingClientRect();
+      const targetBounds = target.getBoundingClientRect();
+      const endX = targetBounds.left - bounds.left + targetBounds.width * .5;
+      const endY = targetBounds.top - bounds.top + targetBounds.height * .5;
+      const startX = pointer.classList.contains('is-visible') ? Number(pointer.dataset.x) : endX - 42;
+      const startY = pointer.classList.contains('is-visible') ? Number(pointer.dataset.y) : endY + 34;
+      pointer.style.transition = 'none';
+      pointer.style.transform = `translate(${startX}px, ${startY}px)`;
+      pointer.classList.add('is-visible');
+      await wait(80);
+      pointer.style.transition = 'transform .6s cubic-bezier(.22, 1, .36, 1)';
+      pointer.style.transform = `translate(${endX}px, ${endY}px)`;
+      await wait(630);
+      target.classList.add('is-pressed');
+      target.click();
+      await wait(170);
+      target.classList.remove('is-pressed');
+      pointer.dataset.x = String(endX);
+      pointer.dataset.y = String(endY);
     }
 
     async function runScenario(s: Scenario) {
       answer.classList.remove('is-show'); typing.classList.remove('is-show'); user.classList.remove('is-show');
+      greeting?.classList.remove('is-hidden');
       await wait(300);
-      user.classList.add('is-show');
-      await typeText(s.q);
+      if (inputDemo) {
+        inputText.textContent = '';
+        input.classList.add('is-typing');
+        await typeText(s.q, inputText);
+        input.classList.remove('is-typing');
+        await clickSend();
+        greeting?.classList.add('is-hidden');
+        inputText.textContent = 'Ask your ERP anything…';
+        typeEl.textContent = s.q;
+        typeEl.classList.add('done');
+        user.classList.add('is-show');
+      } else {
+        user.classList.add('is-show');
+        await typeText(s.q);
+      }
       await wait(500);
-      user.classList.remove('is-show');
+      if (!inputDemo) user.classList.remove('is-show');
       await wait(250);
       typing.classList.add('is-show');
       await wait(1000);
@@ -389,24 +613,41 @@
       answer.classList.add('is-show');
       // reveal rows in sync with the answer fade-in (no blank gap)
       requestAnimationFrame(() => revealTable(tableHost));
-      await wait(2600);
-      setView('graph');
-      await wait(3200);
+      if (inputDemo) {
+        await wait(1700);
+        const graphButton = btns.find((button) => button.dataset.view === 'graph');
+        const tableButton = btns.find((button) => button.dataset.view === 'table');
+        if (graphButton) await clickControl(graphButton);
+        await wait(1700);
+        if (tableButton) await clickControl(tableButton);
+        await wait(700);
+        if (pdfButton) await clickControl(pdfButton);
+        await wait(1900);
+        if (saveButton) await clickControl(saveButton);
+        await wait(2100);
+        pointer?.classList.remove('is-visible');
+      } else {
+        await wait(2600);
+        setView('graph');
+        await wait(3200);
+      }
     }
 
     async function loop() {
       if (RM) {
-        const s = SCENARIOS[0];
+        const s = scenarios[0];
+        greeting?.classList.add('is-hidden');
+        if (inputDemo) { typeEl.textContent = s.q; typeEl.classList.add('done'); user.classList.add('is-show'); }
         ansTitle.textContent = s.title; currentScenario = s; buildTable(tableHost, s);
         setView('table'); answer.classList.add('is-show');
         return;
       }
-      // eslint-disable-next-line no-constant-condition
-      while (true) {
-        await runScenario(SCENARIOS[si]);
+      while (root.isConnected) {
+        await runScenario(scenarios[si]);
+        if (!root.isConnected) return;
         answer.classList.remove('is-show');
         await wait(350);
-        si = (si + 1) % SCENARIOS.length;
+        si = (si + 1) % scenarios.length;
       }
     }
     loop();
