@@ -80,15 +80,15 @@ const navHoverClass =
 
 // Dropdown menu background
 const dropdownBgClass =
-  isBlackTheme  ? 'md:bg-gray-900 border border-white/10' :
-  isWhiteTheme  ? 'md:bg-white border border-gray-200' :
-  'md:bg-white/90 dark:md:bg-dark';
+  isBlackTheme  ? 'xl:bg-gray-900 border border-white/10' :
+  isWhiteTheme  ? 'xl:bg-white border border-gray-200' :
+  'xl:bg-white/90 dark:xl:bg-dark';
 
 // Dropdown item hover
 const dropdownItemHoverClass =
-  isBlackTheme  ? 'md:hover:bg-white/10 hover:text-white' :
-  isWhiteTheme  ? 'md:hover:bg-gray-100 hover:text-gray-900' :
-  'md:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700';
+  isBlackTheme  ? 'xl:hover:bg-white/10 hover:text-white' :
+  isWhiteTheme  ? 'xl:hover:bg-gray-100 hover:text-gray-900' :
+  'xl:hover:bg-gray-100 hover:text-link dark:hover:text-white dark:hover:bg-gray-700';
 ---
 
 <header
@@ -104,8 +104,8 @@ const dropdownItemHoverClass =
   <div
     class:list={[
       'relative text-default py-1.5 px-4 sm:px-6 mx-auto w-full',
-      { 'md:flex md:justify-between': position !== 'center' },
-      { 'md:grid md:grid-cols-3 md:items-center': position === 'center' },
+      { 'xl:flex xl:justify-between': position !== 'center' },
+      { 'xl:grid xl:grid-cols-3 xl:items-center': position === 'center' },
       { 'max-w-6xl': !isFullWidth },
     ]}
   >
@@ -117,39 +117,51 @@ const dropdownItemHoverClass =
           <Logo />
         )}
       </a>
-      <div class="flex items-center md:hidden">
+      <div class="flex items-center gap-2 xl:hidden">
+        {
+          actions?.length ? (
+            <span class="hidden md:flex items-center">
+              {actions.map((btnProps) => (
+                <Button {...btnProps} class="ml-2 py-2 px-5 font-semibold shadow-none text-xs w-auto" />
+              ))}
+            </span>
+          ) : (
+            ''
+          )
+        }
         <ToggleMenu />
       </div>
     </div>
 
     <nav
-      class="items-center w-full md:w-auto hidden md:flex md:mx-5 text-default overflow-y-auto overflow-x-hidden md:overflow-visible md:justify-self-center"
+      class="items-center w-full xl:w-auto hidden xl:flex xl:mx-5 text-default overflow-y-auto overflow-x-hidden xl:overflow-visible xl:justify-self-center"
       aria-label="Main navigation"
     >
       <ul
-        class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-base md:text-[0.75rem] tracking-[0.01rem] font-medium md:justify-center"
+        class="flex flex-col xl:flex-row xl:self-center w-full xl:w-auto text-xl font-semibold xl:font-medium xl:text-[0.75rem] tracking-[0.01rem] xl:justify-center"
       >
         {
           links.map(({ text, href, links }) => (
-            <li class={links?.length ? 'dropdown md:relative' : ''}>
+            <li class={links?.length ? 'dropdown xl:relative' : ''}>
               {links?.length ? (
                 <>
                   <button
                     type="button"
-                    class:list={['px-3 py-2 flex items-center whitespace-nowrap w-full md:w-auto', navHoverClass]}
+                    aria-expanded="false"
+                    class:list={['px-3 py-2 flex items-center whitespace-nowrap w-full xl:w-auto', navHoverClass]}
                   >
                     {text}{' '}
-                    <Icon name="tabler:chevron-down" class="dropdown-chevron w-4 h-4 md:w-3.5 md:h-3.5 ml-auto md:ml-0.5 rtl:ml-0 rtl:mr-auto md:rtl:mr-0.5 transition-transform duration-200" />
+                    <Icon name="tabler:chevron-down" class="dropdown-chevron w-4 h-4 xl:w-3.5 xl:h-3.5 ml-auto xl:ml-0.5 rtl:ml-0 rtl:mr-auto xl:rtl:mr-0.5 transition-transform duration-200" />
                   </button>
                   <div class:list={[
-                    'dropdown-menu md:backdrop-blur-md md:rounded-2xl md:absolute md:top-full md:left-0 pl-4 md:pl-0 md:hidden md:border dropdown-animate',
-                    isBlackTheme ? 'md:bg-[#111] md:border-white/10' : 'md:bg-white md:border-gray-300',
+                    'dropdown-menu xl:backdrop-blur-md xl:rounded-2xl xl:absolute xl:top-full xl:left-0 pl-4 xl:pl-0 xl:hidden xl:border dropdown-animate',
+                    isBlackTheme ? 'xl:bg-[#111] xl:border-white/10' : 'xl:bg-white xl:border-gray-300',
                   ]}
                     style={`min-width: ${links.length > 4 ? '640px' : '400px'};`}
                   >
                     <ul class:list={[
                       'p-3 grid gap-0.5',
-                      links.length > 4 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1',
+                      links.length > 4 ? 'grid-cols-1 xl:grid-cols-2' : 'grid-cols-1',
                     ]}>
                       {links.map(({ text: text2, href: href2, icon: icon2, description: desc2 }) => (
                         <li>
@@ -165,7 +177,7 @@ const dropdownItemHoverClass =
                           >
                             {icon2 && (
                               <span class:list={[
-                                'w-7 h-7 rounded-lg hidden md:flex items-center justify-center shrink-0 mt-0.5',
+                                'w-7 h-7 rounded-lg hidden xl:flex items-center justify-center shrink-0 mt-0.5',
                                 isBlackTheme ? 'bg-white/10' : 'bg-gray-100',
                               ]}>
                                 <Icon name={icon2} class="w-3.5 h-3.5" />
@@ -175,7 +187,7 @@ const dropdownItemHoverClass =
                               <span class="text-[0.75rem] font-semibold leading-snug">{text2}</span>
                               {desc2 && (
                                 <span class:list={[
-                                  'text-[0.65rem] font-normal leading-snug hidden md:block',
+                                  'text-[0.65rem] font-normal leading-snug hidden xl:block',
                                   isBlackTheme ? 'text-white/50' : 'text-gray-400',
                                 ]}>
                                   {desc2}
@@ -209,12 +221,12 @@ const dropdownItemHoverClass =
     <div
       class:list={[
         { 'ml-auto rtl:ml-0 rtl:mr-auto': position === 'left' },
-        'hidden md:self-center md:flex items-center md:mb-0 fixed w-full md:w-auto md:static justify-end left-0 rtl:left-auto rtl:right-0 bottom-0 p-3 md:p-0 md:justify-self-end',
+        'hdr-actions hidden md:!hidden xl:!flex xl:self-center items-center xl:mb-0 fixed w-full xl:w-auto xl:static justify-end left-0 rtl:left-auto rtl:right-0 bottom-0 p-3 xl:p-0 xl:justify-self-end',
       ]}
     >
-      <div class="items-center flex justify-between w-full md:w-auto">
+      <div class="items-center flex justify-between w-full xl:w-auto">
         <!-- <div class="flex">
-          {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 md:w-5 md:h-5 md:inline-block" />}
+          {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 xl:w-5 xl:h-5 xl:inline-block" />}
           {showRssFeed && (
             <a
               class="text-muted dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center"
@@ -227,9 +239,9 @@ const dropdownItemHoverClass =
         </div> -->
         {
           actions?.length ? (
-            <span class="ml-4 rtl:ml-0 rtl:mr-4">
+            <span class="hdr-actions-btns ml-4 rtl:ml-0 rtl:mr-4">
               {actions.map((btnProps) => (
-                <Button {...btnProps} class="ml-2 py-2 px-4 md:px-5 font-semibold shadow-none text-xs w-auto" />
+                <Button {...btnProps} class="ml-2 py-2 px-4 xl:px-5 font-semibold shadow-none text-xs w-auto" />
               ))}
             </span>
           ) : (
@@ -267,50 +279,145 @@ const dropdownItemHoverClass =
      The !important flags on display ensure our accordion state beats the global
      .dropdown:focus-within / :hover rules in tailwind.css — otherwise the button
      retains focus after a tap and the submenu never closes. */
-  @media (max-width: 767px) {
+  @media (max-width: 1279px) {
+    /* Smooth accordion: animate the row height from 0 to its content height
+       (grid 0fr -> 1fr), with a fade. Closed panels are also hidden from taps
+       and keyboard focus once the closing animation has finished. */
     .dropdown-menu {
       min-width: 0 !important;
       left: auto !important;
       transform: none !important;
       animation: none !important;
-      display: none !important;
+      display: grid !important;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      visibility: hidden;
+      transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, visibility 0s linear 0.35s;
+    }
+    .dropdown-menu > ul {
+      min-height: 0;
+      overflow: hidden;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .dropdown.is-open > .dropdown-menu {
-      display: block !important;
+      grid-template-rows: 1fr;
+      opacity: 1;
+      visibility: visible;
+      transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease 0.05s, visibility 0s;
+    }
+    .dropdown.is-open > .dropdown-menu > ul {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
     }
     .dropdown.is-open > button .dropdown-chevron {
       transform: rotate(180deg);
+    }
+  }
+
+  /* Phone: Quick Contact + Request a Demo as full-width buttons, fixed at the bottom of the open menu */
+  @media (max-width: 767px) {
+    .hdr-actions {
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: inherit;
+    }
+    .hdr-actions-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      margin: 0 !important;
+    }
+    .hdr-actions-btns > :global(*) {
+      width: 100% !important;
+      margin: 0 !important;
+      justify-content: center;
+      padding-top: 0.8rem !important;
+      padding-bottom: 0.8rem !important;
+      font-size: 0.875rem !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dropdown-menu, .dropdown-menu > ul { transition: none !important; }
+  }
+
+  /* Tablet (portrait + landscape): hamburger menu, action buttons stay in the header row,
+     so the menu panel can run to the bottom of the screen. */
+  @media (min-width: 768px) and (max-width: 1279px) {
+    #header.expanded nav {
+      bottom: 0 !important;
+      padding: 0 24px 24px;
     }
   }
 </style>
 
 <script is:inline>
   (function () {
+    // Bind once per page lifetime. With ClientRouter, inline scripts can re-run after
+    // page swaps; a second listener would toggle the accordion twice (open then close).
+    if (window.__ubMobileNavBound) return;
+    window.__ubMobileNavBound = true;
+
+    const mobileMq = window.matchMedia('(max-width: 1279px)');
+
     // Event delegation on document in CAPTURE phase — fires before any bubble-phase
     // click handlers (notably the '#header nav' closer in BasicScripts.astro that
     // would otherwise slam the mobile menu shut on every tap).
-    // Using delegation (not per-button binding) means this keeps working across
-    // Astro's client-side page transitions where the header DOM is replaced.
+    // Delegation (not per-button binding) keeps working across page transitions.
     document.addEventListener(
       'click',
       (e) => {
-        // Desktop uses the existing CSS hover behaviour — only intercept on mobile
-        if (window.innerWidth >= 768) return;
-        // Only handle taps on (or inside) a dropdown's parent toggle button
+        if (!mobileMq.matches) return;
         const target = e.target;
         if (!(target instanceof Element)) return;
+
+        // Hamburger: start the menu panel just below the header row, so it doesn't
+        // slide under the logo when the announcement bar pushes the header down.
+        const toggle = target.closest('[data-aw-toggle-menu]');
+        if (toggle) {
+          const header = document.getElementById('header');
+          const nav = document.querySelector('#header nav');
+          const row = header && header.querySelector(':scope > div:last-child > div:first-child');
+          if (nav && row) nav.style.top = Math.max(0, Math.round(row.getBoundingClientRect().bottom) + 8) + 'px';
+          // Phone: stop the scrolling menu just above the fixed button bar (measured after it shows)
+          requestAnimationFrame(() => {
+            const bar = header && header.querySelector('.hdr-actions');
+            if (!nav) return;
+            if (bar && bar.offsetHeight && window.innerWidth < 768) {
+              nav.style.setProperty('bottom', bar.offsetHeight + 'px', 'important');
+            } else {
+              nav.style.removeProperty('bottom');
+            }
+          });
+          document.querySelectorAll('#header .dropdown.is-open').forEach((d) => {
+            d.classList.remove('is-open');
+            d.querySelector(':scope > button')?.setAttribute('aria-expanded', 'false');
+          });
+          return;
+        }
+
+        // Accordion toggle buttons
         const btn = target.closest('#header .dropdown > button');
         if (!btn) return;
+        e.preventDefault();
         // Kill propagation so the #header nav closer never sees this click
         e.stopPropagation();
         const dropdown = btn.parentElement;
         if (!dropdown) return;
         const wasOpen = dropdown.classList.contains('is-open');
-        // Accordion: close all dropdowns, then re-open this one if it was closed
-        document
-          .querySelectorAll('#header .dropdown')
-          .forEach((d) => d.classList.remove('is-open'));
-        if (!wasOpen) dropdown.classList.add('is-open');
+        // Accordion: close all, then re-open this one if it was closed
+        document.querySelectorAll('#header .dropdown').forEach((d) => {
+          d.classList.remove('is-open');
+          d.querySelector(':scope > button')?.setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          dropdown.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+        // Drop focus so :focus-within styles can't keep a closed submenu showing
+        if (wasOpen) btn.blur();
       },
       true // capture phase
     );

@@ -13,6 +13,8 @@ import HeroOrbital from '~/components/widgets/HeroOrbital.astro';
 import HeroChatConsole from '~/components/widgets/HeroChatConsole.astro';
 import ParticleGlobe from '~/components/widgets/ParticleGlobe.astro';
 import Steps from '~/components/widgets/Steps.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { Icon } from 'astro-icon/components';
 
 import { headerData } from '~/navigation';
 
@@ -574,6 +576,34 @@ const metadata = {
   />
 
   <!-- ══════════════════════════════════════════════════════════
+       12b. HUDDLE GLOBAL — same block as /products/clarior
+       ══════════════════════════════════════════════════════════ -->
+  <WidgetWrapper id="huddle-global" containerClass="max-w-7xl">
+    <div class="hg-card relative overflow-hidden rounded-3xl bg-black text-white">
+      <canvas class="hg-canvas" data-hg-canvas aria-hidden="true"></canvas>
+      <div class="relative z-10 px-8 py-14 md:px-16 md:py-24 max-w-3xl">
+        <p class="inline-flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold text-white mb-6">
+          <Icon name="tabler:calendar-event" class="w-5 h-5 text-primary" />
+          Nov 12-14, 2026
+          <span class="text-white/30">|</span>
+          <Icon name="tabler:map-pin" class="w-5 h-5 text-primary" />
+          Kerala, India
+        </p>
+        <h2 class="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight font-heading text-white mb-8">
+          Experience Clarior at Huddle Global
+        </h2>
+        <p class="text-lg md:text-2xl text-white/90 leading-relaxed mb-10">
+          Visit the UpBuff Technologies exhibitor pod and take the <strong class="text-white">Clarior Live Challenge</strong>. Bring a business question. See how Clarior works using a demonstration ERP database.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/request-demo" class="inline-flex items-center px-7 py-3 rounded-full bg-white text-black font-semibold text-base hover:bg-gray-200 transition-colors duration-150">Book a Live Demo</a>
+          <a href="#hero-video" data-video-src="https://www.youtube.com/embed/qahCMMyeGzw?autoplay=1&rel=0&modestbranding=1" class="inline-flex items-center px-7 py-3 rounded-full border-2 border-white text-white font-semibold text-base hover:bg-white/10 transition-colors duration-150">Watch Product Launch</a>
+        </div>
+      </div>
+    </div>
+  </WidgetWrapper>
+
+  <!-- ══════════════════════════════════════════════════════════
        13. FAQ ACCORDION
        ══════════════════════════════════════════════════════════ -->
   <FaqAccordion
@@ -654,9 +684,9 @@ const metadata = {
     const iframe   = document.getElementById('hero-video-iframe');
     const videoSrc = 'https://www.youtube.com/embed/uhP4tvcec0c?autoplay=1&rel=0&modestbranding=1';
 
-    function openModal() {
+    function openModal(src) {
       if (!overlay || !iframe) return;
-      iframe.setAttribute('src', videoSrc);
+      iframe.setAttribute('src', src || videoSrc);
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       document.body.style.overflow = 'hidden';
     }
@@ -668,10 +698,101 @@ const metadata = {
       document.body.style.overflow = '';
     }
 
-    btn?.forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); openModal(); }));
+    btn?.forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); openModal(b.dataset.videoSrc); }));
     closeBtn?.addEventListener('click', closeModal);
     backdrop?.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
 
 </Layout>
+
+<style>
+  /* ── Huddle Global particle stream ── */
+  .hg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+</style>
+
+<script>
+  // Huddle Global background: green particles rising along a curved stream (canvas, no libraries).
+  // Same as the Huddle Global card on /products/clarior.
+  function initHuddleStream() {
+    document.querySelectorAll<HTMLCanvasElement>('[data-hg-canvas]').forEach(bindStream);
+  }
+  function bindStream(canvas: HTMLCanvasElement) {
+    if (canvas.dataset.hgBound) return;
+    canvas.dataset.hgBound = '1';
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    type P = { t: number; off: number; r: number; a: number; l: number; sp: number; wob: number; ph: number; stray: boolean; sx: number; sy: number };
+    let W = 0, H = 0, parts: P[] = [], raf = 0, running = false;
+
+    // Stream path: in from the bottom-left, along the bottom, then up the right side.
+    const P0 = [-0.05, 1.08], P1 = [0.55, 0.7], P2 = [1.02, 1.05], P3 = [0.9, -0.08];
+    const bez = (t: number) => {
+      const u = 1 - t;
+      const x = u*u*u*P0[0] + 3*u*u*t*P1[0] + 3*u*t*t*P2[0] + t*t*t*P3[0];
+      const y = u*u*u*P0[1] + 3*u*u*t*P1[1] + 3*u*t*t*P2[1] + t*t*t*P3[1];
+      const dx = 3*u*u*(P1[0]-P0[0]) + 6*u*t*(P2[0]-P1[0]) + 3*t*t*(P3[0]-P2[0]);
+      const dy = 3*u*u*(P1[1]-P0[1]) + 6*u*t*(P2[1]-P1[1]) + 3*t*t*(P3[1]-P2[1]);
+      return [x, y, dx, dy];
+    };
+    const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+
+    const make = (): P => ({
+      t: Math.random(), off: gauss(), r: Math.random() < 0.8 ? 0.5 + Math.random() * 1.3 : 1.8 + Math.random() * 1.8,
+      a: 0.45 + Math.random() * 0.55, l: 48 + Math.random() * 22, sp: 0.00025 + Math.random() * 0.0006,
+      wob: 2 + Math.random() * 6, ph: Math.random() * Math.PI * 2, stray: Math.random() < 0.06,
+      sx: Math.random(), sy: Math.random(),
+    });
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = rect.width; H = rect.height;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.round(Math.min(6000, Math.max(1500, W * H / 120)));
+      parts = Array.from({ length: n }, make);
+    };
+
+    const draw = (time: number) => {
+      ctx.clearRect(0, 0, W, H);
+      const minSide = Math.min(W, H);
+      for (const p of parts) {
+        let x: number, y: number;
+        if (p.stray) {
+          p.sy -= p.sp * 0.6; if (p.sy < -0.02) { p.sy = 1.02; p.sx = Math.random(); }
+          x = p.sx * W; y = p.sy * H;
+        } else {
+          p.t += p.sp; if (p.t > 1) { p.t = 0; p.off = gauss(); }
+          const [bx, by, dx, dy] = bez(p.t);
+          const len = Math.hypot(dx * W, dy * H) || 1;
+          const nx = -dy * H / len, ny = dx * W / len;               // normal to the stream
+          const width = minSide * (0.13 + 0.13 * Math.sin(p.t * Math.PI)); // wider in the middle
+          const w = Math.sin(time / 1400 + p.ph) * p.wob;
+          x = bx * W + nx * (p.off * width + w);
+          y = by * H + ny * (p.off * width + w) - Math.cos(time / 1700 + p.ph) * p.wob;
+        }
+        const edge = Math.max(0, 1 - Math.abs(p.off) * 0.9);
+        ctx.globalAlpha = p.stray ? p.a * 0.4 : p.a * (0.45 + 0.55 * edge);
+        ctx.fillStyle = `hsl(150, 62%, ${p.l}%)`;
+        ctx.beginPath(); ctx.arc(x, y, p.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const loop = (time: number) => { draw(time); raf = requestAnimationFrame(loop); };
+    const start = () => { if (running || reduce) return; running = true; raf = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    resize(); draw(0);
+    let rt: ReturnType<typeof setTimeout> | undefined;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); draw(performance.now()); }, 150); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((e) => (e.some((x) => x.isIntersecting) ? start() : stop())).observe(canvas);
+    } else start();
+  }
+  document.addEventListener('astro:page-load', initHuddleStream);
+</script>
+

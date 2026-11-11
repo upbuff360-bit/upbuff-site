@@ -46,7 +46,7 @@ const { language, textDirection } = I18N;
     <slot />
 
 
-<!-- Paste before </body> in your Layout.astro -->
+<!-- Paste before </body> in your Layout.astro
 <script is:inline>
   window.chatbotConfig = {
     agentId: "agt-102",
@@ -64,6 +64,46 @@ const { language, textDirection } = I18N;
       s.async = true;
       document.body.appendChild(s);
     }
+  });
+</script> -->
+
+<script
+  is:inline
+  async
+  src="https://chat.upbuff.com/widget.js"
+  data-website-id="8dde6fcd-59e0-4eef-92df-7d8756d88b11"
+></script>
+
+<script>
+  import { swapFunctions } from 'astro:transitions/client';
+
+  const widgetHostId = 'sitewise-chat-8dde6fcd-59e0-4eef-92df-7d8756d88b11';
+
+  document.addEventListener('astro:before-swap', (event) => {
+    const widgetHost = document.getElementById(widgetHostId);
+    if (!widgetHost || widgetHost.parentElement !== document.body) return;
+
+    event.swap = () => {
+      const nextDocument = event.newDocument;
+      const currentBody = document.body;
+      const nextBody = nextDocument.body;
+
+      // Keep the widget iframe attached to the same body so its chat session stays open.
+      swapFunctions.deselectScripts(nextDocument);
+      swapFunctions.swapRootAttributes(nextDocument);
+      swapFunctions.swapHeadElements(nextDocument);
+      const restoreFocus = swapFunctions.saveFocus();
+
+      for (const attribute of Array.from(currentBody.attributes)) currentBody.removeAttribute(attribute.name);
+      for (const attribute of Array.from(nextBody.attributes)) currentBody.setAttribute(attribute.name, attribute.value);
+
+      for (const child of Array.from(currentBody.childNodes)) {
+        if (child !== widgetHost) currentBody.removeChild(child);
+      }
+      while (nextBody.firstChild) currentBody.insertBefore(nextBody.firstChild, widgetHost);
+
+      restoreFocus();
+    };
   });
 </script>
 
