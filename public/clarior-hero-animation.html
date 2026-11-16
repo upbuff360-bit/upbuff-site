@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clarior – Conversational BI for SAP Business One | UpBuff</title>
+<style>
+:root{
+  --bg:#F6F8F5;--card:#FFFFFF;--border:#DCE5E0;--input:#F3F6F4;--txt:#10201A;--muted:#586961;
+  --green:#15803D;--bubble:#15803D;--gold:#F5B942;--goldt:#A66200;--aibub:#EEF4F0;--tile:#0B2019;--tiletxt:#FFFFFF;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--txt)}
+#wrap{position:relative;width:100%;height:100%;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--bg);overflow:hidden}
+.abs{position:absolute}
+.row{position:absolute;left:0;right:0;text-align:center;transform:translateY(calc(-50% + var(--dy,0px)))}
+.scene{position:absolute;inset:0;opacity:0;visibility:hidden}
+.a{opacity:0}
+/* problem */
+.pills{position:absolute;left:0;right:0;top:640px;display:flex;justify-content:center;align-items:center;gap:0}
+.pill{height:84px;padding:0 36px;border-radius:42px;background:var(--card);border:2px solid var(--border);display:flex;align-items:center;font-weight:600;font-size:34px;transform:translateY(var(--dy,0px))}
+.arrow{width:70px;text-align:center;font-weight:600;font-size:40px;color:var(--goldt)}
+/* reveal */
+#word{font-weight:800;color:var(--txt)}
+#uline{position:absolute;left:50%;top:650px;height:6px;background:var(--gold);transform:translateX(-50%);width:0}
+/* demo */
+#win{position:absolute;left:215px;top:40px;width:1490px;height:1000px;border-radius:36px;background:var(--card);border:2px solid var(--border);transform:translateY(var(--dy,0px))}
+.tile{width:56px;height:56px;border-radius:14px;background:var(--tile);color:var(--tiletxt);display:flex;align-items:center;justify-content:center}
+#hdr{position:absolute;left:40px;right:40px;top:34px;height:56px;display:flex;align-items:center;justify-content:space-between}
+#hdr .name{font-weight:700;font-size:34px;margin-left:20px}
+.conn{display:flex;align-items:center;gap:12px;font-weight:500;font-size:24px;color:var(--muted)}
+.conn i{width:14px;height:14px;border-radius:50%;background:var(--green);display:block}
+#hline{position:absolute;left:0;right:0;top:124px;height:2px;background:var(--border)}
+#inbar{position:absolute;left:40px;right:40px;bottom:36px;height:80px;border-radius:20px;background:var(--input);border:2px solid var(--border);display:flex;align-items:center;padding:0 12px 0 34px;font-weight:500;font-size:34px}
+#intext{flex:1;white-space:nowrap;overflow:hidden}
+#intext .ph{color:var(--muted)}
+#caret{display:inline-block;width:3px;height:36px;background:var(--gold);vertical-align:middle;margin-left:2px}
+#send{width:56px;height:56px;border-radius:14px;background:var(--gold);color:#0B2019;display:flex;align-items:center;justify-content:center;transition:filter .1s}
+#send.press{filter:brightness(1.25)}
+#ubub{position:absolute;right:50px;top:170px;height:80px;padding:0 32px;border-radius:18px;background:var(--bubble);color:#fff;font-weight:600;font-size:34px;display:flex;align-items:center;transform:translateY(var(--dy,0px))}
+#av{position:absolute;left:50px;top:270px}
+#think{position:absolute;left:126px;top:270px;height:64px;padding:0 28px;border-radius:18px;background:var(--aibub);display:flex;align-items:center;gap:14px;font-weight:500;font-size:26px;color:var(--muted)}
+#think b{width:14px;height:14px;border-radius:50%;background:var(--txt);display:inline-block;animation:bl 1s infinite ease-in-out}
+#think b:nth-child(2){animation-delay:.15s}#think b:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,100%{opacity:.3}50%{opacity:1}}
+#ans{position:absolute;left:126px;right:50px;top:270px;height:450px;border-radius:20px;background:var(--aibub);padding:32px 36px}
+#ans .lead{font-size:32px}
+#ans .lead strong{color:var(--goldt);font-weight:700}
+table{border-collapse:collapse;margin-top:20px;width:100%}
+th{text-align:left;font-weight:600;font-size:24px;color:var(--muted);text-transform:uppercase;padding:0 0 14px;border-bottom:2px solid var(--border)}
+td{font-weight:500;font-size:30px;padding:14px 0 0;height:58px}
+td:last-child{color:var(--goldt);font-weight:600}
+tr.r{transform:translateY(var(--dy,0px))}
+#foot{position:absolute;left:36px;right:30px;bottom:22px;display:flex;justify-content:space-between;align-items:center}
+#foot .t{font-weight:500;font-size:22px;color:var(--green)}
+#foot .s{height:38px;padding:0 24px;border-radius:19px;background:var(--border);font-weight:500;font-size:20px;color:var(--muted);display:flex;align-items:center}
+/* more */
+.qgrid{position:absolute;left:320px;top:410px;width:1280px;display:grid;grid-template-columns:1fr;gap:18px}
+.q{height:120px;border-radius:24px;background:var(--card);border:2px solid var(--border);padding:22px 30px;display:flex;align-items:center;gap:26px;transform:translateY(var(--dy,0px))}
+.q .qi{flex:0 0 46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px}
+.q .qi.g{background:#15803D;color:#fff}.q .qi.y{background:var(--gold);color:#0B2019}
+.q p{margin:0;font-weight:600;font-size:34px;line-height:42px}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage">
+
+<!-- 1 problem -->
+<section class="scene" data-s="0" data-d="6.5">
+  <div class="row a" data-a="0.2,0.8,20" style="top:350px;font-weight:700;font-size:88px;line-height:1.08"><span style="display:block">Your answers are already</span><span style="display:block">in SAP Business One.</span></div>
+  <div class="row a" data-a="1.8,0.8,20" style="top:520px;font-weight:500;font-size:46px;color:var(--muted)">But getting them still means…</div>
+  <div class="pills">
+    <div class="pill a" data-a="3.0,0.6,24">Run a report</div><div class="arrow a" data-a="3.3,0.4,0">→</div>
+    <div class="pill a" data-a="3.45,0.6,24">Export to Excel</div><div class="arrow a" data-a="3.75,0.4,0">→</div>
+    <div class="pill a" data-a="3.9,0.6,24">Filter &amp; pivot</div><div class="arrow a" data-a="4.2,0.4,0">→</div>
+    <div class="pill a" data-a="4.35,0.6,24">Email it around</div>
+  </div>
+</section>
+
+<!-- 2 reveal -->
+<section class="scene" data-s="6.5" data-d="4.5" id="sReveal">
+  <div class="row a" data-a="0.2,0.7,0" style="top:380px;font-weight:500;font-size:42px;color:var(--muted)">Introducing</div>
+  <div class="row a" id="word" data-a="0.7,1,0" style="top:540px">CLARIOR</div>
+  <div id="uline"></div>
+  <div class="row a" data-a="1.9,0.8,0" style="top:730px;font-weight:600;font-size:48px;color:var(--green)">Conversational BI for SAP Business One</div>
+</section>
+
+<!-- 3 demo -->
+<section class="scene" data-s="11" data-d="9.5" id="sDemo">
+  <div id="win" class="a" data-a="0,0.6,30">
+    <div id="hdr"><div style="display:flex;align-items:center"><div class="tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></div><span class="name">Clarior</span></div>
+      <div class="conn"><i></i>Connected to SAP Business One</div></div>
+    <div id="hline"></div>
+    <div id="ubub" class="a">Which customers are overdue by more than 60 days?</div>
+    <div id="av" class="tile" style="opacity:0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
+    <div id="think" style="display:none"><b></b><b></b><b></b><span style="margin-left:14px">Reading A/R invoices…</span></div>
+    <div id="ans" class="a">
+      <div class="lead">4 customers are overdue by more than 60 days, <strong>₹18.6 L</strong> in total.</div>
+      <table>
+        <thead class="a" id="th"><tr><th style="width:43%">Customer</th><th style="width:15%">Invoices</th><th style="width:21%">Overdue amount</th><th>Days overdue</th></tr></thead>
+        <tbody>
+          <tr class="r a"><td>Sunrise Traders</td><td>6</td><td>₹6,42,500</td><td>94</td></tr>
+          <tr class="r a"><td>Kerala Agro Foods</td><td>4</td><td>₹5,18,200</td><td>81</td></tr>
+          <tr class="r a"><td>Metro Hardware Co.</td><td>3</td><td>₹4,07,900</td><td>72</td></tr>
+          <tr class="r a"><td>BlueLine Logistics</td><td>2</td><td>₹2,91,400</td><td>63</td></tr>
+        </tbody>
+      </table>
+      <div id="foot"><span class="t a" id="ft">Answered in seconds, straight from SAP Business One</span><span class="s a" id="fs">Sample data</span></div>
+    </div>
+    <div id="inbar"><div id="intext"></div><div id="send"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+  </div>
+</section>
+
+<!-- 4 more -->
+<section class="scene" data-s="20.5" data-d="7">
+  <div class="row a" data-a="0.2,0.7,16" style="top:230px;font-weight:800;font-size:76px">Ask in plain English.</div>
+  <div class="row a" data-a="0.8,0.7,0" style="top:320px;font-weight:500;font-size:38px;color:var(--muted)">Sales, purchasing, inventory, finance: one conversation.</div>
+  <div class="qgrid">
+    <div class="q a" data-a="1.2,0.6,26"><span class="qi g">?</span><p>Which items are below reorder level in the Kochi warehouse?</p></div>
+    <div class="q a" data-a="2.2,0.6,26"><span class="qi y">?</span><p>What were our top 5 selling items this month?</p></div>
+    <div class="q a" data-a="3.2,0.6,26"><span class="qi g">?</span><p>Show open purchase orders by vendor.</p></div>
+    <div class="q a" data-a="4.2,0.6,26"><span class="qi y">?</span><p>How do this quarter’s sales compare with last quarter?</p></div>
+  </div>
+</section>
+
+<!-- 5 benefits -->
+<section class="scene" data-s="27.5" data-d="5">
+  <div class="row a" data-a="0.3,0.6,30" style="top:330px;font-weight:800;font-size:120px">No reports.</div>
+  <div class="row a" data-a="1.0,0.6,30" style="top:520px;font-weight:800;font-size:120px">No exports.</div>
+  <div class="row a" data-a="1.7,0.6,30" style="top:710px;font-weight:800;font-size:120px;color:var(--green)">Just ask.</div>
+</section>
+
+<!-- 6 closing -->
+<section class="scene" data-s="32.5" data-d="6">
+  <div class="row a" data-a="0.2,0.8,20" style="top:385px;font-weight:800;font-size:110px;line-height:1.05">Stop Searching.</div>
+  <div class="row a" data-a="0.8,0.8,0" style="top:520px;font-weight:800;font-size:110px;line-height:1.05;color:var(--green)">Start Asking.</div>
+  <div class="row a" data-a="1.6,0.8,0" style="top:670px;font-weight:800;font-size:56px;letter-spacing:14px;padding-left:14px">CLARIOR</div>
+  <div class="row a" data-a="1.6,0.8,0" style="top:740px;font-weight:600;font-size:34px;color:var(--muted)">Conversational BI for SAP Business One</div>
+</section>
+
+</div></div>
+
+<script>
+(function(){
+  var TOTAL = 38.5, FADE = 0.4;
+  var QUESTION = 'Which customers are overdue by more than 60 days?';
+  var stage = document.getElementById('stage'), wrap = document.getElementById('wrap');
+  function fit(){
+    var scale = wrap.clientWidth * 1.15 / 1920;
+    stage.style.transform = 'scale(' + scale + ')';
+    stage.style.left = ((wrap.clientWidth - 1920 * scale) / 2) + 'px';
+    stage.style.top = ((wrap.clientHeight - 1080 * scale) / 2) + 'px';
+  }
+  window.addEventListener('resize', fit); fit();
+
+  function clamp(x){ return Math.max(0, Math.min(1, x)); }
+  function ease(t){ t = clamp(t); return 1 - Math.pow(1 - t, 3); }
+  function prog(t, s, d){ return ease((t - s) / d); }
+  function setA(el, p, dy){ el.style.opacity = p; el.style.setProperty('--dy', ((dy || 0) * (1 - p)) + 'px'); }
+
+  var scenes = [].slice.call(document.querySelectorAll('.scene')).map(function(el){
+    return { el: el, s: +el.dataset.s, d: +el.dataset.d,
+      items: [].slice.call(el.querySelectorAll('[data-a]')).map(function(n){
+        var v = n.dataset.a.split(',').map(Number); return { el: n, s: v[0], d: v[1], dy: v[2], sc: n.dataset.scale ? +n.dataset.scale : null };
+      }) };
+  });
+
+  // demo elements
+  var win = document.getElementById('win'), intext = document.getElementById('intext'), send = document.getElementById('send'),
+      ubub = document.getElementById('ubub'), av = document.getElementById('av'), think = document.getElementById('think'),
+      ans = document.getElementById('ans'), th = document.getElementById('th'), rows = [].slice.call(document.querySelectorAll('tr.r')),
+      ft = document.getElementById('ft'), fs = document.getElementById('fs');
+  var word = document.getElementById('word'), uline = document.getElementById('uline');
+
+  function demo(t){
+    var t0 = 0.7, t1 = 2.5, ts = 2.9, tans = 4.4;
+    if (t < t0 || t >= ts) intext.innerHTML = '<span class="ph">Ask your ERP anything…</span>';
+    else {
+      var n = Math.floor(QUESTION.length * clamp((t - t0) / (t1 - t0)));
+      var show = t < t1 || Math.floor(t * 2.5) % 2 === 0;
+      intext.innerHTML = '';
+      intext.appendChild(document.createTextNode(QUESTION.slice(0, n)));
+      if (show) { var c = document.createElement('span'); c.id = 'caret'; intext.appendChild(c); }
+    }
+    send.classList.toggle('press', t > ts - 0.15 && t < ts + 0.1);
+    setA(ubub, prog(t, ts, 0.45), 20);
+    av.style.opacity = t > ts + 0.6 ? 1 : 0;
+    think.style.display = (t > ts + 0.6 && t < tans) ? 'flex' : 'none';
+    setA(ans, prog(t, tans, 0.4), 0);
+    setA(th, prog(t, tans + 0.3, 0.4), 0);
+    rows.forEach(function(r, i){ setA(r, prog(t, tans + 0.6 + i * 0.28, 0.4), 14); });
+    setA(ft, prog(t, tans + 1.6, 0.5), 0);
+    setA(fs, prog(t, tans + 2.0, 0.5), 0);
+  }
+  function reveal(t){
+    var a = prog(t, 0.7, 1);
+    word.style.fontSize = (150 + 40 * a) + 'px';
+    word.style.letterSpacing = (10 + 16 * a) + 'px';
+    word.style.paddingLeft = (10 + 16 * a) + 'px';
+    uline.style.width = (520 * prog(t, 1.5, 0.8)) + 'px';
+  }
+
+  function render(T){
+    scenes.forEach(function(sc){
+      var t = T - sc.s, on = t >= 0 && t < sc.d;
+      sc.el.style.visibility = on ? 'visible' : 'hidden';
+      if (!on) return;
+      sc.el.style.opacity = Math.min(clamp(t / FADE), clamp((sc.d - t) / FADE));
+      sc.items.forEach(function(it){
+        var p = prog(t, it.s, it.d);
+        setA(it.el, p, it.dy);
+        if (it.sc) it.el.style.transform = 'translateY(-50%) scale(' + (it.sc + (1 - it.sc) * p) + ')';
+      });
+      if (sc.el.id === 'sDemo') demo(t);
+      if (sc.el.id === 'sReveal') reveal(t);
+    });
+  }
+
+  var cur = 0, last = null;
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function loop(now){
+    if (last !== null) cur = (cur + Math.min((now - last) / 1000, 0.1)) % TOTAL;
+    last = now;
+    render(cur);
+    requestAnimationFrame(loop);
+  }
+  if (reducedMotion) render(18.5);
+  else requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

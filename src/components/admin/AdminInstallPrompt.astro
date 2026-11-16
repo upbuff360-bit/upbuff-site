@@ -1,0 +1,115 @@
+<div
+  id="admin-install-prompt"
+  class="hidden border-b border-emerald-100 bg-emerald-50 px-5 py-3 text-sm text-gray-800"
+  role="region"
+  aria-label="Install UpBuff Admin"
+>
+  <div class="flex items-start gap-3">
+    <img src="/admin/icon-192.png" alt="" class="h-10 w-10 shrink-0 rounded-lg" />
+    <div class="min-w-0 flex-1">
+      <p class="font-semibold">Add UpBuff Admin to your device</p>
+      <p id="admin-install-description" class="mt-0.5 text-xs text-gray-600">Open your inbox like an app.</p>
+      <button
+        id="admin-install-button"
+        type="button"
+        class="mt-2 hidden rounded-lg bg-[#27AE61] px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
+        >Install app</button
+      >
+    </div>
+    <button
+      id="admin-install-dismiss"
+      type="button"
+      aria-label="Dismiss install suggestion"
+      class="rounded-lg p-1 text-gray-500 hover:bg-emerald-100 hover:text-gray-900"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg
+      >
+    </button>
+  </div>
+</div>
+
+<script>
+  type InstallPromptEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
+  type InstallNavigator = Navigator & { install?: () => Promise<void>; standalone?: boolean };
+
+  const banner = document.querySelector<HTMLElement>('#admin-install-prompt')!;
+  const button = document.querySelector<HTMLButtonElement>('#admin-install-button')!;
+  const description = document.querySelector<HTMLElement>('#admin-install-description')!;
+  const dismiss = document.querySelector<HTMLButtonElement>('#admin-install-dismiss')!;
+  const installNavigator = navigator as InstallNavigator;
+  const isIos =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
+  const isInstalled = () =>
+    window.matchMedia('(display-mode: standalone)').matches || installNavigator.standalone === true;
+  const dismissedKey = 'upbuff-admin-install-dismissed';
+  let authenticated = false;
+  let deferredPrompt: InstallPromptEvent | null = null;
+
+  function isDismissed() {
+    try {
+      return localStorage.getItem(dismissedKey) === 'true';
+    } catch {
+      return false;
+    }
+  }
+
+  function showIfAvailable() {
+    if (!authenticated || isInstalled() || isDismissed()) return;
+    const canPrompt = typeof installNavigator.install === 'function' || deferredPrompt !== null;
+    if (!canPrompt && !isIos) return;
+    banner.classList.remove('hidden');
+    if (canPrompt) {
+      button.classList.remove('hidden');
+    } else {
+      description.textContent = 'On your iPhone or iPad, open the browser Share menu and choose Add to Home Screen.';
+    }
+  }
+
+  window.addEventListener('admin-authenticated', () => {
+    authenticated = true;
+    showIfAvailable();
+  });
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredPrompt = event as InstallPromptEvent;
+    showIfAvailable();
+  });
+  window.addEventListener('appinstalled', () => banner.classList.add('hidden'));
+  dismiss.addEventListener('click', () => {
+    try {
+      localStorage.setItem(dismissedKey, 'true');
+    } catch {
+      /* Storage can be unavailable. */
+    }
+    banner.classList.add('hidden');
+  });
+  button.addEventListener('click', async () => {
+    if (button.disabled) return;
+    button.disabled = true;
+    try {
+      if (typeof installNavigator.install === 'function') {
+        await installNavigator.install();
+        banner.classList.add('hidden');
+      } else if (deferredPrompt) {
+        const prompt = deferredPrompt;
+        deferredPrompt = null;
+        await prompt.prompt();
+        await prompt.userChoice;
+        banner.classList.add('hidden');
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name !== 'AbortError') console.error('[admin] install failed:', error);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>

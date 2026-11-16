@@ -36,7 +36,7 @@ export const headerData = {
           text: 'Clarior',
           href: getPermalink('/products/clarior'),
           icon: 'tabler:brain',
-          description: 'Conversational AI for SAP Business One',
+          description: 'Conversational BI for SAP Business One',
         },
         {
           text: 'Warehouse & Inventory Management',

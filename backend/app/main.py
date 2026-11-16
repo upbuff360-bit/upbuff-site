@@ -97,8 +97,11 @@ def b64url(data: bytes) -> str:
     return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
 
 
+ADMIN_SESSION_SECONDS = 30 * 24 * 60 * 60
+
+
 def create_session(username: str) -> str:
-    payload = b64url(json.dumps({"sub": username, "exp": int(time.time()) + 12 * 60 * 60}).encode())
+    payload = b64url(json.dumps({"sub": username, "exp": int(time.time()) + ADMIN_SESSION_SECONDS}).encode())
     signature = hmac.new(required_env("ADMIN_SESSION_SECRET").encode(), payload.encode(), hashlib.sha256).digest()
     return f"{payload}.{b64url(signature)}"
 
@@ -231,7 +234,7 @@ async def login(credentials: LoginRequest, response: Response) -> dict[str, bool
     response.set_cookie(
         key="upbuff_admin_session",
         value=create_session(expected_username),
-        max_age=12 * 60 * 60,
+        max_age=ADMIN_SESSION_SECONDS,
         httponly=True,
         secure=os.getenv("COOKIE_SECURE", "true").lower() == "true",
         samesite="strict",
@@ -252,6 +255,12 @@ async def logout(response: Response) -> dict[str, bool]:
     )
     response.headers["Cache-Control"] = "no-store"
     return {"success": True}
+
+
+@app.get("/admin/session", dependencies=[Depends(require_admin)])
+async def admin_session(response: Response) -> dict[str, bool]:
+    response.headers["Cache-Control"] = "no-store"
+    return {"authenticated": True}
 
 
 def submission_type_filter(kind: Literal["contact", "demo", "consultation"]) -> dict[str, Any]:
