@@ -22,6 +22,8 @@ export interface Post {
   excerpt?: string;
   /**  */
   image?: ImageMetadata | string;
+  /** Optional descriptive alt text for the cover image. Falls back to the title. */
+  imageAlt?: string;
 
   /**  */
   category?: Taxonomy;

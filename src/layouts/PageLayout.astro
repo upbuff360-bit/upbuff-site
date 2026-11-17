@@ -16,9 +16,90 @@ export interface Props {
    * 'white'  — light hero pages (index, integrations, industry, security)
    */
   headerTheme?: 'black' | 'white' | 'default' | 'transparent';
+  /**
+   * BreadcrumbList schema. By default it is built from the URL and the page title.
+   * Pass `false` on pages that output their own BreadcrumbList schema.
+   */
+  breadcrumb?: false | { name: string; url: string }[];
 }
 
-const { metadata, headerTheme = 'black' } = Astro.props;
+const { metadata, headerTheme = 'black', breadcrumb } = Astro.props;
+
+// ── Site-wide structured data (one Organization + WebSite for every page) ──
+const SITE = 'https://www.upbuff.com';
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE}/#organization`,
+      name: 'UpBuff Technologies',
+      legalName: 'UpBuff Technologies Pvt. Ltd.',
+      url: SITE,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE}/images/brand/upbuff-logo.png`,
+        width: 1200,
+        height: 400,
+      },
+      description:
+        'UpBuff Technologies builds the AI-powered ERP Execution Platform, extending SAP Business One, SAP S/4HANA, Oracle ERP and Epicor ERP into frontline operations, and Clarior, Conversational BI for SAP Business One.',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Unit M-06, 8th Floor, Nila, Technopark Phase 1',
+        addressLocality: 'Thiruvananthapuram',
+        addressRegion: 'Kerala',
+        postalCode: '695581',
+        addressCountry: 'IN',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+91-8330006006',
+        contactType: 'sales',
+        url: `${SITE}/contact`,
+      },
+      sameAs: [
+        'https://www.linkedin.com/company/upbuff/',
+        'https://x.com/upbuff_crm',
+        'https://www.instagram.com/upbuff.crm/',
+        'https://www.facebook.com/upbuff.crm/',
+        'https://www.youtube.com/channel/UCZRjZv8JTKev2fVdFzhPXyw',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      name: 'UpBuff Technologies',
+      url: `${SITE}/`,
+      publisher: { '@id': `${SITE}/#organization` },
+      inLanguage: 'en',
+    },
+  ],
+};
+
+// ── Breadcrumb: Home › (Products) › current page, unless the page opts out ──
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const pageName = (metadata?.title ?? '').split(/\s[|—–]\s/)[0].trim();
+const autoCrumbs =
+  path === '/' || !pageName
+    ? []
+    : [
+        { name: 'Home', url: `${SITE}/` },
+        ...(path.startsWith('/products/') ? [{ name: 'Products', url: `${SITE}/products` }] : []),
+        { name: pageName, url: `${SITE}${path}` },
+      ];
+const crumbs = breadcrumb === false ? [] : (breadcrumb ?? autoCrumbs);
+const breadcrumbSchema =
+  crumbs.length > 1
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.url })),
+      }
+    : null;
+
+// Set to true to show the Clarior "Newly Launched" marquee above the header again.
+const SHOW_CLARIOR_MARQUEE = false;
 
 // Cast actions to CallToAction[] so TypeScript accepts the narrow variant union
 const headerActions = (headerData.actions ?? []) as CallToAction[];
@@ -27,6 +108,8 @@ const headerActions = (headerData.actions ?? []) as CallToAction[];
 <Layout metadata={metadata}>
 
   <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(siteSchema)} />
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
     <slot name="head" />
   </Fragment>
 
@@ -34,7 +117,7 @@ const headerActions = (headerData.actions ?? []) as CallToAction[];
 
   <!-- Common header — Announcement + nav bar together, both sticky -->
   <div class="sticky top-0 z-40">
-    <ClariorAnnouncementMarquee />
+    {SHOW_CLARIOR_MARQUEE && <ClariorAnnouncementMarquee />}
     <slot name="header">
       <Announcement />
       <Header

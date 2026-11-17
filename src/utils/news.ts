@@ -58,6 +58,8 @@ const getNormalizedNews = async (entry: CollectionEntry<'news'>): Promise<Post> 
     metadata,
 
     Content,
+    // Raw source text — used by the article page to detect embedded videos for schema.
+    content: entry.body,
 
     readingTime: readingTime ?? remarkPluginFrontmatter?.readingTime,
   };

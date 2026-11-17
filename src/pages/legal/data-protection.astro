@@ -57,6 +57,23 @@ const layers = [
 ---
 
 <Layout metadata={metadata} headerTheme="white">
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        '@id': metadata.canonical + '#webpage',
+        url: metadata.canonical,
+        name: metadata.title,
+        description: metadata.description,
+        inLanguage: 'en',
+        isPartOf: { '@id': 'https://www.upbuff.com/#website' },
+        publisher: { '@id': 'https://www.upbuff.com/#organization' },
+      })}
+    />
+  </Fragment>
+
 
   <Fragment slot="announcement" />
 

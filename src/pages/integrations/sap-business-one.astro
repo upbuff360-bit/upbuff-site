@@ -41,7 +41,7 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata} headerTheme="white">
+<Layout breadcrumb={false} metadata={metadata} headerTheme="white">
   <Fragment slot="head">
     <!-- ── Core meta ──────────────────────────────────────── -->
     <meta name="author"   content="UpBuff Technologies" />
@@ -67,11 +67,12 @@ const metadata = {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
+      "@id": "https://www.upbuff.com/#organization",
       "name": "UpBuff Technologies",
       "url": "https://www.upbuff.com",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.upbuff.com/logo.png",
+        "url": "https://www.upbuff.com/images/brand/upbuff-logo.png",
         "width": 200,
         "height": 60
       },
@@ -86,17 +87,6 @@ const metadata = {
     })} />
 
     <!-- ── Schema: WebSite ───────────────────────────────── -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "UpBuff ERP Execution Platform",
-      "url": "https://www.upbuff.com",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.upbuff.com/?s={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    })} />
 
     <!-- ── Schema: WebPage ───────────────────────────────── -->
     <script type="application/ld+json" set:html={JSON.stringify({
