@@ -5,7 +5,7 @@ excerpt: "You can connect AI to SAP Business One in three ways: a custom API int
 image: /images/blog/how-to-connect-ai-to-sap-business-one/how-to-connect-ai-to-sap-business-one.png
 author: Visakh Viswanath
 readingTime: 10
-category: ERP Operations
+category: AI & Analytics
 tags:
   - sap-business-one
   - ai-automation

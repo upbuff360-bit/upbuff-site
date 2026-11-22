@@ -245,12 +245,13 @@ const breadcrumbItems = [
           <div class="max-w-5xl mx-auto px-4 sm:px-6 -mt-1 md:-mt-6 pt-6 md:pt-10">
             <Image
               src={heroImage}
-              class="w-full max-w-[1000px] mx-auto rounded-2xl shadow-md bg-gray-100 aspect-[10/3] object-cover"
+              class:list={['w-full max-w-[1000px] mx-auto rounded-2xl shadow-md bg-gray-100 object-cover', !post.imageHeight && 'aspect-[10/3]']}
+              style={post.imageHeight ? `aspect-ratio: 1000 / ${post.imageHeight}` : undefined}
               widths={[400, 700, 1000]}
               sizes="(max-width: 1000px) 100vw, 1000px"
               alt={post.imageAlt || post.title}
               width={1000}
-              height={400}
+              height={post.imageHeight || 400}
               loading="eager"
               decoding="async"
             />

@@ -24,6 +24,8 @@ export interface Post {
   image?: ImageMetadata | string;
   /** Optional descriptive alt text for the cover image. Falls back to the title. */
   imageAlt?: string;
+  /** Optional cover height in px at 1000px width on the article page (default 400). */
+  imageHeight?: number;
 
   /**  */
   category?: Taxonomy;

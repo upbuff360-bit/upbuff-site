@@ -6,7 +6,7 @@ excerpt: "A clear, side-by-side comparison of the three ways to turn purchase or
 author: Shiburaj
 image: /images/blog/ai-po-to-so-automation-vs-manual-vs-edi/ai-po-to-so-automation-vs-manual-vs-edi.png
 readingTime: 10
-category: ERP Operations
+category: AI & Analytics
 tags:
   - sap-business-one
   - po-to-so-automation

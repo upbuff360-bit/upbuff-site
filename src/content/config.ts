@@ -59,6 +59,8 @@ const contentSchema = z.object({
   excerpt: z.string().optional(),
   image: z.string().optional(),
   imageAlt: z.string().optional(),
+  /** Optional cover height in px at 1000px width on the article page (default 400). */
+  imageHeight: z.number().optional(),
 
   category: z.string().optional(),
   tags: z.array(z.string()).optional(),
