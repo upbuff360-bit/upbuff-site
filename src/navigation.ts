@@ -137,10 +137,10 @@ export const headerData = {
           description: 'Company news, press releases, and the events where you can meet the UpBuff team.',
         },
         {
-          text: 'Free SAP B1 Consultation',
+          text: 'Free SAP Consultation',
           href: getPermalink('/resources/sap-consultation'),
           icon: 'tabler:lifebuoy',
-          description: 'Quick fixes under 2 hours — resolved free by our SAP B1 consultants.',
+          description: 'SAP Business One quick fixes under 2 hours, resolved free by our SAP B1 consultants.',
         },
       ],
     },
@@ -198,7 +198,7 @@ export const footerData = {
         { text: 'Blog',         href: getPermalink('/blog') },
         { text: 'Newsroom',     href: getPermalink('/newsroom') },
         { text: 'Case Studies', href: getPermalink('/case-studies') },
-        { text: 'Free SAP B1 Consultation', href: getPermalink('/resources/sap-consultation') },
+        { text: 'Free SAP Consultation', href: getPermalink('/resources/sap-consultation') },
       ],
     },
     {

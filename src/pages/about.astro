@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Header from '~/components/widgets/Header.astro';
 import LogoBar from '~/components/widgets/LogoBar.astro';
 import Stats from '~/components/widgets/Stats.astro';
+import PhotoMarquee from '~/components/common/PhotoMarquee.astro';
 import CtaBanner from '~/components/widgets/CtaBanner.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
 import Quote from '~/components/common/Quote.astro';
@@ -55,7 +56,7 @@ const metadata = {
           "@type": "Person",
           "name": "Shiburaj Krishnapillai",
           "jobTitle": "Founder & CEO",
-          "image": "https://www.upbuff.com/uploads/shiburaj.png",
+          "image": "https://www.upbuff.com/images/authors/shiburaj-upbuff.webp",
           "worksFor": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" },
           "sameAs": ["https://www.linkedin.com/in/shiburaj-krishnapillai"]
         },
@@ -63,9 +64,17 @@ const metadata = {
           "@type": "Person",
           "name": "Rajesh Kattilepurath",
           "jobTitle": "Co-Founder & Director",
-          "image": "https://www.upbuff.com/uploads/rajesh.png",
+          "image": "https://www.upbuff.com/images/authors/rajesh-k-upbuff.webp",
           "worksFor": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" },
           "sameAs": ["https://www.linkedin.com/in/rajesh131/"]
+        },
+        {
+          "@type": "Person",
+          "name": "Subrata Banerjee",
+          "jobTitle": "CTO",
+          "image": "https://www.upbuff.com/images/authors/subrata-banerjee-upbuff.webp",
+          "worksFor": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" },
+          "sameAs": ["https://www.linkedin.com/in/subrata-bj/"]
         }
       ]
     })} />
@@ -88,7 +97,7 @@ const metadata = {
     <div
       class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
       aria-hidden="true"
-      style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.13) 0%,transparent 70%);"
+      style="background:radial-gradient(ellipse at 50% 0%,rgba(39,174,97,0.13) 0%,transparent 70%);"
     />
     <div class="absolute inset-0 pointer-events-none noise-overlay opacity-30" aria-hidden="true" />
 
@@ -98,7 +107,7 @@ const metadata = {
       <div class="py-20 md:py-28">
         <!-- Tagline pill -->
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm mb-6">
-          <span class="w-2 h-2 rounded-full bg-indigo-400 shrink-0" aria-hidden="true"></span>
+          <span class="w-2 h-2 rounded-full bg-[rgb(39,174,97)] shrink-0" aria-hidden="true"></span>
           <span class="text-sm font-medium text-white/80">About UpBuff</span>
         </div>
 
@@ -107,7 +116,7 @@ const metadata = {
         </h1>
 
         <p class="text-lg md:text-xl text-white/75 leading-relaxed max-w-3xl mx-auto mb-5">
-          In 2017, a founder and a handful of technology passionates set out to solve a problem
+          In 2024, a founder and a handful of technology passionates set out to solve a problem
           that every enterprise running SAP already lived with — the gap between what ERP recorded
           and what operations teams could actually execute in the field.
         </p>
@@ -154,7 +163,7 @@ const metadata = {
       <!-- Row 1 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div>
-          <p class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-4">Where It All Began</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-[rgb(39,174,97)] mb-4">Where It All Began</p>
           <p class="text-gray-900 text-base md:text-lg leading-relaxed mb-5">
             In September 04, 2024 under the leadership of our founder Mr. Shiburaj Krishnapillai and cofounder Mr. Rajesh Kattilepurath, a
             small team of deeply committed technologists launched a service management solution
@@ -187,7 +196,7 @@ const metadata = {
           />
         </div>
         <div>
-          <p class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-4">Building the Faith</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-[rgb(39,174,97)] mb-4">Building the Faith</p>
           <p class="text-gray-900 text-base md:text-lg leading-relaxed mb-5">
             We adopted one formula for earning trust — and only one: build relationships that last.
             Over half a decade, that approach scaled our products, our team, and our reputation
@@ -204,7 +213,7 @@ const metadata = {
       <!-- Row 3 -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div>
-          <p class="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-4">What It Looks Like in Practice</p>
+          <p class="text-xs font-bold uppercase tracking-widest text-[rgb(39,174,97)] mb-4">What It Looks Like in Practice</p>
           <p class="text-gray-900 text-base md:text-lg leading-relaxed mb-5">
             Field technicians at a drone manufacturer logging service orders from a jobsite
             in Rajasthan. Warehouse operators at a chemical distributor scanning goods receipts
@@ -237,12 +246,12 @@ const metadata = {
     <div
       class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] pointer-events-none"
       aria-hidden="true"
-      style="background:radial-gradient(ellipse at 50% 0%,rgba(99,102,241,0.1) 0%,transparent 70%);"
+      style="background:radial-gradient(ellipse at 50% 0%,rgba(39,174,97,0.1) 0%,transparent 70%);"
     />
 
     <div class="relative max-w-3xl mx-auto px-4 sm:px-6 text-center" id="quote-slider">
 
-      <div class="text-indigo-500 text-8xl font-serif leading-none mb-2 select-none" aria-hidden="true">&ldquo;</div>
+      <div class="text-[rgb(39,174,97)] text-8xl font-serif leading-none mb-2 select-none" aria-hidden="true">&ldquo;</div>
 
       <!-- Slider viewport -->
       <div class="quote-viewport overflow-hidden relative">
@@ -254,12 +263,12 @@ const metadata = {
               <p class="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-snug md:leading-snug mb-10">
                 Our team spans ERP architects, mobile engineers, and integration specialists
                 across India and beyond — but our commitment has never changed:
-                <span class="text-indigo-400">every enterprise deserves execution speed
+                <span class="text-[rgb(39,174,97)]">every enterprise deserves execution speed
                 without paying for it with ERP instability.</span>
               </p>
               <footer class="flex items-center justify-center gap-4">
-                <div class="w-12 h-12 rounded-xl overflow-hidden ring-white/20 shrink-0 bg-gray-800">
-                  <img src="/uploads/shiburaj.png" alt="Shiburaj Krishnapillai" class="w-full h-full object-cover" loading="lazy" />
+                <div class="w-12 h-12 rounded-full overflow-hidden ring-white/20 shrink-0">
+                  <img src="/images/authors/shiburaj-upbuff.webp" alt="Shiburaj Krishnapillai" class="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div class="text-left">
                   <p class="text-white font-semibold text-sm">Shiburaj Krishnapillai</p>
@@ -274,16 +283,36 @@ const metadata = {
             <blockquote>
               <p class="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-snug md:leading-snug mb-10">
                 The market does not need another standalone app. It needs a platform that
-                <span class="text-indigo-400">speaks the language of ERP — in real time,
+                <span class="text-[rgb(39,174,97)]">speaks the language of ERP — in real time,
                 without compromise, and without ever asking IT to touch the core.</span>
               </p>
               <footer class="flex items-center justify-center gap-4">
-                <div class="w-12 h-12 rounded-xl overflow-hidden ring-white/20 shrink-0 bg-gray-800">
-                  <img src="/uploads/rajesh.png" alt="Rajesh Kattilepurath" class="w-full h-full object-cover" loading="lazy" />
+                <div class="w-12 h-12 rounded-full overflow-hidden ring-white/20 shrink-0">
+                  <img src="/images/authors/rajesh-k-upbuff.webp" alt="Rajesh Kattilepurath" class="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div class="text-left">
                   <p class="text-white font-semibold text-sm">Rajesh Kattilepurath</p>
                   <p class="text-white/40 text-xs mt-0.5">Co-founder &amp; Head of Marketing, UpBuff</p>
+                </div>
+              </footer>
+            </blockquote>
+          </div>
+
+          <!-- Slide 3 — Subrata -->
+          <div class="quote-slide w-full shrink-0">
+            <blockquote>
+              <p class="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-snug md:leading-snug mb-10">
+                For our engineers, Clean Core is not a limitation. It is the design principle:
+                <span class="text-[rgb(39,174,97)]">everything we build connects through official APIs,
+                so every ERP upgrade stays safe and every integration stays dependable.</span>
+              </p>
+              <footer class="flex items-center justify-center gap-4">
+                <div class="w-12 h-12 rounded-full overflow-hidden ring-white/20 shrink-0">
+                  <img src="/images/authors/subrata-banerjee-upbuff.webp" alt="Subrata Banerjee" class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="text-left">
+                  <p class="text-white font-semibold text-sm">Subrata Banerjee</p>
+                  <p class="text-white/40 text-xs mt-0.5">CTO, UpBuff</p>
                 </div>
               </footer>
             </blockquote>
@@ -294,8 +323,9 @@ const metadata = {
 
       <!-- Dot indicators -->
       <div class="flex items-center justify-center gap-2 mt-10">
-        <button class="quote-dot w-2.5 h-2.5 rounded-full bg-indigo-400 scale-125 transition-all duration-300" data-target="0" aria-label="Quote 1"></button>
+        <button class="quote-dot w-2.5 h-2.5 rounded-full bg-[rgb(39,174,97)] scale-125 transition-all duration-300" data-target="0" aria-label="Quote 1"></button>
         <button class="quote-dot w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300" data-target="1" aria-label="Quote 2"></button>
+        <button class="quote-dot w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300" data-target="2" aria-label="Quote 3"></button>
       </div>
 
     </div>
@@ -314,7 +344,7 @@ const metadata = {
         if (track) track.style.transform = `translateX(-${current * 100}%)`;
         dots.forEach((dot, i) => {
           const active = i === current;
-          dot.classList.toggle('bg-indigo-400', active);
+          dot.classList.toggle('bg-[rgb(39,174,97)]', active);
           dot.classList.toggle('scale-125', active);
           dot.classList.toggle('bg-white/20', !active);
         });
@@ -351,8 +381,8 @@ const metadata = {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <div class="rounded-2xl border border-gray-200 bg-white p-8 md:p-10 shadow-sm">
-          <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center mb-5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <div class="w-10 h-10 rounded-xl bg-[rgb(39,174,97)]/10 flex items-center justify-center mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[rgb(39,174,97)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
             </svg>
           </div>
@@ -366,8 +396,8 @@ const metadata = {
         </div>
 
         <div class="rounded-2xl border border-gray-200 bg-white p-8 md:p-10 shadow-sm">
-          <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center mb-5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <div class="w-10 h-10 rounded-xl bg-[rgb(39,174,97)]/10 flex items-center justify-center mb-5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[rgb(39,174,97)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
             </svg>
           </div>
@@ -389,6 +419,7 @@ const metadata = {
        6. STATS
        ══════════════════════════════════════════════════════════ -->
   <Stats
+    id="about-stats"
     tagline="Platform Scale"
     title="UpBuff at a glance"
     subtitle="Real numbers from production deployments across industries and ERP environments."
@@ -403,62 +434,53 @@ const metadata = {
   <!-- ══════════════════════════════════════════════════════════
        7. PHOTO STRIP — marquee
        ══════════════════════════════════════════════════════════ -->
-  <section class="not-prose overflow-hidden h-64 md:h-72">
-    <div class="flex h-full marquee-track">
-      {[
-        { src: '/uploads/upbuff-stall-at-huddle.png',        alt: 'UpBuff stall at Huddle Kerala',    w: 'w-80', h: 'h-full', mt: 'mt-0'    },
-        { src: '/uploads/sap-partner-summit-bankok.png',     alt: 'SAP Partner Summit Bangkok',       w: 'w-52', h: 'h-4/5', mt: 'mt-auto' },
-        { src: '/uploads/shibu-at-huddle-kerala.png',        alt: 'Shiburaj at Huddle Kerala',        w: 'w-72', h: 'h-full', mt: 'mt-0'    },
-        { src: '/uploads/upbuff-at-gitex-dubai.png',         alt: 'UpBuff at GITEX Dubai',            w: 'w-60', h: 'h-3/4', mt: 'mt-4'    },
-        { src: '/uploads/upbuff-at-gitex-discussions.png',   alt: 'UpBuff discussions at GITEX',      w: 'w-96', h: 'h-full', mt: 'mt-0'    },
-        { src: '/uploads/shibu-and-rajesh-at-gitex.png',     alt: 'Shiburaj and Rajesh at GITEX',     w: 'w-56', h: 'h-4/5', mt: 'mt-auto' },
-        { src: '/uploads/gitex-upbuff-presence.png',         alt: 'UpBuff presence at GITEX',         w: 'w-80', h: 'h-full', mt: 'mt-0'    },
-        { src: '/uploads/upbuff-stall-at-huddle.png',        alt: 'UpBuff stall at Huddle',           w: 'w-64', h: 'h-3/4', mt: 'mt-2'    },
-        { src: '/uploads/upbuff-at-gitex-discussions.png',   alt: 'Team at GITEX',                    w: 'w-72', h: 'h-full', mt: 'mt-0'    },
-        { src: '/uploads/sap-partner-summit-bankok.png',     alt: 'SAP Summit Bangkok',               w: 'w-48', h: 'h-4/5', mt: 'mt-4'    },
-      ].map((photo) => (
-        <div class={`shrink-0 ${photo.w} ${photo.h} ${photo.mt} overflow-hidden rounded-lg`}>
-          <img
-            src={photo.src}
-            alt={photo.alt}
-            class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-            loading="lazy"
-          />
-        </div>
-      ))}
-    </div>
-  </section>
+  <PhotoMarquee
+    ariaLabel="UpBuff at events"
+    speed={110}
+    grayscale={false}
+    class="mt-10 mb-0"
+    photos={[
+      { src: '/uploads/upbuff-stall-at-huddle.png', alt: 'UpBuff stall at Huddle Kerala', wide: true },
+      { src: '/uploads/sap-partner-summit-bankok.png', alt: 'SAP Partner Summit Bangkok', wide: true },
+      { src: '/uploads/shibu-at-huddle-kerala.png', alt: 'Shiburaj at Huddle Kerala', wide: true },
+      { src: '/uploads/upbuff-at-gitex-dubai.png', alt: 'UpBuff at GITEX Dubai', wide: true },
+      { src: '/uploads/upbuff-at-gitex-discussions.png', alt: 'UpBuff discussions at GITEX', wide: true },
+      { src: '/uploads/shibu-and-rajesh-at-gitex.png', alt: 'Shiburaj and Rajesh at GITEX', wide: true },
+      { src: '/uploads/gitex-upbuff-presence.png', alt: 'UpBuff presence at GITEX', wide: true },
+    ]}
+  />
 
-  <style>
-    .marquee-track {
-      gap: 6px;
-      align-items: flex-end;
-      animation: marquee-scroll 35s linear infinite;
-      width: max-content;
-    }
-    .marquee-track:hover {
-      animation-play-state: paused;
-    }
-    @keyframes marquee-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-  </style>
+  <!-- Huddle Global 2026 photos (same strip as the Huddle news page), scrolling the opposite way -->
+  <PhotoMarquee
+    ariaLabel="UpBuff at Huddle Global 2026"
+    speed={84}
+    grayscale={false}
+    reverse
+    class="-mt-[22px] mb-10"
+    photos={[
+      { src: "/images/news/upbuff-clarior-huddle-global-2026/rajesh-kattilepurath-shiburaj-krishnapillai-clarior-demo-huddle-global-2026.jpg", alt: "Rajesh Kattilepurath and Shiburaj Krishnapillai talking with a visitor at the UpBuff stall, Huddle Global 2026", wide: true },
+      { src: "/images/news/upbuff-clarior-huddle-global-2026/upbuff-stall-h15-visitor-clarior-live-challenge-huddle-global-2026.jpg", alt: "Visitor reading the Clarior flyer at UpBuff stall H15, Huddle Global 2026" },
+      { src: "/images/news/upbuff-clarior-huddle-global-2026/visakh-viswanath-clarior-demo-speaker-huddle-global-2026.jpg", alt: "Visakh Viswanath explaining Clarior to an event speaker at Huddle Global 2026", wide: true },
+      { src: "/images/news/upbuff-clarior-huddle-global-2026/shiburaj-krishnapillai-visitors-upbuff-stall-huddle-global-2026.jpg", alt: "Shiburaj Krishnapillai explaining Clarior to an interested investor at Huddle Global 2026", wide: true },
+      { src: "/images/news/upbuff-clarior-huddle-global-2026/shiburaj-krishnapillai-conversation-huddle-global-2026.jpg", alt: "Shiburaj Krishnapillai in conversation with a delegate at Huddle Global 2026" },
+      { src: "/images/news/upbuff-clarior-huddle-global-2026/vc-panel-discussion-huddle-global-2026-kovalam.jpg", alt: "Panel discussion The VC Truth on the main stage at Huddle Global 2026, Kovalam" },
+    ]}
+  />
 
   <!-- ══════════════════════════════════════════════════════════
        8. LEADERSHIP
        ══════════════════════════════════════════════════════════ -->
   <section class="bg-white py-16 md:py-24 not-prose">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-3">Leadership</h2>
       <p class="text-gray-400 text-center text-base max-w-xl mx-auto mb-14">
         The team behind the platform.
       </p>
-      <QuoteGrid class="!mt-0 text-left">
+      <QuoteGrid class="leadership-grid !mt-0 text-left">
         <Quote
           name="Shiburaj Krishnapillai"
           role="Founder & CEO"
-          photo="/uploads/shiburaj.png"
+          photo="/images/authors/shiburaj-upbuff.webp"
           linkedin="https://www.linkedin.com/in/shiburaj-krishnapillai"
         >
           I believe technology should simplify work, not create more of it.
@@ -479,7 +501,7 @@ const metadata = {
         <Quote
           name="Rajesh Kattilepurath"
           role="Co-Founder & Director"
-          photo="/uploads/rajesh.png"
+          photo="/images/authors/rajesh-k-upbuff.webp"
           linkedin="https://www.linkedin.com/in/rajesh131/"
         >
           The market does not need another standalone app. It needs a platform that speaks the
@@ -496,6 +518,28 @@ const metadata = {
             international Cloud ERP order and more than 45 key accounts, and received the Pride @ Ramco
             award twice. At UpBuff, he drives business development, channel partnerships and customer
             relationships.
+          </p>
+        </Quote>
+        <Quote
+          name="Subrata Banerjee"
+          role="CTO"
+          photo="/images/authors/subrata-banerjee-upbuff.webp"
+          linkedin="https://www.linkedin.com/in/subrata-bj/"
+        >
+          Great enterprise software fits the ERP, respects its rules and simply works for the people
+          who use it every day.
+          <p slot="bio">
+            Subrata brings more than 16 years of technology experience from Tata Elxsi, where he grew
+            from Engineer to Competency Head &amp; Business Lead &ndash; Digital. Along the way he led
+            technology delivery as a Technology Project Manager, built and managed engineering
+            competencies as Competency Manager, and went on to lead the Digital business.
+          </p>
+          <p slot="bio">
+            At UpBuff, he leads technology and engineering. He is responsible for the architecture of
+            the UpBuff ERP Execution Platform, which connects web, mobile and AI applications to SAP
+            Business One, SAP S/4HANA, Oracle ERP and Epicor ERP through official APIs without changing
+            the ERP core, and he guides the engineering teams across product development, integrations,
+            security and AI.
           </p>
         </Quote>
       </QuoteGrid>
@@ -561,8 +605,8 @@ const metadata = {
             body: 'We invest in architecture guides, integration patterns, and technical content — because the enterprise software community is better when knowledge circulates rather than accumulates in private.',
           },
         ].map((item) => (
-          <div class="rounded-xl border border-gray-100 bg-gray-50 p-6 group hover:border-indigo-200 hover:bg-indigo-50/30 transition-colors duration-200">
-            <p class="text-xs font-bold text-indigo-400 mb-3 font-mono">{item.number}</p>
+          <div class="rounded-xl border border-gray-100 bg-gray-50 p-6 group hover:border-[rgb(39,174,97)]/30 hover:bg-[rgb(39,174,97)]/5 transition-colors duration-200">
+            <p class="text-xs font-bold text-[rgb(39,174,97)] mb-3 font-mono">{item.number}</p>
             <h3 class="font-bold text-gray-900 text-sm mb-3">{item.title}</h3>
             <p class="text-sm text-gray-500 leading-relaxed">{item.body}</p>
           </div>
@@ -575,6 +619,7 @@ const metadata = {
        12. FAQ
        ══════════════════════════════════════════════════════════ -->
   <FaqAccordion
+    id="about-faq"
     tagline="FAQs"
     title="About UpBuff — questions answered"
     items={[
@@ -612,3 +657,40 @@ const metadata = {
   />
 
 </Layout>
+
+<!-- Leadership: three cards side by side on large screens -->
+<style is:global>
+  @media (min-width: 1024px) {
+    .quote-grid.leadership-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+</style>
+<!-- About page: use the UpBuff brand green instead of the shared widgets' pink/purple accents -->
+<style is:global>
+  #about-stats .bg-pink-500,
+  #about-faq .bg-pink-500 {
+    background-color: rgb(39 174 97) !important;
+  }
+  #about-stats .stat-amount {
+    background: none !important;
+    -webkit-text-fill-color: rgb(39 174 97) !important;
+    color: rgb(39 174 97) !important;
+  }
+  /* No divider line under the numbers */
+  #about-stats .bg-gradient-to-r {
+    display: none !important;
+  }
+  /* Thin black icons */
+  #about-stats .gradient-icon-wrap svg,
+  #about-stats .gradient-icon-wrap svg * {
+    color: #111111 !important;
+    stroke: #111111 !important;
+    stroke-width: 1.25 !important;
+    fill: none !important;
+  }
+  #about-stats [style*="244,114,182"] {
+    background: radial-gradient(ellipse at 0% 0%, rgba(39, 174, 97, 0.07) 0%, transparent 65%) !important;
+  }
+</style>

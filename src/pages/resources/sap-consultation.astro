@@ -2,21 +2,30 @@
 import Layout from '~/layouts/PageLayout.astro';
 import FeaturesGrid from '~/components/widgets/FeaturesGrid.astro';
 import FaqAccordion from '~/components/widgets/FaqAccordion.astro';
+import CtaBanner from '~/components/widgets/CtaBanner.astro';
 import { countryDialCodes, defaultCountryDialCode } from '~/data/countryDialCodes';
 import { LEAD_FORM_TURNSTILE_ENABLED } from '~/utils/lead-form-turnstile';
 
 const metadata = {
-  title: 'Free SAP Business One Consultation & Support | UpBuff',
+  title: 'SAP Consultation: Free Fixes Under 2 Hours',
   description:
-    'Free SAP Business One support and consultation from UpBuff. Report issues, print layouts, dashboards, approvals, authorizations — quick fixes under 2 hours resolved free, remotely.',
+    'Get a free SAP consultation for SAP Business One. Our SAP B1 consultants fix reports, layouts, dashboards and approvals remotely, free under 2 hours.',
   canonical: 'https://www.upbuff.com/resources/sap-consultation',
   robots: { index: true, follow: true },
   openGraph: {
     type: 'website',
     url: 'https://www.upbuff.com/resources/sap-consultation',
-    title: 'Free SAP Business One Consultation & Support | UpBuff',
+    title: 'SAP Consultation: Free Fixes Under 2 Hours — UpBuff',
     description:
-      'Bring us your most annoying SAP Business One problem. If it is a fix under 2 hours, we do it free — remote, no strings attached.',
+      'Book a free SAP consultation for SAP Business One. Bring us your most annoying SAP B1 problem. If it is a fix under 2 hours, we do it free, remotely.',
+    images: [
+      {
+        url: 'https://www.upbuff.com/images/resources/free-sap-consultation-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'The UpBuff SAP Business One team behind the free SAP consultation',
+      },
+    ],
   },
 };
 
@@ -48,7 +57,7 @@ const issueGroups = [
 
 const highlights = [
   'Quick fixes resolved free — anything under 2 hours of work',
-  'Session at any time that suits you',
+  'SAP consultation at any time that suits you',
   'No core changes, no database writes',
   'Bigger than 2 hours? You get an honest scope and quote — zero pressure',
 ];
@@ -60,9 +69,9 @@ const highlights = [
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": "Free SAP Business One Support & Consultation — Quick Fixes",
+      "name": "Free SAP Consultation for SAP Business One",
       "provider": { "@type": "Organization", "name": "UpBuff Technologies", "url": "https://www.upbuff.com" },
-      "serviceType": "SAP Business One consulting and support",
+      "serviceType": "SAP consultation, SAP Business One consulting and support",
       "areaServed": "Worldwide (remote)",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR", "description": "Free SAP Business One quick fixes — issues resolvable within 2 hours, remote." },
       "url": "https://www.upbuff.com/resources/sap-consultation"
@@ -71,11 +80,12 @@ const highlights = [
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        { "@type": "Question", "name": "Is the SAP Business One consultation really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If your issue can be fixed within 2 hours of remote work, we fix it completely free. If it needs more than that, we tell you upfront and share a clear quote — you decide." } },
-        { "@type": "Question", "name": "What SAP Business One issues can be fixed in under 2 hours?", "acceptedAnswer": { "@type": "Answer", "text": "Typical quick fixes: invoice or PO print layouts, custom query reports, dashboards and KPIs, alerts, approval procedures, user authorization errors, UDFs and formatted searches, numbering series, posting periods, and email/SBO Mailer configuration." } },
-        { "@type": "Question", "name": "Will you make changes to our SAP database or core?", "acceptedAnswer": { "@type": "Answer", "text": "No. All fixes are done at the configuration and reporting level through standard SAP Business One tools — no direct database writes, no core modification. We also ask you to confirm a current backup exists before any session." } },
+        { "@type": "Question", "name": "Is the SAP consultation really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. If your issue can be fixed within 2 hours of remote work, we fix it completely free. If it needs more than that, we tell you upfront and share a clear quote — you decide." } },
+        { "@type": "Question", "name": "What can a free SAP consultation fix in under 2 hours?", "acceptedAnswer": { "@type": "Answer", "text": "Typical quick fixes: invoice or PO print layouts, custom query reports, dashboards and KPIs, alerts, approval procedures, user authorization errors, UDFs and formatted searches, numbering series, posting periods, and email/SBO Mailer configuration." } },
+        { "@type": "Question", "name": "Will the SAP consultation change our database or core?", "acceptedAnswer": { "@type": "Answer", "text": "No. All fixes are done at the configuration and reporting level through standard SAP Business One tools — no direct database writes, no core modification. We also ask you to confirm a current backup exists before any session." } },
+        { "@type": "Question", "name": "Who are your SAP Business One consultants?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff's team of SAP Business One functional and technical consultants, who work with SAP B1 on SQL Server and SAP HANA every day: print layouts, query reports, dashboards, approvals, authorizations and integrations." } },
         { "@type": "Question", "name": "Is UpBuff an official SAP partner?", "acceptedAnswer": { "@type": "Answer", "text": "UpBuff is an independent software company whose products integrate with SAP Business One through official APIs. Our solutions are distributed through SAP partner firms. This consultation is an UpBuff service and is not affiliated with or endorsed by SAP." } },
-        { "@type": "Question", "name": "How does the free session work?", "acceptedAnswer": { "@type": "Answer", "text": "Book via the form with a short description of your issue. We confirm whether it fits the 2-hour window, schedule a remote screen-share session at a convenient time, fix it, and document what was changed." } }
+        { "@type": "Question", "name": "How does the free SAP consultation work?", "acceptedAnswer": { "@type": "Answer", "text": "Book via the form with a short description of your issue. We confirm whether it fits the 2-hour window, schedule a remote screen-share session at a convenient time, fix it, and document what was changed." } }
       ]
     })} />
   </Fragment>
@@ -100,12 +110,12 @@ const highlights = [
             <span class="text-xs font-semibold text-white/70 uppercase tracking-widest">Free · Quick Fixes · Under 2 hours</span>
           </div>
           <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-5 text-white leading-tight">
-            Free SAP Business One Consultation
+            Free SAP Consultation for SAP Business One
             <span class="block text-[rgb(39,174,97)] mt-2">Your most annoying issue, fixed free</span>
           </h1>
           <p class="text-lg text-gray-400 mb-8">
-            Every SAP B1 system has one — the invoice layout that prints wrong, the approval that gets stuck,
-            the report nobody could build. Bring it to UpBuff's SAP Business One consultants.
+            Every SAP B1 system has one: the invoice layout that prints wrong, the approval that gets stuck,
+            the report nobody could build. Book a free SAP consultation with UpBuff's SAP Business One consultants.
             <strong>If it's a fix under 2 hours, we do it free.</strong>
           </p>
           <ul class="flex flex-col gap-3.5">
@@ -120,13 +130,13 @@ const highlights = [
           </ul>
           <p class="text-xs text-gray-500 mt-8 leading-relaxed">
             Fair use applies. Remote only. UpBuff is an independent software company —
-            this service is not affiliated with or endorsed by SAP SE. Please ensure a current backup before any session.
+            this service is not affiliated with or endorsed by SAP SE. We'll confirm a current backup with you before the session.
           </p>
         </div>
 
         <!-- Right: quick connect form -->
         <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 relative">
-          <h2 class="text-xl font-bold text-gray-900 mb-1">Book your free SAP Business One consultation</h2>
+          <h2 class="text-xl font-bold text-gray-900 mb-1">Book your free SAP consultation</h2>
           <p class="text-sm text-gray-500 mb-5">Tell us the issue — our SAP Business One support team replies within one business day.</p>
 
           <!-- Success message -->
@@ -236,8 +246,8 @@ const highlights = [
   <div id="what-we-fix">
     <FeaturesGrid
       tagline="What We Fix Free"
-      title="SAP Business One quick fixes — the under-2-hour menu"
-      subtitle="If your issue looks like one of these, our SAP Business One support consultants can almost certainly fix it free. Not sure? Send it anyway — we'll tell you honestly."
+      title="Free SAP consulting services for SAP Business One quick fixes"
+      subtitle="If your issue looks like one of these, a free SAP consultation with our SAP Business One support consultants can almost certainly fix it. Not sure? Send it anyway — we'll tell you honestly."
       items={[
         {
           icon: 'tabler:chart-bar',
@@ -247,7 +257,7 @@ const highlights = [
         {
           icon: 'tabler:file-invoice',
           title: 'Print Layout & Report Fixes',
-          description: 'Invoice, PO, or delivery print layouts (PLD/Crystal) — logos, bank details, GST fields, alignment, missing columns.',
+          description: 'Invoice, PO or delivery print layouts (PLD or Crystal Reports). Our Crystal Reports consultants fix logos, bank details, GST fields, alignment and missing columns.',
         },
         {
           icon: 'tabler:database-search',
@@ -282,7 +292,7 @@ const highlights = [
         {
           icon: 'tabler:help-circle',
           title: 'Or Something Else Entirely',
-          description: "Need SAP Business One help that doesn't fit any box? Send it anyway. If it's fixable within 2 hours, it qualifies — and if not, you'll get an honest answer.",
+          description: "Need SAP Business One help that doesn't fit any box? Send it anyway. If it's fixable within 2 hours, it qualifies for the free SAP consultation. If not, you'll get an honest answer.",
         },
       ]}
     />
@@ -293,18 +303,18 @@ const highlights = [
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-20">
       <div class="text-center mb-12">
         <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(39,174,97)] mb-2">How It Works</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">How the free SAP Business One consultation works</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">How the free SAP consultation works</h2>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
           <div class="w-12 h-12 rounded-full bg-[rgb(39,174,97)] text-white flex items-center justify-center font-bold text-xl mx-auto mb-4">1</div>
-          <h3 class="font-bold text-lg text-gray-900 mb-2">Tell us the issue</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">Book via the form with a short description (a screenshot helps). We confirm within one business day whether it fits the free 2-hour window.</p>
+          <h3 class="font-bold text-lg text-gray-900 mb-2">Book your SAP consultation</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Send a short description of the issue via the form (a screenshot helps). We confirm within one business day whether it fits the free 2-hour window.</p>
         </div>
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
           <div class="w-12 h-12 rounded-full bg-[rgb(39,174,97)] text-white flex items-center justify-center font-bold text-xl mx-auto mb-4">2</div>
-          <h3 class="font-bold text-lg text-gray-900 mb-2">Remote screen-share session</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">A screen-share session with an UpBuff SAP Business One consultant. Configuration and reporting level only — no database writes, no core changes, backup confirmed first.</p>
+          <h3 class="font-bold text-lg text-gray-900 mb-2">Your remote SAP consultation</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">A screen-share session with an UpBuff SAP support consultant. Configuration and reporting level only — no database writes, no core changes, backup confirmed first.</p>
         </div>
         <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
           <div class="w-12 h-12 rounded-full bg-[rgb(39,174,97)] text-white flex items-center justify-center font-bold text-xl mx-auto mb-4">3</div>
@@ -321,36 +331,49 @@ const highlights = [
       <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(39,174,97)] mb-2">Why Free?</p>
       <h2 class="text-3xl font-bold text-gray-900 mb-4">Because we know this pain — deeply</h2>
       <p class="text-gray-600 text-lg leading-relaxed">
-        We work with SAP Business One businesses every day — manufacturers and production plants, distributors,
+        We work with <a href="https://www.sap.com/products/erp/business-one.html" target="_blank" rel="noopener" class="text-[rgb(39,174,97)] hover:underline font-medium">SAP Business One</a> businesses every day — manufacturers and production plants, distributors,
         retailers, and field service companies. And almost every one of them came to us carrying the same small,
         stubborn issues — problems that quietly waste hours every month. They shouldn't cost you a support contract
-        to fix. That's why this free SAP Business One consultation exists — because we've seen how much relief a two-hour fix can bring, and no business
+        to fix. That's why this free SAP consultation exists — because we've seen how much relief a two-hour fix can bring, and no business
         should live with an ERP that almost works. And when the problem is bigger than a fix, our
         <a href="/products" class="text-[rgb(39,174,97)] hover:underline font-medium">SAP Business One products</a> pick up where the quick fixes end.
       </p>
+      <img
+        src="/images/resources/free-sap-consultation-upbuff-sap-business-one-team.jpg"
+        alt="The UpBuff SAP Business One team behind the free SAP consultation"
+        width="1200"
+        height="900"
+        loading="lazy"
+        decoding="async"
+        class="mt-10 w-full rounded-2xl shadow-md object-cover"
+      />
     </div>
   </section>
 
   <!-- ── FAQ ──────────────────────────────────────────────── -->
   <FaqAccordion
     tagline="FAQs"
-    title="Free SAP Business One consultation — questions answered"
+    title="Free SAP consultation: your questions answered"
     items={[
       {
-        question: 'Is the SAP Business One consultation really free?',
+        question: 'Is the SAP consultation really free?',
         answer: 'Yes. If your issue can be fixed within 2 hours of remote work, we fix it completely free. If it needs more than that, we tell you upfront and share a clear quote — you decide, zero pressure.',
       },
       {
-        question: 'What SAP Business One issues can be fixed in under 2 hours?',
+        question: 'What can a free SAP consultation fix in under 2 hours?',
         answer: 'Typical quick fixes: invoice/PO print layouts (PLD or Crystal), custom query reports, dashboards and KPIs, alerts, approval procedures, user authorization errors, UDFs and formatted searches, numbering series, posting periods, and SBO Mailer email setup.',
       },
       {
-        question: 'Will you make changes to our SAP database or core?',
+        question: 'Will the SAP consultation change our database or core?',
         answer: 'No. All fixes are done at the configuration and reporting level using standard SAP Business One tools — no direct database writes, no core modification. We also ask you to confirm a current backup exists before any session.',
       },
       {
-        question: 'What do we need to prepare for the session?',
+        question: 'What do we need to prepare for the SAP consultation?',
         answer: 'Very little — sessions run fully remotely at a time that works for you. All you need is a screen-share and a SAP Business One user login with appropriate permissions, plus confirmation that a current backup exists.',
+      },
+      {
+        question: 'Who are your SAP Business One consultants?',
+        answer: "UpBuff's team of SAP Business One functional and technical consultants, who work with SAP B1 on SQL Server and SAP HANA every day: print layouts, query reports, dashboards, approvals, authorizations and integrations.",
       },
       {
         question: 'Is UpBuff an official SAP partner?',
@@ -363,15 +386,21 @@ const highlights = [
     ]}
   />
 
-  <!-- ── Final CTA ────────────────────────────────────────── -->
-  <section class="bg-[#0a0a0a] not-prose">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">What's your most annoying SAP B1 issue?</h2>
-      <p class="text-gray-400 text-lg mb-8">Send it now and get expert SAP Business One support and help — if it's under 2 hours, it's free. Worst case, you get an honest answer about what it takes.</p>
-      <a href="#quick-fix-form" class="btn-primary px-10 py-4 font-semibold text-base">Book my free fix</a>
-      <p class="text-gray-500 text-sm mt-6">Or call <a href="tel:+918330006006" class="text-[rgb(39,174,97)] hover:underline">+91 83300 06006</a></p>
-    </div>
-  </section>
+  <!-- ── Final CTA (same animated block as the Clarior page) ── -->
+  <CtaBanner
+    title="What's your most annoying SAP B1 issue?"
+    subtitle="Send it now for a free SAP consultation with an expert SAP B1 consultant. If it's under 2 hours, it's free. Worst case, you get an honest answer about what it takes."
+    action={{
+      text: 'Book my free fix',
+      href: '#quick-fix-form',
+      variant: 'primary',
+    }}
+    secondaryAction={{
+      text: 'Call +91 83300 06006',
+      href: 'tel:+918330006006',
+      icon: 'tabler:phone',
+    }}
+  />
 </Layout>
 
 <!-- Turnstile loader — same pattern as /contact, View Transitions safe -->

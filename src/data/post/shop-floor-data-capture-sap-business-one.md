@@ -3,7 +3,7 @@ publishDate: 2026-08-28T00:00:00Z
 title: "How to Capture Shop Floor Data in SAP Business One: From Paper to Real Time"
 excerpt: "Production runs all day; SAP Business One finds out at the end of the shift. Here's how shop floor data capture closes that gap: operation confirmations, material issue, scrap and downtime reasons, posted to SAP B1 as they happen."
 image: /images/blog/shop-floor-data-capture-sap-business-one/shop-floor-data-capture-sap-business-one.png
-author: Subrat
+author: Subrata Banerjee
 readingTime: 9
 category: ERP Operations
 tags:

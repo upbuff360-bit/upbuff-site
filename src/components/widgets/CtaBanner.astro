@@ -8,6 +8,8 @@ export interface Props extends Widget {
   subtitle?: string;
   /** Primary CTA button */
   action?: CallToAction;
+  /** Optional second button (green), e.g. a phone call link */
+  secondaryAction?: CallToAction;
   /** Small trust note shown next to the button (e.g. "No credit card required") */
   note?: string;
   /** Icon HTML rendered before the note text (defaults to a green check) */
@@ -18,6 +20,7 @@ const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   action,
+  secondaryAction,
   note,
   noteIcon,
 
@@ -51,7 +54,7 @@ const actionTarget = action?.target;
         <p class="text-lg md:text-2xl text-white/90 leading-relaxed mb-8" set:html={subtitle} />
       )}
 
-      {(action?.text || note) && (
+      {(action?.text || secondaryAction?.text || note) && (
         <div class="flex flex-wrap items-center gap-x-6 gap-y-4">
           {action?.text && (
             <a
@@ -61,6 +64,17 @@ const actionTarget = action?.target;
               class="inline-flex items-center px-7 py-3 rounded-full bg-white text-black font-semibold text-base hover:bg-gray-200 transition-colors duration-150"
             >
               {action.text}
+            </a>
+          )}
+          {secondaryAction?.text && (
+            <a
+              href={secondaryAction.href}
+              target={secondaryAction.target}
+              rel={secondaryAction.target === '_blank' ? 'noopener noreferrer' : undefined}
+              class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[rgb(39,174,97)] text-white font-semibold text-base hover:bg-[rgb(24,139,74)] transition-colors duration-150"
+            >
+              {secondaryAction.icon && <Icon name={secondaryAction.icon} class="w-5 h-5 shrink-0" />}
+              {secondaryAction.text}
             </a>
           )}
           {note && (

@@ -1,0 +1,169 @@
+---
+/**
+ * PhotoMarquee — full-width scrolling photo strip, same style as the About page.
+ * Photos are equal squares (or wider 4:3 with `wide: true`), greyscale and turn colour on hover.
+ * The strip pauses on hover and stays still for visitors who prefer reduced motion.
+ * Can be used inside an article: it breaks out to the full screen width.
+ */
+interface Photo {
+  src: string;
+  alt: string;
+  /** Optional text shown under the photo */
+  caption?: string;
+  /** Show this photo wider (4:3) instead of square */
+  wide?: boolean;
+}
+
+export interface Props {
+  photos: Photo[];
+  /** Seconds for the full set of photos to pass. Higher = slower. Default: 60 */
+  speed?: number;
+  ariaLabel?: string;
+  /** Show photos in black and white until hovered. Default: true */
+  grayscale?: boolean;
+  /** Scroll left-to-right instead of right-to-left. Default: false */
+  reverse?: boolean;
+  /** Extra classes for the outer section (e.g. spacing) */
+  class?: string;
+}
+
+const { photos = [], speed = 60, ariaLabel = 'Photo gallery', grayscale = true, reverse = false, class: className = 'my-10' } = Astro.props;
+
+// Repeat short lists so one set is wider than large screens, then use two sets for a seamless loop.
+// Only the first appearance of each photo is visible to screen readers and search engines.
+const repeat = Math.max(1, Math.ceil(8 / Math.max(photos.length, 1)));
+const oneSet = Array.from({ length: repeat }, () => photos).flat();
+const items = [...oneSet, ...oneSet].map((p, i) => ({ ...p, copy: i < photos.length ? 0 : 1 }));
+---
+
+<section class:list={['photo-marquee not-prose overflow-hidden', reverse && 'pm-reverse', className]} role="region" aria-label={ariaLabel}>
+  <div class="flex pm-track" style={`--pm-speed:${speed * repeat}s`}>
+    {
+      items.map((photo) => (
+        <figure class={photo.wide ? 'pm-figure pm-wide' : 'pm-figure'} aria-hidden={photo.copy === 1 ? 'true' : undefined}>
+          <div class="pm-item">
+          <img
+            src={photo.src}
+            alt={photo.copy === 1 ? '' : photo.alt}
+            class={grayscale ? 'pm-img grayscale hover:grayscale-0 transition-all duration-500' : 'pm-img'}
+            loading="lazy"
+            decoding="async"
+          />
+          </div>
+          {photo.caption && <figcaption class="pm-caption">{photo.caption}</figcaption>}
+        </figure>
+      ))
+    }
+  </div>
+</section>
+
+<style is:global>
+  .photo-marquee {
+    --pm-size: 16rem;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+  .photo-marquee .pm-track {
+    gap: 6px;
+    align-items: flex-start;
+    width: max-content;
+    animation: pm-scroll var(--pm-speed, 60s) linear infinite;
+  }
+  /* Fixed square boxes: the photo is cropped to fill the box and can never change its size. */
+  .photo-marquee .pm-item {
+    position: relative;
+    flex: 0 0 var(--pm-size);
+    width: var(--pm-size);
+    height: var(--pm-size);
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  .photo-marquee .pm-img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    margin: 0 !important;
+    object-fit: cover;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .photo-marquee .pm-figure {
+    flex: 0 0 var(--pm-size);
+    width: var(--pm-size);
+    margin: 0;
+  }
+  /* Wider photos: same height, 4:3 width */
+  .photo-marquee .pm-wide {
+    flex-basis: calc(var(--pm-size) * 4 / 3);
+    width: calc(var(--pm-size) * 4 / 3);
+  }
+  .photo-marquee .pm-wide .pm-item {
+    flex-basis: auto;
+    width: 100%;
+  }
+  .photo-marquee .pm-caption {
+    margin: 0.625rem 0 0;
+    padding: 0 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-style: normal;
+    text-align: center;
+    color: rgb(75 85 99);
+  }
+  .dark .photo-marquee .pm-caption {
+    color: rgb(156 163 175);
+  }
+  /* Hover: the photo card grows a little and the photo zooms in inside it */
+  .photo-marquee .pm-track {
+    padding: 14px 0;
+  }
+  .photo-marquee .pm-figure {
+    position: relative;
+    transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .photo-marquee .pm-item {
+    transition: box-shadow 0.45s ease;
+  }
+  .photo-marquee .pm-img {
+    transform: scale(1);
+    transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), filter 0.5s ease;
+  }
+  .photo-marquee .pm-figure:hover {
+    transform: scale(1.04);
+    z-index: 2;
+  }
+  .photo-marquee .pm-figure:hover .pm-item {
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.35);
+  }
+  .photo-marquee .pm-figure:hover .pm-img {
+    transform: scale(1.08);
+  }
+  .photo-marquee.pm-reverse .pm-track {
+    animation-direction: reverse;
+  }
+  .photo-marquee .pm-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes pm-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 3px)); }
+  }
+  @media (min-width: 768px) {
+    .photo-marquee { --pm-size: 18rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .photo-marquee { overflow-x: auto; }
+    .photo-marquee .pm-track { animation: none; }
+    .photo-marquee .pm-figure,
+    .photo-marquee .pm-img { transition: none; }
+    .photo-marquee .pm-figure:hover,
+    .photo-marquee .pm-figure:hover .pm-img { transform: none; }
+    .photo-marquee [aria-hidden='true'] { display: none; }
+  }
+</style>

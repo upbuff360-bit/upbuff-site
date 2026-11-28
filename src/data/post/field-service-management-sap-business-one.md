@@ -3,7 +3,7 @@ publishDate: 2026-06-22T00:00:00Z
 title: "Field Service Management for SAP Business One: The Complete Guide"
 excerpt: "SAP Business One handles service records in the back office — but your technicians work on-site. Here's how to add field service management to SAP B1 with real-time work orders, mobile execution, and offline support."
 image: /images/blog/field-service-management-sap-business-one/field-service-management-sap-business-one.png
-author: Subrat
+author: Subrata Banerjee
 readingTime: 10
 category: ERP Operations
 tags:

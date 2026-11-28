@@ -8,7 +8,7 @@ const AUTHOR_PHOTOS: Record<string, string> = {
   'Kinjal Gala': '/images/authors/kinjal-gala-upbuff.webp',
   'Rajesh K': '/images/authors/rajesh-k-upbuff.webp',
   Shiburaj: '/images/authors/shiburaj-upbuff.webp',
-  Subrat: '/images/authors/subrat-upbuff.webp',
+  'Subrata Banerjee': '/images/authors/subrata-banerjee-upbuff.webp',
   'Visakh Viswanath': '/images/authors/visakh-viswanath-upbuff.webp',
 };
 

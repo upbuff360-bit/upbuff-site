@@ -98,3 +98,26 @@ html {
 .dd *:first-child {
   margin-top: 0;
 }
+
+/* Blog and newsroom detail pages: gentle zoom-in on the hero image when the page opens.
+   The frame (.hero-zoom) clips the image, so the page layout never moves. */
+.hero-zoom {
+  isolation: isolate;
+}
+.hero-zoom img {
+  transform-origin: center;
+  animation: hero-zoom-in 6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes hero-zoom-in {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-zoom img {
+    animation: none;
+  }
+}
