@@ -106,7 +106,6 @@ const videoSchema = youtubeId
         `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
       ],
       uploadDate: post.publishDate?.toISOString(),
-      contentUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
       embedUrl: `https://www.youtube.com/embed/${youtubeId}`,
       publisher: { '@id': 'https://www.upbuff.com/#organization' },
     }

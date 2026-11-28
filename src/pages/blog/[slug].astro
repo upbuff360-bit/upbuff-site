@@ -1,4 +1,5 @@
 ---
+import { getAuthorPhoto } from '~/utils/authors';
 import type { GetStaticPaths } from 'astro';
 import { Icon } from 'astro-icon/components';
 
@@ -77,6 +78,7 @@ const breadcrumbItems = [
   { label: 'Blog', href: '/blog' },
   { label: post.title },
 ];
+const authorPhoto = getAuthorPhoto(post.author);
 ---
 
 <Layout breadcrumb={false} metadata={metadata} headerTheme="white">
@@ -106,6 +108,7 @@ const breadcrumbItems = [
           '@type': 'Person',
           name: post.author || 'UpBuff Technologies',
           ...(post.authorLinkedIn ? { url: post.authorLinkedIn, sameAs: [post.authorLinkedIn] } : {}),
+          ...(authorPhoto ? { image: new URL(authorPhoto, 'https://www.upbuff.com').href } : {}),
         },
         publisher: {
           '@type': 'Organization',
@@ -174,14 +177,26 @@ const breadcrumbItems = [
           {
             post.author && (
               <div class="flex items-center gap-2.5">
-                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[rgb(39,174,97)] to-[rgb(24,139,74)] text-white text-xs font-bold shadow-sm">
-                  {post.author
-                    .split(' ')
-                    .map((n) => n[0])
-                    .slice(0, 2)
-                    .join('')
-                    .toUpperCase()}
-                </span>
+                {authorPhoto ? (
+                  <img
+                    src={authorPhoto}
+                    alt={`${post.author}, author at UpBuff Technologies`}
+                    width="36"
+                    height="36"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-9 h-9 rounded-full object-cover shadow-sm ring-1 ring-gray-200"
+                  />
+                ) : (
+                  <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[rgb(39,174,97)] to-[rgb(24,139,74)] text-white text-xs font-bold shadow-sm">
+                    {post.author
+                      .split(' ')
+                      .map((n) => n[0])
+                      .slice(0, 2)
+                      .join('')
+                      .toUpperCase()}
+                  </span>
+                )}
                 <div class="leading-tight">
                   <span class="block text-[11px] uppercase tracking-widest text-gray-400 font-semibold">
                     Written by

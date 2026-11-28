@@ -1,12 +1,13 @@
 ---
 publishDate: 2026-11-22T00:00:00Z
+updateDate: 2026-11-28T00:00:00Z
 title: "What Is Conversational BI? How Clarior Brings It to SAP Business One"
 excerpt: "Conversational BI lets you ask business questions in plain language and get the answers as tables, charts and dashboards. Learn how it works, what to check before you choose a tool, and how Clarior brings conversational BI to SAP Business One."
 image: /images/blog/what-is-conversational-bi/what-is-conversational-bi.jpg
 imageHeight: 560
 imageAlt: "Conversational BI with Clarior on a tablet: the question “Which customers have more than 60 days overdue?” answered with an overdue payments chart and table from SAP Business One"
 author: Visakh Viswanath
-readingTime: 10
+readingTime: 9
 category: AI & Analytics
 tags:
   - conversational-bi
@@ -33,22 +34,18 @@ import ClariorChatDemo from '~/components/widgets/ClariorChatDemo.astro';
 
 **Conversational BI (conversational business intelligence) lets you ask questions about your business data in everyday language and get the answers back as tables, charts and dashboards.** Instead of opening report screens, setting filters or waiting for someone to build a report, you simply type a question such as "Which customers have overdue payments?" and see the answer in seconds.
 
-For companies running SAP Business One, this matters a lot. Your sales, finance, purchasing and inventory data is already in the ERP. The hard part has always been getting a clear answer out of it. In this guide, we explain what conversational BI is, how it works, how it differs from traditional BI tools and general AI chatbots, and what to check before you use it with SAP Business One. Throughout, we use [Clarior](/products/clarior), UpBuff's conversational BI for SAP Business One, as the running example.
+For SAP Business One companies, the data is already in the ERP. The hard part is getting a clear answer out of it. This guide explains how conversational BI works, how it compares with traditional BI, AI chatbots and other conversational BI tools, and what to check before you choose one. We use [Clarior](/products/clarior), UpBuff's conversational BI for SAP Business One, as the running example.
 
 ## What is conversational BI?
 
-Business intelligence (BI) is the practice of turning business data into information people can act on. Traditionally, that meant reports, dashboards and analysis tools built by specialists.
-
-Conversational BI keeps the same goal but changes how you get there. You talk to your data in plain language, the way you would ask a colleague. The system understands the question, finds the right data, and shows you the result.
-
-Here is a simple example in Clarior:
+Business intelligence (BI) turns business data into information people can act on, traditionally through reports and dashboards built by specialists. Conversational BI keeps that goal but lets you talk to your data in plain language, the way you would ask a colleague. For example, in Clarior:
 
 - **You ask:** "How did our sales perform last month compared with the month before?"
 - **Clarior answers:** a short table of both months, the difference, and a chart you can save to a dashboard.
 
-Then you can carry on with a follow-up question, such as "Break that down by region" or "Show only the top 10 customers". The conversation keeps its context, so you don't start from scratch each time.
+You can then ask a follow-up, such as "Break that down by region", without starting from scratch.
 
-<div class="not-prose my-10 overflow-hidden rounded-2xl bg-black text-white shadow-lg">
+<aside aria-label="Clarior video and demo" class="not-prose my-10 overflow-hidden rounded-2xl bg-black text-white shadow-lg">
   <div class="aspect-video w-full">
     <iframe
       class="h-full w-full"
@@ -63,55 +60,41 @@ Then you can carry on with a follow-up question, such as "Break that down by reg
   <div class="p-6 md:p-8">
     <p class="!m-0 !mb-2 text-sm font-semibold uppercase tracking-wider !text-green-400">See it in action</p>
     <p class="!m-0 !mb-3 text-2xl md:text-3xl font-bold leading-tight !text-white">Clarior: Conversational BI for SAP Business One</p>
-    <p class="!m-0 !mb-6 leading-relaxed !text-white/80">Type a business question in everyday language and get the answer as a table or chart, straight from SAP Business One. Read-only, and your permissions apply.</p>
+    <p class="!m-0 !mb-6 leading-relaxed !text-white/80">Type a business question in everyday language and get the answer as a table or chart, straight from SAP Business One. Read-only, and it follows your SAP Business One permissions.</p>
     <div class="flex flex-wrap items-center gap-4">
       <a href="/request-demo" class="inline-flex items-center px-6 py-3 rounded-full bg-white !text-black !no-underline font-semibold hover:bg-gray-200 transition-colors">Book a live demo</a>
-      <a href="/products/clarior" class="inline-flex items-center gap-2 font-semibold !text-white !no-underline hover:!text-green-400 transition-colors">Explore Clarior <span aria-hidden="true">&rarr;</span></a>
+      <a href="/products/clarior" class="inline-flex items-center gap-2 font-semibold !text-white !no-underline hover:!text-green-400 transition-colors">Explore Clarior <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 18l6-6"/><path d="M13 6l6 6"/></svg></a>
     </div>
   </div>
-</div>
+</aside>
 
 ## How it works, step by step
 
 Most tools follow the same five steps:
 
 1. **You ask a question in everyday language.** No query language, no report menus.
-2. **AI interprets the question.** It works out what you mean: which data, which time period, which filters and which measures.
-3. **The system prepares a database query.** Using your question and the structure of your database (which tables and fields exist, not your records), it builds a query within the access you are allowed.
-4. **The query runs and you see the answer.** The query runs against your business data, and the result comes back as a table or chart. In Clarior, it runs inside your own environment through a read-only gateway, so your records stay with you.
-5. **You explore further.** You ask follow-up questions, change the view, or save useful answers to a dashboard.
-
-In other words, the AI handles the translation from human language to data query. As a result, you spend your time on the answer, not on how to get it.
+2. **AI interprets the question.** It works out which data, time period, filters and measures you mean.
+3. **The system prepares a database query.** It uses your question and your database structure (which tables and fields exist, not your records). In Clarior, the cloud AI prepares an authorized, read-only query without seeing your records.
+4. **The query runs and you see the answer.** The result comes back as a table or chart. In Clarior, the query runs inside your own environment, so your records stay with you.
+5. **You explore further.** Ask follow-up questions, change the view, or save the answer to a dashboard.
 
 ## Conversational BI vs traditional BI
 
-Traditional BI is not going away. Formal reports, statutory reports and carefully designed dashboards still have their place. However, the two approaches suit different jobs.
+Traditional BI is not going away: formal reports and well-designed dashboards still have their place. By traditional BI here, we mean fixed ERP reports, pre-built dashboards and the queue for custom reports. Users can already filter pre-built dashboards, and Power BI and SAP Analytics Cloud now add natural-language features too (see below). The difference is the brand-new question that no report or data model covers yet.
 
-By traditional BI here, we mean fixed ERP reports and the queue for custom reports, the way most SAP Business One teams work today. Interactive dashboard tools such as Power BI already let trained users filter and drill down. Conversational BI goes a step further: anyone can ask a brand-new question in plain language.
-
-| | Traditional BI | Conversational BI |
+| Aspect | Traditional BI | Conversational BI |
 | --- | --- | --- |
 | How you get an answer | Open a report or dashboard, set filters | Type a question in plain language |
-| Who can use it | People trained on reports and BI tools | Anyone who can describe what they need |
-| New questions | Often need a new report built by IT or a consultant | Ask straight away |
+| Who can answer a new question | People who can build or change reports and data models | Anyone who can describe what they need |
+| New questions | Often need a new report or data model built by IT or a consultant | Ask straight away |
 | Follow-up questions | Re-run the report with new filters | Ask a follow-up in the same conversation |
 | Best for | Fixed, repeated reporting and formal outputs | Everyday questions and quick exploration |
 
-The biggest difference is the report backlog. With traditional BI, every new business question can become a request in someone's queue. With conversational BI, most everyday questions are answered by the person who asked them.
-
 ## Conversational BI vs a general AI chatbot
 
-It is easy to confuse conversational BI with a general AI chatbot. They are not the same thing.
+It is easy to confuse conversational BI with a general-purpose AI chatbot such as ChatGPT. Used on its own, a chatbot answers from its training and from what you paste or upload. It doesn't know your sales figures or customer balances. Some chatbots can be connected to business systems through plugins or connectors such as MCP, but then you set up the connection, permissions and data protection yourself. We cover those routes in our guide on [how to connect AI to SAP Business One](/blog/how-to-connect-ai-to-sap-business-one).
 
-A general AI chatbot answers from what it learned during training and from what you paste into it. It does not know your sales figures or your customer balances. If you ask it about your business, it can only guess, or you have to copy your data into it.
-
-Conversational BI, on the other hand, is connected to your own business data. Its answers come from a query against your system, not from the model's general knowledge. A well-designed conversational BI tool also:
-
-- **Respects user permissions,** so people only see the data they are allowed to see.
-- **Reads data without changing it,** so asking a question can never alter your records.
-- **Limits what leaves your environment,** so your records and query results are not sent to an outside AI service.
-
-These three points matter even more when the data lives in your ERP.
+Conversational BI is connected to your business data, so its answers come from a query against your system. For ERP data, a well-designed tool also respects user permissions, never changes your data, and keeps your records and query results inside your environment.
 
 ## What can you ask? Conversational BI examples for SAP Business One
 
@@ -160,6 +143,8 @@ Take the finance question "Which customers have overdue payments?" Instead of a 
           <div class="pv-chips"><span>Invoices</span><span>Customers</span><span>Due dates</span><span>Balance due</span></div>
           <p class="pv-small">Never sent</p>
           <ul class="pv-list"><li class="pv-no"><b>✕</b> Customer names or records</li><li class="pv-no"><b>✕</b> Invoice amounts</li><li class="pv-no"><b>✕</b> Query results</li><li class="pv-no"><b>✕</b> Your SAP B1 login details</li></ul>
+          <p class="pv-small !mt-3">Before sending</p>
+          <ul class="pv-list"><li class="pv-yes"><b>✓</b> Names and amounts you type are masked</li></ul>
         </div>
         <div class="pv-panel pv-local pv-step" style="--d:2.3s">
           <p class="pv-label pv-label-local"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zm3-2V7a4 4 0 1 1 8 0v4"/></svg> What stays with you</p>
@@ -178,78 +163,85 @@ Take the finance question "Which customers have overdue payments?" Instead of a 
   </ClariorChatDemo>
 </div>
 
-Notice the split. To understand your question, Clarior's cloud AI service works with your question, the conversation context and schema information, such as which tables and fields exist. The customer names, amounts and query results stay in your environment. Personal identifiers and financial values are also masked and filtered before anything is sent to the AI, so even a customer name you type in your question is protected.
+Notice the split. To understand your question, Clarior's cloud AI service works with your question text, the conversation context and schema information, such as which tables and fields exist. The database records and query results, including the customer names and amounts the query returns, stay in your environment. And if you type a customer name or an amount into your question, for example "Show overdue invoices for Northwind Traders", Clarior masks and filters those personal identifiers and financial values before anything is sent to the AI.
 
-From there, you keep the conversation going. For example, ask "Only show customers more than 40 days overdue", switch the answer to a chart, or save it to a dashboard so it is ready every morning.
+From there, you can ask "Only show customers more than 40 days overdue", switch to a chart, or save the answer as a dashboard.
 
 ## Why it matters for SAP Business One users
 
-SAP Business One is a strong system of record. It holds accurate data across sales, finance, purchasing and inventory. Yet many teams still struggle to get quick answers from it. We see the same four problems again and again:
+SAP Business One holds accurate data, yet many teams still struggle to get quick answers from it. We see four problems again and again:
 
 - **Decisions on old numbers.** By the time a report is run, exported and shared, stock, receivables and sales have already moved on.
 - **A growing report backlog.** Every new question becomes a request to IT or a consultant.
 - **Numbers that don't match.** Each team builds its own spreadsheet from its own export, so figures differ between departments.
 - **Only experts get answers.** Owners and managers wait for the few people trained on SAP Business One reports.
 
-Conversational BI addresses all four. Managers ask their own questions, answers come straight from the ERP, and everyone works from the same source. One note on matching numbers: live ERP answers remove stale exports and spreadsheet mistakes, but teams still need to agree what each measure means, for example whether "sales" includes credit memos. Sharing saved dashboards keeps everyone on the same definition. For a wider look at the options, see our guide on [how to connect AI to SAP Business One](/blog/how-to-connect-ai-to-sap-business-one).
+Conversational BI fixes the first, second and fourth directly. Matching numbers needs one more step, because the same question can be calculated in different ways: "sales" can mean orders, deliveries or invoices, with or without credit memos, and "overdue" can count from the due date or the posting date. Agree what each measure means, check the answer once against your standard SAP Business One report, and save it as a dashboard. In Clarior, a saved dashboard keeps its query, so every refresh runs the same agreed calculation.
 
 ## What to check before choosing a tool for your ERP
 
-Not every tool that "chats with your data" is ready for ERP data. Before you choose one, check these points:
+Not every tool that "chats with your data" is ready for ERP data. Check these points:
 
-1. **Is it read-only?** Asking a question should never be able to change records in your ERP.
+1. **Is it read-only?** Asking a question should never be able to change records in your ERP. Ask how this is enforced: the strongest guarantee is a read-only database account, because the database itself blocks any change, even if someone tries to trick the AI with a cleverly worded question.
 2. **Where does your data go?** Find out which data stays in your environment and which data is sent to cloud AI services.
 3. **Does it follow your permissions?** A sales user and a finance manager asking the same question should see different answers if their access is different.
-4. **Is it built for your ERP?** A tool that understands SAP Business One's data model will interpret questions more reliably than a generic one.
+4. **Is it built for your ERP?** SAP Business One uses its own tables and codes, such as OINV for A/R invoices and OCRD for business partners. A tool built around that model starts from a better place, but ask each vendor how they test accuracy, and try it with your own questions.
 5. **Can you check the answers?** You should be able to verify results against your standard reports, especially in the first weeks.
-6. **Can you save and share results?** Useful answers should be easy to keep in a dashboard, so you don't ask the same question every morning.
-
-### How Clarior measures up
-
-We designed Clarior around this checklist. Here is how it answers each point:
-
-| Check | Clarior |
-| --- | --- |
-| Read-only? | Yes. Clarior's gateway connects to your database with a read-only database user, so Clarior cannot change data in SAP Business One. |
-| Where does your data go? | Transactional query results stay in your environment. Question text, conversation context, authorized schema information and certain metadata are processed by the cloud services Clarior needs to operate. Personal identifiers and financial values are masked and filtered before anything is sent to the AI. |
-| Follows your permissions? | Yes. Access is governed by configured permissions. |
-| Built for your ERP? | Yes. Clarior is designed specifically for SAP Business One, including your user-defined fields and tables (UDFs and UDTs), on both Microsoft SQL Server and SAP HANA. |
-| Can you check the answers? | Yes. Answers come back as tables you can compare with SAP Business One's standard reports. You never need to read or write a query yourself. |
-| Save results? | Yes. Save answers as dashboards. Each refresh loads the latest data from SAP Business One. |
+6. **Can you save results?** Useful answers should be easy to keep as a dashboard.
 
 ## The limits of conversational BI
 
-Conversational BI is powerful, but it is not magic. It is worth being clear about its limits:
+Conversational BI is powerful, but it has limits:
 
 - **Clear questions get better answers.** A specific question such as "Sales last month by region" works better than a vague one such as "How are we doing?" Good tools ask for clarification when a question is vague.
 - **Answers are only as good as your data.** If items are posted late or master data is messy, the answers will reflect that.
 - **It does not replace formal reporting.** Statutory reports, audits and month-end packs still belong in your standard reporting process.
 - **Verify early on.** When we test conversational BI with SAP Business One, we check its answers against SAP Business One's standard reports. We recommend you do the same during your first weeks.
 
+## Other ways to get conversational BI on SAP Business One
+
+Several tools already let you ask SAP Business One questions in plain language. The core techniques, such as turning questions into database queries (text-to-SQL) and connecting through a gateway inside your network, are well established. The options differ in setup, where your data must live first, and security:
+
+- **SAP Analytics Cloud natural language query ("Just Ask").** Ask questions in plain language about data that has first been connected and modelled in SAP Analytics Cloud.
+- **Microsoft Power BI with Q&A and Copilot.** Natural-language features on Power BI data models built from SAP Business One data, with Microsoft's on-premises data gateway reaching local databases. Suits teams with Power BI skills in-house.
+- **SAP Business One add-ons.** For example, the Boyum B1UP AI Assistant turns plain-language questions into SQL and shows the results in a table, and Vision33's Copilot for SAP Business One, built on the Saltbox integration platform, handles questions and guided processes.
+- **Build your own.** Open-source frameworks such as Vanna are the most flexible route, but your team designs and maintains the security, permissions and data masking.
+
+If you already run Power BI or SAP Analytics Cloud, their natural-language features may suit you. If you want answers straight from SAP Business One without first building a BI project, read on.
+
 ## Conversational BI for SAP Business One: meet Clarior
 
-[Clarior](/products/clarior) is UpBuff's [Conversational BI for SAP Business One](/products/clarior). You type a business question in everyday language. Clarior uses AI to interpret your request and prepares an authorized, read-only database query. You then see the answer as a table or chart, ask follow-up questions, and save useful insights to dashboards.
+[Clarior](/products/clarior) is UpBuff's [Conversational BI for SAP Business One](/products/clarior). It applies the established techniques above specifically to SAP Business One: you ask in everyday language, get tables and charts, ask follow-ups and save answers as dashboards. Clarior queries your SAP Business One database directly through a customer-hosted gateway in your own environment, so there is no separate data model or data warehouse to build first.
 
-Clarior connects to SAP Business One through a **customer-hosted gateway**, a gateway that runs in your own environment and uses a read-only database user. That is why transactional query results can stay with you, while your configured permissions decide who sees what. It works with your user-defined fields and tables, on both Microsoft SQL Server and SAP HANA.
+Here is how Clarior answers the checklist above:
+
+| Check | Clarior |
+| --- | --- |
+| Read-only? | Yes. Clarior's gateway connects to your database with a read-only database user. The database itself enforces this, so no question, however it is worded, can change data in SAP Business One. |
+| Where does your data go? | Query results stay in your environment. Question text, conversation context, authorized schema information and certain metadata are processed by the cloud services Clarior needs to operate. Personal identifiers and financial values are masked and filtered before anything is sent to the AI. |
+| Follows your permissions? | Yes. Clarior follows each user's existing SAP Business One authorizations automatically, so people only see what they can already see in SAP Business One. There is no separate permission setup. |
+| Built for your ERP? | Yes. Clarior is designed specifically for SAP Business One, including your user-defined fields and tables (UDFs and UDTs), on both Microsoft SQL Server and SAP HANA. |
+| Can you check the answers? | Yes. Answers come back as tables you can compare with SAP Business One's standard reports. You never need to read or write a query yourself. |
+| Save results? | Yes. Save answers as dashboards. Each refresh loads the latest data from SAP Business One. |
 
 You can [watch the Clarior global product launch on YouTube](https://www.youtube.com/watch?v=qahCMMyeGzw) or read the [Clarior launch announcement](/newsroom/clarior-conversational-bi-for-sap-business-one) in our newsroom.
 
 ## Frequently asked questions
 
 **What does conversational BI mean?**
-Conversational BI means using everyday language to ask questions about your business data and getting the answers as tables, charts or dashboards. It combines business intelligence with a conversational, question-and-answer way of working.
+Using everyday language to ask questions about your business data, and getting the answers as tables, charts or dashboards.
 
 **Is conversational BI the same as conversational analytics?**
-The two terms are used almost interchangeably. Both describe asking questions of your data in natural language. "Conversational BI" usually puts more weight on business reporting and dashboards, while "conversational analytics" is sometimes used more broadly.
+Almost. Both mean asking questions of your data in natural language; "conversational BI" leans more toward business reporting and dashboards.
 
 **Do I need to know SQL or reporting tools to use conversational BI?**
-No. That is the main point of conversational BI. The AI turns your question into a database query, so you don't need to write one.
+No. The AI turns your question into a database query for you.
 
 **Can conversational BI change data in SAP Business One?**
-It should not. For ERP data, choose a read-only tool. Clarior, for example, only runs read-only database queries against [SAP Business One](https://www.sap.com/products/erp/business-one.html).
+It shouldn't. Choose a read-only tool for ERP data. Clarior only runs read-only queries against [SAP Business One](https://www.sap.com/products/erp/business-one.html), enforced by a read-only database user.
 
 **Will conversational BI replace our BI dashboards?**
-Usually not. Conversational BI is best for everyday questions and quick exploration, while traditional dashboards remain useful for fixed, repeated reporting. Many teams use both, and save their most useful conversational answers as dashboards.
+Usually not. Conversational BI suits everyday questions, and dashboards suit fixed, repeated reporting. Many teams save their best conversational answers as dashboards.
 
 ## Ask your ERP, don't search it
 
